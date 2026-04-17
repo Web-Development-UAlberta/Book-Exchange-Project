@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        dotnet-version: ["9.0.x"]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Restore dependencies
+        run: dotnet restore $(find ./src -name "*.csproj" | head -n 1)
+
+      - name: Build
+        run: dotnet build $(find ./src -name "*.csproj" | head -n 1) --no-restore
+
+      - name: Check build artifacts
+        run: |
+          BUILD_DIR=$(find ./src -name "*.csproj" | head -n 1 | xargs dirname)
+          if [ ! -d "$BUILD_DIR/bin" ] && [ ! -d "$BUILD_DIR/publish" ]; then
+           echo "No build output directory found. Expected 'bin' or 'publish'."
+           exit 1
+          fi
