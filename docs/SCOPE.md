@@ -25,6 +25,7 @@ The platform leverages matching logic and mock book data to connect users and fa
 ## 3. Scope of Features
 
 ### 3.1 User Management
+
 - User registration and authentication
 - User profiles including:
   - Owned books
@@ -35,6 +36,7 @@ The platform leverages matching logic and mock book data to connect users and fa
 ---
 
 ### 3.2 Book Management
+
 - Add/edit/remove owned books
 - Add books to wishlist
 - Retrieve book metadata using mock data (title, author, ISBN)
@@ -50,12 +52,15 @@ The platform leverages matching logic and mock book data to connect users and fa
 ### 3.3 Transaction Types
 
 #### A. Selling
+
 - Users can list books with a fixed price
 
 #### B. Buying
+
 - Users can submit purchase offers
 
 #### C. Swapping
+
 - Users can propose book exchanges
 - System suggests value-balanced swaps
   - Example: 3 × $10 books for 1 × $30 book
@@ -63,6 +68,7 @@ The platform leverages matching logic and mock book data to connect users and fa
 ---
 
 ### 3.4 Matching Engine
+
 - Match users based on:
   - Owned books vs wishlist
   - Buy/sell compatibility
@@ -73,6 +79,7 @@ The platform leverages matching logic and mock book data to connect users and fa
 ---
 
 ### 3.5 Search and Filtering
+
 - Advanced filtering by:
   - Author
   - Genre
@@ -83,6 +90,7 @@ The platform leverages matching logic and mock book data to connect users and fa
 ---
 
 ### 3.6 Wishlist & Notifications
+
 - Users can maintain a wishlist
 - Notification system alerts users when:
   - Desired books become available
@@ -91,6 +99,7 @@ The platform leverages matching logic and mock book data to connect users and fa
 ---
 
 ### 3.7 Book Condition System
+
 - Users specify book condition:
   - New
   - Like New
@@ -101,6 +110,7 @@ The platform leverages matching logic and mock book data to connect users and fa
 ---
 
 ### 3.8 Communication System
+
 - Messaging or notification-based interaction between users
 - Used for:
   - Negotiations
@@ -109,6 +119,7 @@ The platform leverages matching logic and mock book data to connect users and fa
 ---
 
 ### 3.9 Rating & Review System
+
 - Users can:
   - Rate transactions
   - Review books and exchange experiences
@@ -146,18 +157,23 @@ The platform leverages matching logic and mock book data to connect users and fa
 ## 6. Non-Functional Requirements
 
 ### Performance
+
 - Fast search and matching responses
 
 ### Scalability
+
 - Designed to support growing user base
 
 ### Security
+
 - Secure authentication and user data protection
 
 ### Usability
+
 - Simple and intuitive UI/UX
 
 ### Reliability
+
 - Consistent matching and notification delivery
 
 ---
@@ -180,4 +196,3 @@ The platform leverages matching logic and mock book data to connect users and fa
 - Real payment integration (Stripe, PayPal)
 - Mobile app version
 - Advanced trust & fraud detection system
-
