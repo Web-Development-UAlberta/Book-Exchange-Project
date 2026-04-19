@@ -1,5 +1,18 @@
 # Book Exchange Platform
 
+### Table of Contents
+
+1. [Introduction](#introduction)
+2. [System Architecture](#system-architecture)
+3. [Detailed Design](#detailed-design)
+4. [User Interface Design](#user-interface-design)
+5. [Security Considerations](#security-considerations)
+6. [Matching Logic Design](#matching-logic-design)
+7. [Testing Strategy](#testing-strategy)
+8. [Deployment Plan](#deployment-plan)
+9. [Timeline & Milestones Detailed](#timeline-and-milestones-starting-april-13-2026)
+10. [Appendix](#appendix)
+
 ## 1. Introduction
 
 This document describes the system architecture and detailed design for the Book Exchange Platform, a web-based application that allows users to exchange, buy, and sell books.
@@ -845,7 +858,7 @@ Home
 
 - Cloud VM or Kubernetes
 
-## 8.3 Production
+### 8.3 Production
 
 - Dockerized deployment
 - Reverse proxy (NGINX)
@@ -855,7 +868,7 @@ Home
 
 ## 9. Timeline and Milestones (Starting April 13, 2026)
 
-## Week 01 (Apr 13 – Apr 19, 2026)
+### Week 01 (Apr 13 – Apr 19, 2026)
 
 - Team Norms Document (Thursday Night) → `./docs/TEAM-NORMS.md`
 - Scope Document Draft → `./docs/SCOPE.md`
@@ -866,7 +879,7 @@ Home
 
 ---
 
-## Week 02 (Apr 20 – Apr 26, 2026)
+### Week 02 (Apr 20 – Apr 26, 2026)
 
 - Draft Entity-Relationship Diagram Revision 1 → `./docs/ERD.drawio`
 - Design Document Final
@@ -879,7 +892,7 @@ Home
 
 ---
 
-## Week 03 (Apr 27 – May 3, 2026)
+### Week 03 (Apr 27 – May 3, 2026)
 
 - ERD Final (Sunday Night) → `./docs/ERD.drawio`
 - Final Wireframes → `./docs/wireframes/*.drawio | *.fig`
@@ -890,7 +903,7 @@ Home
 
 ---
 
-## Week 04 (May 4 – May 10, 2026)
+### Week 04 (May 4 – May 10, 2026)
 
 - Implementation of ORM
 - README: Project Setup/Startup → `./docs/README.md`
@@ -900,7 +913,7 @@ Home
 
 ---
 
-## Week 05 (May 11 – May 17, 2026)
+### Week 05 (May 11 – May 17, 2026)
 
 - Implementation of Business Logic
 - README: Project Usage → `./docs/README.md`
@@ -908,13 +921,13 @@ Home
 
 ---
 
-## Week 06 (May 18 – May 24, 2026)
+### Week 06 (May 18 – May 24, 2026)
 
 - Final Project Presentation and Q&A
 
 ---
 
-## End of Course (After May 24, 2026)
+### End of Course (After May 24, 2026)
 
 - Final Revisions After Presentation
 - Ensure All Tests Pass

@@ -1,5 +1,18 @@
 # 📘 Book Exchange Platform
 
+### Table of Contents
+
+1. [Project Overview](#project-overview)
+2. [Objectives](#objectives)
+3. [Scope of Features](#scope-of-features)
+4. [Business Rules](#business-rules)
+5. [Data & Integration](#data--integration)
+6. [Non-Functional Requirements](#non-functional-requirements)
+7. [Out of Scope (Initial Version)](#out-of-scope-initial-version)
+8. [Future Enhancements](#future-enhancements)
+9. [Success Criteria](#success-criteria)
+10. [Timeline](#timeline)
+
 ## 1. Project Overview
 
 The Book Exchange Platform is a web-based system that enables users to exchange, buy, and sell books. Users can list books they own, specify books they want, and interact with other users through swap proposals, direct purchases, or sales.
@@ -205,8 +218,8 @@ The platform leverages matching logic and mock book data to connect users and fa
 
 | Week       | Tasks                      |
 | ---------- | -------------------------- |
-| **Week 1** | Documentaion Reviewed      |
-| **Week 2** | Documentaion Finalized     |
+| **Week 1** | Documentation Reviewed     |
+| **Week 2** | Documentation Finalized    |
 | **Week 3** | Back End Set Up & Testing  |
 | **Week 4** | Front End Set Up & Testing |
 | **Week 5** | First Release              |
