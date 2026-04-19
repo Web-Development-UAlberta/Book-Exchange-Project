@@ -218,8 +218,8 @@ The platform leverages matching logic and mock book data to connect users and fa
 
 | Week       | Tasks                      |
 | ---------- | -------------------------- |
-| **Week 1** | Documentaion Reviewed      |
-| **Week 2** | Documentaion Finalized     |
+| **Week 1** | Documentation Reviewed     |
+| **Week 2** | Documentation Finalized    |
 | **Week 3** | Back End Set Up & Testing  |
 | **Week 4** | Front End Set Up & Testing |
 | **Week 5** | First Release              |
