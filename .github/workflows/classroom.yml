@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        dotnet-version: ["9.0.x"]
+        dotnet-version: ["10.0.x"]
 
     steps:
       - uses: actions/checkout@v3
@@ -22,10 +22,10 @@ jobs:
           dotnet-version: ${{ matrix.dotnet-version }}
 
       - name: Restore dependencies
-        run: dotnet restore $(find ./src -name "*.csproj" | head -n 1)
+        run: dotnet restore ./src/Book-Exchange/Book-Exchange.slnx
 
       - name: Build
-        run: dotnet build $(find ./src -name "*.csproj" | head -n 1) --no-restore
+        run: dotnet build --no-restore -c Release ./src/Book-Exchange/Book-Exchange.slnx
 
       - name: Check build artifacts
         run: |
