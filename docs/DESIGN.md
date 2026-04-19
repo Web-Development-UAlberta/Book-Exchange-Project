@@ -67,7 +67,7 @@ CREATE TABLE "AspNetRoles" (
 );
 ```
 
-####  AspNetUserRoles Table
+#### AspNetUserRoles Table
 
 ```sql
 CREATE TABLE "AspNetUserRoles" (
@@ -513,6 +513,7 @@ CREATE TABLE messages (
     created_at TIMESTAMP NOT NULL DEFAULT now()
 );
 ```
+
 ---
 
 ### 3.2 Core Components
@@ -607,7 +608,6 @@ J. Notification Module
 
 ### 3.3 API Endpoints (MVC Controllers)
 
-
 A. Authentication Controller (/account)
 
 - POST /account/register → Register new user
@@ -662,7 +662,7 @@ E. Listings Controller (/listings)
 F. Matching Controller (/matching)
 
 - GET /matching/suggestions → Get personalized match suggestions
-- GET /matching/swaps → Get potential swap matches 
+- GET /matching/swaps → Get potential swap matches
 - GET /matching/listing/{id} → Get matches for a specific listing
 
 ---
@@ -718,47 +718,47 @@ K. Notifications Controller (/notifications)
 ### 4.1 Key Screens
 
 - Home Page
-    - Search bar (books, authors, ISBN)
-    - Featured listings
-    - Recent activity / recommendations
+  - Search bar (books, authors, ISBN)
+  - Featured listings
+  - Recent activity / recommendations
 - Dashboard
-    - Overview of user activity
-    - Active listings (buy/sell/swap)
-    - Wishlist summary
-    - Recent matches and notifications
-    - Ongoing transactions
+  - Overview of user activity
+  - Active listings (buy/sell/swap)
+  - Wishlist summary
+  - Recent matches and notifications
+  - Ongoing transactions
 - Book Listings
-    - Browse and filter listings (price, condition, type, location)
-    - View listing details (book info, seller, condition, price)
-    - Create/edit/delete listings
+  - Browse and filter listings (price, condition, type, location)
+  - View listing details (book info, seller, condition, price)
+  - Create/edit/delete listings
 - Wishlist
-    - View saved books
-    - Add/remove books
-    - See availability/match status
+  - View saved books
+  - Add/remove books
+  - See availability/match status
 - Matching / Suggestions
-    - Suggested swaps and purchases
-    - Value-balanced swap recommendations
-    - Quick actions (accept, negotiate, message)
+  - Suggested swaps and purchases
+  - Value-balanced swap recommendations
+  - Quick actions (accept, negotiate, message)
 - Transactions
-    - View transaction history
-    - Track current transactions (status: negotiating, confirmed, shipped, etc.)
-    - Confirm/cancel actions
+  - View transaction history
+  - Track current transactions (status: negotiating, confirmed, shipped, etc.)
+  - Confirm/cancel actions
 - Shipping
-    - Address management
-    - Shipment tracking (carrier, status, tracking number)
-    - Shipping cost breakdown
+  - Address management
+  - Shipment tracking (carrier, status, tracking number)
+  - Shipping cost breakdown
 - Messages
-    - Conversations list
-    - Chat interface with users
-    - Offer negotiation inside chat
+  - Conversations list
+  - Chat interface with users
+  - Offer negotiation inside chat
 - Notifications
-    - Alerts for matches, offers, messages, and transaction updates
-    - Mark as read / archive
+  - Alerts for matches, offers, messages, and transaction updates
+  - Mark as read / archive
 - User Profile
-    - Personal info
-    - Ratings and reviews
-    - Public listings
-    - Reputation score
+  - Personal info
+  - Ratings and reviews
+  - Public listings
+  - Reputation score
 
 ---
 
@@ -790,7 +790,7 @@ Home
 
 ### 5.1 Authentication & Authorization
 
-- ASP.NET Identity 
+- ASP.NET Identity
 
 ### 5.2 Data Protection
 

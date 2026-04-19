@@ -196,3 +196,18 @@ The platform leverages matching logic and mock book data to connect users and fa
 - Real payment integration (Stripe, PayPal)
 - Mobile app version
 - Advanced trust & fraud detection system
+
+## 9. Success Criteria
+
+???
+
+## 10. Timeline
+
+| Week       | Tasks                      |
+| ---------- | -------------------------- |
+| **Week 1** | Documentaion Reviewed      |
+| **Week 2** | Documentaion Finalized     |
+| **Week 3** | Back End Set Up & Testing  |
+| **Week 4** | Front End Set Up & Testing |
+| **Week 5** | First Release              |
+| **Week 6** | Final Project              |
