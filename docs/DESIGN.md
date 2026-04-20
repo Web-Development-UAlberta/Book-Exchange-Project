@@ -298,17 +298,6 @@ CREATE TABLE listings (
 );
 ```
 
-### Conditions Table
-
-```sql
-CREATE TABLE condition_codes (
-    code CHAR(2) PRIMARY KEY, --- LN, VG, GD, AC, PF
-    label VARCHAR(50) NOT NULL, --- Like New, Very Good, Good, Acceptable, Poor
-    multiplier NUMERIC(8,2) NOT NULL, --- for swap valuation engine
-    sort_order SMALLINT NOT NULL UNIQUE -- 1 = best, 5 = worst
-);
-```
-
 #### Wishlist Table
 
 ```sql
