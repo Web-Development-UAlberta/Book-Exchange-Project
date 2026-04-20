@@ -2,16 +2,16 @@
 
 ### Table of Contents
 
-1. [Introduction](#introduction)
-2. [System Architecture](#system-architecture)
-3. [Detailed Design](#detailed-design)
-4. [User Interface Design](#user-interface-design)
-5. [Security Considerations](#security-considerations)
-6. [Matching Logic Design](#matching-logic-design)
-7. [Testing Strategy](#testing-strategy)
-8. [Deployment Plan](#deployment-plan)
-9. [Timeline & Milestones Detailed](#timeline-and-milestones-starting-april-13-2026)
-10. [Appendix](#appendix)
+1. [Introduction](#1-introduction)
+2. [System Architecture](#2-system-architecture)
+3. [Detailed Design](#3-detailed-design)
+4. [User Interface Design](#4-user-interface-design)
+5. [Security Considerations](#5-security-considerations)
+6. [Matching Logic Design](#6-matching-logic-design)
+7. [Testing Strategy](#7-testing-strategy)
+8. [Deployment Plan](#8-deployment-plan)
+9. [Timeline & Milestones Detailed](#9-timeline-and-milestones-starting-april-13-2026)
+10. [Appendix](#10-appendix)
 
 ## 1. Introduction
 
@@ -733,9 +733,9 @@ K. Notifications Controller (/notifications)
 - Home Page
   - Search bar (books, authors, ISBN)
   - Featured listings
-  - Recent activity / recommendations
+  - How it works
 - Dashboard
-  - Overview of user activity
+  - Overview of user activity / recommendations
   - Active listings (buy/sell/swap)
   - Wishlist summary
   - Recent matches and notifications

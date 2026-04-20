@@ -2,16 +2,16 @@
 
 ### Table of Contents
 
-1. [Project Overview](#project-overview)
-2. [Objectives](#objectives)
-3. [Scope of Features](#scope-of-features)
-4. [Business Rules](#business-rules)
-5. [Data & Integration](#data--integration)
-6. [Non-Functional Requirements](#non-functional-requirements)
-7. [Out of Scope (Initial Version)](#out-of-scope-initial-version)
-8. [Future Enhancements](#future-enhancements)
-9. [Success Criteria](#success-criteria)
-10. [Timeline](#timeline)
+1. [Project Overview](#1-project-overview)
+2. [Objectives](#2-objectives)
+3. [Scope of Features](#3-scope-of-features)
+4. [Business Rules](#4-business-rules)
+5. [Data & Integration](#5-data--integration)
+6. [Non-Functional Requirements](#6-non-functional-requirements)
+7. [Out of Scope (Initial Version)](#7-out-of-scope-initial-version)
+8. [Future Enhancements](#8-future-enhancements)
+9. [Success Criteria](#9-success-criteria)
+10. [Timeline](#10-timeline)
 
 ## 1. Project Overview
 
