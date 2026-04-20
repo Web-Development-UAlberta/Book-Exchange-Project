@@ -1,0 +1,11 @@
+Confirm the purpose of the listings page. 
+- Is it for the user to list their active swap/buy/sell items, do we not want a list of what they have read and how they felt about it.
+-- if so that would mean another table for just there generic list of books that they have read and another rating system for that.
+
+On my dashboard on my home pc add in table names/id's of fields for the dashboard page that was made earlier but not pushed.
+
+Do we want to include cover images, if so what table would those be in?
+
+ERD feedback:
+- Book_authors & genre tables have 2 primary key fields
+- looks like we missing a profile table, username, pronouns, bio. Could be added to the AspNewUsers table
