@@ -14,6 +14,9 @@ namespace Book_Exchange.Data
         public DbSet<Location> Locations => Set<Location>();
         public DbSet<LocationDistance> LocationDistances => Set<LocationDistance>();
         public DbSet<Address> Addresses => Set<Address>();
+        public DbSet<Book> Books => Set<Book>();
+        public DbSet<Author> Authors => Set<Author>();
+        public DbSet<Genre> Genres => Set<Genre>();
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -104,6 +107,11 @@ namespace Book_Exchange.Data
 
             // authors
             builder.Entity<Author>()
+                .HasIndex(x => x.Name)
+                .IsUnique();
+
+            // genres
+            builder.Entity<Genre>()
                 .HasIndex(x => x.Name)
                 .IsUnique();
         }
