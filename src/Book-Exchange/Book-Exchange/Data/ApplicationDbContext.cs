@@ -101,6 +101,11 @@ namespace Book_Exchange.Data
             builder.Entity<Book>()
                 .Property(x => x.CreatedAt)
                 .HasDefaultValueSql("now()");
+
+            // authors
+            builder.Entity<Author>()
+                .HasIndex(x => x.Name)
+                .IsUnique();
         }
     }
 }
