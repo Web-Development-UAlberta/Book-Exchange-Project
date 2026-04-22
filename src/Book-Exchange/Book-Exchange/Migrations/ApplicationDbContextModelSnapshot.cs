@@ -271,6 +271,52 @@ namespace Book_Exchange.Migrations
                     b.ToTable("genres", "public");
                 });
 
+            modelBuilder.Entity("Book_Exchange.Models.Listing", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("book_id");
+
+                    b.Property<int>("Condition")
+                        .HasColumnType("integer")
+                        .HasColumnName("condition");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("now()");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric(8,2)")
+                        .HasColumnName("price");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer")
+                        .HasColumnName("type");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.Property<decimal>("WeightKg")
+                        .HasColumnType("numeric(8,2)")
+                        .HasColumnName("weight_kg");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("listings", "public");
+                });
+
             modelBuilder.Entity("Book_Exchange.Models.Location", b =>
                 {
                     b.Property<Guid>("Id")
@@ -520,6 +566,25 @@ namespace Book_Exchange.Migrations
                     b.Navigation("Genre");
                 });
 
+            modelBuilder.Entity("Book_Exchange.Models.Listing", b =>
+                {
+                    b.HasOne("Book_Exchange.Models.Book", "Book")
+                        .WithMany("Listings")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Book_Exchange.Models.ApplicationUser", "User")
+                        .WithMany("Listings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Book_Exchange.Models.LocationDistance", b =>
                 {
                     b.HasOne("Book_Exchange.Models.Location", "FromLocation")
@@ -593,6 +658,8 @@ namespace Book_Exchange.Migrations
             modelBuilder.Entity("Book_Exchange.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("Listings");
                 });
 
             modelBuilder.Entity("Book_Exchange.Models.Author", b =>
@@ -605,6 +672,8 @@ namespace Book_Exchange.Migrations
                     b.Navigation("BookAuthors");
 
                     b.Navigation("BookGenres");
+
+                    b.Navigation("Listings");
                 });
 
             modelBuilder.Entity("Book_Exchange.Models.Genre", b =>

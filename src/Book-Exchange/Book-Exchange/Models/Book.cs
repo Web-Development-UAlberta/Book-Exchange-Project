@@ -28,4 +28,5 @@ public class Book
 
     public ICollection<BookAuthor> BookAuthors { get; set; } = new List<BookAuthor>();
     public ICollection<BookGenre> BookGenres { get; set; } = new List<BookGenre>();
+    public ICollection<Listing> Listings { get; set; } = new List<Listing>();
 }   

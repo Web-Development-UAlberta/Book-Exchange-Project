@@ -19,6 +19,7 @@ namespace Book_Exchange.Data
         public DbSet<BookAuthor> BookAuthors => Set<BookAuthor>();
         public DbSet<Genre> Genres => Set<Genre>();
         public DbSet<BookGenre> BookGenres => Set<BookGenre>();
+        public DbSet<Listing> Listings => Set<Listing>();
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -148,6 +149,24 @@ namespace Book_Exchange.Data
                 .WithMany(x => x.BookGenres)
                 .HasForeignKey(x => x.GenreId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // listings
+
+            builder.Entity<Listing>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.Listings)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Listing>()
+                .HasOne(x => x.Book)
+                .WithMany(x => x.Listings)
+                .HasForeignKey(x => x.BookId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Listing>()
+                .Property(x => x.CreatedAt)
+                .HasDefaultValueSql("now()");
         }
     }
 }
