@@ -3,6 +3,7 @@ using System;
 using Book_Exchange.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Book_Exchange.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260422043340_Carrier")]
+    partial class Carrier
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -433,342 +436,6 @@ namespace Book_Exchange.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Book_Exchange.Models.Message", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("now()");
-
-                    b.Property<Guid?>("ListingId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("listing_id");
-
-                    b.Property<string>("MessageText")
-                        .HasColumnType("text")
-                        .HasColumnName("message_text");
-
-                    b.Property<int>("MessageType")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(0)
-                        .HasColumnName("message_type");
-
-                    b.Property<decimal?>("OfferAmount")
-                        .HasColumnType("numeric(8,2)")
-                        .HasColumnName("offer_amount");
-
-                    b.Property<Guid>("ReceiverId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("receiver_id");
-
-                    b.Property<Guid>("SenderId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("sender_id");
-
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(0)
-                        .HasColumnName("status");
-
-                    b.Property<Guid?>("TransactionId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("transaction_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ListingId");
-
-                    b.HasIndex("ReceiverId");
-
-                    b.HasIndex("SenderId");
-
-                    b.HasIndex("TransactionId");
-
-                    b.ToTable("messages", "public");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.Notification", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("now()");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("message");
-
-                    b.Property<DateTime?>("ReadAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("read_at");
-
-                    b.Property<Guid?>("RelatedBookId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("related_book_id");
-
-                    b.Property<Guid?>("RelatedListingId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("related_listing_id");
-
-                    b.Property<Guid?>("RelatedTransactionId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("related_transaction_id");
-
-                    b.Property<Guid?>("RelatedWishlistId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("related_wishlist_id");
-
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(0)
-                        .HasColumnName("status");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
-                        .HasColumnName("title");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer")
-                        .HasColumnName("type");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RelatedBookId");
-
-                    b.HasIndex("RelatedListingId");
-
-                    b.HasIndex("RelatedTransactionId");
-
-                    b.HasIndex("RelatedWishlistId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("notifications", "public");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.Review", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("text")
-                        .HasColumnName("comment");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("now()");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("integer")
-                        .HasColumnName("rating");
-
-                    b.Property<Guid>("RevieweeId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("reviewee_id");
-
-                    b.Property<Guid>("ReviewerId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("reviewer_id");
-
-                    b.Property<Guid>("TransactionId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("transaction_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RevieweeId");
-
-                    b.HasIndex("ReviewerId");
-
-                    b.HasIndex("TransactionId", "ReviewerId", "RevieweeId")
-                        .IsUnique();
-
-                    b.ToTable("reviews", "public", t =>
-                        {
-                            t.HasCheckConstraint("CK_reviews_rating_range", "\"rating\" BETWEEN 1 AND 5");
-
-                            t.HasCheckConstraint("CK_reviews_reviewer_not_reviewee", "\"reviewer_id\" <> \"reviewee_id\"");
-                        });
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.Shipment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<Guid?>("CarrierId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("carrier_id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("now()");
-
-                    b.Property<string>("LabelUrl")
-                        .HasColumnType("text")
-                        .HasColumnName("label_url");
-
-                    b.Property<int?>("Locality")
-                        .HasColumnType("integer")
-                        .HasColumnName("locality");
-
-                    b.Property<decimal>("PackageWeightKg")
-                        .HasColumnType("numeric(8,2)")
-                        .HasColumnName("package_weight_kg");
-
-                    b.Property<Guid>("ReceiverAddressId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("receiver_address_id");
-
-                    b.Property<Guid>("SenderAddressId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("sender_address_id");
-
-                    b.Property<decimal?>("ShippingCost")
-                        .HasColumnType("numeric(8,2)")
-                        .HasColumnName("shipping_cost");
-
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(0)
-                        .HasColumnName("status");
-
-                    b.Property<string>("TrackingNumber")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("tracking_number");
-
-                    b.Property<Guid>("TransactionId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("transaction_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarrierId");
-
-                    b.HasIndex("ReceiverAddressId");
-
-                    b.HasIndex("SenderAddressId");
-
-                    b.HasIndex("TransactionId");
-
-                    b.ToTable("shipments", "public");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.Transaction", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<Guid?>("BuyerId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("buyer_id");
-
-                    b.Property<DateTime?>("CancelledAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("cancelled_at");
-
-                    b.Property<DateTime?>("CompletedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("completed_at");
-
-                    b.Property<DateTime?>("ConfirmedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("confirmed_at");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("now()");
-
-                    b.Property<Guid?>("ListingId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("listing_id");
-
-                    b.Property<Guid?>("SellerId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("seller_id");
-
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(0)
-                        .HasColumnName("status");
-
-                    b.Property<decimal?>("TotalValue")
-                        .HasColumnType("numeric(8,2)")
-                        .HasColumnName("total_value");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer")
-                        .HasColumnName("type");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BuyerId");
-
-                    b.HasIndex("ListingId");
-
-                    b.HasIndex("SellerId");
-
-                    b.ToTable("transactions", "public", t =>
-                        {
-                            t.HasCheckConstraint("CK_transactions_buyer_or_seller", "\"buyer_id\" IS NOT NULL OR \"seller_id\" IS NOT NULL");
-                        });
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.TransactionListing", b =>
-                {
-                    b.Property<Guid>("TransactionId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("transaction_id");
-
-                    b.Property<Guid>("ListingId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("listing_id");
-
-                    b.HasKey("TransactionId", "ListingId");
-
-                    b.HasIndex("ListingId");
-
-                    b.ToTable("transaction_listings", "public");
-                });
-
             modelBuilder.Entity("Book_Exchange.Models.WishlistItem", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1037,182 +704,6 @@ namespace Book_Exchange.Migrations
                     b.Navigation("ToLocation");
                 });
 
-            modelBuilder.Entity("Book_Exchange.Models.Message", b =>
-                {
-                    b.HasOne("Book_Exchange.Models.Listing", "Listing")
-                        .WithMany("Messages")
-                        .HasForeignKey("ListingId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("Book_Exchange.Models.ApplicationUser", "Receiver")
-                        .WithMany("ReceivedMessages")
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Book_Exchange.Models.ApplicationUser", "Sender")
-                        .WithMany("SentMessages")
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Book_Exchange.Models.Transaction", "Transaction")
-                        .WithMany("Messages")
-                        .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Listing");
-
-                    b.Navigation("Receiver");
-
-                    b.Navigation("Sender");
-
-                    b.Navigation("Transaction");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.Notification", b =>
-                {
-                    b.HasOne("Book_Exchange.Models.Book", "RelatedBook")
-                        .WithMany("Notifications")
-                        .HasForeignKey("RelatedBookId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("Book_Exchange.Models.Listing", "RelatedListing")
-                        .WithMany("Notifications")
-                        .HasForeignKey("RelatedListingId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("Book_Exchange.Models.Transaction", "RelatedTransaction")
-                        .WithMany("Notifications")
-                        .HasForeignKey("RelatedTransactionId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("Book_Exchange.Models.WishlistItem", "RelatedWishlist")
-                        .WithMany("Notifications")
-                        .HasForeignKey("RelatedWishlistId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("Book_Exchange.Models.ApplicationUser", "User")
-                        .WithMany("Notifications")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RelatedBook");
-
-                    b.Navigation("RelatedListing");
-
-                    b.Navigation("RelatedTransaction");
-
-                    b.Navigation("RelatedWishlist");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.Review", b =>
-                {
-                    b.HasOne("Book_Exchange.Models.ApplicationUser", "Reviewee")
-                        .WithMany("ReviewsReceived")
-                        .HasForeignKey("RevieweeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Book_Exchange.Models.ApplicationUser", "Reviewer")
-                        .WithMany("ReviewsWritten")
-                        .HasForeignKey("ReviewerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Book_Exchange.Models.Transaction", "Transaction")
-                        .WithMany("Reviews")
-                        .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Reviewee");
-
-                    b.Navigation("Reviewer");
-
-                    b.Navigation("Transaction");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.Shipment", b =>
-                {
-                    b.HasOne("Book_Exchange.Models.Carrier", "Carrier")
-                        .WithMany("Shipments")
-                        .HasForeignKey("CarrierId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("Book_Exchange.Models.Address", "ReceiverAddress")
-                        .WithMany("ReceiverShipments")
-                        .HasForeignKey("ReceiverAddressId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Book_Exchange.Models.Address", "SenderAddress")
-                        .WithMany("SenderShipments")
-                        .HasForeignKey("SenderAddressId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Book_Exchange.Models.Transaction", "Transaction")
-                        .WithMany("Shipments")
-                        .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Carrier");
-
-                    b.Navigation("ReceiverAddress");
-
-                    b.Navigation("SenderAddress");
-
-                    b.Navigation("Transaction");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.Transaction", b =>
-                {
-                    b.HasOne("Book_Exchange.Models.ApplicationUser", "Buyer")
-                        .WithMany("BuyerTransactions")
-                        .HasForeignKey("BuyerId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Book_Exchange.Models.Listing", "Listing")
-                        .WithMany("PrimaryTransactions")
-                        .HasForeignKey("ListingId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("Book_Exchange.Models.ApplicationUser", "Seller")
-                        .WithMany("SellerTransactions")
-                        .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Buyer");
-
-                    b.Navigation("Listing");
-
-                    b.Navigation("Seller");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.TransactionListing", b =>
-                {
-                    b.HasOne("Book_Exchange.Models.Listing", "Listing")
-                        .WithMany("TransactionListings")
-                        .HasForeignKey("ListingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Book_Exchange.Models.Transaction", "Transaction")
-                        .WithMany("TransactionListings")
-                        .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Listing");
-
-                    b.Navigation("Transaction");
-                });
-
             modelBuilder.Entity("Book_Exchange.Models.WishlistItem", b =>
                 {
                     b.HasOne("Book_Exchange.Models.Book", "Book")
@@ -1283,32 +774,11 @@ namespace Book_Exchange.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Book_Exchange.Models.Address", b =>
-                {
-                    b.Navigation("ReceiverShipments");
-
-                    b.Navigation("SenderShipments");
-                });
-
             modelBuilder.Entity("Book_Exchange.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Addresses");
 
-                    b.Navigation("BuyerTransactions");
-
                     b.Navigation("Listings");
-
-                    b.Navigation("Notifications");
-
-                    b.Navigation("ReceivedMessages");
-
-                    b.Navigation("ReviewsReceived");
-
-                    b.Navigation("ReviewsWritten");
-
-                    b.Navigation("SellerTransactions");
-
-                    b.Navigation("SentMessages");
 
                     b.Navigation("WishlistItems");
                 });
@@ -1326,32 +796,17 @@ namespace Book_Exchange.Migrations
 
                     b.Navigation("Listings");
 
-                    b.Navigation("Notifications");
-
                     b.Navigation("WishlistItems");
                 });
 
             modelBuilder.Entity("Book_Exchange.Models.Carrier", b =>
                 {
                     b.Navigation("Rates");
-
-                    b.Navigation("Shipments");
                 });
 
             modelBuilder.Entity("Book_Exchange.Models.Genre", b =>
                 {
                     b.Navigation("BookGenres");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.Listing", b =>
-                {
-                    b.Navigation("Messages");
-
-                    b.Navigation("Notifications");
-
-                    b.Navigation("PrimaryTransactions");
-
-                    b.Navigation("TransactionListings");
                 });
 
             modelBuilder.Entity("Book_Exchange.Models.Location", b =>
@@ -1361,24 +816,6 @@ namespace Book_Exchange.Migrations
                     b.Navigation("DistancesFrom");
 
                     b.Navigation("DistancesTo");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.Transaction", b =>
-                {
-                    b.Navigation("Messages");
-
-                    b.Navigation("Notifications");
-
-                    b.Navigation("Reviews");
-
-                    b.Navigation("Shipments");
-
-                    b.Navigation("TransactionListings");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.WishlistItem", b =>
-                {
-                    b.Navigation("Notifications");
                 });
 #pragma warning restore 612, 618
         }

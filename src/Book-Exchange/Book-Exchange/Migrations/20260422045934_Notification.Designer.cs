@@ -3,6 +3,7 @@ using System;
 using Book_Exchange.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Book_Exchange.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260422045934_Notification")]
+    partial class Notification
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -431,68 +434,6 @@ namespace Book_Exchange.Migrations
 
                             t.HasCheckConstraint("CK_location_distances_not_same", "\"from_location_id\" <> \"to_location_id\"");
                         });
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.Message", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("now()");
-
-                    b.Property<Guid?>("ListingId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("listing_id");
-
-                    b.Property<string>("MessageText")
-                        .HasColumnType("text")
-                        .HasColumnName("message_text");
-
-                    b.Property<int>("MessageType")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(0)
-                        .HasColumnName("message_type");
-
-                    b.Property<decimal?>("OfferAmount")
-                        .HasColumnType("numeric(8,2)")
-                        .HasColumnName("offer_amount");
-
-                    b.Property<Guid>("ReceiverId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("receiver_id");
-
-                    b.Property<Guid>("SenderId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("sender_id");
-
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(0)
-                        .HasColumnName("status");
-
-                    b.Property<Guid?>("TransactionId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("transaction_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ListingId");
-
-                    b.HasIndex("ReceiverId");
-
-                    b.HasIndex("SenderId");
-
-                    b.HasIndex("TransactionId");
-
-                    b.ToTable("messages", "public");
                 });
 
             modelBuilder.Entity("Book_Exchange.Models.Notification", b =>
@@ -1037,39 +978,6 @@ namespace Book_Exchange.Migrations
                     b.Navigation("ToLocation");
                 });
 
-            modelBuilder.Entity("Book_Exchange.Models.Message", b =>
-                {
-                    b.HasOne("Book_Exchange.Models.Listing", "Listing")
-                        .WithMany("Messages")
-                        .HasForeignKey("ListingId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("Book_Exchange.Models.ApplicationUser", "Receiver")
-                        .WithMany("ReceivedMessages")
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Book_Exchange.Models.ApplicationUser", "Sender")
-                        .WithMany("SentMessages")
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Book_Exchange.Models.Transaction", "Transaction")
-                        .WithMany("Messages")
-                        .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Listing");
-
-                    b.Navigation("Receiver");
-
-                    b.Navigation("Sender");
-
-                    b.Navigation("Transaction");
-                });
-
             modelBuilder.Entity("Book_Exchange.Models.Notification", b =>
                 {
                     b.HasOne("Book_Exchange.Models.Book", "RelatedBook")
@@ -1300,15 +1208,11 @@ namespace Book_Exchange.Migrations
 
                     b.Navigation("Notifications");
 
-                    b.Navigation("ReceivedMessages");
-
                     b.Navigation("ReviewsReceived");
 
                     b.Navigation("ReviewsWritten");
 
                     b.Navigation("SellerTransactions");
-
-                    b.Navigation("SentMessages");
 
                     b.Navigation("WishlistItems");
                 });
@@ -1345,8 +1249,6 @@ namespace Book_Exchange.Migrations
 
             modelBuilder.Entity("Book_Exchange.Models.Listing", b =>
                 {
-                    b.Navigation("Messages");
-
                     b.Navigation("Notifications");
 
                     b.Navigation("PrimaryTransactions");
@@ -1365,8 +1267,6 @@ namespace Book_Exchange.Migrations
 
             modelBuilder.Entity("Book_Exchange.Models.Transaction", b =>
                 {
-                    b.Navigation("Messages");
-
                     b.Navigation("Notifications");
 
                     b.Navigation("Reviews");

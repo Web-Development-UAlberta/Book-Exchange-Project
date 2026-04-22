@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="erd1" name="Page-1">
-        <mxGraphModel dx="10880" dy="5165" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2550" math="0" shadow="0">
+        <mxGraphModel dx="4670" dy="3329" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2550" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -415,6 +415,20 @@
                         <Array as="points">
                             <mxPoint x="-720" y="1350"/>
                             <mxPoint x="-720" y="1350"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="87" value="&lt;b&gt;ENUM locality_type&lt;/b&gt;&lt;hr&gt;local&lt;br&gt;provincial&lt;br&gt;national&lt;br&gt;international" style="shape=rectangle;rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;spacingLeft=6;fontSize=12;" vertex="1" parent="1">
+                    <mxGeometry x="1670" y="270" width="220" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="88" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;locality&lt;/span&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;html=1;endArrow=open;strokeColor=#d6b656;fontSize=11;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="87">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1600" y="230" as="sourcePoint"/>
+                        <mxPoint x="1680" y="190" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1600" y="230"/>
+                            <mxPoint x="1630" y="230"/>
+                            <mxPoint x="1630" y="330"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>

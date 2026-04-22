@@ -401,6 +401,17 @@ CREATE TYPE shipping_status AS ENUM (
 );
 ```
 
+#### Locality Type ENUM
+
+```sql
+CREATE TYPE locality_type AS ENUM (
+    'local',
+    'provincial',
+    'national',
+    'international'
+);
+```
+
 #### Shipments Table
 
 ```sql
