@@ -51,4 +51,5 @@ public class Transaction
     public ICollection<Shipment> Shipments { get; set; } = new List<Shipment>();
     public ICollection<Review> Reviews { get; set; } = new List<Review>();
     public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+    public ICollection<Message> Messages { get; set; } = new List<Message>();
 }

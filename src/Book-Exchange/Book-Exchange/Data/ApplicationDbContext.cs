@@ -28,6 +28,7 @@ namespace Book_Exchange.Data
         public DbSet<Shipment> Shipments => Set<Shipment>();
         public DbSet<Review> Reviews => Set<Review>();
         public DbSet<Notification> Notifications => Set<Notification>();
+        public DbSet<Message> Messages => Set<Message>();
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -361,6 +362,43 @@ namespace Book_Exchange.Data
                 .HasDefaultValue(NotificationStatus.Unread);
 
             builder.Entity<Notification>()
+                .Property(x => x.CreatedAt)
+                .HasDefaultValueSql("now()");
+
+            // messages
+            builder.Entity<Message>()
+                .HasOne(x => x.Sender)
+                .WithMany(x => x.SentMessages)
+                .HasForeignKey(x => x.SenderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Message>()
+                .HasOne(x => x.Receiver)
+                .WithMany(x => x.ReceivedMessages)
+                .HasForeignKey(x => x.ReceiverId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Message>()
+                .HasOne(x => x.Listing)
+                .WithMany(x => x.Messages)
+                .HasForeignKey(x => x.ListingId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Message>()
+                .HasOne(x => x.Transaction)
+                .WithMany(x => x.Messages)
+                .HasForeignKey(x => x.TransactionId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Message>()
+                .Property(x => x.Status)
+                .HasDefaultValue(MessageStatus.Sent);
+
+            builder.Entity<Message>()
+                .Property(x => x.MessageType)
+                .HasDefaultValue(MessageType.Text);
+
+            builder.Entity<Message>()
                 .Property(x => x.CreatedAt)
                 .HasDefaultValueSql("now()");
         }

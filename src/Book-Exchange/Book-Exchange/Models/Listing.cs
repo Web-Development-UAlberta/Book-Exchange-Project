@@ -41,4 +41,5 @@ public class Listing
     public ICollection<Transaction> PrimaryTransactions { get; set; } = new List<Transaction>();
     public ICollection<TransactionListing> TransactionListings { get; set; } = new List<TransactionListing>();
     public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+    public ICollection<Message> Messages { get; set; } = new List<Message>();
 }
