@@ -26,4 +26,6 @@ public class Book
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
 
+    public ICollection<BookAuthor> BookAuthors { get; set; } = new List<BookAuthor>();
+    public ICollection<BookGenre> BookGenres { get; set; } = new List<BookGenre>();
 }   

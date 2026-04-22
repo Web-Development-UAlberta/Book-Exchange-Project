@@ -16,7 +16,9 @@ namespace Book_Exchange.Data
         public DbSet<Address> Addresses => Set<Address>();
         public DbSet<Book> Books => Set<Book>();
         public DbSet<Author> Authors => Set<Author>();
+        public DbSet<BookAuthor> BookAuthors => Set<BookAuthor>();
         public DbSet<Genre> Genres => Set<Genre>();
+        public DbSet<BookGenre> BookGenres => Set<BookGenre>();
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -110,10 +112,42 @@ namespace Book_Exchange.Data
                 .HasIndex(x => x.Name)
                 .IsUnique();
 
+            // book_authors
+            builder.Entity<BookAuthor>()
+                .HasKey(x => new { x.BookId, x.AuthorId });
+
+            builder.Entity<BookAuthor>()
+                .HasOne(x => x.Book)
+                .WithMany(x => x.BookAuthors)
+                .HasForeignKey(x => x.BookId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<BookAuthor>()
+                .HasOne(x => x.Author)
+                .WithMany(x => x.BookAuthors)
+                .HasForeignKey(x => x.AuthorId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             // genres
             builder.Entity<Genre>()
                 .HasIndex(x => x.Name)
                 .IsUnique();
+
+            // book_genres
+            builder.Entity<BookGenre>()
+                .HasKey(x => new { x.BookId, x.GenreId });
+
+            builder.Entity<BookGenre>()
+                .HasOne(x => x.Book)
+                .WithMany(x => x.BookGenres)
+                .HasForeignKey(x => x.BookId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<BookGenre>()
+                .HasOne(x => x.Genre)
+                .WithMany(x => x.BookGenres)
+                .HasForeignKey(x => x.GenreId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

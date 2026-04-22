@@ -14,4 +14,6 @@ public class Author
     [MaxLength(255)]
     [Column("name")]
     public string Name { get; set; } = string.Empty;
+
+    public ICollection<BookAuthor> BookAuthors { get; set; } = new List<BookAuthor>();
 }
