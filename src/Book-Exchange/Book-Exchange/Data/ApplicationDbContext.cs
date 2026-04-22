@@ -26,6 +26,7 @@ namespace Book_Exchange.Data
         public DbSet<Transaction> Transactions => Set<Transaction>();
         public DbSet<TransactionListing> TransactionListings => Set<TransactionListing>();
         public DbSet<Shipment> Shipments => Set<Shipment>();
+        public DbSet<Review> Reviews => Set<Review>();
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -288,6 +289,40 @@ namespace Book_Exchange.Data
             builder.Entity<Shipment>()
                 .Property(x => x.CreatedAt)
                 .HasDefaultValueSql("now()");
+
+            // reviews
+            builder.Entity<Review>()
+                .HasIndex(x => new { x.TransactionId, x.ReviewerId, x.RevieweeId })
+                .IsUnique();
+
+            builder.Entity<Review>()
+                .HasOne(x => x.Transaction)
+                .WithMany(x => x.Reviews)
+                .HasForeignKey(x => x.TransactionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Review>()
+                .HasOne(x => x.Reviewer)
+                .WithMany(x => x.ReviewsWritten)
+                .HasForeignKey(x => x.ReviewerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Review>()
+                .HasOne(x => x.Reviewee)
+                .WithMany(x => x.ReviewsReceived)
+                .HasForeignKey(x => x.RevieweeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Review>()
+                .Property(x => x.CreatedAt)
+                .HasDefaultValueSql("now()");
+
+            builder.Entity<Review>()
+                .ToTable(t =>
+                {
+                    t.HasCheckConstraint("CK_reviews_rating_range", "\"rating\" BETWEEN 1 AND 5");
+                    t.HasCheckConstraint("CK_reviews_reviewer_not_reviewee", "\"reviewer_id\" <> \"reviewee_id\"");
+                });
         }
     }
 }

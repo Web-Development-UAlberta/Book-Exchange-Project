@@ -13,4 +13,7 @@ public class ApplicationUser : IdentityUser<Guid>
 
     public ICollection<Transaction> BuyerTransactions { get; set; } = new List<Transaction>();
     public ICollection<Transaction> SellerTransactions { get; set; } = new List<Transaction>();
+
+    public ICollection<Review> ReviewsWritten { get; set; } = new List<Review>();
+    public ICollection<Review> ReviewsReceived { get; set; } = new List<Review>();
 }
