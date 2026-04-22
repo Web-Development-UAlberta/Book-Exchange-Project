@@ -11,6 +11,10 @@ namespace Book_Exchange.Data
         Guid
         >(options)
     {
+        public DbSet<Location> Locations => Set<Location>();
+        public DbSet<LocationDistance> LocationDistances => Set<LocationDistance>();
+
+
         protected override void OnModelCreating(ModelBuilder builder)
 
         {
@@ -37,6 +41,36 @@ namespace Book_Exchange.Data
             builder.HasPostgresEnum<MessageType>("public", "message_type");
             builder.HasPostgresEnum<MessageStatus>("public", "message_status");
             builder.HasPostgresEnum<LocalityType>("public", "locality_type");
+
+            // locations
+            builder.Entity<Location>()
+                .HasIndex(x => new { x.City, x.ProvinceState, x.Country })
+                .IsUnique();
+
+            // location_distances
+            builder.Entity<LocationDistance>()
+                .HasKey(x => new { x.FromLocationId, x.ToLocationId });
+
+            builder.Entity<LocationDistance>()
+                .HasOne(x => x.FromLocation)
+                .WithMany(x => x.DistancesFrom)
+                .HasForeignKey(x => x.FromLocationId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<LocationDistance>()
+                .HasOne(x => x.ToLocation)
+                .WithMany(x => x.DistancesTo)
+                .HasForeignKey(x => x.ToLocationId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<LocationDistance>()
+                .ToTable(t =>
+                {
+                    t.HasCheckConstraint("CK_location_distances_not_same", "\"from_location_id\" <> \"to_location_id\"");
+                    t.HasCheckConstraint("CK_location_distances_distance_nonnegative", "\"distance_km\" >= 0");
+
+                });
+
         }
     }
 }

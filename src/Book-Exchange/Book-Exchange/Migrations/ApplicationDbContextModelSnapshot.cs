@@ -98,6 +98,65 @@ namespace Book_Exchange.Migrations
                     b.ToTable("AspNetUsers", "public");
                 });
 
+            modelBuilder.Entity("Book_Exchange.Models.Location", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("city");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("country");
+
+                    b.Property<string>("ProvinceState")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("province_state");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("City", "ProvinceState", "Country")
+                        .IsUnique();
+
+                    b.ToTable("locations", "public");
+                });
+
+            modelBuilder.Entity("Book_Exchange.Models.LocationDistance", b =>
+                {
+                    b.Property<Guid>("FromLocationId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("from_location_id");
+
+                    b.Property<Guid>("ToLocationId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("to_location_id");
+
+                    b.Property<decimal>("DistanceKm")
+                        .HasColumnType("numeric(10,2)")
+                        .HasColumnName("distance_km");
+
+                    b.HasKey("FromLocationId", "ToLocationId");
+
+                    b.HasIndex("ToLocationId");
+
+                    b.ToTable("location_distances", "public", t =>
+                        {
+                            t.HasCheckConstraint("CK_location_distances_distance_nonnegative", "\"distance_km\" >= 0");
+
+                            t.HasCheckConstraint("CK_location_distances_not_same", "\"from_location_id\" <> \"to_location_id\"");
+                        });
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
                 {
                     b.Property<Guid>("Id")
@@ -232,6 +291,25 @@ namespace Book_Exchange.Migrations
                     b.ToTable("AspNetUserTokens", "public");
                 });
 
+            modelBuilder.Entity("Book_Exchange.Models.LocationDistance", b =>
+                {
+                    b.HasOne("Book_Exchange.Models.Location", "FromLocation")
+                        .WithMany("DistancesFrom")
+                        .HasForeignKey("FromLocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Book_Exchange.Models.Location", "ToLocation")
+                        .WithMany("DistancesTo")
+                        .HasForeignKey("ToLocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FromLocation");
+
+                    b.Navigation("ToLocation");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -281,6 +359,13 @@ namespace Book_Exchange.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Book_Exchange.Models.Location", b =>
+                {
+                    b.Navigation("DistancesFrom");
+
+                    b.Navigation("DistancesTo");
                 });
 #pragma warning restore 612, 618
         }
