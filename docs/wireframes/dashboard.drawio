@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="5JvZG34TLhCuNs3pS40I" name="Page-1">
-        <mxGraphModel dx="823" dy="883" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1086" dy="883" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -142,86 +142,89 @@
                 <mxCell id="117" value="View all&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="551.88" y="820" width="90" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="118" value="" style="group" vertex="1" connectable="0" parent="1">
+                <mxCell id="118" value="" style="group" parent="1" vertex="1" connectable="0">
                     <mxGeometry width="850" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="119" value="" style="group" vertex="1" connectable="0" parent="118">
+                <mxCell id="119" value="" style="group" parent="118" vertex="1" connectable="0">
                     <mxGeometry width="850" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="120" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="119">
+                <mxCell id="120" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="119" vertex="1">
                     <mxGeometry width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="121" value="Book Exchange" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="119">
+                <mxCell id="121" value="Book Exchange" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="119" vertex="1">
                     <mxGeometry x="10" width="90" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="122" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="119">
+                <mxCell id="122" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="119" vertex="1">
                     <mxGeometry x="110" y="10" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="123" value="My Listings" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="119">
+                <mxCell id="123" value="My Listings" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="119" vertex="1">
                     <mxGeometry x="170" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="125" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="119">
+                <mxCell id="125" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" parent="119" vertex="1">
                     <mxGeometry x="620" y="10" width="90" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="126" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="119">
+                <mxCell id="126" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="119" vertex="1">
                     <mxGeometry x="240" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="134" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="119">
+                <mxCell id="134" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="119" vertex="1">
                     <mxGeometry x="730" y="5" width="40" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="136" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="119">
+                <mxCell id="136" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="119" vertex="1">
                     <mxGeometry x="780" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="137" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="119">
+                <mxCell id="137" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="119" vertex="1">
                     <mxGeometry x="310" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="127" value="&amp;nbsp;NAVBAR ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="118">
+                <mxCell id="127" value="&amp;nbsp;NAVBAR ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="118" vertex="1">
                     <mxGeometry y="50" width="850" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="128" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="128" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry y="1000" width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="129" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="129" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="10" y="1002" width="130" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="130" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="130" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="660" y="1012" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="131" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="131" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="720" y="1012" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="132" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="132" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="780" y="1012" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="133" value="&amp;nbsp;FOOTER ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="133" value="&amp;nbsp;FOOTER ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="10" y="1070" width="820" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="138" value="DASHBOARD - sidebar ID= Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="138" value="DASHBOARD - sidebar ID= Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="13.5" y="620" width="156.5" height="100" as="geometry"/>
                 </mxCell>
-                <mxCell id="139" value="DASHBAORD - active listings ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="139" value="DASHBAORD - active listings ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="213" y="178" width="137" height="52" as="geometry"/>
                 </mxCell>
-                <mxCell id="140" value="DASHBAORD - wishlist&amp;nbsp; ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="140" value="DASHBAORD - wishlist&amp;nbsp; ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="368.5" y="178" width="137" height="52" as="geometry"/>
                 </mxCell>
-                <mxCell id="141" value="DASHBAORD - open listings ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="141" value="DASHBAORD - open listings ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="533" y="178" width="137" height="52" as="geometry"/>
                 </mxCell>
-                <mxCell id="142" value="DASHBAORD - messages ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="142" value="DASHBAORD - messages ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="681.5" y="178" width="137" height="52" as="geometry"/>
                 </mxCell>
-                <mxCell id="143" value="PANEL - active transactions ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="143" value="PANEL - active transactions ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="220.75" y="518" width="289.25" height="52" as="geometry"/>
                 </mxCell>
-                <mxCell id="145" value="PANEL - wishlist ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="145" value="PANEL - wishlist ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="530" y="518" width="289.25" height="52" as="geometry"/>
                 </mxCell>
-                <mxCell id="146" value="PANEL - active listings ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="146" value="PANEL - active listings ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="213" y="880" width="289.25" height="52" as="geometry"/>
                 </mxCell>
-                <mxCell id="147" value="PANEL - notifications ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="147" value="PANEL - notifications ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="530" y="880" width="289.25" height="52" as="geometry"/>
+                </mxCell>
+                <mxCell id="148" value="+ Add Listing" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="370" y="820" width="90" height="20" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
