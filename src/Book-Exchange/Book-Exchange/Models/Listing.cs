@@ -37,4 +37,7 @@ public class Listing
 
     public ApplicationUser User { get; set; } = null!;
     public Book Book { get; set; } = null!;
+
+    public ICollection<Transaction> PrimaryTransactions { get; set; } = new List<Transaction>();
+    public ICollection<TransactionListing> TransactionListings { get; set; } = new List<TransactionListing>();
 }

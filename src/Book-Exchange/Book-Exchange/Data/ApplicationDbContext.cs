@@ -23,6 +23,8 @@ namespace Book_Exchange.Data
         public DbSet<WishlistItem> Wishlist => Set<WishlistItem>();
         public DbSet<Carrier> Carriers => Set<Carrier>();
         public DbSet<CarrierRate> CarrierRates => Set<CarrierRate>();
+        public DbSet<Transaction> Transactions => Set<Transaction>();
+        public DbSet<TransactionListing> TransactionListings => Set<TransactionListing>();
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -203,6 +205,55 @@ namespace Book_Exchange.Data
             builder.Entity<CarrierRate>()
                 .Property(x => x.CreatedAt)
                 .HasDefaultValueSql("now()");
+
+            // transactions
+            builder.Entity<Transaction>()
+                .HasOne(x => x.Buyer)
+                .WithMany(x => x.BuyerTransactions)
+                .HasForeignKey(x => x.BuyerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Transaction>()
+                .HasOne(x => x.Seller)
+                .WithMany(x => x.SellerTransactions)
+                .HasForeignKey(x => x.SellerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Transaction>()
+                .HasOne(x => x.Listing)
+                .WithMany(x => x.PrimaryTransactions)
+                .HasForeignKey(x => x.ListingId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Transaction>()
+                .Property(x => x.Status)
+                .HasDefaultValue(TransactionStatus.Proposed);
+
+            builder.Entity<Transaction>()
+                .Property(x => x.CreatedAt)
+                .HasDefaultValueSql("now()");
+
+            builder.Entity<Transaction>()
+                .ToTable(t =>
+                {
+                    t.HasCheckConstraint("CK_transactions_buyer_or_seller", "\"buyer_id\" IS NOT NULL OR \"seller_id\" IS NOT NULL");
+                });
+
+            // transaction_listings
+            builder.Entity<TransactionListing>()
+                .HasKey(x => new { x.TransactionId, x.ListingId });
+
+            builder.Entity<TransactionListing>()
+                .HasOne(x => x.Transaction)
+                .WithMany(x => x.TransactionListings)
+                .HasForeignKey(x => x.TransactionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<TransactionListing>()
+                .HasOne(x => x.Listing)
+                .WithMany(x => x.TransactionListings)
+                .HasForeignKey(x => x.ListingId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
