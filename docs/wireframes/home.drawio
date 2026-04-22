@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="nwZHn6CSP7jbT7hnAO0n" name="Page-1">
-        <mxGraphModel dx="1448" dy="883" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1526" dy="1261" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -208,8 +208,8 @@
                 <mxCell id="153" value="Good" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="145" vertex="1">
                     <mxGeometry x="96" y="175" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="157" value="&amp;nbsp;HERO ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
-                    <mxGeometry x="10" y="260" width="820" height="20" as="geometry"/>
+                <mxCell id="157" value="&amp;nbsp;HERO ID = Class =&amp;nbsp;&lt;br&gt;SEARCH INPUT ID CLASS" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="10" y="260" width="820" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="158" value="" style="group" parent="1" vertex="1" connectable="0">
                     <mxGeometry width="850" height="70" as="geometry"/>
