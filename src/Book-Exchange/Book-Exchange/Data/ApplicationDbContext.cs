@@ -25,6 +25,7 @@ namespace Book_Exchange.Data
         public DbSet<CarrierRate> CarrierRates => Set<CarrierRate>();
         public DbSet<Transaction> Transactions => Set<Transaction>();
         public DbSet<TransactionListing> TransactionListings => Set<TransactionListing>();
+        public DbSet<Shipment> Shipments => Set<Shipment>();
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -254,6 +255,39 @@ namespace Book_Exchange.Data
                 .WithMany(x => x.TransactionListings)
                 .HasForeignKey(x => x.ListingId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // shipments
+            builder.Entity<Shipment>()
+                .HasOne(x => x.Transaction)
+                .WithMany(x => x.Shipments)
+                .HasForeignKey(x => x.TransactionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Shipment>()
+                .HasOne(x => x.SenderAddress)
+                .WithMany(x => x.SenderShipments)
+                .HasForeignKey(x => x.SenderAddressId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Shipment>()
+                .HasOne(x => x.ReceiverAddress)
+                .WithMany(x => x.ReceiverShipments)
+                .HasForeignKey(x => x.ReceiverAddressId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Shipment>()
+                .HasOne(x => x.Carrier)
+                .WithMany(x => x.Shipments)
+                .HasForeignKey(x => x.CarrierId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Shipment>()
+                .Property(x => x.Status)
+                .HasDefaultValue(ShippingStatus.Pending);
+
+            builder.Entity<Shipment>()
+                .Property(x => x.CreatedAt)
+                .HasDefaultValueSql("now()");
         }
     }
 }

@@ -17,4 +17,5 @@ public class Carrier
     public string Name { get; set; } = string.Empty;
 
     public ICollection<CarrierRate> Rates { get; set; } = new List<CarrierRate>();
+    public ICollection<Shipment> Shipments { get; set; } = new List<Shipment>();
 }

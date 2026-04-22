@@ -35,4 +35,6 @@ public class Address
     public ApplicationUser? User { get; set; }
     public Location Location { get; set; } = null!;
 
+    public ICollection<Shipment> SenderShipments { get; set; } = new List<Shipment>();
+    public ICollection<Shipment> ReceiverShipments { get; set; } = new List<Shipment>();
 }
