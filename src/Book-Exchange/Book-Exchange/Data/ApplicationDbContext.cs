@@ -27,6 +27,7 @@ namespace Book_Exchange.Data
         public DbSet<TransactionListing> TransactionListings => Set<TransactionListing>();
         public DbSet<Shipment> Shipments => Set<Shipment>();
         public DbSet<Review> Reviews => Set<Review>();
+        public DbSet<Notification> Notifications => Set<Notification>();
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -323,6 +324,45 @@ namespace Book_Exchange.Data
                     t.HasCheckConstraint("CK_reviews_rating_range", "\"rating\" BETWEEN 1 AND 5");
                     t.HasCheckConstraint("CK_reviews_reviewer_not_reviewee", "\"reviewer_id\" <> \"reviewee_id\"");
                 });
+
+            // notifications
+            builder.Entity<Notification>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.Notifications)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Notification>()
+                .HasOne(x => x.RelatedListing)
+                .WithMany(x => x.Notifications)
+                .HasForeignKey(x => x.RelatedListingId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Notification>()
+                .HasOne(x => x.RelatedBook)
+                .WithMany(x => x.Notifications)
+                .HasForeignKey(x => x.RelatedBookId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Notification>()
+                .HasOne(x => x.RelatedWishlist)
+                .WithMany(x => x.Notifications)
+                .HasForeignKey(x => x.RelatedWishlistId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Notification>()
+                .HasOne(x => x.RelatedTransaction)
+                .WithMany(x => x.Notifications)
+                .HasForeignKey(x => x.RelatedTransactionId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Notification>()
+                .Property(x => x.Status)
+                .HasDefaultValue(NotificationStatus.Unread);
+
+            builder.Entity<Notification>()
+                .Property(x => x.CreatedAt)
+                .HasDefaultValueSql("now()");
         }
     }
 }

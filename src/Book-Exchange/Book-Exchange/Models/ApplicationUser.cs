@@ -16,4 +16,6 @@ public class ApplicationUser : IdentityUser<Guid>
 
     public ICollection<Review> ReviewsWritten { get; set; } = new List<Review>();
     public ICollection<Review> ReviewsReceived { get; set; } = new List<Review>();
+
+    public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 }

@@ -24,4 +24,6 @@ public class WishlistItem
 
     public ApplicationUser User { get; set; } = null!;
     public Book Book { get; set; } = null!;
+
+    public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 }

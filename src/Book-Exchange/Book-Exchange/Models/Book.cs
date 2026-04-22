@@ -30,4 +30,5 @@ public class Book
     public ICollection<BookGenre> BookGenres { get; set; } = new List<BookGenre>();
     public ICollection<Listing> Listings { get; set; } = new List<Listing>();
     public ICollection<WishlistItem> WishlistItems { get; set; } = new List<WishlistItem>();
+    public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 }   
