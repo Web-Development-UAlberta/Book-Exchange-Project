@@ -3,6 +3,7 @@ using System;
 using Book_Exchange.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Book_Exchange.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260422042432_Listing")]
+    partial class Listing
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -376,35 +379,6 @@ namespace Book_Exchange.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Book_Exchange.Models.WishlistItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<Guid>("BookId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("book_id");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_active");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("UserId", "BookId")
-                        .IsUnique();
-
-                    b.ToTable("wishlist", "public");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
                 {
                     b.Property<Guid>("Id")
@@ -633,25 +607,6 @@ namespace Book_Exchange.Migrations
                     b.Navigation("ToLocation");
                 });
 
-            modelBuilder.Entity("Book_Exchange.Models.WishlistItem", b =>
-                {
-                    b.HasOne("Book_Exchange.Models.Book", "Book")
-                        .WithMany("WishlistItems")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Book_Exchange.Models.ApplicationUser", "User")
-                        .WithMany("WishlistItems")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -708,8 +663,6 @@ namespace Book_Exchange.Migrations
                     b.Navigation("Addresses");
 
                     b.Navigation("Listings");
-
-                    b.Navigation("WishlistItems");
                 });
 
             modelBuilder.Entity("Book_Exchange.Models.Author", b =>
@@ -724,8 +677,6 @@ namespace Book_Exchange.Migrations
                     b.Navigation("BookGenres");
 
                     b.Navigation("Listings");
-
-                    b.Navigation("WishlistItems");
                 });
 
             modelBuilder.Entity("Book_Exchange.Models.Genre", b =>

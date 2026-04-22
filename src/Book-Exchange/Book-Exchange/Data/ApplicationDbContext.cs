@@ -20,6 +20,7 @@ namespace Book_Exchange.Data
         public DbSet<Genre> Genres => Set<Genre>();
         public DbSet<BookGenre> BookGenres => Set<BookGenre>();
         public DbSet<Listing> Listings => Set<Listing>();
+        public DbSet<WishlistItem> Wishlist => Set<WishlistItem>();
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -151,7 +152,6 @@ namespace Book_Exchange.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             // listings
-
             builder.Entity<Listing>()
                 .HasOne(x => x.User)
                 .WithMany(x => x.Listings)
@@ -167,6 +167,23 @@ namespace Book_Exchange.Data
             builder.Entity<Listing>()
                 .Property(x => x.CreatedAt)
                 .HasDefaultValueSql("now()");
+
+            // wishlist
+            builder.Entity<WishlistItem>()
+                .HasIndex(x => new { x.UserId, x.BookId })
+                .IsUnique();
+
+            builder.Entity<WishlistItem>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.WishlistItems)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<WishlistItem>()
+                .HasOne(x => x.Book)
+                .WithMany(x => x.WishlistItems)
+                .HasForeignKey(x => x.BookId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
