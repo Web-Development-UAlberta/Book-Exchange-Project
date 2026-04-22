@@ -21,6 +21,8 @@ namespace Book_Exchange.Data
         public DbSet<BookGenre> BookGenres => Set<BookGenre>();
         public DbSet<Listing> Listings => Set<Listing>();
         public DbSet<WishlistItem> Wishlist => Set<WishlistItem>();
+        public DbSet<Carrier> Carriers => Set<Carrier>();
+        public DbSet<CarrierRate> CarrierRates => Set<CarrierRate>();
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -184,6 +186,23 @@ namespace Book_Exchange.Data
                 .WithMany(x => x.WishlistItems)
                 .HasForeignKey(x => x.BookId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // carriers
+
+            builder.Entity<Carrier>()
+                .HasIndex(x => x.Name)
+                .IsUnique();
+
+            // carrier_rates
+            builder.Entity<CarrierRate>()
+                .HasOne(x => x.Carrier)
+                .WithMany(x => x.Rates)
+                .HasForeignKey(x => x.CarrierId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<CarrierRate>()
+                .Property(x => x.CreatedAt)
+                .HasDefaultValueSql("now()");
         }
     }
 }
