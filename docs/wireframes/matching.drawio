@@ -1,0 +1,163 @@
+<mxfile host="65bd71144e">
+    <diagram id="IQwAWwu0O47zz1LXXu9W" name="Page-1">
+        <mxGraphModel dx="1671" dy="1358" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry width="850" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="" style="group" parent="2" vertex="1" connectable="0">
+                    <mxGeometry width="850" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="3" vertex="1">
+                    <mxGeometry width="850" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Book Exchange" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="3" vertex="1">
+                    <mxGeometry x="10" width="90" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="3" vertex="1">
+                    <mxGeometry x="110" y="10" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="Matching" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="3" vertex="1">
+                    <mxGeometry x="170" y="10" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" parent="3" vertex="1">
+                    <mxGeometry x="620" y="10" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="3" vertex="1">
+                    <mxGeometry x="240" y="10" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="3" vertex="1">
+                    <mxGeometry x="730" y="5" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="3" vertex="1">
+                    <mxGeometry x="780" y="10" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="3" vertex="1">
+                    <mxGeometry x="310" y="10" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="&amp;nbsp;NAVBAR ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="2" vertex="1">
+                    <mxGeometry y="50" width="850" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="&lt;span style=&quot;font-size: 24px;&quot;&gt;&lt;b&gt;Match suggestions&lt;/b&gt;&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="100" width="230" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;MATCHING FILTER ID = CLASS =&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="360" y="155" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="All suggestions" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="150" width="95" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry y="1000" width="850" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="10" y="1002" width="130" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="48" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="660" y="1012" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="49" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="720" y="1012" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="50" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="1012" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="51" value="&amp;nbsp;FOOTER ID = Class =&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="10" y="1070" width="820" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="52" value="Swap" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="148" y="150" width="95" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="53" value="Buy / Sell" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="255" y="150" width="95" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="54" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;" parent="1" vertex="1">
+                    <mxGeometry x="75" y="220" width="700" height="340" as="geometry"/>
+                </mxCell>
+                <mxCell id="55" value="Multi-book swap" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="90" y="230" width="120" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="56" value="&lt;b&gt;Your 3 books (-$30)&lt;/b&gt;&lt;br&gt;&lt;div&gt;Book A - $10 - Good&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;Book B - $10 - Very Good&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;Book C - $10 - Good&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;br style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;align=left;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="135" y="270" width="200" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" value="" style="endArrow=classic;startArrow=classic;html=1;entryX=0.593;entryY=0.324;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=#f5f5f5;strokeColor=#666666;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="364.95" y="330" as="sourcePoint"/>
+                        <mxPoint x="475.0499999999999" y="330.1600000000001" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="61" value="Propose Swap" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="510" width="95" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="Message user" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="208" y="510" width="95" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="63" value="View Listing" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="315" y="510" width="95" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="64" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;" parent="1" vertex="1">
+                    <mxGeometry x="75" y="600" width="700" height="340" as="geometry"/>
+                </mxCell>
+                <mxCell id="65" value="Swap" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="90" y="610" width="120" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="68" value="" style="endArrow=classic;startArrow=classic;html=1;entryX=0.593;entryY=0.324;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=#f5f5f5;strokeColor=#666666;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="364.95" y="710" as="sourcePoint"/>
+                        <mxPoint x="475.0499999999999" y="710.1600000000001" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="71" value="Propose Swap" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="890" width="95" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="75" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
+                    <mxGeometry x="530" y="270" width="220" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="72" value="Message user" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="208" y="890" width="95" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="73" value="View Listing" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="315" y="890" width="95" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="77" value="Cover" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="282.5" width="200" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="78" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Their book&lt;/h1&gt;&lt;p&gt;Title - Price - Condition&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="550" y="397.5" width="180" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="79" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
+                    <mxGeometry x="520" y="660" width="220" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="80" value="Cover" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="530" y="672.5" width="200" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="81" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Their book&lt;/h1&gt;&lt;p&gt;Title - Price - Condition&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="787.5" width="180" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="82" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
+                    <mxGeometry x="115" y="660" width="220" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="83" value="Cover" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="125" y="672.5" width="200" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="84" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Your book&lt;/h1&gt;&lt;p&gt;Title - Price - Condition&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="135" y="787.5" width="180" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="85" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;MATCH OFFER SIDE ID = CLASS =&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="75" y="570" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="86" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;MATCHING RESULTS LIST ID = CLASS =&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="85" y="190" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="87" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;MATCH REQUEST SIDE ID = CLASS =&amp;nbsp;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="515" y="570" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="88" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;PROPOSE SWAP BTN ID = CLASS =&amp;nbsp;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;MATCH MESSAGE BTN ID = CLASS =&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;MATCH VIEW LISTING BTN ID = CLASS =&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="425" y="890" width="260" height="55" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
