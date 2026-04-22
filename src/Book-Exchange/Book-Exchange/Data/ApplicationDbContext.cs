@@ -1,10 +1,15 @@
 ﻿using Book_Exchange.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Book_Exchange.Data
 {
-    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext(options)
+    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<
+        ApplicationUser,
+        IdentityRole<Guid>,
+        Guid
+        >(options)
     {
         protected override void OnModelCreating(ModelBuilder builder)
 
@@ -12,6 +17,14 @@ namespace Book_Exchange.Data
             base.OnModelCreating(builder);
             
             builder.HasDefaultSchema("public");
+
+            builder.Entity<ApplicationUser>().ToTable("AspNetUsers", "public");
+            builder.Entity<IdentityRole<Guid>>().ToTable("AspNetRoles", "public");
+            builder.Entity<IdentityUserRole<Guid>>().ToTable("AspNetUserRoles", "public");
+            builder.Entity<IdentityUserClaim<Guid>>().ToTable("AspNetUserClaims", "public");
+            builder.Entity<IdentityUserLogin<Guid>>().ToTable("AspNetUserLogins", "public");
+            builder.Entity<IdentityRoleClaim<Guid>>().ToTable("AspNetRoleClaims", "public");
+            builder.Entity<IdentityUserToken<Guid>>().ToTable("AspNetUserTokens", "public");
 
             // PostgreSQL enum mapping
             builder.HasPostgresEnum<BookCondition>("public", "book_condition");

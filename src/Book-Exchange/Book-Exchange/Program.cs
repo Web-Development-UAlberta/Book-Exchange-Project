@@ -6,10 +6,9 @@ using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-// For enum support
 var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
 dataSourceBuilder.MapEnum<BookCondition>("public.book_condition");
 dataSourceBuilder.MapEnum<ListingType>("public.listing_type");
@@ -21,19 +20,26 @@ dataSourceBuilder.MapEnum<NotificationStatus>("public.notification_status");
 dataSourceBuilder.MapEnum<MessageType>("public.message_type");
 dataSourceBuilder.MapEnum<MessageStatus>("public.message_status");
 dataSourceBuilder.MapEnum<LocalityType>("public.locality_type");
+
 var dataSource = dataSourceBuilder.Build();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(dataSource));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services
+    .AddDefaultIdentity<ApplicationUser>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = true;
+    })
+    .AddRoles<IdentityRole<Guid>>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -41,13 +47,13 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
@@ -58,6 +64,6 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 app.MapRazorPages()
-   .WithStaticAssets();
+    .WithStaticAssets();
 
 app.Run();
