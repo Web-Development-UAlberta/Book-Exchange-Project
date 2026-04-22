@@ -13,6 +13,7 @@ namespace Book_Exchange.Data
     {
         public DbSet<Location> Locations => Set<Location>();
         public DbSet<LocationDistance> LocationDistances => Set<LocationDistance>();
+        public DbSet<Address> Addresses => Set<Address>();
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -71,6 +72,22 @@ namespace Book_Exchange.Data
 
                 });
 
+            // addresses
+            builder.Entity<Address>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.Addresses)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Address>()
+                .HasOne(x => x.Location)
+                .WithMany(x => x.Addresses)
+                .HasForeignKey(x => x.LocationId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Address>()
+                .Property(x => x.CreatedAt)
+                .HasDefaultValueSql("now()");
         }
     }
 }

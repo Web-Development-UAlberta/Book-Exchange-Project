@@ -7,5 +7,5 @@ namespace Book_Exchange.Models;
 public class ApplicationUser : IdentityUser<Guid>
 
 {
-
+    public ICollection<Address> Addresses { get; set; } = new List<Address>();
 }
