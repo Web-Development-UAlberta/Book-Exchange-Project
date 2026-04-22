@@ -1,13 +1,30 @@
 using Book_Exchange.Data;
+using Book_Exchange.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+// For enum support
+var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
+dataSourceBuilder.MapEnum<BookCondition>("public.book_condition");
+dataSourceBuilder.MapEnum<ListingType>("public.listing_type");
+dataSourceBuilder.MapEnum<TransactionType>("public.transaction_type");
+dataSourceBuilder.MapEnum<TransactionStatus>("public.transaction_status");
+dataSourceBuilder.MapEnum<ShippingStatus>("public.shipping_status");
+dataSourceBuilder.MapEnum<NotificationType>("public.notification_type");
+dataSourceBuilder.MapEnum<NotificationStatus>("public.notification_status");
+dataSourceBuilder.MapEnum<MessageType>("public.message_type");
+dataSourceBuilder.MapEnum<MessageStatus>("public.message_status");
+dataSourceBuilder.MapEnum<LocalityType>("public.locality_type");
+var dataSource = dataSourceBuilder.Build();
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseNpgsql(dataSource));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
