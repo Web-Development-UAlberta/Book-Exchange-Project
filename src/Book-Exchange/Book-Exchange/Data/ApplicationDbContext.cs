@@ -88,6 +88,19 @@ namespace Book_Exchange.Data
             builder.Entity<Address>()
                 .Property(x => x.CreatedAt)
                 .HasDefaultValueSql("now()");
+
+            // books
+            builder.Entity<Book>()
+                .HasIndex(x => x.Isbn13)
+                .IsUnique();
+
+            builder.Entity<Book>()
+                .HasIndex(x => x.Isbn10)
+                .IsUnique();
+
+            builder.Entity<Book>()
+                .Property(x => x.CreatedAt)
+                .HasDefaultValueSql("now()");
         }
     }
 }
