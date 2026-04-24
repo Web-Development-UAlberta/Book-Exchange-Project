@@ -210,9 +210,21 @@ The platform leverages matching logic and mock book data to connect users and fa
 - Mobile app version
 - Advanced trust & fraud detection system
 
+---
+
 ## 9. Success Criteria
 
-???
+- Users can register, authenticate, and manage their profiles
+- Ratings and reviews are recorded and contribute to user reputation
+- Books can be listed, searched, filtered by relevant attributes
+- Books can be rated and reviewed
+- Matching engine successfully identifies swap and buy/sell opportunities
+- Messaging between users is functional
+- Role-based access control is enforced throughout the platform
+- Core backend logic is covered by unit and integration tests
+- Transactions can be proposed, negotiated, and completed end-to-end
+
+---
 
 ## 10. Timeline
 
