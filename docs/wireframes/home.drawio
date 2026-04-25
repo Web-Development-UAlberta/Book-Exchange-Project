@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="nwZHn6CSP7jbT7hnAO0n" name="Page-1">
-        <mxGraphModel dx="959" dy="3087" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1370" dy="3467" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -712,8 +712,8 @@
                 <mxCell id="294" value="&lt;font style=&quot;color: rgb(143, 143, 143);&quot;&gt;Search wishlit....&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="3441" y="145" width="190" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="295" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;WISHLIST PAGE + COUNT ID = CLASS =&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
-                    <mxGeometry x="3670" y="110" width="260" height="20" as="geometry"/>
+                <mxCell id="295" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;WISHLIST PAGE ID = &quot;wishlist-page&quot;&lt;br&gt;&amp;nbsp;COUNT ID&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;= &quot;wishlist-count&quot;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="3670" y="90" width="260" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="296" value="Available only" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="3765" y="145" width="95" height="30" as="geometry"/>
@@ -784,20 +784,20 @@
                 <mxCell id="318" value="+ Add Book" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="4080" y="105" width="95" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="319" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;WISHLIST ADD BOOK BTN ID = CLASS =&amp;nbsp;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
-                    <mxGeometry x="4057.5" y="140" width="140" height="40" as="geometry"/>
+                <mxCell id="319" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;WISHLIST ADD BOOK BTN ID&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;= &quot;wishlist-add-btn&quot;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="4020" y="140" width="190" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="320" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;WISHLIST FILTER AVAILABLE ID = CLASS =&amp;nbsp;&lt;br&gt;WISHLIST CLEAR FILTER ID = CLASS =&amp;nbsp;&lt;br&gt;?? NEED OR DEFAULT ALL&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
-                    <mxGeometry x="3765" y="180" width="140" height="105" as="geometry"/>
+                <mxCell id="320" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;WISHLIST FILTER AVAILABLE ID&amp;nbsp;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;= &quot;wishlist-filter-available-btn&quot;&lt;br&gt;SHOW ALL ID&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;= &quot;wishlist-filter-all-btn&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="3765" y="180" width="175" height="100" as="geometry"/>
                 </mxCell>
-                <mxCell id="321" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;WISHLIST ITEM ID = CLASS =&amp;nbsp;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
-                    <mxGeometry x="3640" y="345" width="207.5" height="20" as="geometry"/>
+                <mxCell id="321" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;WISHLIST ITEM ID&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;= &quot;wishlist-items-list&lt;br&gt;EACH ROW CLASS&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;= &quot;wishlist-item&quot;&lt;br&gt;COVER CLASS&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;= &quot;wishlist-item-cover&quot;&lt;br&gt;TITE CLASS&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;= &quot;wishlist-item-title&quot;&lt;br&gt;AUTHOR CLASS&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;= &quot;wishlist-item-author&quot;&lt;br&gt;&lt;br&gt;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="3530" y="570" width="231.25" height="115" as="geometry"/>
                 </mxCell>
-                <mxCell id="322" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;WISHLIST AVAILABLE BADGE ID = CLASS =&amp;nbsp;&lt;br&gt;WISHLIST VIEW LISTINGS BTN ID = CLASS =&amp;nbsp;&lt;br&gt;WISHLIST REMOVE BTM ID = CLASS =&amp;nbsp;&lt;br&gt;WISHLIST NOTIFY BTN ID = CLASS =&amp;nbsp;&lt;br&gt;WISHLIST REMOVE BTN ID = CLASS =&amp;nbsp;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
-                    <mxGeometry x="3976.25" y="535" width="207.5" height="160" as="geometry"/>
+                <mxCell id="322" value="&lt;span style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); color: rgb(255, 255, 255);&quot;&gt;AVAILABILITY BADGE CLASS&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;= &quot;wishlist-availability-badge&quot;&lt;br style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;VIEWLISTING CLASS&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&amp;nbsp;= &quot;wishlist-view-listings-btn&quot;&lt;br&gt;NOTIFY ME CLASS = &quot;wishlist-notify-btn&quot;&lt;br style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;REMOVE LISTING CLASS&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&amp;nbsp;= &quot;wishlist-remove-btn&quot;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="3930" y="535" width="310" height="115" as="geometry"/>
                 </mxCell>
-                <mxCell id="323" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;WISHLIST SEARCH ID = CLASS =&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
-                    <mxGeometry x="3460" y="180" width="260" height="20" as="geometry"/>
+                <mxCell id="323" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;WISHLIST SEARCH ID&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;= &quot;wishlist-search=input&quot;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="3460" y="180" width="280" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="324" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="3400" y="1005" width="850" height="50" as="geometry"/>
