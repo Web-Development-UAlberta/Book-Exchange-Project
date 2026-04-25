@@ -76,6 +76,7 @@ The platform leverages matching logic and mock book data to connect users and fa
 - Users can propose book exchanges
 - System suggests value-balanced swaps
   - Example: 3 × $10 books for 1 × $30 book
+  - Example: 2 x $10 books + $10.00 for 1 x $30 book
 
 ---
 
@@ -147,6 +148,7 @@ The platform leverages matching logic and mock book data to connect users and fa
 - Matching logic must:
   - Consider both swap and buy/sell scenarios
   - Balance value differences in swaps
+  - If book balance isn't equal users can offer money to cover the balance and complete transaction
 - Maximum 3 counter-offer iterations per negotiation cycle
 - System must store:
   - Users
@@ -208,9 +210,12 @@ The platform leverages matching logic and mock book data to connect users and fa
 
 - Users can register, authenticate, and manage their profiles
 - Ratings and reviews are recorded and contribute to user reputation
+  - Ratings and reviews are only available to registered members
 - Books can be listed, searched, filtered by relevant attributes
 - Books can be rated and reviewed
+  - Book reviews are open to the public
 - Matching engine successfully identifies swap and buy/sell opportunities
+  - All users are altered when a match is found.
 - Messaging between users is functional
 - Role-based access control is enforced throughout the platform
 - Core backend logic is covered by unit and integration tests
