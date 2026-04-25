@@ -57,79 +57,84 @@ A. Identity and User Module
 
 B. Book Representation
 
-- No dedicated book table is maintained  
-- Books are identified using a **single ISBN field**  
-- ISBN supports both 10 and 13 digit formats  
-- Book metadata (title, author, etc.) is retrieved from external APIs  
-- Avoids duplication and simplifies database design  
+- No dedicated book table is maintained
+- Books are identified using a **single ISBN field**
+- ISBN supports both 10 and 13 digit formats
+- Book metadata (title, author, etc.) is retrieved from external APIs
+- Avoids duplication and simplifies database design
 
 C. Listing Module
 
-- Users create listings using ISBN  
+- Users create listings using ISBN
 - Each listing includes:
-  - Condition  
+  - Condition
   - Price
   - Weight
-- Listings belong to users  
-- No book metadata snapshot stored  
-- Listing type is derived at exchange time 
+- Listings belong to users
+- No book metadata snapshot stored
+- Listing type is derived at exchange time
 
 D. Wishlist Module
-- Users store desired books using ISBN  
-- Wishlist items can be active/inactive  
-- Prevent duplicate entries per user  
-- Used for matching 
+
+- Users store desired books using ISBN
+- Wishlist items can be active/inactive
+- Prevent duplicate entries per user
+- Used for matching
 
 E. Matching and Recommendation Engine
 
 - Matching based on:
   - ISBN equality between listings and wishlists  
-Supports:
-- Buy/Sell  
-- Book swaps  
+    Supports:
+- Buy/Sell
+- Book swaps
 - Multi-book swaps (1:3 limit)
 
 Simplified:
-- No valuation formulas  
-- No condition multipliers  
-- No AI-based matching  
+
+- No valuation formulas
+- No condition multipliers
+- No AI-based matching
 
 F. Exchange Module
+
 - Users initiate interaction via **ExchangeRequests**
-Types:
-- BuySell  
-- BookSwap  
-- BookSwapWithCash  
+  Types:
+- BuySell
+- BookSwap
+- BookSwapWithCash
 
 Features:
-- No negotiation  
-- No counter-offers  
+
+- No negotiation
+- No counter-offers
 - Request includes:
-  - Optional money (Price)  
-  - Optional offered books  
+  - Optional money (Price)
+  - Optional offered books
 
 Owner can:
-- Accept  
-- Reject  
+
+- Accept
+- Reject
 
 G. Transaction Module
 
 - Manage transactions for buy/sell, swap, and multi-swap scenarios
 - Track participants such as buyer and seller
 - Link transactions to one or more listings
-- Manage transaction lifecycle through statuses such as proposed, negotiating, confirmed, shipped, completed, cancelled, and disputed
+- Manage transaction lifecycle through statuses such as proposed, confirmed, shipped, completed, cancelled, and disputed
 - Record timestamps for confirmation, completion, and cancellation
 - Support negotiation and controlled counter-offer workflow
 
 H. Shipping and Delivery Module
 
-- Uses Google Place ID for addresses  
-- Distance calculated via external API  
-- Carrier table with pricing model 
+- Uses Google Place ID for addresses
+- Distance calculated via external API
+- Carrier table with pricing model
 - Shipping cost formula:
-`ShippingCost = BaseCost + (WeightKg × CostPerKg) + (DistanceKm × CostPerKm)`
-- Stores shipment tracking details  
-- Supports future integration with shipping APIs  
+  `ShippingCost = BaseCost + (WeightKg × CostPerKg) + (DistanceKm × CostPerKm)`
+- Stores shipment tracking details
+- Supports future integration with shipping APIs
 
 I. Messaging and Negotiation Module
 
@@ -162,101 +167,101 @@ K. Notification Module
 
 A. Account (/account)
 
-- POST /register  
-- POST /login  
-- POST /logout  
+- POST /register
+- POST /login
+- POST /logout
 
 ---
 
 B. Users (/users)
 
-- GET /profile  
-- PUT /update  
-- GET /{id}  
-- GET /{id}/reviews  
-- GET /{id}/addresses  
-- POST /addresses  
-- PUT /addresses/{id}  
-- DELETE /addresses/{id}  
+- GET /profile
+- PUT /update
+- GET /{id}
+- GET /{id}/reviews
+- GET /{id}/addresses
+- POST /addresses
+- PUT /addresses/{id}
+- DELETE /addresses/{id}
 
 ---
 
 C. Listings (/listings)
 
-- GET /  
-- GET /{id}  
-- POST /create  
-- PUT /{id}  
-- DELETE /{id}  
-- GET /user/{userId}  
+- GET /
+- GET /{id}
+- POST /create
+- PUT /{id}
+- DELETE /{id}
+- GET /user/{userId}
 
 ---
 
 D. Wishlist (/wishlist)
 
-- GET /  
-- POST /add  
-- DELETE /remove/{isbn}  
-- PUT /{id}/toggle  
+- GET /
+- POST /add
+- DELETE /remove/{isbn}
+- PUT /{id}/toggle
 
 ---
 
 E. Matching (/matching)
 
-- GET /suggestions  
-- GET /listing/{id}  
+- GET /suggestions
+- GET /listing/{id}
 
 ---
 
 F. ExchangeRequests (/exchange)
 
-- POST /create  
-- GET /{id}  
-- PUT /{id}/accept  
-- PUT /{id}/reject  
-- GET /user  
+- POST /create
+- GET /{id}
+- PUT /{id}/accept
+- PUT /{id}/reject
+- GET /user
 
 ---
 
 G. Transactions (/transactions)
 
-- GET /history  
-- GET /{id}  
-- PUT /{id}/status  
+- GET /history
+- GET /{id}
+- PUT /{id}/status
 
 ---
 
 H. Shipments (/shipments)
 
-- POST /create  
-- GET /{id}  
-- PUT /{id}/quote  
-- PUT /{id}/status  
+- POST /create
+- GET /{id}
+- PUT /{id}/quote
+- PUT /{id}/status
 
 ---
 
 I. Messages (/messages)
 
-- GET /  
-- GET /{userId}  
-- POST /send  
-- PUT /{id}/read  
+- GET /
+- GET /{userId}
+- POST /send
+- PUT /{id}/read
 
 ---
 
 J. Reviews (/reviews)
 
-- POST /create  
-- GET /user/{userId}  
+- POST /create
+- GET /user/{userId}
 
 ---
 
 K. Notifications (/notifications)
 
-- GET /  
-- PUT /{id}/read  
-- PUT /read-all  
-- DELETE /{id}  
+- GET /
+- PUT /{id}/read
+- PUT /read-all
+- DELETE /{id}
 
 ---
 
@@ -280,16 +285,17 @@ K. Notifications (/notifications)
 ## 5. Matching Logic Design
 
 ### Matching Rule
+
 - `Listing.Isbn == Wishlist.Isbn`
 
 ---
 
 ### Constraints
 
-- Swap ratio: max 3:1 or 1:3  
-- No negotiation  
-- No multi-user chain swaps  
-- Owner decision is final  
+- Swap ratio: max 3:1 or 1:3
+- No negotiation
+- No multi-user chain swaps
+- Owner decision is final
 
 ---
 
