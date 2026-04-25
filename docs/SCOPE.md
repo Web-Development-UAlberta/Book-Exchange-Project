@@ -9,9 +9,8 @@
 5. [Data & Integration](#5-data--integration)
 6. [Non-Functional Requirements](#6-non-functional-requirements)
 7. [Out of Scope (Initial Version)](#7-out-of-scope-initial-version)
-8. [Future Enhancements](#8-future-enhancements)
-9. [Success Criteria](#9-success-criteria)
-10. [Timeline](#10-timeline)
+8. [Success Criteria](#8-success-criteria)
+9. [Timeline](#9-timeline)
 
 ## 1. Project Overview
 
@@ -193,26 +192,19 @@ The platform leverages matching logic and mock book data to connect users and fa
 
 ## 7. Out of Scope (Initial Version)
 
-- Real payment gateway integration (can be mocked)
+- Real payment integration (Stripe, PayPal)
 - Integration with shipping providers
 - Calculate shipping costs based on:
   - Location
   - Book weight/dimensions
 - Real-time logistics tracking (basic shipping calculation only)
-- AI-based recommendation system (future enhancement)
-
----
-
-## 8. Future Enhancements
-
-- AI-powered recommendation engine
-- Real payment integration (Stripe, PayPal)
+- AI-based recommendation system
 - Mobile app version
 - Advanced trust & fraud detection system
 
 ---
 
-## 9. Success Criteria
+## 8. Success Criteria
 
 - Users can register, authenticate, and manage their profiles
 - Ratings and reviews are recorded and contribute to user reputation
@@ -226,7 +218,7 @@ The platform leverages matching logic and mock book data to connect users and fa
 
 ---
 
-## 10. Timeline
+## 9. Timeline
 
 | Week       | Tasks                      |
 | ---------- | -------------------------- |
