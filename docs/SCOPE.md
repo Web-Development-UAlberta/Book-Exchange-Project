@@ -203,6 +203,7 @@ The platform leverages matching logic and mock book data to connect users and fa
 - AI-based recommendation system
 - Mobile app version
 - Advanced trust & fraud detection system
+- Member vs Verified Member tiers
 
 ---
 
