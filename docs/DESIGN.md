@@ -55,40 +55,64 @@ A. Identity and User Module
 - Location support based on city, province/state, and country
 - User reputation through transaction-based ratings and reviews
 
-B. Book Catalog Module
+B. Book Representation
 
-- Maintain master book records
-- Store book details such as title, ISBN-10, ISBN-13, and published date
-- Manage authors and book-author relationships
-- Manage genres and book-genre relationships
-- Support book metadata retrieval from mock or external sources
-- Reuse shared book records across multiple users and listings
+- No dedicated book table is maintained  
+- Books are identified using a **single ISBN field**  
+- ISBN supports both 10 and 13 digit formats  
+- Book metadata (title, author, etc.) is retrieved from external APIs  
+- Avoids duplication and simplifies database design  
 
-C. Wishlist Module
+C. Listing Module
 
-- Allow users to add books to their wishlist
-- Mark wishlist items as active or inactive
-- Track user interest in books for future matching and notifications
-- Prevent duplicate wishlist entries for the same user and book
+- Users create listings using ISBN  
+- Each listing includes:
+  - Condition  
+  - Price
+  - Weight
+- Listings belong to users  
+- No book metadata snapshot stored  
+- Listing type is derived at exchange time 
 
-D. Listing Module
-
-- Create book listings for selling, buying, or swapping
-- Store listing-specific details such as condition, price, weight, and listing type
-- Use condition codes and multipliers to support valuation and swap balancing
-- Associate each listing with a user and a book
-- Manage listing lifecycle and availability for transactions
+D. Wishlist Module
+- Users store desired books using ISBN  
+- Wishlist items can be active/inactive  
+- Prevent duplicate entries per user  
+- Used for matching 
 
 E. Matching and Recommendation Engine
 
-- Match users based on wishlist books and available listings
-- Detect potential buy, sell, and swap opportunities
-- Compare listing prices and condition-based values
-- Suggest balanced swaps using book condition multipliers
-- Support simple multi-party or multi-listing matching scenarios
-- Trigger notifications when suitable matches are found
+- Matching based on:
+  - ISBN equality between listings and wishlists  
+Supports:
+- Buy/Sell  
+- Book swaps  
+- Multi-book swaps (1:3 limit)
 
-F. Transaction Module
+Simplified:
+- No valuation formulas  
+- No condition multipliers  
+- No AI-based matching  
+
+F. Exchange Module
+- Users initiate interaction via **ExchangeRequests**
+Types:
+- BuySell  
+- BookSwap  
+- BookSwapWithCash  
+
+Features:
+- No negotiation  
+- No counter-offers  
+- Request includes:
+  - Optional money (Price)  
+  - Optional offered books  
+
+Owner can:
+- Accept  
+- Reject  
+
+G. Transaction Module
 
 - Manage transactions for buy/sell, swap, and multi-swap scenarios
 - Track participants such as buyer and seller
@@ -97,17 +121,17 @@ F. Transaction Module
 - Record timestamps for confirmation, completion, and cancellation
 - Support negotiation and controlled counter-offer workflow
 
-G. Shipping and Delivery Module
+H. Shipping and Delivery Module
 
-- Store user shipping addresses
-- Manage carriers and carrier pricing rules
-- Calculate shipping cost using base cost, package weight, and travel distance
-- Support location-to-location distance lookup
-- Create shipment records linked to transactions
-- Track shipment status, carrier, tracking number, label URL, and shipping cost
-- Enable future integration with external shipping carrier APIs for label generation and shipment automation
+- Uses Google Place ID for addresses  
+- Distance calculated via external API  
+- Carrier table with pricing model 
+- Shipping cost formula:
+`ShippingCost = BaseCost + (WeightKg × CostPerKg) + (DistanceKm × CostPerKm)`
+- Stores shipment tracking details  
+- Supports future integration with shipping APIs  
 
-H. Messaging and Negotiation Module
+I. Messaging and Negotiation Module
 
 - Provide direct user-to-user communication
 - Support text messages and offer-based negotiation messages
@@ -116,7 +140,7 @@ H. Messaging and Negotiation Module
 - Track message status such as sent and read
 - Support negotiation flow, including limited counter-offers if required by business rules
 
-I. Review and Reputation Module
+J. Review and Reputation Module
 
 - Allow users to leave reviews only within the context of completed transactions
 - Track reviewer and reviewee for each review
@@ -124,7 +148,7 @@ I. Review and Reputation Module
 - Prevent duplicate reviews for the same transaction and reviewer-reviewee pair
 - Use reviews to build trust and user reputation within the platform
 
-J. Notification Module
+K. Notification Module
 
 - Send notifications for matches, wishlist availability, new messages, offers, and transaction updates
 - Support notification states such as unread, read, and archived
@@ -136,108 +160,103 @@ J. Notification Module
 
 ### 3.2 API Endpoints (MVC Controllers)
 
-A. Authentication Controller (/account)
+A. Account (/account)
 
-- POST /account/register → Register new user
-- POST /account/login → Authenticate user
-- POST /account/logout → Logout user
-
----
-
-B. Users Controller (/users)
-
-- GET /users/profile → Get current user profile
-- PUT /users/update → Update profile info
-- GET /users/{id} → Get public user profile
-- GET /users/{id}/reviews → Get user reviews and rating
-- GET /users/{id}/addresses → Get user addresses
-- POST /users/addresses → Add new address
-- PUT /users/addresses/{id} → Update address
-- DELETE /users/addresses/{id} → Delete address
+- POST /register  
+- POST /login  
+- POST /logout  
 
 ---
 
-C. Books Controller (/books)
+B. Users (/users)
 
-- GET /books/search → Search books (title, ISBN, author, genre)
-- GET /books/{id} → Get book details
-- POST /books/add → Add new book (admin or system use)
-- POST /books/{id}/authors → Assign authors to book
-- POST /books/{id}/genres → Assign genres to book
-
----
-
-D. Wishlist Controller (/wishlist)
-
-- GET /wishlist → Get user wishlist
-- POST /wishlist/add → Add book to wishlist
-- DELETE /wishlist/remove/{bookId} → Remove book from wishlist
-- PUT /wishlist/{id}/toggle → Activate/deactivate wishlist item
+- GET /profile  
+- PUT /update  
+- GET /{id}  
+- GET /{id}/reviews  
+- GET /{id}/addresses  
+- POST /addresses  
+- PUT /addresses/{id}  
+- DELETE /addresses/{id}  
 
 ---
 
-E. Listings Controller (/listings)
+C. Listings (/listings)
 
-- GET /listings → Get all listings (with filters: type, price, condition, location)
-- GET /listings/{id} → Get listing details
-- POST /listings/create → Create new listing
-- PUT /listings/{id} → Update listing
-- DELETE /listings/{id} → Delete listing
-- GET /listings/user/{userId} → Get listings by user
-
----
-
-F. Matching Controller (/matching)
-
-- GET /matching/suggestions → Get personalized match suggestions
-- GET /matching/swaps → Get potential swap matches
-- GET /matching/listing/{id} → Get matches for a specific listing
+- GET /  
+- GET /{id}  
+- POST /create  
+- PUT /{id}  
+- DELETE /{id}  
+- GET /user/{userId}  
 
 ---
 
-G. Transactions Controller (/transactions)
+D. Wishlist (/wishlist)
 
-- POST /transactions/create → Create new transaction (buy/sell/swap)
-- GET /transactions/history → Get user transaction history
-- GET /transactions/{id} → Get transaction details
-- PUT /transactions/{id}/status → Update transaction status
-- POST /transactions/{id}/confirm → Confirm transaction
-- POST /transactions/{id}/cancel → Cancel transaction
+- GET /  
+- POST /add  
+- DELETE /remove/{isbn}  
+- PUT /{id}/toggle  
 
 ---
 
-H. Shipments Controller (/shipments)
+E. Matching (/matching)
 
-- POST /shipments/create → Create shipment for a transaction
-- GET /shipments/{id} → Get shipment details
-- PUT /shipments/{id}/quote → Calculate shipping cost
-- PUT /shipments/{id}/label → Generate shipping label
-- PUT /shipments/{id}/status → Update shipment status
+- GET /suggestions  
+- GET /listing/{id}  
 
 ---
 
-I. Messaging Controller (/messages)
+F. ExchangeRequests (/exchange)
 
-- GET /messages → Get user conversations
-- GET /messages/{userId} → Get conversation with a user
-- POST /messages/send → Send message
-- PUT /messages/{id}/read → Mark message as read
-
----
-
-J. Reviews Controller (/reviews)
-
-- POST /reviews/create → Create review after transaction
-- GET /reviews/user/{userId} → Get reviews for a user
+- POST /create  
+- GET /{id}  
+- PUT /{id}/accept  
+- PUT /{id}/reject  
+- GET /user  
 
 ---
 
-K. Notifications Controller (/notifications)
+G. Transactions (/transactions)
 
-- GET /notifications → Get user notifications
-- PUT /notifications/{id}/read → Mark notification as read
-- PUT /notifications/read-all → Mark all as read
-- DELETE /notifications/{id} → Archive/delete notification
+- GET /history  
+- GET /{id}  
+- PUT /{id}/status  
+
+---
+
+H. Shipments (/shipments)
+
+- POST /create  
+- GET /{id}  
+- PUT /{id}/quote  
+- PUT /{id}/status  
+
+---
+
+I. Messages (/messages)
+
+- GET /  
+- GET /{userId}  
+- POST /send  
+- PUT /{id}/read  
+
+---
+
+J. Reviews (/reviews)
+
+- POST /create  
+- GET /user/{userId}  
+
+---
+
+K. Notifications (/notifications)
+
+- GET /  
+- PUT /{id}/read  
+- PUT /read-all  
+- DELETE /{id}  
 
 ---
 
@@ -260,14 +279,17 @@ K. Notifications Controller (/notifications)
 
 ## 5. Matching Logic Design
 
-- Match when:
-  - User A has a book User B wants
-  - User B has a book User A wants
-- Swap balancing:
-  - Compare total values
-  - Suggest combinations (e.g., 3 low-value books for 1 high-value)
-- Counter-offers:
-  - Limit to 3 iterations per negotiation
+### Matching Rule
+- `Listing.Isbn == Wishlist.Isbn`
+
+---
+
+### Constraints
+
+- Swap ratio: max 3:1 or 1:3  
+- No negotiation  
+- No multi-user chain swaps  
+- Owner decision is final  
 
 ---
 
