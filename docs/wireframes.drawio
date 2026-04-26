@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="nwZHn6CSP7jbT7hnAO0n" name="Page-1">
-        <mxGraphModel dx="1981" dy="3540" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="2410" dy="3653" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -601,7 +601,7 @@
                 <mxCell id="258" value="Pending" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="2388" y="277" width="90" height="25" as="geometry"/>
                 </mxCell>
-                <mxCell id="259" value="TRANSACTIONS LSIT&amp;nbsp;ID = &quot;transactions-list&quot;&lt;br&gt;EACH CARD TRANSACTIONS CARD CLASS&amp;nbsp;= &quot;transactions-card&quot;&lt;br&gt;TRANSACTIONS STATUS BADGE CLASS&amp;nbsp;&amp;nbsp;= &quot;transactions-status-badge&quot;&lt;br&gt;BTNS&lt;br&gt;ACCEPT CLASS&amp;nbsp;&amp;nbsp;= &quot;transactions-accept-btn&quot;&lt;br&gt;MESSAGE CLASS = &quot;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;transactions-message-btn&quot;&lt;/span&gt;&lt;br&gt;TRANSACTION CANCEL&amp;nbsp;CLASS= &quot;transactions-cancel-btn&quot;&lt;br&gt;TRANS REVIEW&lt;br&gt; TRANS REVIEW CLASS&amp;nbsp;= &quot;transactions-review-btn&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=light-dark(#6A00FF,#FFA7FF);strokeColor=none;fontColor=light-dark(#FFFFFF,#000000);" parent="1" vertex="1">
+                <mxCell id="259" value="TRANSACTIONS LSIT&amp;nbsp;ID = &quot;transactions-list&quot;&#xa;EACH CARD TRANSACTIONS CARD CLASS&amp;nbsp;= &quot;transactions-card&quot;&#xa;TRANSACTIONS STATUS BADGE CLASS&amp;nbsp;&amp;nbsp;= &quot;transactions-status-badge&quot;&#xa;BTNS&#xa;ACCEPT CLASS&amp;nbsp;&amp;nbsp;= &quot;transactions-accept-btn&quot;&#xa;MESSAGE CLASS = &quot;transactions-message-btn&quot;&#xa;TRANSACTION CANCEL&amp;nbsp;CLASS= &quot;transactions-cancel-btn&quot;&#xa;TRANS REVIEW&#xa; TRANS REVIEW CLASS&amp;nbsp;= &quot;transactions-review-btn&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=light-dark(#6A00FF,#FFA7FF);strokeColor=none;fontColor=light-dark(#000000,#000000);" parent="1" vertex="1">
                     <mxGeometry x="1830" y="740" width="420" height="150" as="geometry"/>
                 </mxCell>
                 <mxCell id="260" value="Accept" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="1" vertex="1">
@@ -1534,7 +1534,7 @@
                     <mxGeometry x="990" y="-1150" width="440" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="724" value="CONVERSATION LIST ID = &quot;conversation-list&quot;EACH CONVO CLASS = &quot;conversation-item&quot; data-user-id = idACTIVE CONVO CLASS = &quot;conversation-item active&quot;AVATAR CLASS&amp;nbsp;= &quot;conversation-item-avatar&quot;CONVO NAME CLASS&amp;nbsp;= &quot;conversation-item-name&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=#FFFFFF;" parent="1" vertex="1">
-                    <mxGeometry x="864" y="-785" width="286" height="215" as="geometry"/>
+                    <mxGeometry x="864" y="-720" width="286" height="150" as="geometry"/>
                 </mxCell>
                 <mxCell id="725" value="&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;MESSAGE THREAD ID = &quot;message-thread&quot;&lt;br&gt;ACTIVE CONO CLASS = &quot;conversation-item active&quot;&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;CHAT PANEL ID = &quot;chat-panel&quot;&lt;br&gt;HEADER ID = &quot;chat-header&quot;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;MESSAGE THREAD ID = &quot;message-thread&quot;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;&lt;font style=&quot;&quot;&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;EACH MSG CLASS = &quot;message-item incoming&quot; |&amp;nbsp;&lt;/font&gt;&lt;/font&gt;&lt;span style=&quot;color: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); background-color: transparent;&quot;&gt;&quot;message-item&lt;/span&gt;&lt;span style=&quot;color: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); background-color: transparent;&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;color: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); background-color: transparent;&quot;&gt;outgoing&quot; data-message-id = id&amp;nbsp;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;OFFER BUBBLE CLASS = &quot;offer-message&quot;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;BTN&#39;S&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;OFFER ACCEPT CLASS = &quot;offer-accept-btn&quot;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;OFFER COUNTER CLASS = &quot;offer-counter-btn&quot;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;OFFER DECLINE CLASS = &quot;offer-decline-btn&quot;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;MESSAGE INPUT ID = &#39;message-input&quot;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;MESSAGE SEND BTN ID = &quot;message-send-btn&quot;&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="1210" y="-760" width="290" height="250" as="geometry"/>
@@ -1707,8 +1707,8 @@
                 <mxCell id="780" value="Listing Type" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
                     <mxGeometry x="720" y="-760" width="80" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="781" value="PROFILE PAGE ID = &quot;profile-page&quot; data-user-id = idAVATAR&amp;nbsp;ID = &quot;profile-avatar&quot;USERNAME&amp;nbsp;ID = &quot;profile-username&quot;USER SINCE ID = &quot;profile-member-since&quot;EDIT PROFILE BTN ID = &quot;profile-edit-btn&quot;PROFIT STATS ID = &quot;profile-stats&quot;RATING CLASS&amp;nbsp;&amp;nbsp;= &quot;profile-stat-card&quot;&amp;nbsp;ID = &quot;profile-rating&quot;TRADE COUNT&amp;nbsp;CLASS&amp;nbsp;&amp;nbsp;= &quot;profile-stat-card&quot;&amp;nbsp;ID = &quot;profile-trade-count&quot;LISTING COUNT&amp;nbsp;CLASS&amp;nbsp;&amp;nbsp;= &quot;profile-stat-card&quot;&amp;nbsp;ID = &quot;profile-listings-count&quot;PROFILE REVIEWS LIST&amp;nbsp;ID = &quot;profile-review-list&quot;EACH ROW CLASS = &quot;profile-review-item&quot;&amp;nbsp;AUTHOR CLASS = &quot;profile-review-author&quot;COMMENT CLASS&amp;nbsp;CLASS&amp;nbsp;&amp;nbsp;= &quot;profile-review-comment&quot;PROFILE LISTINGS LIST&amp;nbsp;ID = &quot;profile-listings-list&quot;EACH LSIT ITEM CLASS = &quot;profile-listing-row&quot;BADGE CLASS = &quot;profile-type-badge&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=#FFFFFF;" parent="1" vertex="1">
-                    <mxGeometry x="30" y="-540" width="460" height="260" as="geometry"/>
+                <mxCell id="781" value="PROFILE PAGE ID = &quot;profile-page&quot; data-user-id = id &lt;br&gt;AVATAR&amp;nbsp;ID = &quot;profile-avatar&quot;&lt;br&gt;USERNAME&amp;nbsp;ID = &quot;profile-username&quot;&lt;br&gt;USER SINCE ID = &quot;profile-member-since&quot;&lt;br&gt;EDIT PROFILE BTN ID = &quot;profile-edit-btn&quot;&lt;br&gt;PROFIT STATS ID = &quot;profile-stats&quot;&lt;br&gt;RATING CLASS&amp;nbsp;&amp;nbsp;= &quot;profile-stat-card&quot;&amp;nbsp;ID = &quot;profile-rating&quot;&lt;br&gt;TRADE COUNT&amp;nbsp;CLASS&amp;nbsp;&amp;nbsp;= &quot;profile-stat-card&quot;&amp;nbsp;ID = &quot;profile-trade-count&quot;&lt;br&gt;LISTING COUNT&amp;nbsp;CLASS&amp;nbsp;&amp;nbsp;= &quot;profile-stat-card&quot;&amp;nbsp;ID = &quot;profile-listings-count&quot;&lt;br&gt;PROFILE REVIEWS LIST&amp;nbsp;ID = &quot;profile-review-list&quot;&lt;br&gt;EACH ROW CLASS = &quot;profile-review-item&quot;&amp;nbsp;&lt;br&gt;AUTHOR CLASS = &quot;profile-review-author&quot;&lt;br&gt;COMMENT CLASS&amp;nbsp;CLASS&amp;nbsp;&amp;nbsp;= &quot;profile-review-comment&quot;&lt;br&gt;PROFILE LISTINGS LIST&amp;nbsp;ID = &quot;profile-listings-list&quot;&lt;br&gt;EACH LSIT ITEM CLASS = &quot;profile-listing-row&quot;&lt;br&gt;BADGE CLASS = &quot;profile-type-badge&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="-540" width="390" height="260" as="geometry"/>
                 </mxCell>
                 <mxCell id="782" value="Edit Profile" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="1" vertex="1">
                     <mxGeometry x="730" y="-1070" width="80" height="30" as="geometry"/>
@@ -2228,28 +2228,28 @@
                     <mxGeometry x="3870" y="-977" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="954" value="" style="whiteSpace=wrap;html=1;aspect=fixed;dashed=1;fillColor=#eeeeee;strokeColor=#36393d;rotation=0;" parent="1" vertex="1">
-                    <mxGeometry x="4000" y="-1110" width="220" height="240" as="geometry"/>
+                    <mxGeometry x="4000" y="-1043" width="220" height="240" as="geometry"/>
                 </mxCell>
                 <mxCell id="955" value="Listed by" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="4015" y="-1107" width="60" height="30" as="geometry"/>
+                    <mxGeometry x="4015" y="-1040" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="956" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
-                    <mxGeometry x="4015" y="-1077" width="55" height="55" as="geometry"/>
+                    <mxGeometry x="4015" y="-1010" width="55" height="55" as="geometry"/>
                 </mxCell>
                 <mxCell id="957" value="Uername" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="4085" y="-1077" width="60" height="30" as="geometry"/>
+                    <mxGeometry x="4085" y="-1010" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="958" value="*** 4.6 - 18&amp;nbsp; trades" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="4085" y="-1052" width="110" height="30" as="geometry"/>
+                    <mxGeometry x="4085" y="-985" width="110" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="959" value="Propose Swap" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="4015" y="-1007" width="180" height="30" as="geometry"/>
+                    <mxGeometry x="4015" y="-940" width="180" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="960" value="Send offer" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="4015" y="-967" width="180" height="30" as="geometry"/>
+                    <mxGeometry x="4015" y="-900" width="180" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="961" value="Message Seller" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="4015" y="-927" width="180" height="30" as="geometry"/>
+                    <mxGeometry x="4015" y="-860" width="180" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="962" value="LN&lt;div&gt;Like New&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="3440" y="-810" width="80" height="50" as="geometry"/>
@@ -2276,16 +2276,16 @@
                     <mxGeometry x="3477.5" y="-735" width="370" height="105" as="geometry"/>
                 </mxCell>
                 <mxCell id="969" value="Estimated Shipping&lt;div&gt;~ $12.00&lt;br&gt;Based on weight &amp;amp; Location&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;" parent="1" vertex="1">
-                    <mxGeometry x="4000" y="-760" width="220" height="125" as="geometry"/>
+                    <mxGeometry x="4000" y="-693" width="220" height="125" as="geometry"/>
                 </mxCell>
                 <mxCell id="970" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;LISTING DETAIL PAGE ID = &quot;listing-detail-page&quot;&lt;br&gt;BOOK TITLE ID = &quot;listing-book-title&quot;&lt;br&gt;LISTING TYPE BADGE ID = &quot;listing-type-badge&quot;&lt;br&gt;CONDITION ID&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;= &quot;listing-condition-badge&quot;&lt;br&gt;PRICE ID&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;= &quot;listing-price&quot;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="3672.5" y="-930" width="287.5" height="92" as="geometry"/>
                 </mxCell>
                 <mxCell id="972" value="LISTING SELLER CARD ID = &quot;listing-seller-card&quot;&lt;br&gt;LISTER NAME&amp;nbsp;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;ID = &quot;listing-seller-name&quot;&lt;br&gt;&lt;/span&gt;RATING&amp;nbsp;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;ID = &quot;listing-seller-rating&quot;&lt;/span&gt;&lt;br&gt;PROPOSE SWAP BTN&amp;nbsp;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;ID = &quot;propose-swap-btn&quot;&lt;/span&gt;&lt;br&gt;SEND OFFER BTN&amp;nbsp;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;ID = &quot;send-offer-btn&quot;&lt;/span&gt;&lt;br&gt;MESSAGE SELLER BTN&amp;nbsp;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;ID = &quot;message-seller-btn&quot;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
-                    <mxGeometry x="3960" y="-880" width="300" height="110" as="geometry"/>
+                    <mxGeometry x="3960" y="-813" width="300" height="110" as="geometry"/>
                 </mxCell>
                 <mxCell id="975" value="SHIPPIPNG ID = &quot;shipping-estimate&#39;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
-                    <mxGeometry x="4005" y="-620" width="210" height="50" as="geometry"/>
+                    <mxGeometry x="4005" y="-553" width="210" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="976" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;User clicks to view listing&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=#3A5431;fillColor=#6d8764;fontColor=#ffffff;" parent="1" vertex="1">
                     <mxGeometry x="3450" y="-1290" width="240" height="40" as="geometry"/>
@@ -2462,7 +2462,7 @@
                     <mxGeometry x="1279" y="665" width="60" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="1045" value="Back to Listings" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="4045" y="-510" width="140" height="40" as="geometry"/>
+                    <mxGeometry x="4045" y="-443" width="140" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="1125" style="edgeStyle=none;html=1;" parent="1" source="1054" edge="1">
                     <mxGeometry relative="1" as="geometry">
@@ -2900,6 +2900,162 @@
                 </mxCell>
                 <mxCell id="1286" value="List a book you own - buyers and swappers can find it in Browse" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
                     <mxGeometry x="877" y="1307" width="370" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1287" value="" style="group" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="850" y="2369" width="850" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="1288" value="" style="group" vertex="1" connectable="0" parent="1287">
+                    <mxGeometry width="850" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="1289" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1288">
+                    <mxGeometry width="850" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="1290" value="Book Exchange" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1288">
+                    <mxGeometry x="10" width="90" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="1291" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1288">
+                    <mxGeometry x="110" y="10" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1292" value="My Listings" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1288">
+                    <mxGeometry x="170" y="10" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1293" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1288">
+                    <mxGeometry x="620" y="10" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1294" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1288">
+                    <mxGeometry x="240" y="10" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1295" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1288">
+                    <mxGeometry x="730" y="5" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="1296" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1288">
+                    <mxGeometry x="780" y="10" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1297" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1288">
+                    <mxGeometry x="310" y="10" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1298" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1287">
+                    <mxGeometry y="50" width="850" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="1299" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="850" y="3369" width="850" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="1300" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="860" y="3371" width="130" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="1301" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="1510" y="3381" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1302" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="1570" y="3381" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1303" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="1630" y="3381" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1304" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1">
+                    <mxGeometry x="860" y="3439" width="820" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="1305" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;&lt;b&gt;Send an offer&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="884" y="2486" width="236" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1307" value="Make an offer to a listing owner" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="884" y="2516" width="286" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1308" value="OFFER TYPE ID = &quot;exchange-type-selector&quot;&amp;nbsp; CLASS = &quot;exchange-type-option&quot;&amp;nbsp; data-type = &quot;BuySell&quot; / &quot;BookSwap&quot; / &quot;BookSwapWithCash&quot;&lt;br&gt;OFFERED BOOKS LIST&lt;br&gt;ID = &quot;offered-books-list&quot;&amp;nbsp; &lt;br&gt;EACH ROW CLASS = &quot;offered-book-item&quot;&amp;nbsp; CHECKBOX CLASS = &quot;offered-book-checkbox&quot; data-listing-id = id&amp;nbsp;&lt;br&gt;&amp;nbsp;VALIDATION: max 3, block own listings&lt;br&gt;CASH AMOUNT&lt;br&gt;ID = &quot;cash-amount-input&quot;&amp;nbsp; &lt;br&gt;Enabled only when type = BookSwapWithCash&amp;nbsp; &amp;nbsp;Disabled + greyed for BuySell / BookSwap&lt;br&gt;MESSAGE TO OWNER&lt;br&gt;ID = &quot;offer-message-input&quot;&amp;nbsp; Optional free text" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=light-dark(#000000,#000000);" vertex="1" parent="1">
+                    <mxGeometry x="1330" y="2798" width="300" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="1309" value="Cover" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="899" y="2603.5" width="62.5" height="62.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="1313" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;User clicks send offer&amp;nbsp;&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=#3A5431;fillColor=#6d8764;fontColor=#ffffff;" vertex="1" parent="1">
+                    <mxGeometry x="945" y="2309" width="220" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="1318" value="Book Title" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="980" y="2598" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1319" value="ISBN: 123456789 Condition: VG Price $15.00" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="980" y="2620" width="277.5" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1343" value="Buy / Sell&lt;div&gt;Pay with money&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="897.5" y="2772.5" width="98.5" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="1344" value="Book Swap&lt;div&gt;Exchange Books&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;" vertex="1" parent="1">
+                    <mxGeometry x="1011" y="2772.5" width="101" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="1363" value="List by User B" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="980" y="2650" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1364" value="You are offering for" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="893.5" y="2558" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1365" value="" style="endArrow=none;html=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="899" y="2588" as="sourcePoint"/>
+                        <mxPoint x="1280" y="2590" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="1367" value="" style="endArrow=none;html=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="893.5" y="2727.5" as="sourcePoint"/>
+                        <mxPoint x="1274.5" y="2729.5" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="1368" value="Your offer" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="891.5" y="2699.5" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1369" value="Offer Type" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="887.5" y="2735" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1370" value="Submit Offer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="1439" y="2563.5" width="101" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="1371" value="Your books to offer (select up to 3)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="889" y="2830" width="210" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1372" value="Cover" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="904" y="2865.5" width="62.5" height="62.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="1373" value="Book Title" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="985" y="2860" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1374" value="ISBN: 123456789 Condition: VG Price $15.00" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="985" y="2882" width="277.5" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1375" value="Cover" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="904" y="2943.5" width="62.5" height="62.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="1376" value="Book Title" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="985" y="2938" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1377" value="ISBN: 123456789 Condition: VG Price $15.00" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="985" y="2960" width="277.5" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1378" value="Cover" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="904" y="3027.5" width="62.5" height="62.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="1379" value="Book Title" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="985" y="3022" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1380" value="ISBN: 123456789 Condition: VG Price $15.00" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="985" y="3044" width="277.5" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1381" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="904" y="3140" width="146" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1382" value="Additional payment offered ( Swap + Money only)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="884" y="3108" width="290" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1383" value="Message to owner (optional)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="893" y="3190" width="170" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1384" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="904" y="3220" width="356" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="1385" value="Make an offer" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="3050" y="-957.5" width="90" height="35" as="geometry"/>
+                </mxCell>
+                <mxCell id="1386" value="Make an offer" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="4100.75" y="-1107.5" width="90" height="35" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
