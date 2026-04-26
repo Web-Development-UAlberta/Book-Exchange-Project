@@ -232,3 +232,5 @@ The platform leverages matching logic and mock book data to connect users and fa
 | **Week 4** | Front End Set Up & Testing |
 | **Week 5** | First Release              |
 | **Week 6** | Final Project              |
+
+[Back to Top](#1-project-overview)

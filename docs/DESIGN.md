@@ -416,3 +416,5 @@ K. Notifications (/notifications)
 ---
 
 This design is adapted and extended based on the provided reference structure and aligned with the selected technology stack.
+
+[Back to Top](#1-introduction)
