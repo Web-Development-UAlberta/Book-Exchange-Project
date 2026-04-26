@@ -1,0 +1,363 @@
+<mxfile host="Electron" agent="ChatGPT">
+  <diagram id="ERD" name="Book Exchange ERD - Dark Friendly">
+    <mxGraphModel dx="5992" dy="3089" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2850" pageHeight="1200" background="#020617" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sec_identity" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0b1220;strokeColor=#64748b;fontColor=#f8fafc;fontStyle=1;fontSize=18;align=left;verticalAlign=top;spacing=10;dashed=1;" value="ASP.NET Identity" vertex="1">
+          <mxGeometry height="740" width="1350" x="20" y="-30" as="geometry" />
+        </mxCell>
+        <mxCell id="sec_catalog" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0b1220;strokeColor=#64748b;fontColor=#f8fafc;fontStyle=1;fontSize=18;align=left;verticalAlign=top;spacing=10;dashed=1;" value="Catalog / Listings" vertex="1">
+          <mxGeometry height="670" width="780" x="-860" y="-40" as="geometry" />
+        </mxCell>
+        <mxCell id="sec_exchange" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0b1220;strokeColor=#64748b;fontColor=#f8fafc;fontStyle=1;fontSize=18;align=left;verticalAlign=top;spacing=10;dashed=1;" value="Exchange / Transactions" vertex="1">
+          <mxGeometry height="840" width="710" x="370" y="-930" as="geometry" />
+        </mxCell>
+        <mxCell id="sec_ship" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0b1220;strokeColor=#64748b;fontColor=#f8fafc;fontStyle=1;fontSize=18;align=left;verticalAlign=top;spacing=10;dashed=1;" value="Shipping / Communication" vertex="1">
+          <mxGeometry height="1350" width="1340" x="-2320" y="-1200" as="geometry" />
+        </mxCell>
+        <mxCell id="AspNetUsers" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;AspNetUsers&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Id&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;UserName&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;VARCHAR(256)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;NormalizedUserName&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;VARCHAR(256)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Email&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;VARCHAR(256)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;NormalizedEmail&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;VARCHAR(256)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;EmailConfirmed&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;BOOLEAN&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;PasswordHash&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TEXT&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;SecurityStamp&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TEXT&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ConcurrencyStamp&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TEXT&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;PhoneNumber&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TEXT&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;PhoneNumberConfirmed&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;BOOLEAN&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;TwoFactorEnabled&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;BOOLEAN&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;LockoutEnd&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TIMESTAMPTZ&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;LockoutEnabled&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;BOOLEAN&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;AccessFailedCount&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;INT&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="396" width="300" x="220" y="67" as="geometry" />
+        </mxCell>
+        <mxCell id="AspNetRoles" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;AspNetRoles&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Id&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Name&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;VARCHAR(256)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;NormalizedName&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;VARCHAR(256)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ConcurrencyStamp&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TEXT&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="132" width="300" x="1030" y="51" as="geometry" />
+        </mxCell>
+        <mxCell id="AspNetUserRoles" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;AspNetUserRoles&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;UserId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK, FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;RoleId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK, FK&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="84" width="300" x="640" y="75" as="geometry" />
+        </mxCell>
+        <mxCell id="AspNetUserClaims" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;AspNetUserClaims&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Id&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;INT PK IDENTITY&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;UserId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ClaimType&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TEXT&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ClaimValue&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TEXT&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="132" width="300" x="640" y="199" as="geometry" />
+        </mxCell>
+        <mxCell id="AspNetUserLogins" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;AspNetUserLogins&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;LoginProvider&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;VARCHAR(128) PK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ProviderKey&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;VARCHAR(128) PK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ProviderDisplayName&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TEXT&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;UserId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="132" width="300" x="640" y="369" as="geometry" />
+        </mxCell>
+        <mxCell id="AspNetUserTokens" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;AspNetUserTokens&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;UserId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK, FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;LoginProvider&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;VARCHAR(128) PK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Name&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;VARCHAR(128) PK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Value&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TEXT&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="132" width="300" x="180" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="AspNetRoleClaims" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;AspNetRoleClaims&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Id&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;INT PK IDENTITY&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;RoleId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ClaimType&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TEXT&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ClaimValue&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TEXT&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="132" width="300" x="1030" y="281" as="geometry" />
+        </mxCell>
+        <mxCell id="Listings" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;Listings&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Id&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;UserId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Isbn&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;VARCHAR(13)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Condition&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;BookCondition&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Price&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;NUMERIC(10,2)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;WeightGrams&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;INT&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Status&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;ListingStatus&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;CreatedAt&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TIMESTAMP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="228" width="300" x="-460" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="Genres" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;Genres&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Id&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Name&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;VARCHAR(100) UNIQUE&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="84" width="260" x="-820" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ListingGenres" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;ListingGenres&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ListingId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK, FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;GenreId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK, FK&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="84" width="260" x="-820" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="Wishlist" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;Wishlist&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Id&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;UserId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Isbn&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;VARCHAR(13)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;IsActive&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;BOOLEAN&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Unique&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UserId + Isbn&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="156" width="300" x="-460" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="ExchangeRequests" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;ExchangeRequests&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Id&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;TargetListingId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;RequesterId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Type&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;ExchangeType&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Status&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;ExchangeStatus&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Price&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;NUMERIC(10,2) NULL&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Message&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TEXT&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;CreatedAt&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TIMESTAMP&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;AcceptedAt&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TIMESTAMP NULL&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;CompletedAt&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TIMESTAMP NULL&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;CancelledAt&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TIMESTAMP NULL&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="300" width="310" x="390" y="-598" as="geometry" />
+        </mxCell>
+        <mxCell id="ExchangeRequestItems" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;ExchangeRequestItems&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ExchangeRequestId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK, FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;OfferedListingId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK, FK&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="84" width="270" x="410" y="-232" as="geometry" />
+        </mxCell>
+        <mxCell id="Transactions" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;Transactions&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Id&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ExchangeRequestId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK UNIQUE&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Status&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TransactionStatus&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;TotalValue&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;NUMERIC(10,2)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;CreatedAt&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TIMESTAMP&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ConfirmedAt&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TIMESTAMP NULL&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;CompletedAt&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TIMESTAMP NULL&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;CancelledAt&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TIMESTAMP NULL&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="228" width="310" x="390" y="-860" as="geometry" />
+        </mxCell>
+        <mxCell id="Addresses" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;Addresses&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Id&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;UserId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;FullName&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;VARCHAR(200)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;GooglePlaceId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;VARCHAR(255)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;CreatedAt&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TIMESTAMP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="156" width="300" x="-1350" y="-110" as="geometry" />
+        </mxCell>
+        <mxCell id="Carriers" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;Carriers&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Id&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Name&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;VARCHAR(100) UNIQUE&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;BaseCost&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;NUMERIC(10,2)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;CostPerKg&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;NUMERIC(10,2)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;CostPerKm&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;NUMERIC(10,2)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;MaxWeightGrams&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;INT NULL&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;IsActive&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;BOOLEAN&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;CreatedAt&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TIMESTAMP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="228" width="300" x="-2270" y="-870" as="geometry" />
+        </mxCell>
+        <mxCell id="Shipments" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;Shipments&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Id&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;TransactionId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;SenderAddressId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ReceiverAddressId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;CarrierId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;PackageWeightGrams&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;INT&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;DistanceKm&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;NUMERIC(10,2)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ShippingCost&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;NUMERIC(10,2)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;TrackingNumber&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;VARCHAR(100)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;LabelUrl&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TEXT&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Status&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;ShipmentStatus&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;CreatedAt&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TIMESTAMP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="324" width="310" x="-1755" y="-992" as="geometry" />
+        </mxCell>
+        <mxCell id="Reviews" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;Reviews&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Id&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;TransactionId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ReviewerId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Rating&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;INT 1-5&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Comment&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TEXT&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;CreatedAt&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TIMESTAMP&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Unique&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TransactionId + ReviewerId&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="204" width="300" x="-1360" y="-1090" as="geometry" />
+        </mxCell>
+        <mxCell id="Notifications" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;Notifications&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Id&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;UserId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Category&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;NotificationCategory&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Status&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;NotificationStatus&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Title&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;VARCHAR(255)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Message&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TEXT&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;RelatedListingId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK NULL&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;RelatedExchangeRequestId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK NULL&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;RelatedTransactionId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK NULL&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;CreatedAt&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TIMESTAMP&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ReadAt&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TIMESTAMP NULL&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="300" width="310" x="-1370" y="-763" as="geometry" />
+        </mxCell>
+        <mxCell id="Messages" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#38bdf8;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;shadow=0;glass=0;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#0f766e;color:#f8fafc;border-bottom:1px solid #5eead4;padding:6px 8px&quot;&gt;&lt;b&gt;Messages&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Id&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID PK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;SenderId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ReceiverId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;MessageText&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TEXT&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;Status&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;MessageStatus&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ListingId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK NULL&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;ExchangeRequestId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK NULL&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;TransactionId&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;UUID FK NULL&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;&lt;b&gt;CreatedAt&lt;/b&gt; : &lt;span style=&quot;color:#cbd5e1&quot;&gt;TIMESTAMP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="252" width="300" x="-1360" y="-410" as="geometry" />
+        </mxCell>
+        <mxCell id="EnumBookCondition" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e1b4b;strokeColor=#a78bfa;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;dashed=1;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#1e1b4b;color:#f8fafc;border-bottom:1px solid #a78bfa;padding:6px 8px&quot;&gt;&lt;b&gt;BookCondition&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;LikeNew&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;VeryGood&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Good&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Acceptable&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Poor&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="156" width="220" x="-820" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="EnumListingStatus" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e1b4b;strokeColor=#a78bfa;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;dashed=1;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#1e1b4b;color:#f8fafc;border-bottom:1px solid #a78bfa;padding:6px 8px&quot;&gt;&lt;b&gt;ListingStatus&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Active&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Pending&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Completed&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Cancelled&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="132" width="220" x="-820" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="EnumExchangeType" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e1b4b;strokeColor=#a78bfa;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;dashed=1;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#1e1b4b;color:#f8fafc;border-bottom:1px solid #a78bfa;padding:6px 8px&quot;&gt;&lt;b&gt;ExchangeType&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;BuySell&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;BookSwap&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;BookSwapWithCash&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="108" width="240" x="790" y="-590" as="geometry" />
+        </mxCell>
+        <mxCell id="EnumExchangeStatus" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e1b4b;strokeColor=#a78bfa;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;dashed=1;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#1e1b4b;color:#f8fafc;border-bottom:1px solid #a78bfa;padding:6px 8px&quot;&gt;&lt;b&gt;ExchangeStatus&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Requested&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Accepted&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Rejected&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Cancelled&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Completed&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="156" width="230" x="800" y="-430" as="geometry" />
+        </mxCell>
+        <mxCell id="EnumTransactionStatus" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e1b4b;strokeColor=#a78bfa;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;dashed=1;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#1e1b4b;color:#f8fafc;border-bottom:1px solid #a78bfa;padding:6px 8px&quot;&gt;&lt;b&gt;TransactionStatus&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Confirmed&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Shipped&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Completed&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Cancelled&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Disputed&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="156" width="230" x="800" y="-824" as="geometry" />
+        </mxCell>
+        <mxCell id="EnumShipmentStatus" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e1b4b;strokeColor=#a78bfa;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;dashed=1;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#1e1b4b;color:#f8fafc;border-bottom:1px solid #a78bfa;padding:6px 8px&quot;&gt;&lt;b&gt;ShipmentStatus&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Pending&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Quoted&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;LabelCreated&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Shipped&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Delivered&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Cancelled&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="180" width="230" x="-2200" y="-1124" as="geometry" />
+        </mxCell>
+        <mxCell id="EnumNotificationStatus" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e1b4b;strokeColor=#a78bfa;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;dashed=1;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#1e1b4b;color:#f8fafc;border-bottom:1px solid #a78bfa;padding:6px 8px&quot;&gt;&lt;b&gt;NotificationStatus&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Unread&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Read&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Archived&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="108" width="230" x="-1755" y="-630" as="geometry" />
+        </mxCell>
+        <mxCell id="EnumNotificationCategory" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e1b4b;strokeColor=#a78bfa;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;dashed=1;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#1e1b4b;color:#f8fafc;border-bottom:1px solid #a78bfa;padding:6px 8px&quot;&gt;&lt;b&gt;NotificationCategory&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;MatchFound&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;WishlistAvailable&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;NewMessage&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;ExchangeRequested&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;ExchangeAccepted&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;ExchangeRejected&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;TransactionUpdate&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="204" width="270" x="-1755" y="-436" as="geometry" />
+        </mxCell>
+        <mxCell id="EnumMessageStatus" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e1b4b;strokeColor=#a78bfa;align=left;verticalAlign=top;spacing=0;overflow=fill;fontColor=#f8fafc;dashed=1;" value="&lt;div style=&quot;font-size:12px;line-height:1.25;font-family:Arial&quot;&gt;&lt;div style=&quot;font-size:15px;background-color:#1e1b4b;color:#f8fafc;border-bottom:1px solid #a78bfa;padding:6px 8px&quot;&gt;&lt;b&gt;MessageStatus&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Sent&lt;/div&gt;&lt;div style=&quot;padding:3px 8px;border-bottom:1px solid #334155;color:#f8fafc&quot;&gt;Read&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="84" width="210" x="-1735" y="-158" as="geometry" />
+        </mxCell>
+        <mxCell id="edge0" edge="1" parent="1" source="AspNetUserRoles" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="AspNetUsers" value="UserId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="580" y="117" />
+              <mxPoint x="580" y="179" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge1" edge="1" parent="1" source="AspNetUserRoles" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="AspNetRoles" value="RoleId → Id">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge2" edge="1" parent="1" source="AspNetUserClaims" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="AspNetUsers" value="UserId → Id">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge3" edge="1" parent="1" source="AspNetUserLogins" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="AspNetUsers" value="UserId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="580" y="435" />
+              <mxPoint x="580" y="329" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge4" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="AspNetUsers" value="UserId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="370" y="539" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge5" edge="1" parent="1" source="AspNetRoleClaims" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="AspNetRoles" value="RoleId → Id">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge6" edge="1" parent="1" source="Addresses" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="AspNetUsers" value="UserId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-1140" y="690" />
+              <mxPoint x="-20" y="690" />
+              <mxPoint x="-20" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge7" edge="1" parent="1" source="Listings" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="AspNetUsers" value="UserId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-60" y="170" />
+              <mxPoint x="-60" y="278" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge8" edge="1" parent="1" source="Wishlist" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="AspNetUsers" value="UserId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-60" y="448" />
+              <mxPoint x="-60" y="370" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge9" edge="1" parent="1" source="ListingGenres" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="Listings" value="ListingId → Id">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge10" edge="1" parent="1" source="ListingGenres" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="Genres" value="GenreId → Id">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge11" edge="1" parent="1" source="ExchangeRequests" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="Listings" value="TargetListingId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-200" y="-448" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge12" edge="1" parent="1" source="ExchangeRequests" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="AspNetUsers" value="RequesterId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="350" y="-390" />
+            </Array>
+            <mxPoint x="390" y="-410" as="sourcePoint" />
+            <mxPoint x="330" y="80" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge13" edge="1" parent="1" source="ExchangeRequestItems" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="ExchangeRequests" value="ExchangeRequestId → Id">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge14" edge="1" parent="1" source="ExchangeRequestItems" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="Listings" value="OfferedListingId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-30" y="-190" />
+              <mxPoint x="-30" y="124" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge15" edge="1" parent="1" source="Transactions" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="ExchangeRequests" value="ExchangeRequestId → Id">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge16" edge="1" parent="1" source="Shipments" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="Transactions" value="TransactionId → Id">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge17" edge="1" parent="1" source="Shipments" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="Addresses" value="SenderAddressId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-1800" y="-740" />
+              <mxPoint x="-1800" y="-32" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge18" edge="1" parent="1" source="Shipments" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="Addresses" value="ReceiverAddressId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-1830" y="-800" />
+              <mxPoint x="-1830" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge19" edge="1" parent="1" source="Shipments" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="Carriers" value="CarrierId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-1862" y="-920" />
+              <mxPoint x="-1862" y="-756" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge20" edge="1" parent="1" source="Reviews" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="Transactions" value="TransactionId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="350" y="-988" />
+              <mxPoint x="350" y="-780" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge21" edge="1" parent="1" source="Reviews" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="AspNetUsers" value="ReviewerId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="320" y="-950" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge22" edge="1" parent="1" source="Notifications" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="AspNetUsers" value="UserId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-800" y="-530" />
+              <mxPoint x="-800" y="-380" />
+              <mxPoint x="290" y="-380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge23" edge="1" parent="1" source="Notifications" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="Listings" value="RelatedListingId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-240" y="-613" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge24" edge="1" parent="1" source="Notifications" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="ExchangeRequests" value="RelatedExchangeRequestId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-335" y="-570" />
+              <mxPoint x="-335" y="-490" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge25" edge="1" parent="1" source="Notifications" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="Transactions" value="RelatedTransactionId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-690" y="-710" />
+              <mxPoint x="-690" y="-710" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge26" edge="1" parent="1" source="Messages" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="AspNetUsers" value="SenderId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="-284" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge27" edge="1" parent="1" source="Messages" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="AspNetUsers" value="ReceiverId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="230" y="-250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge28" edge="1" parent="1" source="Messages" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="Listings" value="ListingId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-360" y="-220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge29" edge="1" parent="1" source="Messages" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="ExchangeRequests" value="ExchangeRequestId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-940" y="-350" />
+              <mxPoint x="-940" y="-420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge30" edge="1" parent="1" source="Messages" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#fbbf24;fontColor=#f8fafc;fontSize=10;strokeWidth=2;" target="Transactions" value="TransactionId → Id">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-40" y="-320" />
+              <mxPoint x="-40" y="-670" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="enum_edge_0" edge="1" parent="1" source="EnumBookCondition" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;dashed=1;dashPattern=8 4;strokeColor=#a78bfa;fontColor=#f8fafc;fontSize=11;strokeWidth=2;" target="Listings" value="Condition">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-400" y="290" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="enum_edge_1" edge="1" parent="1" source="EnumListingStatus" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;dashed=1;dashPattern=8 4;strokeColor=#a78bfa;fontColor=#f8fafc;fontSize=11;strokeWidth=2;" target="Listings" value="Status">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-540" y="516" />
+              <mxPoint x="-540" y="310" />
+              <mxPoint x="-360" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="enum_edge_2" edge="1" parent="1" source="EnumExchangeType" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;dashed=1;dashPattern=8 4;strokeColor=#a78bfa;fontColor=#f8fafc;fontSize=11;strokeWidth=2;" target="ExchangeRequests" value="Type">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="745" y="-536" />
+              <mxPoint x="745" y="-490" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="enum_edge_3" edge="1" parent="1" source="EnumExchangeStatus" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;dashed=1;dashPattern=8 4;strokeColor=#a78bfa;fontColor=#f8fafc;fontSize=11;strokeWidth=2;" target="ExchangeRequests" value="Status">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="enum_edge_4" edge="1" parent="1" source="EnumTransactionStatus" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;dashed=1;dashPattern=8 4;strokeColor=#a78bfa;fontColor=#f8fafc;fontSize=11;strokeWidth=2;" target="Transactions" value="Status">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="enum_edge_5" edge="1" parent="1" source="EnumShipmentStatus" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;dashed=1;dashPattern=8 4;strokeColor=#a78bfa;fontColor=#f8fafc;fontSize=11;strokeWidth=2;" target="Shipments" value="Status">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-1862" y="-1034" />
+              <mxPoint x="-1862" y="-950" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="enum_edge_6" edge="1" parent="1" source="EnumNotificationStatus" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;dashed=1;dashPattern=8 4;strokeColor=#a78bfa;fontColor=#f8fafc;fontSize=11;strokeWidth=2;" target="Notifications" value="Status">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="enum_edge_7" edge="1" parent="1" source="EnumNotificationCategory" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;dashed=1;dashPattern=8 4;strokeColor=#a78bfa;fontColor=#f8fafc;fontSize=11;strokeWidth=2;" target="Notifications" value="Category">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-1420" y="-334" />
+              <mxPoint x="-1420" y="-550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="enum_edge_8" edge="1" parent="1" source="EnumMessageStatus" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;dashed=1;dashPattern=8 4;strokeColor=#a78bfa;fontColor=#f8fafc;fontSize=11;strokeWidth=2;" target="Messages" value="Status">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
