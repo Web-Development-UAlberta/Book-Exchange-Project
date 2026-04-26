@@ -201,7 +201,7 @@ The platform leverages matching logic and mock book data to connect users and fa
 - Mobile app version
 - Advanced trust & fraud detection system
 - Member vs Verified Member tiers
-- Counter-offers and negotiation are handle via the messaging system.
+- Counter-offers and negotiation mechanism. Handled via the messaging system.
 
 ---
 
