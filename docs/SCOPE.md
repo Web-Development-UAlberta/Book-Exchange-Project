@@ -147,9 +147,7 @@ The platform leverages matching logic and mock book data to connect users and fa
   - Transaction type (sell, buy, swap)
 - Matching logic must:
   - Consider both swap and buy/sell scenarios
-  - Balance value differences in swaps
   - If book balance isn't equal users can offer money to cover the balance and complete transaction
-- Maximum 3 counter-offer iterations per negotiation cycle
 - System must store:
   - Users
   - Book listings
