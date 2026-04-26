@@ -87,7 +87,6 @@ The platform leverages matching logic and mock book data to connect users and fa
   - Buy/sell compatibility
   - Swap feasibility
 - Consider value discrepancies when suggesting swaps
-- Support up to 3 counter-offer permutations per negotiation
 
 ---
 
@@ -202,6 +201,7 @@ The platform leverages matching logic and mock book data to connect users and fa
 - Mobile app version
 - Advanced trust & fraud detection system
 - Member vs Verified Member tiers
+- Counter-offers and negotiation are handle via the messaging system.
 
 ---
 

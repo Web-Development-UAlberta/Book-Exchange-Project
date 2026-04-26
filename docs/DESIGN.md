@@ -124,7 +124,6 @@ G. Transaction Module
 - Link transactions to one or more listings
 - Manage transaction lifecycle through statuses such as proposed, confirmed, shipped, completed, cancelled, and disputed
 - Record timestamps for confirmation, completion, and cancellation
-- Support negotiation and controlled counter-offer workflow
 
 H. Shipping and Delivery Module
 
