@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="nwZHn6CSP7jbT7hnAO0n" name="Page-1">
-        <mxGraphModel dx="1097" dy="3087" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1981" dy="3540" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -325,24 +325,24 @@
                     <mxGeometry x="871" y="380" width="139" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="184" value="Transactions" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
-                    <mxGeometry x="871" y="420" width="139" height="30" as="geometry"/>
+                    <mxGeometry x="871" y="458" width="139" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="185" value="Messages" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
-                    <mxGeometry x="870.5" y="460" width="139" height="30" as="geometry"/>
+                    <mxGeometry x="870.5" y="498" width="139" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="1022" style="edgeStyle=none;html=1;" parent="1" source="186" edge="1">
                     <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="3680" y="1310" as="targetPoint"/>
+                        <mxPoint x="2920" y="1140" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="186" value="Shipping" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
-                    <mxGeometry x="871" y="500" width="139" height="30" as="geometry"/>
+                    <mxGeometry x="871" y="538" width="139" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="187" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
-                    <mxGeometry x="871" y="540" width="139" height="30" as="geometry"/>
+                    <mxGeometry x="871" y="578" width="139" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="188" value="Profile" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
-                    <mxGeometry x="871" y="580" width="139" height="30" as="geometry"/>
+                    <mxGeometry x="871" y="618" width="139" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="189" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="1380" y="238" width="297" height="272" as="geometry"/>
@@ -486,7 +486,7 @@
                     <mxGeometry x="1630" y="1012" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="222" value="&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;DASHBOARD - sidebar&lt;br&gt;ID= &quot;dashboard-sidebar&quot; CLASS = &quot;sidebar-nav-link&quot;&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;data-page = page&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
-                    <mxGeometry x="863.5" y="638" width="156.5" height="100" as="geometry"/>
+                    <mxGeometry x="863.5" y="676" width="156.5" height="100" as="geometry"/>
                 </mxCell>
                 <mxCell id="223" value="&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;ID = &quot;dashboard-stats&quot;&lt;br&gt;CLASS = &quot;stat-card&quot;&lt;br&gt;&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;ID = &quot;stat-active-listings&quot;&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="1063" y="178" width="137" height="52" as="geometry"/>
@@ -578,15 +578,15 @@
                     <mxGeometry x="1713" y="110" width="186" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="252" value="TRANSACTIONS TAB&amp;nbsp;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;ID = &quot;transactions-tabs&quot;&lt;br&gt;EACH TAB CLASS = &quot;transactions-tab&quot;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
-                    <mxGeometry x="1779.75" y="200" width="271" height="30" as="geometry"/>
+                    <mxGeometry x="2127.5" y="138" width="271" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="253" value="Swap - Book A &amp;lt;-&amp;gt; Book B" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="1748" y="263" width="185" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="254" value="" style="endArrow=none;html=1;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="1743" y="410" as="sourcePoint"/>
-                        <mxPoint x="2483" y="410" as="targetPoint"/>
+                        <mxPoint x="1740" y="373.47" as="sourcePoint"/>
+                        <mxPoint x="2480" y="373.47" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="255" value="Active" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="1" vertex="1">
@@ -598,71 +598,64 @@
                 <mxCell id="257" value="With User A - Started Date" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="1748" y="293" width="161" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="258" value="Negotiating" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="2383" y="270" width="90" height="25" as="geometry"/>
+                <mxCell id="258" value="Pending" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="2388" y="277" width="90" height="25" as="geometry"/>
                 </mxCell>
-                <mxCell id="259" value="TRANSACTIONS LSIT&amp;nbsp;ID = &quot;transactions-list&quot;&lt;br&gt;EACH CARD TRANSACTIONS CARD CLASS&amp;nbsp;= &quot;transactions-card&quot;&lt;br&gt;TRANSACTIONS STATUS BADGE CLASS&amp;nbsp;&amp;nbsp;= &quot;transactions-status-badge&quot;&lt;br&gt;BTNS&lt;br&gt;&amp;nbsp;COUNTER INFO&amp;nbsp;CLASS&amp;nbsp;&amp;nbsp;= &quot;transactions-counter-info&quot;&lt;br&gt;ACCEPT CLASS&amp;nbsp;&amp;nbsp;= &quot;transactions-accept-btn&quot;&lt;br&gt;TRANSACTION CANCEL&amp;nbsp;CLASS= &quot;transactions-cancel-btn&quot;&lt;br&gt;TRANS REVIEW&lt;br&gt; TRANS REVIEW CLASS&amp;nbsp;= &quot;transactions-review-btn&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=light-dark(#6A00FF,#FFA7FF);strokeColor=none;fontColor=light-dark(#FFFFFF,#000000);" parent="1" vertex="1">
+                <mxCell id="259" value="TRANSACTIONS LSIT&amp;nbsp;ID = &quot;transactions-list&quot;&lt;br&gt;EACH CARD TRANSACTIONS CARD CLASS&amp;nbsp;= &quot;transactions-card&quot;&lt;br&gt;TRANSACTIONS STATUS BADGE CLASS&amp;nbsp;&amp;nbsp;= &quot;transactions-status-badge&quot;&lt;br&gt;BTNS&lt;br&gt;ACCEPT CLASS&amp;nbsp;&amp;nbsp;= &quot;transactions-accept-btn&quot;&lt;br&gt;MESSAGE CLASS = &quot;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;transactions-message-btn&quot;&lt;/span&gt;&lt;br&gt;TRANSACTION CANCEL&amp;nbsp;CLASS= &quot;transactions-cancel-btn&quot;&lt;br&gt;TRANS REVIEW&lt;br&gt; TRANS REVIEW CLASS&amp;nbsp;= &quot;transactions-review-btn&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=light-dark(#6A00FF,#FFA7FF);strokeColor=none;fontColor=light-dark(#FFFFFF,#000000);" parent="1" vertex="1">
                     <mxGeometry x="1830" y="740" width="420" height="150" as="geometry"/>
                 </mxCell>
                 <mxCell id="260" value="Accept" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="1" vertex="1">
-                    <mxGeometry x="1762" y="370" width="46.5" height="25" as="geometry"/>
+                    <mxGeometry x="1751.5" y="332" width="46.5" height="25" as="geometry"/>
                 </mxCell>
                 <mxCell id="261" value="Cancel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-                    <mxGeometry x="1892" y="370" width="56.5" height="25" as="geometry"/>
+                    <mxGeometry x="1881.5" y="332" width="56.5" height="25" as="geometry"/>
                 </mxCell>
-                <mxCell id="262" value="Counter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-                    <mxGeometry x="1828.75" y="370" width="46.5" height="25" as="geometry"/>
-                </mxCell>
-                <mxCell id="263" value="Counter offer 2 of 3" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="1747.75" y="330" width="208.5" height="20" as="geometry"/>
+                <mxCell id="262" value="Message" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+                    <mxGeometry x="1810" y="332" width="54.75" height="25" as="geometry"/>
                 </mxCell>
                 <mxCell id="264" value="Sell - Book Title to User" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="1753" y="420" width="185" height="30" as="geometry"/>
+                    <mxGeometry x="1748" y="396" width="185" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="265" value="" style="endArrow=none;html=1;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="1748" y="567" as="sourcePoint"/>
-                        <mxPoint x="2488" y="567" as="targetPoint"/>
+                        <mxPoint x="1740" y="513.95" as="sourcePoint"/>
+                        <mxPoint x="2480" y="513.95" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="266" value="$9.00" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="1753" y="450" width="161" height="30" as="geometry"/>
+                    <mxGeometry x="1748" y="426" width="161" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="267" value="shipped" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="2388" y="427" width="90" height="25" as="geometry"/>
+                    <mxGeometry x="2388" y="413.54" width="90" height="25" as="geometry"/>
                 </mxCell>
                 <mxCell id="268" value="View Shipment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="1" vertex="1">
-                    <mxGeometry x="1762" y="525" width="96" height="25" as="geometry"/>
-                </mxCell>
-                <mxCell id="269" value="Counter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-                    <mxGeometry x="1892" y="525" width="46.5" height="25" as="geometry"/>
-                </mxCell>
-                <mxCell id="270" value="Counter offer 2 of 3" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="1752.75" y="487" width="208.5" height="20" as="geometry"/>
+                    <mxGeometry x="1746" y="465" width="96" height="25" as="geometry"/>
                 </mxCell>
                 <mxCell id="271" value="Sell - Book Title to User" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="1743" y="580" width="185" height="30" as="geometry"/>
+                    <mxGeometry x="1743" y="527.95" width="185" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="272" value="" style="endArrow=none;html=1;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="1738" y="727" as="sourcePoint"/>
-                        <mxPoint x="2478" y="727" as="targetPoint"/>
+                        <mxPoint x="1738" y="638.95" as="sourcePoint"/>
+                        <mxPoint x="2478" y="638.95" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="273" value="$9.00" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="1743" y="610" width="161" height="30" as="geometry"/>
+                    <mxGeometry x="1743" y="557.95" width="161" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="274" value="completed" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="2378" y="587" width="90" height="25" as="geometry"/>
+                    <mxGeometry x="2378" y="534.95" width="90" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1259" style="edgeStyle=none;html=1;" edge="1" parent="1" source="275">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="3750.000000000001" y="1147.2727272727273" as="targetPoint"/>
+                    </mxGeometry>
                 </mxCell>
                 <mxCell id="275" value="Leave Review" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="1" vertex="1">
-                    <mxGeometry x="1752" y="685" width="96" height="25" as="geometry"/>
+                    <mxGeometry x="1735.5" y="595" width="96" height="25" as="geometry"/>
                 </mxCell>
                 <mxCell id="276" value="View Details" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-                    <mxGeometry x="1882" y="685" width="91" height="25" as="geometry"/>
-                </mxCell>
-                <mxCell id="277" value="Counter offer 2 of 3" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="1742.75" y="647" width="208.5" height="20" as="geometry"/>
+                    <mxGeometry x="1850" y="595" width="91" height="25" as="geometry"/>
                 </mxCell>
                 <mxCell id="279" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;User Clicks the view all to be taken here&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=#3A5431;fillColor=#6d8764;fontColor=#ffffff;" parent="1" vertex="1">
                     <mxGeometry x="1740" y="-60" width="370" height="40" as="geometry"/>
@@ -878,7 +871,7 @@
                     <mxGeometry x="850" y="1837" width="850" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="401" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;&lt;b&gt;Create Listing&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="884" y="1297" width="186" height="30" as="geometry"/>
+                    <mxGeometry x="887.5" y="1279" width="186" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="402" value="LN&lt;div&gt;Like New&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="890" y="1527" width="80" height="50" as="geometry"/>
@@ -931,7 +924,7 @@
                 <mxCell id="418" value="0.00" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
                     <mxGeometry x="885" y="1627" width="189" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="419" value="Weight (grams)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                <mxCell id="419" value="Weight (kg)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="1084" y="1597" width="90" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="420" value="000" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
@@ -1226,22 +1219,22 @@
                     <mxGeometry x="2590" y="150" width="95" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="595" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="2550" y="1264" width="850" height="50" as="geometry"/>
+                    <mxGeometry x="2552" y="1002" width="850" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="596" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="2554" y="1264" width="130" height="50" as="geometry"/>
+                    <mxGeometry x="2556" y="1002" width="130" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="597" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="3204" y="1274" width="60" height="30" as="geometry"/>
+                    <mxGeometry x="3206" y="1012" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="598" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="3264" y="1274" width="60" height="30" as="geometry"/>
+                    <mxGeometry x="3266" y="1012" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="599" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="3330" y="1276" width="60" height="30" as="geometry"/>
+                    <mxGeometry x="3332" y="1014" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="600" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
-                    <mxGeometry x="2554" y="1332" width="820" height="20" as="geometry"/>
+                    <mxGeometry x="2556" y="1070" width="820" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="601" value="Swap" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="2698" y="150" width="95" height="30" as="geometry"/>
@@ -1249,86 +1242,8 @@
                 <mxCell id="602" value="Buy / Sell" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="2805" y="150" width="95" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="603" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;" parent="1" vertex="1">
-                    <mxGeometry x="2625" y="220" width="700" height="300" as="geometry"/>
-                </mxCell>
-                <mxCell id="604" value="Multi-book swap" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
-                    <mxGeometry x="2640" y="230" width="120" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="605" value="&lt;b&gt;Your 3 books (-$30)&lt;/b&gt;&lt;br&gt;&lt;div&gt;Book A - $10 - Good&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;Book B - $10 - Very Good&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;Book C - $10 - Good&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;br style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;align=left;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" parent="1" vertex="1">
-                    <mxGeometry x="2685" y="260" width="200" height="200" as="geometry"/>
-                </mxCell>
-                <mxCell id="606" value="" style="endArrow=classic;startArrow=classic;html=1;entryX=0.593;entryY=0.324;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=#f5f5f5;strokeColor=#666666;" parent="1" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="2930" y="359.5" as="sourcePoint"/>
-                        <mxPoint x="3040.1" y="359.6600000000001" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="607" value="Propose Swap" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="2650" y="477.5" width="95" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="608" value="Message user" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="2758" y="477.5" width="95" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="609" value="View Listing" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="2865" y="477.5" width="95" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="610" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;" parent="1" vertex="1">
-                    <mxGeometry x="2625" y="924" width="700" height="320" as="geometry"/>
-                </mxCell>
-                <mxCell id="611" value="Swap" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
-                    <mxGeometry x="2640" y="934" width="120" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="612" value="" style="endArrow=classic;startArrow=classic;html=1;entryX=0.593;entryY=0.324;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=#f5f5f5;strokeColor=#666666;" parent="1" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="2914.95" y="1034" as="sourcePoint"/>
-                        <mxPoint x="3025.0499999999997" y="1034.16" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="613" value="Propose Swap" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="2650.5" y="1194" width="95" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="614" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
-                    <mxGeometry x="3080" y="260" width="220" height="220" as="geometry"/>
-                </mxCell>
-                <mxCell id="615" value="Message user" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="2758.5" y="1194" width="95" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="616" value="View Listing" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="2865.5" y="1194" width="95" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="617" value="Cover" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;dashed=1;" parent="1" vertex="1">
-                    <mxGeometry x="3090" y="272.5" width="200" height="100" as="geometry"/>
-                </mxCell>
-                <mxCell id="618" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Their book&lt;/h1&gt;&lt;p&gt;Title - Price - Condition&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="3100" y="387.5" width="180" height="80" as="geometry"/>
-                </mxCell>
-                <mxCell id="619" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
-                    <mxGeometry x="3067.5" y="969" width="220" height="220" as="geometry"/>
-                </mxCell>
-                <mxCell id="620" value="Cover" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;dashed=1;" parent="1" vertex="1">
-                    <mxGeometry x="3077.5" y="981.5" width="200" height="100" as="geometry"/>
-                </mxCell>
-                <mxCell id="621" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Their book&lt;/h1&gt;&lt;p&gt;Title - Price - Condition&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="3087.5" y="1096.5" width="180" height="80" as="geometry"/>
-                </mxCell>
-                <mxCell id="622" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
-                    <mxGeometry x="2662.5" y="969" width="220" height="220" as="geometry"/>
-                </mxCell>
-                <mxCell id="623" value="Cover" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;dashed=1;" parent="1" vertex="1">
-                    <mxGeometry x="2672.5" y="981.5" width="200" height="100" as="geometry"/>
-                </mxCell>
-                <mxCell id="624" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Your book&lt;/h1&gt;&lt;p&gt;Title - Price - Condition&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="2682.5" y="1096.5" width="180" height="80" as="geometry"/>
-                </mxCell>
-                <mxCell id="625" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;MATCH OFFER SIDE CLASS&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;= &quot;match-offer-side&quot;&lt;br&gt;&lt;span style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); color: rgb(255, 255, 255);&quot;&gt;MATCH REQUEST SIDE CLASS&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); color: rgb(255, 255, 255);&quot;&gt;= &quot;match-offer-side&quot;&lt;/span&gt;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
-                    <mxGeometry x="3035" y="495" width="295" height="40" as="geometry"/>
-                </mxCell>
                 <mxCell id="626" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;MATCHING RESULTS LIST ID = &quot;matching-results-list&quot;&lt;br&gt;EACH CARD CLASS&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;= &quot;match-card card&quot;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="2910" y="150" width="340" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="627" value="PROPOSE BTN CLASS = &quot;propose-swap-btn&quot;&amp;nbsp;&lt;br&gt;MeSSAGE BTN CLASS = match-message-btn&quot;&lt;br&gt;VIEW LISTING BTN = &quot;match-view-listing-btn&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
-                    <mxGeometry x="3015" y="1199" width="295" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="630" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;User clisck the Matches button to be taken here&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=#3A5431;fillColor=#6d8764;fontColor=#ffffff;" parent="1" vertex="1">
                     <mxGeometry x="2600" y="-70" width="430" height="40" as="geometry"/>
@@ -1606,11 +1521,8 @@
                 <mxCell id="718" value="Accept" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="1130" y="-857" width="60" height="19" as="geometry"/>
                 </mxCell>
-                <mxCell id="719" value="Counter" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="1210" y="-857" width="60" height="19" as="geometry"/>
-                </mxCell>
                 <mxCell id="720" value="Decline" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcccc;strokeColor=#36393d;" parent="1" vertex="1">
-                    <mxGeometry x="1300" y="-857" width="60" height="19" as="geometry"/>
+                    <mxGeometry x="1218.5" y="-857" width="60" height="19" as="geometry"/>
                 </mxCell>
                 <mxCell id="721" value="Type Message" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
                     <mxGeometry x="1100" y="-480" width="430" height="30" as="geometry"/>
@@ -2379,7 +2291,7 @@
                     <mxGeometry x="3450" y="-1290" width="240" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="978" value="" style="group" parent="1" vertex="1" connectable="0">
-                    <mxGeometry x="3400" y="1200" width="850" height="80" as="geometry"/>
+                    <mxGeometry x="2550" y="1180" width="850" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="979" value="" style="group" parent="978" vertex="1" connectable="0">
                     <mxGeometry width="850" height="80" as="geometry"/>
@@ -2415,103 +2327,103 @@
                     <mxGeometry y="50" width="850" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="990" value="My Addresses" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="3440" y="1348" width="80" height="30" as="geometry"/>
+                    <mxGeometry x="2590" y="1328" width="80" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="991" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="3440" y="1388" width="360" height="150" as="geometry"/>
+                    <mxGeometry x="2590" y="1368" width="360" height="150" as="geometry"/>
                 </mxCell>
                 <mxCell id="992" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;User A&lt;/h1&gt;&lt;p&gt;123 Main Street&lt;br&gt;Calgary, Ab T3J 1S1&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="3450" y="1388" width="180" height="95" as="geometry"/>
+                    <mxGeometry x="2600" y="1368" width="180" height="95" as="geometry"/>
                 </mxCell>
                 <mxCell id="993" value="Edit" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="3450" y="1498" width="60" height="30" as="geometry"/>
+                    <mxGeometry x="2600" y="1478" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="994" value="Remove" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a20025;fontColor=#ffffff;strokeColor=#6F0000;" parent="1" vertex="1">
-                    <mxGeometry x="3520" y="1498" width="60" height="30" as="geometry"/>
+                    <mxGeometry x="2670" y="1478" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="995" value="Default" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
-                    <mxGeometry x="3730" y="1398" width="60" height="30" as="geometry"/>
+                    <mxGeometry x="2880" y="1378" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="996" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="3440" y="1558" width="360" height="150" as="geometry"/>
+                    <mxGeometry x="2590" y="1538" width="360" height="150" as="geometry"/>
                 </mxCell>
                 <mxCell id="997" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;User A (work)&lt;/h1&gt;&lt;p&gt;123 Main Street&lt;br&gt;Calgary, Ab T3J 1S1&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="3450" y="1558" width="180" height="95" as="geometry"/>
+                    <mxGeometry x="2600" y="1538" width="180" height="95" as="geometry"/>
                 </mxCell>
                 <mxCell id="998" value="Edit" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="3450" y="1668" width="60" height="30" as="geometry"/>
+                    <mxGeometry x="2600" y="1648" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="999" value="Remove" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a20025;fontColor=#ffffff;strokeColor=#6F0000;" parent="1" vertex="1">
-                    <mxGeometry x="3520" y="1668" width="60" height="30" as="geometry"/>
+                    <mxGeometry x="2670" y="1648" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="1000" value="Default" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
-                    <mxGeometry x="3730" y="1568" width="60" height="30" as="geometry"/>
+                    <mxGeometry x="2880" y="1548" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="1001" value="+ Add Address" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="3700" y="1348" width="90" height="30" as="geometry"/>
+                    <mxGeometry x="2850" y="1328" width="90" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="1002" value="" style="endArrow=none;html=1;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="3880" y="1388" as="sourcePoint"/>
-                        <mxPoint x="4230" y="1388" as="targetPoint"/>
+                        <mxPoint x="3030" y="1368" as="sourcePoint"/>
+                        <mxPoint x="3380" y="1368" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="1003" value="Active Shipments" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="3880" y="1348" width="130" height="30" as="geometry"/>
+                    <mxGeometry x="3030" y="1328" width="130" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="1004" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="3880" y="1398" width="360" height="150" as="geometry"/>
+                    <mxGeometry x="3030" y="1378" width="360" height="150" as="geometry"/>
                 </mxCell>
                 <mxCell id="1005" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Book Title - User B&lt;/h1&gt;&lt;p&gt;Canada Post - CA123456789&lt;br&gt;Cost $6.40 - 0.4kg - 280km&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="3890" y="1403" width="240" height="95" as="geometry"/>
+                    <mxGeometry x="3040" y="1383" width="240" height="95" as="geometry"/>
                 </mxCell>
                 <mxCell id="1006" value="Track Shipment" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="3900" y="1498" width="90" height="30" as="geometry"/>
+                    <mxGeometry x="3050" y="1478" width="90" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="1007" value="Shipped" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
-                    <mxGeometry x="4170" y="1408" width="60" height="30" as="geometry"/>
+                    <mxGeometry x="3320" y="1388" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="1008" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="3880" y="1558" width="360" height="150" as="geometry"/>
+                    <mxGeometry x="3030" y="1538" width="360" height="150" as="geometry"/>
                 </mxCell>
                 <mxCell id="1009" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Book Title - me (inbound)&lt;/h1&gt;&lt;p&gt;Canada Post - CA987654321&lt;br&gt;&lt;br&gt;&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="3880" y="1563" width="280" height="95" as="geometry"/>
+                    <mxGeometry x="3030" y="1543" width="280" height="95" as="geometry"/>
                 </mxCell>
                 <mxCell id="1010" value="Track Shipment" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="3900" y="1668" width="90" height="30" as="geometry"/>
+                    <mxGeometry x="3050" y="1648" width="90" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="1011" value="Delivered" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
-                    <mxGeometry x="4170" y="1568" width="60" height="30" as="geometry"/>
+                    <mxGeometry x="3320" y="1548" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="1012" value="ADDRESS SECTION ID = &quot;addresses-section&quot;&lt;br&gt;ADDRESS CARD CLASS = &quot;address-card&quot;&lt;br&gt;ADDRESS NAME CLASS&amp;nbsp;= &quot;address-full-name&quot;&lt;br&gt;ADDRESS LINE 1 CLASS&amp;nbsp;&amp;nbsp;= &quot;address-line1&quot;&lt;br&gt;ADDRESS CITY CLASS&amp;nbsp;= &quot;address-city-region&quot;&lt;br&gt;ADDRESS POSTAL CLASS&amp;nbsp;= &quot;address-postal&quot;&lt;br&gt;ADDRESS DEFAULT BADGE CLASS = &quot;address-default-badge&quot;&lt;br&gt;&lt;br&gt;BTNS&lt;br&gt;ADD ADDRESS ID&amp;nbsp;= &quot;add-address-btn&quot;&lt;br&gt;EDIT ADDRESS CLASS = &quot;address-edit-btn&quot;&lt;br&gt;REMOVE ADDRESS CLASS = &quot;address-remove-btn&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=light-dark(#FFFFFF,#000000);" parent="1" vertex="1">
-                    <mxGeometry x="3460" y="1726" width="360" height="214" as="geometry"/>
+                    <mxGeometry x="2610" y="1706" width="360" height="214" as="geometry"/>
                 </mxCell>
                 <mxCell id="1013" value="SHIPMENT SECTION ID = &quot;shipments-section&quot;&lt;br&gt;EACH CARD CLASS&amp;nbsp;= &quot;shipment-card&quot;&lt;br&gt;SHIPMENT DESCRIPTION CLASS&amp;nbsp;= &quot;shipment-description&quot;&lt;br&gt;SHIPMENT BADGE CLASS&amp;nbsp;= &quot;shipment-status-badge&quot;&lt;br&gt;CARRIER CLASS&amp;nbsp;= &quot;shipment-carrier&quot;&lt;br&gt;COST SUM CLASS&amp;nbsp;= &quot;shipment-cost-summary&quot;&lt;br&gt;PROGRESS CLASS&amp;nbsp;= &quot;shipment-tracking-progress&quot;&lt;br&gt;BTNS&lt;br&gt;SHIPMENT TRACK CLASS&amp;nbsp;= &quot;shipment-track-btn&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=light-dark(#FFFFFF,#000000);" parent="1" vertex="1">
-                    <mxGeometry x="3905" y="1726" width="325" height="154" as="geometry"/>
+                    <mxGeometry x="3055" y="1706" width="325" height="154" as="geometry"/>
                 </mxCell>
                 <mxCell id="1014" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="3400" y="2200" width="850" height="50" as="geometry"/>
+                    <mxGeometry x="2550" y="2180" width="850" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="1015" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="3410" y="2202" width="130" height="50" as="geometry"/>
+                    <mxGeometry x="2560" y="2182" width="130" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="1016" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="4060" y="2212" width="60" height="30" as="geometry"/>
+                    <mxGeometry x="3210" y="2192" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="1017" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="4120" y="2212" width="60" height="30" as="geometry"/>
+                    <mxGeometry x="3270" y="2192" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="1018" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="4180" y="2212" width="60" height="30" as="geometry"/>
+                    <mxGeometry x="3330" y="2192" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="1019" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
-                    <mxGeometry x="3410" y="2270" width="820" height="20" as="geometry"/>
+                    <mxGeometry x="2560" y="2250" width="820" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="1021" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;User Clicks shipping&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=#3A5431;fillColor=#6d8764;fontColor=#ffffff;" parent="1" vertex="1">
-                    <mxGeometry x="3420" y="1152" width="200" height="40" as="geometry"/>
+                    <mxGeometry x="2580" y="1120" width="200" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="1023" value="&lt;span style=&quot;font-size: 24px;&quot;&gt;&lt;b&gt;Shipping&lt;/b&gt;&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="3440" y="1310" width="186" height="30" as="geometry"/>
+                    <mxGeometry x="2590" y="1290" width="186" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="1024" value="&amp;nbsp;FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="877" y="1070" width="820" height="20" as="geometry"/>
@@ -2552,32 +2464,442 @@
                 <mxCell id="1045" value="Back to Listings" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="4045" y="-510" width="140" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="1046" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;" vertex="1" parent="1">
-                    <mxGeometry x="2625" y="587" width="700" height="300" as="geometry"/>
-                </mxCell>
-                <mxCell id="1047" value="Multi-book Swap" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
-                    <mxGeometry x="2640" y="597" width="120" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="1048" value="&lt;b&gt;Your 2 books ($20) + Monetary Offering&lt;/b&gt;&lt;br&gt;&lt;div&gt;Book A - $10 - Good&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;Book B - $10 - Very Good&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;+ $10.00&amp;nbsp;&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;br style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;align=left;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1">
-                    <mxGeometry x="2685" y="627" width="200" height="200" as="geometry"/>
-                </mxCell>
-                <mxCell id="1049" value="" style="endArrow=classic;startArrow=classic;html=1;entryX=0.593;entryY=0.324;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=#f5f5f5;strokeColor=#666666;" edge="1" parent="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="2930" y="726.5" as="sourcePoint"/>
-                        <mxPoint x="3040.1" y="726.6600000000001" as="targetPoint"/>
+                <mxCell id="1125" style="edgeStyle=none;html=1;" parent="1" source="1054" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="710" y="2323.076923076923" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="1050" value="Propose Swap" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="2650" y="844.5" width="95" height="30" as="geometry"/>
+                <mxCell id="1054" value="Exchange Requests" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
+                    <mxGeometry x="870.5" y="420" width="139" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1051" value="Message user" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="2758" y="844.5" width="95" height="30" as="geometry"/>
+                <mxCell id="1055" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry y="2370" width="850" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="1052" value="View Listing" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="2865" y="844.5" width="95" height="30" as="geometry"/>
+                <mxCell id="1056" value="" style="group" parent="1055" vertex="1" connectable="0">
+                    <mxGeometry width="850" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="1053" value="&lt;div style=&quot;text-align: right;&quot;&gt;&lt;b style=&quot;background-color: transparent;&quot;&gt;Their 2 books ($30)&lt;/b&gt;&lt;/div&gt;Book A - $15 - Like New&lt;br&gt;Book B - $15 - Like New" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
-                    <mxGeometry x="3080" y="627" width="220" height="220" as="geometry"/>
+                <mxCell id="1057" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1056" vertex="1">
+                    <mxGeometry width="850" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="1058" value="Book Exchange" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1056" vertex="1">
+                    <mxGeometry x="10" width="90" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="1059" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1056" vertex="1">
+                    <mxGeometry x="110" y="10" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1060" value="My Listings" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1056" vertex="1">
+                    <mxGeometry x="170" y="10" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1061" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" parent="1056" vertex="1">
+                    <mxGeometry x="620" y="10" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1062" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1056" vertex="1">
+                    <mxGeometry x="240" y="10" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1063" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1056" vertex="1">
+                    <mxGeometry x="730" y="5" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="1064" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1056" vertex="1">
+                    <mxGeometry x="780" y="10" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1065" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1056" vertex="1">
+                    <mxGeometry x="310" y="10" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1066" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1055" vertex="1">
+                    <mxGeometry y="50" width="850" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="1067" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry y="3370" width="850" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="1068" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="10" y="3372" width="130" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="1069" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="660" y="3382" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1070" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="720" y="3382" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1071" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="3382" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1072" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="10" y="3440" width="820" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="1074" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;&lt;b&gt;Exchange Requests&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="34" y="2487" width="236" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1075" value="Incoming" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="46.25" y="2550" width="73.75" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1077" value="Manage incoming and outgoing exchange requests" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="34" y="2517" width="286" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1078" value="TABS ID = &quot;exchange-request-tabs&quot; CLASS = &quot;exchange-tab&quot; data-tab = &quot;incoming&quot; / &quot;outgoing&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=light-dark(#000000,#000000);" parent="1" vertex="1">
+                    <mxGeometry x="368" y="2480" width="300" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1079" value="Cover" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+                    <mxGeometry x="103" y="2680" width="62.5" height="62.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="1087" value="Accept" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="589.75" y="2704.5" width="46.5" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1089" value="Reject" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+                    <mxGeometry x="656.5" y="2704.5" width="46.5" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1092" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="46.25" y="2780" as="sourcePoint"/>
+                        <mxPoint x="786.25" y="2780" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="1124" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;User Clicks Exchange Requests&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=#3A5431;fillColor=#6d8764;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="55" y="2310" width="300" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="1126" value="Outgoing" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="140" y="2550" width="73.75" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1127" value="User B." style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="103" y="2614" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1128" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="42" y="2614" width="50" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="1129" value="Wants to buy your book listing" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="101" y="2636" width="185" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1130" value="Book Title" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="197.5" y="2680" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1131" value="ISBN: 123456789 Condition: VG Price $15.00" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="195.5" y="2702" width="277.5" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1132" value="View Details" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+                    <mxGeometry x="726" y="2704.5" width="80.25" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1133" value="EXCAHNGE REQUEST CARD&lt;br&gt;CLASS = &quot;exchange-request-card&quot; ID = &quot;exchange-req-{id}&quot;&lt;br&gt;REQUESTER CLASS = &quot;requester-name&quot;&amp;nbsp;&lt;br&gt;STATUS CLASS = &quot;exchange-status-badge&quot;&lt;br&gt;TYPE CLASS = &quot;exchange-type-badge&quot;&amp;nbsp;&lt;br&gt;ACCEPT BTN CLASS = &quot;accept-request-btn&quot;&amp;nbsp;&lt;br&gt;REJECT BTN CLASS = &quot;reject-request-btn&quot;&lt;br&gt;VIEW BTN CLASS = &quot;view-request-btn&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=light-dark(#000000,#000000);" vertex="1" parent="1">
+                    <mxGeometry x="92" y="3200" width="300" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="1134" value="Cover" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="101" y="2886" width="62.5" height="62.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="1135" value="Accept" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+                    <mxGeometry x="591" y="2891" width="46.5" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1136" value="Reject" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="657.75" y="2891" width="46.5" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1137" value="" style="endArrow=none;html=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="44.25" y="2966" as="sourcePoint"/>
+                        <mxPoint x="784.25" y="2966" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="1138" value="User C." style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="101" y="2800" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1139" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="2800" width="50" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="1140" value="Wants to buy your book listing" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="99" y="2822" width="185" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1141" value="Book Title" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="195.5" y="2886" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1142" value="VG - $15" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="193.5" y="2908" width="66.5" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1143" value="View Details" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+                    <mxGeometry x="727.25" y="2891" width="80.25" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1145" value="Accept" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+                    <mxGeometry x="591" y="3093.5" width="46.5" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1146" value="Reject" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="657.75" y="3093.5" width="46.5" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1147" value="" style="endArrow=none;html=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="44.25" y="3174" as="sourcePoint"/>
+                        <mxPoint x="784.25" y="3174" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="1148" value="User D." style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="101" y="3000" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1149" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="3000" width="50" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="1150" value="Wants to buy your book listing" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="99" y="3022" width="185" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1153" value="View Details" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+                    <mxGeometry x="727.25" y="3093.5" width="80.25" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1154" value="Tansaction State" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="345" y="2619" width="98.5" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1155" value="Transaction Type" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;" vertex="1" parent="1">
+                    <mxGeometry x="462.5" y="2619" width="101" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1156" value="Tansaction State" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="345" y="2805" width="98.5" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1157" value="Transaction Type" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;" vertex="1" parent="1">
+                    <mxGeometry x="462.5" y="2805" width="101" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1158" value="Tansaction State" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="345" y="3005" width="98.5" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1159" value="Transaction Type" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;" vertex="1" parent="1">
+                    <mxGeometry x="462.5" y="3005" width="101" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1160" value="Cover" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="320" y="2886" width="62.5" height="62.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="1161" value="Book Title" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="414.5" y="2886" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1162" value="VG - $15" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="412.5" y="2908" width="66.5" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1163" value="" style="endArrow=classic;startArrow=classic;html=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="258" y="2922" as="sourcePoint"/>
+                        <mxPoint x="308" y="2920" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="1164" value="Cover" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="177" y="3095.25" width="62.5" height="62.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="1167" value="Cover" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="348.75" y="3095.25" width="62.5" height="62.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="1168" value="Book Title" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="443.25" y="3095.25" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1169" value="VG - $15" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="441.25" y="3117.25" width="66.5" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1170" value="They offer" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="99" y="2850" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1171" value="For your listing" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="305.5" y="2850" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1172" value="" style="endArrow=classic;startArrow=classic;html=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="290" y="3122" as="sourcePoint"/>
+                        <mxPoint x="330" y="3122" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="1173" value="They offer (2 books + $15)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="96.88" y="3054.25" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1174" value="For your listing" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="329" y="3054.25" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1176" value="Cover" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="104" y="3094.75" width="62.5" height="62.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="1186" value="Send Offer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+                    <mxGeometry x="2670" y="330" width="83.25" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1191" value="" style="endArrow=none;html=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="2607.5" y="383.0899999999999" as="sourcePoint"/>
+                        <mxPoint x="3347.5" y="383.0899999999999" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="1192" value="Buy" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#b1ddf0;strokeColor=#10739e;" vertex="1" parent="1">
+                    <mxGeometry x="2600" y="270" width="50" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="1194" value="Book Title - Author" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="2670" y="263" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1195" value="ISBN: 123456789 - Listing by User B - Condition - Price" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="2670" y="293" width="320" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1196" value="Message Seller" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;arcSize=16;" vertex="1" parent="1">
+                    <mxGeometry x="2780" y="330" width="110" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1197" value="View Listing" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;arcSize=16;" vertex="1" parent="1">
+                    <mxGeometry x="2909" y="330" width="110" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1198" value="Send Offer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+                    <mxGeometry x="2673.75" y="461.04" width="83.25" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1199" value="" style="endArrow=none;html=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="2611.25" y="514.1299999999999" as="sourcePoint"/>
+                        <mxPoint x="3351.25" y="514.1299999999999" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="1200" value="Swap" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="1">
+                    <mxGeometry x="2603.75" y="401.04" width="50" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="1201" value="Book Title - Author" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="2673.75" y="394.04" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1202" value="ISBN: 123456789 - Listing by User B - Condition - Price" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="2673.75" y="424.04" width="320" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1203" value="Message Seller" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;arcSize=16;" vertex="1" parent="1">
+                    <mxGeometry x="2783.75" y="461.04" width="110" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1204" value="View Listing" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;arcSize=16;" vertex="1" parent="1">
+                    <mxGeometry x="2912.75" y="461.04" width="110" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1206" value="Send Offer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+                    <mxGeometry x="2673.75" y="593.04" width="83.25" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1207" value="" style="endArrow=none;html=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="2611.25" y="646.1299999999999" as="sourcePoint"/>
+                        <mxPoint x="3351.25" y="646.1299999999999" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="1209" value="Book Title - Author" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="2673.75" y="526.04" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1210" value="ISBN: 123456789 - Listing by User B - Condition - Price" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="2673.75" y="556.04" width="320" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1211" value="Message Seller" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;arcSize=16;" vertex="1" parent="1">
+                    <mxGeometry x="2783.75" y="593.04" width="110" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1212" value="View Listing" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;arcSize=16;" vertex="1" parent="1">
+                    <mxGeometry x="2912.75" y="593.04" width="110" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="1213" value="Swap" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="1">
+                    <mxGeometry x="2610" y="536" width="50" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="1214" value="MATCH CARDS CLASS = &quot;match-card&quot;&amp;nbsp; ID = &quot;match-{id}&quot;&#xa;TITLE CLASS = &quot;match-book-title&quot;&amp;nbsp;&#xa;ISBN CLASS = &quot;match-isbn&quot;&#xa;SELLER CLASS = &quot;match-seller-name&quot;&amp;nbsp; PRICE CLASS = &quot;match-price&quot;&#xa;TYPE BADGE CLASS = &quot;match-type-badge&quot;&#xa;OFFER BTN CLASS = &quot;match-offer-btn&quot;&amp;nbsp; MSG BTN CLASS = &quot;match-message-btn&quot;&amp;nbsp; VIEW BTN CLASS = &quot;match-view-btn&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=light-dark(#000000,#000000);" vertex="1" parent="1">
+                    <mxGeometry x="2830" y="692" width="231.25" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="1215" value="" style="group" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="3400" y="1180" width="850" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="1216" value="" style="group" vertex="1" connectable="0" parent="1215">
+                    <mxGeometry width="850" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="1217" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1216">
+                    <mxGeometry width="850" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="1218" value="Book Exchange" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1216">
+                    <mxGeometry x="10" width="90" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="1219" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1216">
+                    <mxGeometry x="110" y="10" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1220" value="My Listings" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1216">
+                    <mxGeometry x="170" y="10" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1221" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1216">
+                    <mxGeometry x="620" y="10" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1222" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1216">
+                    <mxGeometry x="240" y="10" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1223" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1216">
+                    <mxGeometry x="730" y="5" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="1224" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1216">
+                    <mxGeometry x="780" y="10" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1225" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1216">
+                    <mxGeometry x="310" y="10" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1226" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1215">
+                    <mxGeometry y="50" width="850" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="1227" value="Transaction # TRANS-00150 - Completed Date" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="3440" y="1328" width="310" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1251" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="3400" y="2180" width="850" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="1252" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="3410" y="2182" width="130" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="1253" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="4060" y="2192" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1254" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="4120" y="2192" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1255" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="4180" y="2192" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1256" value="&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1">
+                    <mxGeometry x="3410" y="2250" width="820" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="1257" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;User Clicks leave review&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=#3A5431;fillColor=#6d8764;fontColor=#ffffff;" vertex="1" parent="1">
+                    <mxGeometry x="3415" y="1120" width="230" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="1258" value="&lt;span style=&quot;font-size: 24px;&quot;&gt;&lt;b&gt;Leave a Review&lt;/b&gt;&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="3440" y="1290" width="186" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1260" value="Book Swap - with Uer B." style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="3540" y="1412" width="150" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1262" value="Cover" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="3441" y="1372" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="1263" value="Book Title - Author" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="3540" y="1377" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1264" value="TRANSACTION SUMMARY ID = &quot;review-transaction-summary&quot;&#xa;CLASS = &quot;review-txn-card&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=light-dark(#000000,#000000);" vertex="1" parent="1">
+                    <mxGeometry x="3870" y="1382.25" width="325" height="47" as="geometry"/>
+                </mxCell>
+                <mxCell id="1265" value="" style="endArrow=none;html=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="3442.5" y="1470" as="sourcePoint"/>
+                        <mxPoint x="4182.5" y="1470" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="1268" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="3441.75" y="1500" width="749" height="410" as="geometry"/>
+                </mxCell>
+                <mxCell id="1269" value="Reviewing User B." style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="3450" y="1513" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1270" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.star;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="3470" y="1575.5" width="30" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1271" value="Rating *" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="3445" y="1543" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1277" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.star;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="3510" y="1575.5" width="30" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1278" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.star;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="3550" y="1575.5" width="30" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1279" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.star;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="3590" y="1575.5" width="30" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1280" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.star;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="3630" y="1575.5" width="30" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1281" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="3457" y="1678" width="715" height="148" as="geometry"/>
+                </mxCell>
+                <mxCell id="1282" value="Comments (optional)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="3460" y="1633" width="130" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1283" value="Submit Review" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="3477.5" y="1857" width="92.5" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1284" value="Cancel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="3590" y="1858" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="1285" value="STAR RATING ID = &quot;review-rating-input&quot;&lt;br&gt;CLASS = &quot;star-rating-btn&quot;&amp;nbsp; data-value = 1..5&lt;br&gt;COMMENT ID = &quot;review-comment-input&quot;&lt;br&gt;SUBMIT BTN ID = &quot;submit-review-btn&quot;&lt;br&gt;CANCEL BTN ID = &quot;cancel-review-btn&quot;&lt;br&gt;FORM ID = &quot;review-form&quot;&lt;br&gt;Validation: rating required, comment optional, max 1 review per transaction/reviewer&lt;br&gt;SUCCESS STATE ID = &quot;review-success-msg&quot;&lt;br&gt;ERROR STATE ID = &quot;review-error-msg&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=light-dark(#000000,#000000);" vertex="1" parent="1">
+                    <mxGeometry x="3760" y="1879.25" width="325" height="167" as="geometry"/>
+                </mxCell>
+                <mxCell id="1286" value="List a book you own - buyers and swappers can find it in Browse" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="877" y="1307" width="370" height="30" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
