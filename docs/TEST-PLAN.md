@@ -1,5 +1,24 @@
 # Test Plan – Book Exchange Platform
 
+### Table of Contents
+
+1. [Purpose](#1-purpose)
+2. [Scope](#2-scope)
+3. [Test Objectives](#3-test-objectives)
+4. [Test Types](#4-test-types)
+5. [Assumptions](#5-assumptions)
+6. [Test Environment](#6-test-environment)
+7. [Entry and Exit Criteria](#7-entry-and-exit-criteria)
+8. [Unit Test Scenario](#8-unit-test-scenarios)
+9. [Integration Test Scenarios](#9-integration-test-scenarios)
+10. [Manual UI Test Scenarios](#10-manual-ui-test-scenarios)
+11. [Non-Functional Checks](#11-non-functional-checks)
+12. [Test Data](#12-test-data)
+13. [Risks](#13-risks)
+14. [Recommended Initial Priority](#14-recommended-initial-priority)
+15. [Deliverables](#15-deliverables)
+16. [Conclusion](#16-conclusion)
+
 ## 1. Purpose
 
 This document defines a simple test plan for the Book Exchange Platform.  
@@ -167,7 +186,7 @@ Testing for a release candidate is complete when:
 
 ## 8. Unit Test Scenarios
 
-## 8.1 Authentication / User Validation
+### 8.1 Authentication / User Validation
 
 ### UT-AUTH-01
 
@@ -186,7 +205,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 8.2 Address Management
+### 8.2 Address Management
 
 ### UT-ADDR-01
 
@@ -210,7 +229,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 8.3 Listing Management
+### 8.3 Listing Management
 
 ### UT-LIST-01
 
@@ -264,7 +283,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 8.4 Genre Management
+### 8.4 Genre Management
 
 ### UT-GENRE-01
 
@@ -288,7 +307,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 8.5 Wishlist Management
+### 8.5 Wishlist Management
 
 ### UT-WISH-01
 
@@ -327,7 +346,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 8.6 Search and Filtering
+### 8.6 Search and Filtering
 
 ### UT-SEARCH-01
 
@@ -371,7 +390,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 8.7 Match Logic
+### 8.7 Match Logic
 
 ### UT-MATCH-01
 
@@ -400,7 +419,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 8.8 Exchange Requests
+### 8.8 Exchange Requests
 
 ### UT-EXCH-01
 
@@ -444,7 +463,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 8.9 Transactions
+### 8.9 Transactions
 
 ### UT-TRANS-01
 
@@ -473,7 +492,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 8.10 Shipping
+### 8.10 Shipping
 
 ### UT-SHIP-01
 
@@ -502,7 +521,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 8.11 Reviews / Ratings
+### 8.11 Reviews / Ratings
 
 ### UT-REVIEW-01
 
@@ -531,7 +550,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 8.12 Notifications
+### 8.12 Notifications
 
 ### UT-NOTIF-01
 
@@ -557,7 +576,7 @@ Testing for a release candidate is complete when:
 
 ## 9. Integration Test Scenarios
 
-## 9.1 Authentication Integration
+### 9.1 Authentication Integration
 
 ### IT-AUTH-01
 
@@ -576,7 +595,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 9.2 Listing Integration
+### 9.2 Listing Integration
 
 ### IT-LIST-01
 
@@ -610,7 +629,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 9.3 Wishlist Integration
+### 9.3 Wishlist Integration
 
 ### IT-WISH-01
 
@@ -634,7 +653,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 9.4 Matching Integration
+### 9.4 Matching Integration
 
 ### IT-MATCH-01
 
@@ -653,7 +672,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 9.5 Exchange Request Integration
+### 9.5 Exchange Request Integration
 
 ### IT-EXCH-01
 
@@ -682,7 +701,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 9.6 Transaction Integration
+### 9.6 Transaction Integration
 
 ### IT-TRANS-01
 
@@ -701,7 +720,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 9.7 Shipping Integration
+### 9.7 Shipping Integration
 
 ### IT-SHIP-01
 
@@ -720,7 +739,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 9.8 Messaging Integration
+### 9.8 Messaging Integration
 
 ### IT-MSG-01
 
@@ -734,7 +753,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 9.9 Review Integration
+### 9.9 Review Integration
 
 ### IT-REVIEW-01
 
@@ -748,7 +767,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 9.10 Search Integration
+### 9.10 Search Integration
 
 ### IT-SEARCH-03
 
@@ -769,7 +788,7 @@ Testing for a release candidate is complete when:
 
 ## 10. Manual UI Test Scenarios
 
-## 10.1 General Navigation
+### 10.1 General Navigation
 
 ### MUI-01
 
@@ -784,7 +803,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 10.2 Registration and Login
+### 10.2 Registration and Login
 
 ### MUI-03
 
@@ -813,7 +832,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 10.3 Profile and Address UI
+### 10.3 Profile and Address UI
 
 ### MUI-08
 
@@ -837,7 +856,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 10.4 Listings UI
+### 10.4 Listings UI
 
 ### MUI-12
 
@@ -871,7 +890,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 10.5 Wishlist UI
+### 10.5 Wishlist UI
 
 ### MUI-18
 
@@ -895,7 +914,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 10.6 Search UI
+### 10.6 Search UI
 
 ### MUI-22
 
@@ -929,7 +948,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 10.7 Matching and Exchange UI
+### 10.7 Matching and Exchange UI
 
 ### MUI-28
 
@@ -968,7 +987,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 10.8 Transaction and Shipping UI
+### 10.8 Transaction and Shipping UI
 
 ### MUI-35
 
@@ -992,7 +1011,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 10.9 Messaging and Notifications UI
+### 10.9 Messaging and Notifications UI
 
 ### MUI-39
 
@@ -1011,7 +1030,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-## 10.10 Authorization UI
+### 10.10 Authorization UI
 
 ### MUI-42
 
@@ -1119,3 +1138,5 @@ Testing deliverables may include:
 
 This test plan provides a simple and practical approach for validating the Book Exchange Platform during development.  
 It focuses on core functionality first and can be expanded later as the project grows.
+
+[Back to Top](#1-purpose)
