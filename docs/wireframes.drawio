@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="nwZHn6CSP7jbT7hnAO0n" name="Page-1">
-        <mxGraphModel dx="2003" dy="6798" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="1202" dy="6169" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -298,8 +298,8 @@
                 <mxCell id="258" value="Pending" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="688" y="3637" width="90" height="25" as="geometry"/>
                 </mxCell>
-                <mxCell id="259" value="TRANSACTIONS LSIT ID = &quot;transactions-list&quot;EACH CARD TRANSACTIONS CARD CLASS = &quot;transactions-card&quot;TRANSACTIONS STATUS BADGE CLASS  = &quot;transactions-status-badge&quot;BTNSACCEPT CLASS  = &quot;transactions-accept-btn&quot;MESSAGE CLASS = &quot;transactions-message-btn&quot;TRANSACTION CANCEL CLASS= &quot;transactions-cancel-btn&quot;TRANS REVIEW TRANS REVIEW CLASS = &quot;transactions-review-btn&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
-                    <mxGeometry x="962.5" y="3993" width="420" height="150" as="geometry"/>
+                <mxCell id="259" value="TRANSACTIONS LSIT ID = &quot;transactions-list&quot;&#xa;EACH CARD TRANSACTIONS CARD CLASS = &quot;transactions-card&quot;&#xa;TRANSACTIONS STATUS BADGE CLASS  = &quot;transactions-status-badge&quot;&#xa;BTNS&#xa;ACCEPT CLASS  = &quot;transactions-accept-btn&quot;&#xa;MESSAGE CLASS = &quot;transactions-message-btn&quot;&#xa;TRANSACTION CANCEL CLASS= &quot;transactions-cancel-btn&quot;&#xa;TRANS REVIEW TRANS REVIEW CLASS = &quot;transactions-review-btn&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="962.5" y="3993" width="337.5" height="167" as="geometry"/>
                 </mxCell>
                 <mxCell id="260" value="Accept" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="1" vertex="1">
                     <mxGeometry x="51.5" y="3692" width="46.5" height="25" as="geometry"/>
@@ -2272,259 +2272,259 @@
                 <mxCell id="1386" value="Make an offer" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="700.75" y="2404.5" width="90" height="35" as="geometry"/>
                 </mxCell>
-                <mxCell id="1461" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;span style=&quot;color: rgb(63, 63, 63); background-color: transparent;&quot;&gt;&lt;font style=&quot;&quot;&gt;Exchange, Buy &amp;amp; Sell Books&lt;/font&gt;&lt;/span&gt;&lt;/h1&gt;&lt;p style=&quot;margin-bottom: 8px;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Find your next read. Pass on your last one&lt;/font&gt;&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;" vertex="1" parent="1">
+                <mxCell id="1461" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;span style=&quot;color: rgb(63, 63, 63); background-color: transparent;&quot;&gt;&lt;font style=&quot;&quot;&gt;Exchange, Buy &amp;amp; Sell Books&lt;/font&gt;&lt;/span&gt;&lt;/h1&gt;&lt;p style=&quot;margin-bottom: 8px;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Find your next read. Pass on your last one&lt;/font&gt;&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;" parent="1" vertex="1">
                     <mxGeometry x="250" y="-4290" width="350" height="100" as="geometry"/>
                 </mxCell>
-                <mxCell id="1462" value="" style="group" vertex="1" connectable="0" parent="1">
+                <mxCell id="1462" value="" style="group" parent="1" vertex="1" connectable="0">
                     <mxGeometry x="150" y="-4159" width="550" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1463" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" vertex="1" parent="1462">
+                <mxCell id="1463" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" parent="1462" vertex="1">
                     <mxGeometry width="400" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1464" value="" style="group" vertex="1" connectable="0" parent="1462">
+                <mxCell id="1464" value="" style="group" parent="1462" vertex="1" connectable="0">
                     <mxGeometry x="430" width="120" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1465" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1464">
+                <mxCell id="1465" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1464" vertex="1">
                     <mxGeometry width="120" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1466" value="Search" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1464">
+                <mxCell id="1466" value="Search" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1464" vertex="1">
                     <mxGeometry x="30" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1467" value="&lt;font style=&quot;color: rgb(143, 143, 143);&quot;&gt;Search by title, author, or genre...&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1462">
+                <mxCell id="1467" value="&lt;font style=&quot;color: rgb(143, 143, 143);&quot;&gt;Search by title, author, or genre...&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1462" vertex="1">
                     <mxGeometry x="10" width="190" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1468" value="" style="endArrow=none;html=1;strokeColor=#8F8F8F;" edge="1" parent="1">
+                <mxCell id="1468" value="" style="endArrow=none;html=1;strokeColor=#8F8F8F;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="10" y="-4084" as="sourcePoint"/>
                         <mxPoint x="840" y="-4084" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="1469" value="" style="endArrow=none;html=1;strokeColor=#8F8F8F;" edge="1" parent="1">
+                <mxCell id="1469" value="" style="endArrow=none;html=1;strokeColor=#8F8F8F;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="10" y="-4044" as="sourcePoint"/>
                         <mxPoint x="840" y="-4044" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="1470" value="FEATURED LISTINGS" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1470" value="FEATURED LISTINGS" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="20" y="-4078" width="130" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1471" value="View all listings" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1471" value="View all listings" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="365" y="-3740" width="120" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1472" value="" style="endArrow=none;html=1;strokeColor=#8F8F8F;" edge="1" parent="1">
+                <mxCell id="1472" value="" style="endArrow=none;html=1;strokeColor=#8F8F8F;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="10" y="-3680" as="sourcePoint"/>
                         <mxPoint x="840" y="-3680" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="1473" value="" style="endArrow=none;html=1;strokeColor=#8F8F8F;" edge="1" parent="1">
+                <mxCell id="1473" value="" style="endArrow=none;html=1;strokeColor=#8F8F8F;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="10" y="-3640" as="sourcePoint"/>
                         <mxPoint x="840" y="-3640" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="1474" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1474" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="28" y="-3590" width="250" height="140" as="geometry"/>
                 </mxCell>
-                <mxCell id="1475" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;List your books&lt;/font&gt;&lt;div&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;&lt;br&gt;&lt;/span&gt;Add books you own or want&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1475" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;List your books&lt;/font&gt;&lt;div&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;&lt;br&gt;&lt;/span&gt;Add books you own or want&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="78" y="-3517" width="150" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="1476" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1476" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry y="-3380" width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1477" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1477" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="10" y="-3378" width="130" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1478" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1478" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="660" y="-3368" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1479" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1479" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="720" y="-3368" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1480" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1480" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="780" y="-3368" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1481" value="HOW IT WORKS" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1481" value="HOW IT WORKS" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="20" y="-3675" width="130" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1482" value="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;dashed=1;" vertex="1" parent="1">
+                <mxCell id="1482" value="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;dashed=1;" parent="1" vertex="1">
                     <mxGeometry x="123" y="-3580" width="60" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="1483" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1483" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="308" y="-3590" width="250" height="140" as="geometry"/>
                 </mxCell>
-                <mxCell id="1484" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Get matched&lt;/font&gt;&lt;div&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;&lt;br&gt;&lt;/span&gt;System finds compatible swaps&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1484" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Get matched&lt;/font&gt;&lt;div&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;&lt;br&gt;&lt;/span&gt;System finds compatible swaps&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="348" y="-3516" width="170" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="1485" value="2" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;dashed=1;" vertex="1" parent="1">
+                <mxCell id="1485" value="2" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;dashed=1;" parent="1" vertex="1">
                     <mxGeometry x="403" y="-3580" width="60" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="1486" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1486" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="573" y="-3590" width="250" height="140" as="geometry"/>
                 </mxCell>
-                <mxCell id="1487" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Exchange &amp;amp; enjoy&lt;/font&gt;&lt;div&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;&lt;br&gt;&lt;/span&gt;Confirm, ship, and review&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1487" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Exchange &amp;amp; enjoy&lt;/font&gt;&lt;div&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;&lt;br&gt;&lt;/span&gt;Confirm, ship, and review&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="623" y="-3517" width="150" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="1488" value="3" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;dashed=1;" vertex="1" parent="1">
+                <mxCell id="1488" value="3" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;dashed=1;" parent="1" vertex="1">
                     <mxGeometry x="668" y="-3580" width="60" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="1489" value="" style="group" vertex="1" connectable="0" parent="1">
+                <mxCell id="1489" value="" style="group" parent="1" vertex="1" connectable="0">
                     <mxGeometry x="31" y="-4000" width="170" height="210" as="geometry"/>
                 </mxCell>
-                <mxCell id="1490" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;rounded=1;" vertex="1" parent="1489">
+                <mxCell id="1490" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;rounded=1;" parent="1489" vertex="1">
                     <mxGeometry width="170" height="210" as="geometry"/>
                 </mxCell>
-                <mxCell id="1491" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1489">
+                <mxCell id="1491" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" parent="1489" vertex="1">
                     <mxGeometry x="15" y="15" width="135" height="90" as="geometry"/>
                 </mxCell>
-                <mxCell id="1492" value="Cover" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1489">
+                <mxCell id="1492" value="Cover" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1489" vertex="1">
                     <mxGeometry x="52.5" y="45" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1493" value="Book Title" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1489">
+                <mxCell id="1493" value="Book Title" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1489" vertex="1">
                     <mxGeometry x="10" y="120" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1494" value="Author Name" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1489">
+                <mxCell id="1494" value="Author Name" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1489" vertex="1">
                     <mxGeometry x="10" y="140" width="75" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1495" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;" vertex="1" parent="1489">
+                <mxCell id="1495" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;" parent="1489" vertex="1">
                     <mxGeometry x="14" y="180" width="50" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="1496" value="Swap" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1489">
+                <mxCell id="1496" value="Swap" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1489" vertex="1">
                     <mxGeometry x="10" y="175" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1497" value="Good" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1489">
+                <mxCell id="1497" value="Good" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1489" vertex="1">
                     <mxGeometry x="96" y="175" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1498" value="" style="group" vertex="1" connectable="0" parent="1">
+                <mxCell id="1498" value="" style="group" parent="1" vertex="1" connectable="0">
                     <mxGeometry x="231" y="-4000" width="170" height="210" as="geometry"/>
                 </mxCell>
-                <mxCell id="1499" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;rounded=1;" vertex="1" parent="1498">
+                <mxCell id="1499" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;rounded=1;" parent="1498" vertex="1">
                     <mxGeometry width="170" height="210" as="geometry"/>
                 </mxCell>
-                <mxCell id="1500" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1498">
+                <mxCell id="1500" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" parent="1498" vertex="1">
                     <mxGeometry x="15" y="15" width="135" height="90" as="geometry"/>
                 </mxCell>
-                <mxCell id="1501" value="Cover" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1498">
+                <mxCell id="1501" value="Cover" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1498" vertex="1">
                     <mxGeometry x="52.5" y="45" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1502" value="Book Title" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1498">
+                <mxCell id="1502" value="Book Title" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1498" vertex="1">
                     <mxGeometry x="10" y="120" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1503" value="Author Name" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1498">
+                <mxCell id="1503" value="Author Name" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1498" vertex="1">
                     <mxGeometry x="10" y="140" width="75" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1504" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="1498">
+                <mxCell id="1504" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" parent="1498" vertex="1">
                     <mxGeometry x="14" y="180" width="50" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="1505" value="$10.00" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1498">
+                <mxCell id="1505" value="$10.00" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1498" vertex="1">
                     <mxGeometry x="96" y="175" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1506" value="Sell" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1498">
+                <mxCell id="1506" value="Sell" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1498" vertex="1">
                     <mxGeometry x="10" y="175" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1507" value="" style="group" vertex="1" connectable="0" parent="1">
+                <mxCell id="1507" value="" style="group" parent="1" vertex="1" connectable="0">
                     <mxGeometry x="441" y="-4000" width="170" height="210" as="geometry"/>
                 </mxCell>
-                <mxCell id="1508" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;rounded=1;" vertex="1" parent="1507">
+                <mxCell id="1508" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;rounded=1;" parent="1507" vertex="1">
                     <mxGeometry width="170" height="210" as="geometry"/>
                 </mxCell>
-                <mxCell id="1509" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1507">
+                <mxCell id="1509" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" parent="1507" vertex="1">
                     <mxGeometry x="15" y="15" width="135" height="90" as="geometry"/>
                 </mxCell>
-                <mxCell id="1510" value="Cover" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1507">
+                <mxCell id="1510" value="Cover" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1507" vertex="1">
                     <mxGeometry x="52.5" y="45" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1511" value="Book Title" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1507">
+                <mxCell id="1511" value="Book Title" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1507" vertex="1">
                     <mxGeometry x="10" y="120" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1512" value="Author Name" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1507">
+                <mxCell id="1512" value="Author Name" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1507" vertex="1">
                     <mxGeometry x="10" y="140" width="75" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1513" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d0cee2;strokeColor=#56517e;" vertex="1" parent="1507">
+                <mxCell id="1513" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d0cee2;strokeColor=#56517e;" parent="1507" vertex="1">
                     <mxGeometry x="14" y="180" width="50" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="1514" value="New" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1507">
+                <mxCell id="1514" value="New" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1507" vertex="1">
                     <mxGeometry x="96" y="175" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1515" value="Buy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1507">
+                <mxCell id="1515" value="Buy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1507" vertex="1">
                     <mxGeometry x="9" y="175" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1516" value="" style="group" vertex="1" connectable="0" parent="1">
+                <mxCell id="1516" value="" style="group" parent="1" vertex="1" connectable="0">
                     <mxGeometry x="646" y="-4000" width="170" height="210" as="geometry"/>
                 </mxCell>
-                <mxCell id="1517" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;rounded=1;" vertex="1" parent="1516">
+                <mxCell id="1517" value="" style="whiteSpace=wrap;html=1;aspect=fixed;rotation=0;rounded=1;" parent="1516" vertex="1">
                     <mxGeometry width="170" height="210" as="geometry"/>
                 </mxCell>
-                <mxCell id="1518" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1516">
+                <mxCell id="1518" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" parent="1516" vertex="1">
                     <mxGeometry x="15" y="15" width="135" height="90" as="geometry"/>
                 </mxCell>
-                <mxCell id="1519" value="Cover" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1516">
+                <mxCell id="1519" value="Cover" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1516" vertex="1">
                     <mxGeometry x="52.5" y="45" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1520" value="Book Title" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1516">
+                <mxCell id="1520" value="Book Title" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1516" vertex="1">
                     <mxGeometry x="10" y="120" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1521" value="Author Name" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1516">
+                <mxCell id="1521" value="Author Name" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1516" vertex="1">
                     <mxGeometry x="10" y="140" width="75" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1522" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;" vertex="1" parent="1516">
+                <mxCell id="1522" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;" parent="1516" vertex="1">
                     <mxGeometry x="14" y="180" width="50" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="1523" value="Swap" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1516">
+                <mxCell id="1523" value="Swap" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1516" vertex="1">
                     <mxGeometry x="10" y="175" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1524" value="Good" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1516">
+                <mxCell id="1524" value="Good" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1516" vertex="1">
                     <mxGeometry x="96" y="175" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1525" value=" HERO ID = &quot;hero-section&quot;&#xa;SEARCH FORM ID = &quot;home-search-form&quot;  input = &quot;search-input&quot; BUTTON ID = &quot;search-btn&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1525" value=" HERO ID = &quot;hero-section&quot;&#xa;SEARCH FORM ID = &quot;home-search-form&quot;  input = &quot;search-input&quot; BUTTON ID = &quot;search-btn&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="-4198" width="200" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="1526" value="" style="group" vertex="1" connectable="0" parent="1">
+                <mxCell id="1526" value="" style="group" parent="1" vertex="1" connectable="0">
                     <mxGeometry y="-4380" width="850" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="1527" value="" style="group" vertex="1" connectable="0" parent="1526">
+                <mxCell id="1527" value="" style="group" parent="1526" vertex="1" connectable="0">
                     <mxGeometry width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1528" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1527">
+                <mxCell id="1528" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1527" vertex="1">
                     <mxGeometry width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1529" value="Book Exchange" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1527">
+                <mxCell id="1529" value="Book Exchange" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1527" vertex="1">
                     <mxGeometry x="10" width="90" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1530" value="Home" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1527">
+                <mxCell id="1530" value="Home" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1527" vertex="1">
                     <mxGeometry x="110" y="10" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1531" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1527">
+                <mxCell id="1531" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1527" vertex="1">
                     <mxGeometry x="170" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1532" value="Log In" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" vertex="1" parent="1527">
+                <mxCell id="1532" value="Log In" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" parent="1527" vertex="1">
                     <mxGeometry x="750" y="10" width="80" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1533" value="Register" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1527">
+                <mxCell id="1533" value="Register" style="rounded=1;whiteSpace=wrap;html=1;" parent="1527" vertex="1">
                     <mxGeometry x="660" y="10" width="80" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1534" value="How it works" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1527">
+                <mxCell id="1534" value="How it works" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1527" vertex="1">
                     <mxGeometry x="240" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1536" value=" FEATURED LISTING ID = &quot;featuerd-listings&quot; &#xa;GRID ID = &quot;featured-listings-grid&quot;&#xa;FOR EACH CARD CLASS = &quot;listings-card&quot;&#xa;IMG CLASS = &quot;listing-card-img&quot;&#xa;TITLE CLASS = &quot;listing-card-title&quot;&#xa;AUTHOR CLASS = &quot;listing-card-author&quot;&#xa;BADGE CLASS = &quot;listing-type-badge&quot; &#xa;CONDITION CLASS = &quot;listing-card-condition&quot;&#xa;PRICE CLASS = &quot;listings-card-price&quot;&#xa;VIEW ALL ID= &quot;view-all-listings-btn&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1536" value=" FEATURED LISTING ID = &quot;featuerd-listings&quot; &#xa;GRID ID = &quot;featured-listings-grid&quot;&#xa;FOR EACH CARD CLASS = &quot;listings-card&quot;&#xa;IMG CLASS = &quot;listing-card-img&quot;&#xa;TITLE CLASS = &quot;listing-card-title&quot;&#xa;AUTHOR CLASS = &quot;listing-card-author&quot;&#xa;BADGE CLASS = &quot;listing-type-badge&quot; &#xa;CONDITION CLASS = &quot;listing-card-condition&quot;&#xa;PRICE CLASS = &quot;listings-card-price&quot;&#xa;VIEW ALL ID= &quot;view-all-listings-btn&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="-3878" width="290" height="150" as="geometry"/>
                 </mxCell>
-                <mxCell id="1537" value=" HOW IT WORKS ID = &quot;how-it-works&quot; EACH STEP CLASS = &quot;how-it-works-step&quot; step1/2/3" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1537" value=" HOW IT WORKS ID = &quot;how-it-works&quot; EACH STEP CLASS = &quot;how-it-works-step&quot; step1/2/3" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="-3548" width="220" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="1538" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1538" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="-3378" width="190" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="1539" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;Home Page Unauthenticated&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=#3A5431;fillColor=#E6E6E6;fontColor=#1A1A1A;" vertex="1" parent="1">
+                <mxCell id="1539" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;Home Page Unauthenticated&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=#3A5431;fillColor=#E6E6E6;fontColor=#1A1A1A;" parent="1" vertex="1">
                     <mxGeometry x="40" y="-4440" width="270" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="1535" value="NAVBAR class = &quot;navbar navbar-expand&quot; unauthenticated shows register + login * authenticated shows user avatar + logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1535" value="NAVBAR class = &quot;navbar navbar-expand&quot; unauthenticated shows register + login * authenticated shows user avatar + logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="-4378" width="160" height="100" as="geometry"/>
                 </mxCell>
                 <mxCell id="215" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="-3180" width="220" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="1543" value="" style="shape=singleArrow;whiteSpace=wrap;html=1;arrowWidth=0.2647058823529278;arrowSize=0.40235294117646847;rotation=90;fillColor=#1A1A1A;" vertex="1" parent="1">
+                <mxCell id="1543" value="" style="shape=singleArrow;whiteSpace=wrap;html=1;arrowWidth=0.2647058823529278;arrowSize=0.40235294117646847;rotation=90;fillColor=#1A1A1A;" parent="1" vertex="1">
                     <mxGeometry x="392" y="-3315" width="50" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="740" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
@@ -2533,448 +2533,448 @@
                 <mxCell id="696" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="-1037" width="320" height="55" as="geometry"/>
                 </mxCell>
-                <mxCell id="1544" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1544" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="-132" width="294.5" height="48" as="geometry"/>
                 </mxCell>
-                <mxCell id="1545" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1545" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="53" width="320" height="55" as="geometry"/>
                 </mxCell>
-                <mxCell id="1546" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1546" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="1025" width="294.5" height="48" as="geometry"/>
                 </mxCell>
-                <mxCell id="1547" value="" style="shape=singleArrow;whiteSpace=wrap;html=1;arrowWidth=0.2647058823529278;arrowSize=0.40235294117646847;rotation=90;fillColor=#1A1A1A;" vertex="1" parent="1">
+                <mxCell id="1547" value="" style="shape=singleArrow;whiteSpace=wrap;html=1;arrowWidth=0.2647058823529278;arrowSize=0.40235294117646847;rotation=90;fillColor=#1A1A1A;" parent="1" vertex="1">
                     <mxGeometry x="380" y="1110" width="50" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="1548" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1548" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="1218" width="320" height="55" as="geometry"/>
                 </mxCell>
-                <mxCell id="1549" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1549" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="2108.25" width="294.5" height="48" as="geometry"/>
                 </mxCell>
-                <mxCell id="1550" value="" style="shape=singleArrow;whiteSpace=wrap;html=1;arrowWidth=0.2647058823529278;arrowSize=0.40235294117646847;rotation=90;fillColor=#1A1A1A;" vertex="1" parent="1">
+                <mxCell id="1550" value="" style="shape=singleArrow;whiteSpace=wrap;html=1;arrowWidth=0.2647058823529278;arrowSize=0.40235294117646847;rotation=90;fillColor=#1A1A1A;" parent="1" vertex="1">
                     <mxGeometry x="387.5" y="2200" width="50" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="1551" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1551" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="2274" width="320" height="55" as="geometry"/>
                 </mxCell>
-                <mxCell id="1552" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1552" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="3215" width="294.5" height="48" as="geometry"/>
                 </mxCell>
-                <mxCell id="1553" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1553" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="3346" width="320" height="55" as="geometry"/>
                 </mxCell>
-                <mxCell id="1554" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1554" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="4287" width="294.5" height="48" as="geometry"/>
                 </mxCell>
-                <mxCell id="1555" value="" style="shape=singleArrow;whiteSpace=wrap;html=1;arrowWidth=0.2647058823529278;arrowSize=0.40235294117646847;rotation=90;fillColor=#1A1A1A;" vertex="1" parent="1">
+                <mxCell id="1555" value="" style="shape=singleArrow;whiteSpace=wrap;html=1;arrowWidth=0.2647058823529278;arrowSize=0.40235294117646847;rotation=90;fillColor=#1A1A1A;" parent="1" vertex="1">
                     <mxGeometry x="355" y="4410" width="50" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="1556" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1556" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="4493" width="320" height="55" as="geometry"/>
                 </mxCell>
-                <mxCell id="1557" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1557" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="5434" width="294.5" height="48" as="geometry"/>
                 </mxCell>
-                <mxCell id="1558" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1558" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="5583" width="320" height="55" as="geometry"/>
                 </mxCell>
-                <mxCell id="1559" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1559" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="6524" width="294.5" height="48" as="geometry"/>
                 </mxCell>
-                <mxCell id="1560" value="" style="group" vertex="1" connectable="0" parent="1">
+                <mxCell id="1560" value="" style="group" parent="1" vertex="1" connectable="0">
                     <mxGeometry x="1" y="5590" width="850" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="1561" value="" style="group" vertex="1" connectable="0" parent="1560">
+                <mxCell id="1561" value="" style="group" parent="1560" vertex="1" connectable="0">
                     <mxGeometry width="850" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="1562" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1561">
+                <mxCell id="1562" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1561" vertex="1">
                     <mxGeometry width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1563" value="BOOK EXCHANGE LOGO" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1561">
+                <mxCell id="1563" value="BOOK EXCHANGE LOGO" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1561" vertex="1">
                     <mxGeometry x="10" width="90" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1564" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1561">
+                <mxCell id="1564" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1561" vertex="1">
                     <mxGeometry x="110" y="10" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1565" value="Dashboard" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1561">
+                <mxCell id="1565" value="Dashboard" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1561" vertex="1">
                     <mxGeometry x="170" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1566" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1561">
+                <mxCell id="1566" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" parent="1561" vertex="1">
                     <mxGeometry x="620" y="10" width="90" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1567" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1561">
+                <mxCell id="1567" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1561" vertex="1">
                     <mxGeometry x="240" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1568" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1561">
+                <mxCell id="1568" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1561" vertex="1">
                     <mxGeometry x="730" y="5" width="40" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="1569" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1561">
+                <mxCell id="1569" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1561" vertex="1">
                     <mxGeometry x="780" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1570" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1561">
+                <mxCell id="1570" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1561" vertex="1">
                     <mxGeometry x="310" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1571" value="" style="shape=singleArrow;whiteSpace=wrap;html=1;arrowWidth=0.2647058823529278;arrowSize=0.40235294117646847;rotation=90;fillColor=#1A1A1A;" vertex="1" parent="1">
+                <mxCell id="1571" value="" style="shape=singleArrow;whiteSpace=wrap;html=1;arrowWidth=0.2647058823529278;arrowSize=0.40235294117646847;rotation=90;fillColor=#1A1A1A;" parent="1" vertex="1">
                     <mxGeometry x="369" y="6600" width="50" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="1572" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1572" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="6673" width="320" height="55" as="geometry"/>
                 </mxCell>
-                <mxCell id="1573" value="" style="group" vertex="1" connectable="0" parent="1">
+                <mxCell id="1573" value="" style="group" parent="1" vertex="1" connectable="0">
                     <mxGeometry x="3" y="6680" width="850" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="1574" value="" style="group" vertex="1" connectable="0" parent="1573">
+                <mxCell id="1574" value="" style="group" parent="1573" vertex="1" connectable="0">
                     <mxGeometry width="850" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="1575" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1574">
+                <mxCell id="1575" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1574" vertex="1">
                     <mxGeometry width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1576" value="BOOK EXCHANGE LOGO" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1574">
+                <mxCell id="1576" value="BOOK EXCHANGE LOGO" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1574" vertex="1">
                     <mxGeometry x="10" width="90" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1577" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1574">
+                <mxCell id="1577" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1574" vertex="1">
                     <mxGeometry x="110" y="10" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1578" value="Dashboard" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1574">
+                <mxCell id="1578" value="Dashboard" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1574" vertex="1">
                     <mxGeometry x="170" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1579" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1574">
+                <mxCell id="1579" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" parent="1574" vertex="1">
                     <mxGeometry x="620" y="10" width="90" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1580" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1574">
+                <mxCell id="1580" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1574" vertex="1">
                     <mxGeometry x="240" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1581" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1574">
+                <mxCell id="1581" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1574" vertex="1">
                     <mxGeometry x="730" y="5" width="40" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="1582" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1574">
+                <mxCell id="1582" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1574" vertex="1">
                     <mxGeometry x="780" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1583" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1574">
+                <mxCell id="1583" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1574" vertex="1">
                     <mxGeometry x="310" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1584" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1584" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry y="7641" width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1585" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1585" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="4" y="7641" width="130" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1586" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1586" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="654" y="7651" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1587" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1587" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="714" y="7651" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1588" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1588" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="780" y="7653" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1589" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1589" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="7633" width="294.5" height="48" as="geometry"/>
                 </mxCell>
-                <mxCell id="1591" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1591" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="7790" width="320" height="55" as="geometry"/>
                 </mxCell>
-                <mxCell id="1592" value="" style="group" vertex="1" connectable="0" parent="1">
+                <mxCell id="1592" value="" style="group" parent="1" vertex="1" connectable="0">
                     <mxGeometry y="7797" width="850" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="1593" value="" style="group" vertex="1" connectable="0" parent="1592">
+                <mxCell id="1593" value="" style="group" parent="1592" vertex="1" connectable="0">
                     <mxGeometry width="850" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="1594" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1593">
+                <mxCell id="1594" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1593" vertex="1">
                     <mxGeometry width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1595" value="BOOK EXCHANGE LOGO" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1593">
+                <mxCell id="1595" value="BOOK EXCHANGE LOGO" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1593" vertex="1">
                     <mxGeometry x="10" width="90" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1596" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1593">
+                <mxCell id="1596" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1593" vertex="1">
                     <mxGeometry x="110" y="10" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1597" value="Dashboard" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1593">
+                <mxCell id="1597" value="Dashboard" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1593" vertex="1">
                     <mxGeometry x="170" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1598" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1593">
+                <mxCell id="1598" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" parent="1593" vertex="1">
                     <mxGeometry x="620" y="10" width="90" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1599" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1593">
+                <mxCell id="1599" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1593" vertex="1">
                     <mxGeometry x="240" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1600" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1593">
+                <mxCell id="1600" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1593" vertex="1">
                     <mxGeometry x="730" y="5" width="40" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="1601" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1593">
+                <mxCell id="1601" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1593" vertex="1">
                     <mxGeometry x="780" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1602" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1593">
+                <mxCell id="1602" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1593" vertex="1">
                     <mxGeometry x="310" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1608" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1608" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-1.7763568394002505e-15" y="8731" width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1609" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1609" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="3.9999999999999982" y="8731" width="130" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1610" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1610" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="654" y="8741" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1611" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1611" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="714" y="8741" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1612" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1612" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="780" y="8743" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1613" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1613" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="8723" width="294.5" height="48" as="geometry"/>
                 </mxCell>
-                <mxCell id="1615" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1615" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="8883" width="320" height="55" as="geometry"/>
                 </mxCell>
-                <mxCell id="1616" value="" style="group" vertex="1" connectable="0" parent="1">
+                <mxCell id="1616" value="" style="group" parent="1" vertex="1" connectable="0">
                     <mxGeometry x="-8.881784197001252e-16" y="8890" width="850" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="1617" value="" style="group" vertex="1" connectable="0" parent="1616">
+                <mxCell id="1617" value="" style="group" parent="1616" vertex="1" connectable="0">
                     <mxGeometry width="850" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="1618" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1617">
+                <mxCell id="1618" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1617" vertex="1">
                     <mxGeometry width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1619" value="BOOK EXCHANGE LOGO" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1617">
+                <mxCell id="1619" value="BOOK EXCHANGE LOGO" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1617" vertex="1">
                     <mxGeometry x="10" width="90" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1620" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1617">
+                <mxCell id="1620" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1617" vertex="1">
                     <mxGeometry x="110" y="10" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1621" value="Dashboard" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1617">
+                <mxCell id="1621" value="Dashboard" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1617" vertex="1">
                     <mxGeometry x="170" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1622" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1617">
+                <mxCell id="1622" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" parent="1617" vertex="1">
                     <mxGeometry x="620" y="10" width="90" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1623" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1617">
+                <mxCell id="1623" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1617" vertex="1">
                     <mxGeometry x="240" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1624" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1617">
+                <mxCell id="1624" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1617" vertex="1">
                     <mxGeometry x="730" y="5" width="40" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="1625" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1617">
+                <mxCell id="1625" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1617" vertex="1">
                     <mxGeometry x="780" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1626" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1617">
+                <mxCell id="1626" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1617" vertex="1">
                     <mxGeometry x="310" y="10" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1628" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1628" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-1.7763568394002505e-15" y="9811" width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1629" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1629" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="3.9999999999999982" y="9811" width="130" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1630" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1630" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="654" y="9821" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1631" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1631" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="714" y="9821" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1632" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1632" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="780" y="9823" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1633" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1633" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="9803" width="294.5" height="48" as="geometry"/>
                 </mxCell>
-                <mxCell id="1634" value="" style="shape=singleArrow;whiteSpace=wrap;html=1;arrowWidth=0.2647058823529278;arrowSize=0.40235294117646847;rotation=90;fillColor=#1A1A1A;" vertex="1" parent="1">
+                <mxCell id="1634" value="" style="shape=singleArrow;whiteSpace=wrap;html=1;arrowWidth=0.2647058823529278;arrowSize=0.40235294117646847;rotation=90;fillColor=#1A1A1A;" parent="1" vertex="1">
                     <mxGeometry x="501.88" y="9900" width="50" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="1635" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1635" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="9963" width="320" height="55" as="geometry"/>
                 </mxCell>
-                <mxCell id="1636" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1636" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="3" y="9970" width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1637" value="BOOK EXCHANGE LOGO" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1637" value="BOOK EXCHANGE LOGO" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="13" y="9970" width="90" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1638" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1638" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="112.99999999999999" y="9980" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1639" value="Dashboard" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1639" value="Dashboard" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="173" y="9980" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1640" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1640" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="623" y="9980" width="90" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1641" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1641" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="243" y="9980" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1642" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                <mxCell id="1642" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
                     <mxGeometry x="733" y="9975" width="40" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="1643" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1643" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="783" y="9980" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1644" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1644" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="313" y="9980" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1645" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1645" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="3.9999999999999982" y="10921" width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1646" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1646" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="7.999999999999998" y="10921" width="130" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1647" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1647" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="658" y="10931" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1648" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1648" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="718" y="10931" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1649" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1649" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="784" y="10933" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1650" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1650" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="10913" width="294.5" height="48" as="geometry"/>
                 </mxCell>
-                <mxCell id="1651" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1651" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-1.7763568394002505e-15" y="12021" width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1652" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1652" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="4" y="12021" width="130" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1653" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1653" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="654" y="12031" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1654" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1654" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="714" y="12031" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1655" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1655" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="780" y="12033" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1656" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1656" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="12013" width="294.5" height="48" as="geometry"/>
                 </mxCell>
-                <mxCell id="1657" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1657" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="11063" width="320" height="55" as="geometry"/>
                 </mxCell>
-                <mxCell id="1658" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1658" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="5" y="11070" width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1659" value="BOOK EXCHANGE LOGO" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1659" value="BOOK EXCHANGE LOGO" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="15" y="11070" width="90" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1660" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1660" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="115" y="11080" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1661" value="Dashboard" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1661" value="Dashboard" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="175" y="11080" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1662" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1662" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="625" y="11080" width="90" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1663" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1663" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="245" y="11080" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1664" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                <mxCell id="1664" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
                     <mxGeometry x="735" y="11075" width="40" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="1665" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1665" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="785" y="11080" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1666" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1666" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="315" y="11080" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1667" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1667" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-1.7763568394002505e-15" y="13121" width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1668" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1668" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="4" y="13121" width="130" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1669" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1669" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="654" y="13131" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1670" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1670" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="714" y="13131" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1671" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1671" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="780" y="13133" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1672" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1672" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="13113" width="294.5" height="48" as="geometry"/>
                 </mxCell>
-                <mxCell id="1673" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1673" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="12153" width="320" height="55" as="geometry"/>
                 </mxCell>
-                <mxCell id="1674" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1674" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="3" y="12160" width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1675" value="BOOK EXCHANGE LOGO" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1675" value="BOOK EXCHANGE LOGO" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="13" y="12160" width="90" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1676" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1676" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="113" y="12170" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1677" value="Dashboard" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1677" value="Dashboard" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="173" y="12170" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1678" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1678" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="623" y="12170" width="90" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1679" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1679" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="243" y="12170" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1680" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                <mxCell id="1680" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
                     <mxGeometry x="733" y="12165" width="40" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="1681" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1681" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="783" y="12170" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1682" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1682" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="313" y="12170" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1683" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1683" value="NAVBAR ID = &quot;main-navbar&quot; AVATAR = &quot;user-avatar-menu&quot; LOGOUT ID = nav-logout-link&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="13263" width="320" height="55" as="geometry"/>
                 </mxCell>
-                <mxCell id="1684" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1684" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="3" y="13270" width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1685" value="BOOK EXCHANGE LOGO" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1685" value="BOOK EXCHANGE LOGO" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="13" y="13270" width="90" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1686" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1686" value="Browse" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="113" y="13280" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1687" value="Dashboard" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1687" value="Dashboard" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="173" y="13280" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1688" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1688" value="Notifications" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="623" y="13280" width="90" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1689" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1689" value="Wishlist" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="243" y="13280" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1690" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                <mxCell id="1690" value="U" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
                     <mxGeometry x="733" y="13275" width="40" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="1691" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1691" value="Logout" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="783" y="13280" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1692" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1692" value="Messages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="313" y="13280" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1693" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="1693" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="2.129999999999998" y="14221" width="850" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1694" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1694" value="Book Exchange&amp;nbsp; c 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="6.13" y="14221" width="130" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="1695" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1695" value="About" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="656.13" y="14231" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1696" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1696" value="Policy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="716.13" y="14231" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1697" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="1697" value="Terms" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="782.13" y="14233" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="1698" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" vertex="1" parent="1">
+                <mxCell id="1698" value=" FOOTER ID = &quot;main-footer&quot; in _Layout.cshtml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#E6E6E6;strokeColor=#3700CC;" parent="1" vertex="1">
                     <mxGeometry x="962.5" y="14213" width="294.5" height="48" as="geometry"/>
                 </mxCell>
-                <mxCell id="1699" value="User Clicks wishlist in the nav bar or the view all in the wishlist panel to be taken here - clicking add book will take you back to the book search screen" style="rounded=0;whiteSpace=wrap;fontSize=18;fillColor=#E6E6E6;strokeColor=#3A5431;fontColor=#1A1A1A;" vertex="1" parent="1">
+                <mxCell id="1699" value="User Clicks wishlist in the nav bar or the view all in the wishlist panel to be taken here - clicking add book will take you back to the book search screen" style="rounded=0;whiteSpace=wrap;fontSize=18;fillColor=#E6E6E6;strokeColor=#3A5431;fontColor=#1A1A1A;" parent="1" vertex="1">
                     <mxGeometry x="40" y="7710" width="803.87" height="72" as="geometry"/>
                 </mxCell>
             </root>
