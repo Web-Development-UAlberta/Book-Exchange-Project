@@ -188,389 +188,149 @@ Testing for a release candidate is complete when:
 
 ### 8.1 Authentication / User Validation
 
-### UT-AUTH-01
-
-**Scenario:** Register user with valid data  
-**Expected Result:** User is accepted and can be created
-
-### UT-AUTH-02
-
-**Scenario:** Register user with missing required fields  
-**Expected Result:** Validation fails
-
-### UT-AUTH-03
-
-**Scenario:** Register user with duplicate email/username  
-**Expected Result:** Duplicate registration is rejected
-
----
+| Number     | Scenario                                    | Expected Result                     |
+| ---------- | ------------------------------------------- | ----------------------------------- |
+| UT-AUTH-01 | Register user with valid data               | User is accepted and can be created |
+| UT-AUTH-02 | Register user with missing required fields  | Validation fails                    |
+| UT-AUTH-03 | Register user with duplicate email/username | Duplicate registration is rejected  |
 
 ### 8.2 Address Management
 
-### UT-ADDR-01
-
-**Scenario:** Create address with valid GooglePlaceId  
-**Expected Result:** Address is accepted
-
-### UT-ADDR-02
-
-**Scenario:** Create address without GooglePlaceId  
-**Expected Result:** Validation fails
-
-### UT-ADDR-03
-
-**Scenario:** User updates own address  
-**Expected Result:** Address is updated successfully
-
-### UT-ADDR-04
-
-**Scenario:** User attempts to update another user's address  
-**Expected Result:** Operation is rejected
-
----
+| Number     | Scenario                                       | Expected Result                 |
+| ---------- | ---------------------------------------------- | ------------------------------- |
+| UT-ADDR-01 | Create address with valid GooglePlaceId        | Address is accepted             |
+| UT-ADDR-02 | Create address without GooglePlaceId           | Validation fails                |
+| UT-ADDR-03 | User updates own address                       | Address is updated successfully |
+| UT-ADDR-04 | User attempts to update another user's address | Operation is rejected           |
 
 ### 8.3 Listing Management
 
-### UT-LIST-01
-
-**Scenario:** Create listing with valid ISBN, condition, price, and weight  
-**Expected Result:** Listing is created successfully
-
-### UT-LIST-02
-
-**Scenario:** Create listing with invalid ISBN format  
-**Expected Result:** Validation fails
-
-### UT-LIST-03
-
-**Scenario:** Create listing with negative price  
-**Expected Result:** Validation fails
-
-### UT-LIST-04
-
-**Scenario:** Create listing with zero or negative weight  
-**Expected Result:** Validation fails
-
-### UT-LIST-05
-
-**Scenario:** Update listing with valid new values  
-**Expected Result:** Listing is updated successfully
-
-### UT-LIST-06
-
-**Scenario:** Update listing status from Active to Pending  
-**Expected Result:** Status change is saved correctly
-
-### UT-LIST-07
-
-**Scenario:** Mark listing as Completed after successful transaction  
-**Expected Result:** Listing is no longer shown as active
-
-### UT-LIST-08
-
-**Scenario:** Delete existing listing  
-**Expected Result:** Listing is removed or marked unavailable based on implementation
-
-### UT-LIST-09
-
-**Scenario:** User attempts to update another user's listing  
-**Expected Result:** Operation is rejected
-
-### UT-LIST-10
-
-**Scenario:** User attempts to delete another user's listing  
-**Expected Result:** Operation is rejected
+| Number     | Scenario                                                     | Expected Result                                                  |
+| ---------- | ------------------------------------------------------------ | ---------------------------------------------------------------- |
+| UT-LIST-01 | Create listing with valid ISBN, condition, price, and weight | Listing is created successfully                                  |
+| UT-LIST-02 | Create listing with invalid ISBN format                      | Validation fails                                                 |
+| UT-LIST-03 | Create listing with negative price                           | Validation fails                                                 |
+| UT-LIST-04 | Create listing with zero or negative weight                  | Validation fails                                                 |
+| UT-LIST-05 | Update listing with valid new values                         | Listing is updated successfully                                  |
+| UT-LIST-06 | Update listing status from Active to Pending                 | Status change is saved correctly                                 |
+| UT-LIST-07 | Mark listing as Completed after successful transaction       | Listing is no longer shown as active                             |
+| UT-LIST-08 | Delete existing listing                                      | Listing is removed or marked unavailable based on implementation |
+| UT-LIST-09 | User attempts to update another user's listing               | Operation is rejected                                            |
+| UT-LIST-10 | User attempts to delete another user's listing               | Operation is rejected                                            |
 
 ---
 
 ### 8.4 Genre Management
 
-### UT-GENRE-01
-
-**Scenario:** Create genre with valid name  
-**Expected Result:** Genre is created successfully
-
-### UT-GENRE-02
-
-**Scenario:** Create duplicate genre  
-**Expected Result:** Duplicate is rejected
-
-### UT-GENRE-03
-
-**Scenario:** Assign genre to listing  
-**Expected Result:** ListingGenres record is created
-
-### UT-GENRE-04
-
-**Scenario:** Assign same genre to same listing twice  
-**Expected Result:** Duplicate relationship is prevented
+| Number      | Scenario                                | Expected Result                     |
+| ----------- | --------------------------------------- | ----------------------------------- |
+| UT-GENRE-01 | Create genre with valid name            | Genre is created successfully       |
+| UT-GENRE-02 | Create duplicate genre                  | Duplicate is rejected               |
+| UT-GENRE-03 | Assign genre to listing                 | ListingGenres record is created     |
+| UT-GENRE-04 | Assign same genre to same listing twice | Duplicate relationship is prevented |
 
 ---
 
 ### 8.5 Wishlist Management
 
-### UT-WISH-01
-
-**Scenario:** Add valid ISBN to wishlist  
-**Expected Result:** Wishlist item is added
-
-### UT-WISH-02
-
-**Scenario:** Add invalid ISBN to wishlist  
-**Expected Result:** Validation fails
-
-### UT-WISH-03
-
-**Scenario:** Add duplicate ISBN to same user's wishlist  
-**Expected Result:** Duplicate is prevented
-
-### UT-WISH-04
-
-**Scenario:** Remove item from wishlist  
-**Expected Result:** Item is removed successfully
-
-### UT-WISH-05
-
-**Scenario:** Toggle wishlist item active/inactive  
-**Expected Result:** IsActive updates correctly
-
-### UT-WISH-06
-
-**Scenario:** User attempts to update another user's wishlist item  
-**Expected Result:** Operation is rejected
-
-### UT-WISH-07
-
-**Scenario:** User attempts to delete another user's wishlist item  
-**Expected Result:** Operation is rejected
+| Number     | Scenario                                             | Expected Result              |
+| ---------- | ---------------------------------------------------- | ---------------------------- |
+| UT-WISH-01 | Add valid ISBN to wishlist                           | Wishlist item is added       |
+| UT-WISH-02 | Add invalid ISBN to wishlist                         | Validation fails             |
+| UT-WISH-03 | Add duplicate ISBN to same user's wishlist           | Duplicate is prevented       |
+| UT-WISH-04 | Remove item from wishlist                            | Item is removed successfully |
+| UT-WISH-05 | Toggle wishlist item active/inactive                 | IsActive updates correctly   |
+| UT-WISH-06 | User attempts to update another user's wishlist item | Operation is rejected        |
+| UT-WISH-07 | User attempts to delete another user's wishlist item | Operation is rejected        |
 
 ---
 
 ### 8.6 Search and Filtering
 
-### UT-SEARCH-01
-
-**Scenario:** Search listings by ISBN  
-**Expected Result:** Matching listings are returned
-
-### UT-SEARCH-02
-
-**Scenario:** Filter listings by genre  
-**Expected Result:** Only listings with selected genre are returned
-
-### UT-SEARCH-03
-
-**Scenario:** Filter listings by condition  
-**Expected Result:** Only listings with selected condition are returned
-
-### UT-SEARCH-04
-
-**Scenario:** Filter listings by status Active  
-**Expected Result:** Only active listings are returned
-
-### UT-SEARCH-05
-
-**Scenario:** Search listings by book title keyword
-**Expected Result:** Listings whose book title contains the keyword are returned
-
-### UT-SEARCH-06
-
-**Scenario:** Search listings by author name
-**Expected Result:** Listings whose book author matches the query are returned
-
-### UT-SEARCH-07
-
-**Scenario:** Search with keyword and active filters combined
-**Expected Result:** Results match both the keyword and all applied filters
-
-### UT-SEARCH-08
-
-**Scenario:** Search is case-insensitive
-**Expected Result:** "tolkien" and "Tolkien" return the same results
+| Number       | Scenario                                        | Expected Result                                             |
+| ------------ | ----------------------------------------------- | ----------------------------------------------------------- |
+| UT-SEARCH-01 | Search listings by ISBN                         | Matching listings are returned                              |
+| UT-SEARCH-02 | Filter listings by genre                        | Only listings with selected genre are returned              |
+| UT-SEARCH-03 | Filter listings by condition                    | Only listings with selected condition are returned          |
+| UT-SEARCH-04 | Filter listings by status Active                | Only active listings are returned                           |
+| UT-SEARCH-05 | Search listings by book title keyword           | Listings whose book title contains the keyword are returned |
+| UT-SEARCH-06 | Search listings by author name                  | Listings whose book author matches the query are returned   |
+| UT-SEARCH-07 | Search with keyword and active filters combined | Results match both the keyword and all applied filters      |
+| UT-SEARCH-08 | Search is case-insensitive                      | "tolkien" and "Tolkien" return the same results             |
 
 ---
 
 ### 8.7 Match Logic
 
-### UT-MATCH-01
-
-**Scenario:** User wishlist ISBN matches another user's active listing ISBN  
-**Expected Result:** Match is returned
-
-### UT-MATCH-02
-
-**Scenario:** No matching listing exists  
-**Expected Result:** Empty result returned
-
-### UT-MATCH-03
-
-**Scenario:** Exclude user's own listing from match results  
-**Expected Result:** User's own listings are not suggested
-
-### UT-MATCH-04
-
-**Scenario:** Inactive wishlist item matches a listing  
-**Expected Result:** Match is not returned
-
-### UT-MATCH-05
-
-**Scenario:** Completed or cancelled listing matches wishlist  
-**Expected Result:** Match is not returned
+| Number      | Scenario                                                      | Expected Result                       |
+| ----------- | ------------------------------------------------------------- | ------------------------------------- |
+| UT-MATCH-01 | User wishlist ISBN matches another user's active listing ISBN | Match is returned                     |
+| UT-MATCH-02 | No matching listing exists                                    | Empty result returned                 |
+| UT-MATCH-03 | Exclude user's own listing from match results                 | User's own listings are not suggested |
+| UT-MATCH-04 | Inactive wishlist item matches a listing                      | Match is not returned                 |
+| UT-MATCH-05 | Completed or cancelled listing matches wishlist               | Match is not returned                 |
 
 ---
 
 ### 8.8 Exchange Requests
 
-### UT-EXCH-01
-
-**Scenario:** Create BuySell exchange request for active listing  
-**Expected Result:** ExchangeRequest is created with Requested status
-
-### UT-EXCH-02
-
-**Scenario:** Create BookSwap exchange request with one offered listing  
-**Expected Result:** ExchangeRequest and ExchangeRequestItems are created
-
-### UT-EXCH-03
-
-**Scenario:** Create BookSwapWithCash request with offered listing and price  
-**Expected Result:** ExchangeRequest is created successfully
-
-### UT-EXCH-04
-
-**Scenario:** Create swap request with more than three offered listings  
-**Expected Result:** Request is rejected by business rule
-
-### UT-EXCH-05
-
-**Scenario:** Create exchange request for own listing  
-**Expected Result:** Request is rejected
-
-### UT-EXCH-06
-
-**Scenario:** Accept valid exchange request  
-**Expected Result:** ExchangeRequest status becomes Accepted
-
-### UT-EXCH-07
-
-**Scenario:** Reject exchange request  
-**Expected Result:** ExchangeRequest status becomes Rejected
-
-### UT-EXCH-08
-
-**Scenario:** Invalid exchange status transition  
-**Expected Result:** System rejects invalid transition
+| Number     | Scenario                                                       | Expected Result                                      |
+| ---------- | -------------------------------------------------------------- | ---------------------------------------------------- |
+| UT-EXCH-01 | Create BuySell exchange request for active listing             | ExchangeRequest is created with Requested status     |
+| UT-EXCH-02 | Create BookSwap exchange request with one offered listing      | ExchangeRequest and ExchangeRequestItems are created |
+| UT-EXCH-03 | Create BookSwapWithCash request with offered listing and price | ExchangeRequest is created successfully              |
+| UT-EXCH-04 | Create swap request with more than three offered listings      | Request is rejected by business rule                 |
+| UT-EXCH-05 | Create exchange request for own listing                        | Request is rejected                                  |
+| UT-EXCH-06 | Accept valid exchange request                                  | ExchangeRequest status becomes Accepted              |
+| UT-EXCH-07 | Reject exchange request                                        | ExchangeRequest status becomes Rejected              |
+| UT-EXCH-08 | Invalid exchange status transition                             | System rejects invalid transition                    |
 
 ---
 
 ### 8.9 Transactions
 
-### UT-TRANS-01
-
-**Scenario:** Create transaction from accepted exchange request  
-**Expected Result:** Transaction is created with Confirmed status
-
-### UT-TRANS-02
-
-**Scenario:** Attempt to create transaction from rejected request  
-**Expected Result:** Transaction creation is rejected
-
-### UT-TRANS-03
-
-**Scenario:** Complete transaction  
-**Expected Result:** Transaction status changes to Completed
-
-### UT-TRANS-04
-
-**Scenario:** Cancel transaction  
-**Expected Result:** Transaction status changes to Cancelled
-
-### UT-TRANS-05
-
-**Scenario:** Invalid status transition  
-**Expected Result:** System rejects invalid transition
+| Number      | Scenario                                            | Expected Result                              |
+| ----------- | --------------------------------------------------- | -------------------------------------------- |
+| UT-TRANS-01 | Create transaction from accepted exchange request   | Transaction is created with Confirmed status |
+| UT-TRANS-02 | Attempt to create transaction from rejected request | Transaction creation is rejected             |
+| UT-TRANS-03 | Complete transaction                                | Transaction status changes to Completed      |
+| UT-TRANS-04 | Cancel transaction                                  | Transaction status changes to Cancelled      |
+| UT-TRANS-05 | Invalid status transition                           | System rejects invalid transition            |
 
 ---
 
 ### 8.10 Shipping
 
-### UT-SHIP-01
-
-**Scenario:** Calculate shipping cost with valid carrier, weight, and distance  
-**Expected Result:** Shipping cost is calculated correctly
-
-### UT-SHIP-02
-
-**Scenario:** Shipping weight exceeds carrier max weight  
-**Expected Result:** Carrier is rejected or unavailable
-
-### UT-SHIP-03
-
-**Scenario:** Missing sender or receiver address  
-**Expected Result:** Shipment creation fails
-
-### UT-SHIP-04
-
-**Scenario:** Distance API returns valid distance  
-**Expected Result:** DistanceKm is stored and shipping cost is calculated
-
-### UT-SHIP-05
-
-**Scenario:** Distance API fails  
-**Expected Result:** System handles failure gracefully
+| Number     | Scenario                                                         | Expected Result                                      |
+| ---------- | ---------------------------------------------------------------- | ---------------------------------------------------- |
+| UT-SHIP-01 | Calculate shipping cost with valid carrier, weight, and distance | Shipping cost is calculated correctly                |
+| UT-SHIP-02 | Shipping weight exceeds carrier max weight                       | Carrier is rejected or unavailable                   |
+| UT-SHIP-03 | Missing sender or receiver address                               | Shipment creation fails                              |
+| UT-SHIP-04 | Distance API returns valid distance                              | DistanceKm is stored and shipping cost is calculated |
+| UT-SHIP-05 | Distance API fails                                               | System handles failure gracefully                    |
 
 ---
 
 ### 8.11 Reviews / Ratings
 
-### UT-REVIEW-01
-
-**Scenario:** Create review for completed transaction  
-**Expected Result:** Review is accepted
-
-### UT-REVIEW-02
-
-**Scenario:** Create review before transaction completion  
-**Expected Result:** Review is rejected
-
-### UT-REVIEW-03
-
-**Scenario:** Rating outside allowed range  
-**Expected Result:** Validation fails
-
-### UT-REVIEW-04
-
-**Scenario:** Duplicate review for same transaction by same reviewer  
-**Expected Result:** Duplicate is rejected
-
-### UT-REVIEW-05
-
-**Scenario:** Aggregate user rating from multiple reviews  
-**Expected Result:** Average rating is calculated correctly
+| Number       | Scenario                                               | Expected Result                        |
+| ------------ | ------------------------------------------------------ | -------------------------------------- |
+| UT-REVIEW-01 | Create review for completed transaction                | Review is accepted                     |
+| UT-REVIEW-02 | Create review before transaction completion            | Review is rejected                     |
+| UT-REVIEW-03 | Rating outside allowed range                           | Validation fails                       |
+| UT-REVIEW-04 | Duplicate review for same transaction by same reviewer | Duplicate is rejected                  |
+| UT-REVIEW-05 | Aggregate user rating from multiple reviews            | Average rating is calculated correctly |
 
 ---
 
 ### 8.12 Notifications
 
-### UT-NOTIF-01
-
-**Scenario:** Trigger notification when a match is found  
-**Expected Result:** Notification record is created
-
-### UT-NOTIF-02
-
-**Scenario:** Trigger notification when message is received  
-**Expected Result:** Notification is created
-
-### UT-NOTIF-03
-
-**Scenario:** Trigger notification when exchange request is accepted  
-**Expected Result:** Notification is created
-
-### UT-NOTIF-04
-
-**Scenario:** Mark notification as read  
-**Expected Result:** Status changes to Read and ReadAt is populated
+| Number      | Scenario                                               | Expected Result                                |
+| ----------- | ------------------------------------------------------ | ---------------------------------------------- |
+| UT-NOTIF-01 | Trigger notification when a match is found             | Notification record is created                 |
+| UT-NOTIF-02 | Trigger notification when message is received          | Notification is created                        |
+| UT-NOTIF-03 | Trigger notification when exchange request is accepted | Notification is created                        |
+| UT-NOTIF-04 | Mark notification as read                              | Status changes to Read and ReadAt is populated |
 
 ---
 
@@ -578,211 +338,105 @@ Testing for a release candidate is complete when:
 
 ### 9.1 Authentication Integration
 
-### IT-AUTH-01
-
-**Scenario:** User registers through request pipeline  
-**Expected Result:** User record exists and registration flow succeeds
-
-### IT-AUTH-02
-
-**Scenario:** Valid login  
-**Expected Result:** User is authenticated and redirected appropriately
-
-### IT-AUTH-03
-
-**Scenario:** Access protected page without login  
-**Expected Result:** User is redirected to login page
+| Number     | Scenario                                | Expected Result                                    |
+| ---------- | --------------------------------------- | -------------------------------------------------- |
+| IT-AUTH-01 | User registers through request pipeline | User record exists and registration flow succeeds  |
+| IT-AUTH-02 | Valid login                             | User is authenticated and redirected appropriately |
+| IT-AUTH-03 | Access protected page without login     | User is redirected to login page                   |
 
 ---
 
 ### 9.2 Listing Integration
 
-### IT-LIST-01
-
-**Scenario:** Authenticated user creates a listing  
-**Expected Result:** Listing appears in My Listings and database
-
-### IT-LIST-02
-
-**Scenario:** User creates listing with invalid ISBN  
-**Expected Result:** Validation error is shown and database is unchanged
-
-### IT-LIST-03
-
-**Scenario:** Edit existing listing  
-**Expected Result:** Updated values are saved and displayed
-
-### IT-LIST-04
-
-**Scenario:** Delete listing  
-**Expected Result:** Listing is removed or marked unavailable
-
-### IT-LIST-05
-
-**Scenario:** User tries to edit another user's listing  
-**Expected Result:** Access is denied or operation is blocked
-
-### IT-LIST-06
-
-**Scenario:** User assigns genres to listing  
-**Expected Result:** ListingGenres records are saved correctly
+| Number     | Scenario                                  | Expected Result                                     |
+| ---------- | ----------------------------------------- | --------------------------------------------------- |
+| IT-LIST-01 | Authenticated user creates a listing      | Listing appears in My Listings and database         |
+| IT-LIST-02 | User creates listing with invalid ISBN    | Validation error is shown and database is unchanged |
+| IT-LIST-03 | Edit existing listing                     | Updated values are saved and displayed              |
+| IT-LIST-04 | Delete listing                            | Listing is removed or marked unavailable            |
+| IT-LIST-05 | User tries to edit another user's listing | Access is denied or operation is blocked            |
+| IT-LIST-06 | User assigns genres to listing            | ListingGenres records are saved correctly           |
 
 ---
 
 ### 9.3 Wishlist Integration
 
-### IT-WISH-01
-
-**Scenario:** User adds ISBN to wishlist  
-**Expected Result:** Wishlist item is saved and shown
-
-### IT-WISH-02
-
-**Scenario:** User adds duplicate ISBN  
-**Expected Result:** Duplicate is blocked
-
-### IT-WISH-03
-
-**Scenario:** Remove wishlist item  
-**Expected Result:** Item no longer appears
-
-### IT-WISH-04
-
-**Scenario:** User tries to update another user's wishlist item  
-**Expected Result:** Access is denied or operation is blocked
+| Number     | Scenario                                          | Expected Result                          |
+| ---------- | ------------------------------------------------- | ---------------------------------------- |
+| IT-WISH-01 | User adds ISBN to wishlist                        | Wishlist item is saved and shown         |
+| IT-WISH-02 | User adds duplicate ISBN                          | Duplicate is blocked                     |
+| IT-WISH-03 | Remove wishlist item                              | Item no longer appears                   |
+| IT-WISH-04 | User tries to update another user's wishlist item | Access is denied or operation is blocked |
 
 ---
 
 ### 9.4 Matching Integration
 
-### IT-MATCH-01
-
-**Scenario:** User wishlist matches another user's active listing  
-**Expected Result:** Match suggestion appears
-
-### IT-MATCH-02
-
-**Scenario:** Matching listing belongs to same user  
-**Expected Result:** Match is excluded
-
-### IT-MATCH-03
-
-**Scenario:** Listing status is Completed  
-**Expected Result:** Match is excluded
+| Number      | Scenario                                            | Expected Result          |
+| ----------- | --------------------------------------------------- | ------------------------ |
+| IT-MATCH-01 | User wishlist matches another user's active listing | Match suggestion appears |
+| IT-MATCH-02 | Matching listing belongs to same user               | Match is excluded        |
+| IT-MATCH-03 | Listing status is Completed                         | Match is excluded        |
 
 ---
 
 ### 9.5 Exchange Request Integration
 
-### IT-EXCH-01
-
-**Scenario:** User creates BuySell exchange request  
-**Expected Result:** ExchangeRequest is saved with Requested status
-
-### IT-EXCH-02
-
-**Scenario:** User creates BookSwap exchange request  
-**Expected Result:** ExchangeRequest and ExchangeRequestItems are saved
-
-### IT-EXCH-03
-
-**Scenario:** User creates BookSwapWithCash exchange request  
-**Expected Result:** Request includes offered listing(s) and Price
-
-### IT-EXCH-04
-
-**Scenario:** Listing owner accepts exchange request  
-**Expected Result:** ExchangeRequest status becomes Accepted and Transaction is created
-
-### IT-EXCH-05
-
-**Scenario:** Listing owner rejects exchange request  
-**Expected Result:** ExchangeRequest status becomes Rejected and no Transaction is created
+| Number     | Scenario                                       | Expected Result                                                       |
+| ---------- | ---------------------------------------------- | --------------------------------------------------------------------- |
+| IT-EXCH-01 | User creates BuySell exchange request          | ExchangeRequest is saved with Requested status                        |
+| IT-EXCH-02 | User creates BookSwap exchange request         | ExchangeRequest and ExchangeRequestItems are saved                    |
+| IT-EXCH-03 | User creates BookSwapWithCash exchange request | Request includes offered listing(s) and Price                         |
+| IT-EXCH-04 | Listing owner accepts exchange request         | ExchangeRequest status becomes Accepted and Transaction is created    |
+| IT-EXCH-05 | Listing owner rejects exchange request         | ExchangeRequest status becomes Rejected and no Transaction is created |
 
 ---
 
 ### 9.6 Transaction Integration
 
-### IT-TRANS-01
-
-**Scenario:** Accepted exchange creates transaction  
-**Expected Result:** Transaction is linked to ExchangeRequest
-
-### IT-TRANS-02
-
-**Scenario:** Completing transaction updates listing status  
-**Expected Result:** Related listing(s) are no longer active
-
-### IT-TRANS-03
-
-**Scenario:** Transaction history is requested  
-**Expected Result:** User sees relevant transactions
+| Number      | Scenario                                      | Expected Result                          |
+| ----------- | --------------------------------------------- | ---------------------------------------- |
+| IT-TRANS-01 | Accepted exchange creates transaction         | Transaction is linked to ExchangeRequest |
+| IT-TRANS-02 | Completing transaction updates listing status | Related listing(s) are no longer active  |
+| IT-TRANS-03 | Transaction history is requested              | User sees relevant transactions          |
 
 ---
 
 ### 9.7 Shipping Integration
 
-### IT-SHIP-01
-
-**Scenario:** Create shipment for transaction  
-**Expected Result:** Shipment is saved and linked to transaction
-
-### IT-SHIP-02
-
-**Scenario:** Quote shipment using carrier pricing and distance  
-**Expected Result:** DistanceKm and ShippingCost are calculated
-
-### IT-SHIP-03
-
-**Scenario:** Update shipment status  
-**Expected Result:** Shipment status updates correctly
+| Number     | Scenario                                          | Expected Result                             |
+| ---------- | ------------------------------------------------- | ------------------------------------------- |
+| IT-SHIP-01 | Create shipment for transaction                   | Shipment is saved and linked to transaction |
+| IT-SHIP-02 | Quote shipment using carrier pricing and distance | DistanceKm and ShippingCost are calculated  |
+| IT-SHIP-03 | Update shipment status                            | Shipment status updates correctly           |
 
 ---
 
 ### 9.8 Messaging Integration
 
-### IT-MSG-01
-
-**Scenario:** Send message between users  
-**Expected Result:** Message is stored and visible in conversation thread
-
-### IT-MSG-02
-
-**Scenario:** Receive notification for new message  
-**Expected Result:** Related notification record appears
+| Number    | Scenario                             | Expected Result                                      |
+| --------- | ------------------------------------ | ---------------------------------------------------- |
+| IT-MSG-01 | Send message between users           | Message is stored and visible in conversation thread |
+| IT-MSG-02 | Receive notification for new message | Related notification record appears                  |
 
 ---
 
 ### 9.9 Review Integration
 
-### IT-REVIEW-01
-
-**Scenario:** User submits review after completed transaction  
-**Expected Result:** Review is saved and linked to transaction
-
-### IT-REVIEW-02
-
-**Scenario:** User profile displays updated rating  
-**Expected Result:** Aggregate rating is updated on profile page
+| Number       | Scenario                                        | Expected Result                             |
+| ------------ | ----------------------------------------------- | ------------------------------------------- |
+| IT-REVIEW-01 | User submits review after completed transaction | Review is saved and linked to transaction   |
+| IT-REVIEW-02 | User profile displays updated rating            | Aggregate rating is updated on profile page |
 
 ---
 
 ### 9.10 Search Integration
 
-### IT-SEARCH-03
-
-**Scenario:** Search listings by title keyword through request pipeline
-**Expected Result:** Matching active listings are returned from the database
-
-### IT-SEARCH-04
-
-**Scenario:** Search listings by author name through request pipeline
-**Expected Result:** Matching active listings are returned from the database
-
-### IT-SEARCH-05
-
-**Scenario:** Combine keyword search with genre and condition filters
-**Expected Result:** Results satisfy all search and filter criteria simultaneously
+| Number       | Scenario                                                  | Expected Result                                               |
+| ------------ | --------------------------------------------------------- | ------------------------------------------------------------- |
+| IT-SEARCH-03 | Search listings by title keyword through request pipeline | Matching active listings are returned from the database       |
+| IT-SEARCH-04 | Search listings by author name through request pipeline   | Matching active listings are returned from the database       |
+| IT-SEARCH-05 | Combine keyword search with genre and condition filters   | Results satisfy all search and filter criteria simultaneously |
 
 ---
 
@@ -790,281 +444,126 @@ Testing for a release candidate is complete when:
 
 ### 10.1 General Navigation
 
-### MUI-01
-
-**Scenario:** Open home page  
-**Expected Result:** Page loads without error and navigation is visible
-
-### MUI-02
-
-**Scenario:** Navigate through major pages  
-**Pages:** Home, Login, Register, Listings, Wishlist, Profile, Messages, Notifications  
-**Expected Result:** All links work correctly
+| Number | Scenario                                                                                                   | Expected Result                                    |
+| ------ | ---------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| MUI-01 | Open home page                                                                                             | Page loads without error and navigation is visible |
+| MUI-02 | Navigate through major pages (Home, Login, Register, Listings, Wishlist, Profile, Messages, Notifications) | All links work correctly                           |
 
 ---
 
 ### 10.2 Registration and Login
 
-### MUI-03
-
-**Scenario:** Register with valid data  
-**Expected Result:** Account is created successfully
-
-### MUI-04
-
-**Scenario:** Register with invalid data  
-**Expected Result:** Validation messages are shown
-
-### MUI-05
-
-**Scenario:** Login with valid credentials  
-**Expected Result:** Login succeeds
-
-### MUI-06
-
-**Scenario:** Login with invalid credentials  
-**Expected Result:** Error message is shown
-
-### MUI-07
-
-**Scenario:** Logout  
-**Expected Result:** Session ends and protected pages are inaccessible
+| Number | Scenario                       | Expected Result                                   |
+| ------ | ------------------------------ | ------------------------------------------------- |
+| MUI-03 | Register with valid data       | Account is created successfully                   |
+| MUI-04 | Register with invalid data     | Validation messages are shown                     |
+| MUI-05 | Login with valid credentials   | Login succeeds                                    |
+| MUI-06 | Login with invalid credentials | Error message is shown                            |
+| MUI-07 | Logout                         | Session ends and protected pages are inaccessible |
 
 ---
 
 ### 10.3 Profile and Address UI
 
-### MUI-08
-
-**Scenario:** View profile  
-**Expected Result:** User details display correctly
-
-### MUI-09
-
-**Scenario:** Edit profile  
-**Expected Result:** Changes are saved and visible
-
-### MUI-10
-
-**Scenario:** Add address using Google Place ID / address lookup  
-**Expected Result:** Address is saved successfully
-
-### MUI-11
-
-**Scenario:** Add address without valid location  
-**Expected Result:** Validation message is shown
+| Number | Scenario                                           | Expected Result                |
+| ------ | -------------------------------------------------- | ------------------------------ |
+| MUI-08 | View profile                                       | User details display correctly |
+| MUI-09 | Edit profile                                       | Changes are saved and visible  |
+| MUI-10 | Add address using Google Place ID / address lookup | Address is saved successfully  |
+| MUI-11 | Add address without valid location                 | Validation message is shown    |
 
 ---
 
 ### 10.4 Listings UI
 
-### MUI-12
-
-**Scenario:** Create new listing through form  
-**Expected Result:** Listing is created and shown
-
-### MUI-13
-
-**Scenario:** Submit listing form with invalid ISBN  
-**Expected Result:** Validation message appears
-
-### MUI-14
-
-**Scenario:** Submit listing with negative price  
-**Expected Result:** Validation message appears
-
-### MUI-15
-
-**Scenario:** Edit own listing  
-**Expected Result:** Updated values appear after saving
-
-### MUI-16
-
-**Scenario:** Delete own listing  
-**Expected Result:** Listing disappears or becomes unavailable
-
-### MUI-17
-
-**Scenario:** Try to edit another user's listing by URL  
-**Expected Result:** Access denied or redirect
+| Number | Scenario                                  | Expected Result                           |
+| ------ | ----------------------------------------- | ----------------------------------------- |
+| MUI-12 | Create new listing through form           | Listing is created and shown              |
+| MUI-13 | Submit listing form with invalid ISBN     | Validation message appears                |
+| MUI-14 | Submit listing with negative price        | Validation message appears                |
+| MUI-15 | Edit own listing                          | Updated values appear after saving        |
+| MUI-16 | Delete own listing                        | Listing disappears or becomes unavailable |
+| MUI-17 | Try to edit another user's listing by URL | Access denied or redirect                 |
 
 ---
 
 ### 10.5 Wishlist UI
 
-### MUI-18
-
-**Scenario:** Add ISBN to wishlist  
-**Expected Result:** Item appears in wishlist page
-
-### MUI-19
-
-**Scenario:** Add duplicate ISBN to wishlist  
-**Expected Result:** Duplicate is blocked
-
-### MUI-20
-
-**Scenario:** Remove wishlist item  
-**Expected Result:** Item disappears from wishlist page
-
-### MUI-21
-
-**Scenario:** Toggle wishlist item active/inactive  
-**Expected Result:** Status updates visually
+| Number | Scenario                             | Expected Result                    |
+| ------ | ------------------------------------ | ---------------------------------- |
+| MUI-18 | Add ISBN to wishlist                 | Item appears in wishlist page      |
+| MUI-19 | Add duplicate ISBN to wishlist       | Duplicate is blocked               |
+| MUI-20 | Remove wishlist item                 | Item disappears from wishlist page |
+| MUI-21 | Toggle wishlist item active/inactive | Status updates visually            |
 
 ---
 
 ### 10.6 Search UI
 
-### MUI-22
-
-**Scenario:** Search by ISBN  
-**Expected Result:** Matching listings are shown
-
-### MUI-23
-
-**Scenario:** Use filters such as genre or condition  
-**Expected Result:** Results update correctly
-
-### MUI-24
-
-**Scenario:** Search with no results  
-**Expected Result:** Friendly “no results found” message is shown
-
-### MUI-25
-
-**Scenario:** Search by book title keyword
-**Expected Result:** Matching listings appear with correct title displayed on result card
-
-### MUI-26
-
-**Scenario:** Search by author name
-**Expected Result:** Matching listings appear with correct author displayed on result card
-
-### MUI-27
-
-**Scenario:** Search is case-insensitive
-**Expected Result:** Results are the same regardless of capitalisation used in the query
+| Number | Scenario                               | Expected Result                                                       |
+| ------ | -------------------------------------- | --------------------------------------------------------------------- |
+| MUI-22 | Search by ISBN                         | Matching listings are shown                                           |
+| MUI-23 | Use filters such as genre or condition | Results update correctly                                              |
+| MUI-24 | Search with no results                 | Friendly "no results found" message is shown                          |
+| MUI-25 | Search by book title keyword           | Matching listings appear with correct title displayed on result card  |
+| MUI-26 | Search by author name                  | Matching listings appear with correct author displayed on result card |
+| MUI-27 | Search is case-insensitive             | Results are the same regardless of capitalisation used in the query   |
 
 ---
 
 ### 10.7 Matching and Exchange UI
 
-### MUI-28
-
-**Scenario:** View match suggestions  
-**Expected Result:** Matching listings are displayed
-
-### MUI-29
-
-**Scenario:** Start buy/sell request  
-**Expected Result:** Exchange request is submitted
-
-### MUI-30
-
-**Scenario:** Start book swap request  
-**Expected Result:** User can select up to 3 offered books
-
-### MUI-31
-
-**Scenario:** Start book + money swap request  
-**Expected Result:** User can select books and enter extra Price
-
-### MUI-32
-
-**Scenario:** Attempt to offer more than 3 books  
-**Expected Result:** UI blocks or validation message appears
-
-### MUI-33
-
-**Scenario:** Listing owner accepts request  
-**Expected Result:** Transaction is created
-
-### MUI-34
-
-**Scenario:** Listing owner rejects request  
-**Expected Result:** Request status becomes rejected
+| Number | Scenario                           | Expected Result                             |
+| ------ | ---------------------------------- | ------------------------------------------- |
+| MUI-28 | View match suggestions             | Matching listings are displayed             |
+| MUI-29 | Start buy/sell request             | Exchange request is submitted               |
+| MUI-30 | Start book swap request            | User can select up to 3 offered books       |
+| MUI-31 | Start book + money swap request    | User can select books and enter extra Price |
+| MUI-32 | Attempt to offer more than 3 books | UI blocks or validation message appears     |
+| MUI-33 | Listing owner accepts request      | Transaction is created                      |
+| MUI-34 | Listing owner rejects request      | Request status becomes rejected             |
 
 ---
 
 ### 10.8 Transaction and Shipping UI
 
-### MUI-35
-
-**Scenario:** View transaction history  
-**Expected Result:** Past and current transactions are displayed
-
-### MUI-36
-
-**Scenario:** Create shipment for transaction  
-**Expected Result:** Shipment form saves correctly
-
-### MUI-37
-
-**Scenario:** Quote shipping cost  
-**Expected Result:** Shipping cost displays correctly
-
-### MUI-38
-
-**Scenario:** Update shipment status  
-**Expected Result:** Shipment status updates visually
+| Number | Scenario                        | Expected Result                             |
+| ------ | ------------------------------- | ------------------------------------------- |
+| MUI-35 | View transaction history        | Past and current transactions are displayed |
+| MUI-36 | Create shipment for transaction | Shipment form saves correctly               |
+| MUI-37 | Quote shipping cost             | Shipping cost displays correctly            |
+| MUI-38 | Update shipment status          | Shipment status updates visually            |
 
 ---
 
 ### 10.9 Messaging and Notifications UI
 
-### MUI-39
-
-**Scenario:** Open message thread and send message  
-**Expected Result:** Message appears in conversation
-
-### MUI-40
-
-**Scenario:** Open notifications page  
-**Expected Result:** Notifications are visible
-
-### MUI-41
-
-**Scenario:** Mark notification as read  
-**Expected Result:** Notification state changes visually
+| Number | Scenario                             | Expected Result                     |
+| ------ | ------------------------------------ | ----------------------------------- |
+| MUI-39 | Open message thread and send message | Message appears in conversation     |
+| MUI-40 | Open notifications page              | Notifications are visible           |
+| MUI-41 | Mark notification as read            | Notification state changes visually |
 
 ---
 
 ### 10.10 Authorization UI
 
-### MUI-42
-
-**Scenario:** Unauthenticated user tries to access protected page  
-**Expected Result:** Redirect to login page
-
-### MUI-43
-
-**Scenario:** User tries to edit another user's content  
-**Expected Result:** Access denied or redirect occurs
+| Number | Scenario                                            | Expected Result                  |
+| ------ | --------------------------------------------------- | -------------------------------- |
+| MUI-42 | Unauthenticated user tries to access protected page | Redirect to login page           |
+| MUI-43 | User tries to edit another user's content           | Access denied or redirect occurs |
 
 ---
 
 ## 11. Non-Functional Checks
 
-### NFT-01 Performance
-
-Open common pages and confirm they load within acceptable time locally
-
-### NFT-02 Error Handling
-
-Trigger invalid inputs and verify user-friendly messages appear
-
-### NFT-03 Data Integrity
-
-Verify related records remain consistent after create/update/delete actions
-
-### NFT-04 Basic Usability
-
-Check labels, buttons, forms, and navigation for clarity
-
-### NFT-05 External API Failure
-
-Simulate Google Books or Google distance lookup failure and confirm the app handles it gracefully
+| Number | Check                | Description                                                                                       |
+| ------ | -------------------- | ------------------------------------------------------------------------------------------------- |
+| NFT-01 | Performance          | Open common pages and confirm they load within acceptable time locally                            |
+| NFT-02 | Error Handling       | Trigger invalid inputs and verify user-friendly messages appear                                   |
+| NFT-03 | Data Integrity       | Verify related records remain consistent after create/update/delete actions                       |
+| NFT-04 | Basic Usability      | Check labels, buttons, forms, and navigation for clarity                                          |
+| NFT-05 | External API Failure | Simulate Google Books or Google distance lookup failure and confirm the app handles it gracefully |
 
 ---
 
