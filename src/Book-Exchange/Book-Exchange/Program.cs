@@ -41,6 +41,7 @@ builder.Services
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IListingService, ListingService>();
+// builder.Services.AddScoped<IExchangeRequestService, ExchangeRequestService>();
 
 var app = builder.Build();
 
