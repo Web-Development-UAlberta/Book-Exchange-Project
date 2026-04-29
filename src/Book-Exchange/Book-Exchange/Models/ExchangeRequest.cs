@@ -24,6 +24,6 @@ public class ExchangeRequest
     public DateTime? CancelledAt { get; set; }
 
     public ICollection<ExchangeRequestItem> ExchangeRequestItems { get; set; } = new List<ExchangeRequestItem>();
-
     public Transaction? Transaction { get; set; }
+    public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 }

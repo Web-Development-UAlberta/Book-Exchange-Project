@@ -23,6 +23,7 @@ namespace Book_Exchange.Data
         public DbSet<Carrier> Carriers => Set<Carrier>();
         public DbSet<Shipment> Shipments => Set<Shipment>();
         public DbSet<Review> Reviews => Set<Review>();
+        public DbSet<Notification> Notifications => Set<Notification>();
 
 
 
@@ -578,7 +579,92 @@ namespace Book_Exchange.Data
                 {
                     t.HasCheckConstraint("ck_reviews_rating", "rating BETWEEN 1 AND 5");
                 });
+            });
 
+            // Notification
+            builder.Entity<Notification>(entity =>
+            {
+                entity.ToTable("notifications");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.UserId)
+                    .HasColumnName("user_id")
+                    .IsRequired();
+
+                entity.Property(e => e.Category)
+                    .HasColumnName("category")
+                    .HasColumnType("notification_category")
+                    .IsRequired();
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("status")
+                    .HasColumnType("notification_status")
+                    .HasDefaultValueSql("'unread'::notification_status")
+                    .IsRequired();
+
+                entity.Property(e => e.Title)
+                    .HasColumnName("title")
+                    .HasMaxLength(255)
+                    .IsRequired();
+
+                entity.Property(e => e.Message)
+                    .HasColumnName("message")
+                    .IsRequired();
+
+                entity.Property(e => e.RelatedListingId)
+                    .HasColumnName("related_listing_id");
+
+                entity.Property(e => e.RelatedExchangeRequestId)
+                    .HasColumnName("related_exchange_request_id");
+
+                entity.Property(e => e.RelatedTransactionId)
+                    .HasColumnName("related_transaction_id");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()")
+                    .IsRequired();
+
+                entity.Property(e => e.ReadAt)
+                    .HasColumnName("read_at");
+
+                entity.HasOne(e => e.User)
+                    .WithMany(e => e.Notifications)
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.RelatedListing)
+                    .WithMany(e => e.Notifications)
+                    .HasForeignKey(e => e.RelatedListingId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasOne(e => e.RelatedExchangeRequest)
+                    .WithMany(e => e.Notifications)
+                    .HasForeignKey(e => e.RelatedExchangeRequestId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasOne(e => e.RelatedTransaction)
+                    .WithMany(e => e.Notifications)
+                    .HasForeignKey(e => e.RelatedTransactionId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasIndex(e => e.UserId)
+                    .HasDatabaseName("ix_notifications_user_id");
+
+                entity.HasIndex(e => e.Status)
+                    .HasDatabaseName("ix_notifications_status");
+
+                entity.HasIndex(e => e.RelatedListingId)
+                    .HasDatabaseName("ix_notifications_related_listing_id");
+
+                entity.HasIndex(e => e.RelatedExchangeRequestId)
+                    .HasDatabaseName("ix_notifications_related_exchange_request_id");
+
+                entity.HasIndex(e => e.RelatedTransactionId)
+                    .HasDatabaseName("ix_notifications_related_transaction_id");
             });
         }
     }

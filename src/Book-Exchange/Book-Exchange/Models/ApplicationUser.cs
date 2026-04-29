@@ -11,4 +11,5 @@ public class ApplicationUser : IdentityUser<Guid>
     public ICollection<WishlistItem> WishlistItems { get; set; } = new List<WishlistItem>();
     public ICollection<ExchangeRequest> ExchangeRequests { get; set; } = new List<ExchangeRequest>();
     public ICollection<Review> Reviews { get; set; } = new List<Review>();
+    public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 }
