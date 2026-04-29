@@ -18,4 +18,6 @@ public class Listing
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public ICollection<ListingGenre> ListingGenres { get; set; } = new List<ListingGenre>();
+    public ICollection<ExchangeRequest> TargetExchangeRequests { get; set; } = new List<ExchangeRequest>();
+    public ICollection<ExchangeRequestItem> OfferedInExchangeRequestItems { get; set; } = new List<ExchangeRequestItem>();
 }

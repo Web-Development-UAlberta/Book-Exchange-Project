@@ -3,6 +3,7 @@ using System;
 using Book_Exchange.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Book_Exchange.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260429022204_AddingWishlistItem")]
+    partial class AddingWishlistItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,100 +135,6 @@ namespace Book_Exchange.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("asp_net_users", "public");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.ExchangeRequest", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime?>("AcceptedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("accepted_at");
-
-                    b.Property<DateTime?>("CancelledAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("cancelled_at");
-
-                    b.Property<DateTime?>("CompletedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("completed_at");
-
-                    b.Property<decimal?>("CounterOffer")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("numeric(10,2)")
-                        .HasColumnName("counter_offer");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("now()");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("text")
-                        .HasColumnName("message");
-
-                    b.Property<decimal?>("Price")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("numeric(10,2)")
-                        .HasColumnName("price");
-
-                    b.Property<Guid>("RequesterId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("requester_id");
-
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("exchange_status")
-                        .HasColumnName("status")
-                        .HasDefaultValueSql("'requested'::exchange_status");
-
-                    b.Property<Guid>("TargetListingId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("target_listing_id");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("exchange_type")
-                        .HasColumnName("type");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RequesterId")
-                        .HasDatabaseName("ix_exchange_requests_requester_id");
-
-                    b.HasIndex("Status")
-                        .HasDatabaseName("ix_exchange_requests_status");
-
-                    b.HasIndex("TargetListingId")
-                        .HasDatabaseName("ix_exchange_requests_target_listing_id");
-
-                    b.ToTable("exchange_requests", "public", t =>
-                        {
-                            t.HasCheckConstraint("ck_exchange_requests_counter_offer", "counter_offer IS NULL OR counter_offer >= 0");
-
-                            t.HasCheckConstraint("ck_exchange_requests_price", "price IS NULL OR price >= 0");
-                        });
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.ExchangeRequestItem", b =>
-                {
-                    b.Property<Guid>("ExchangeRequestId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("exchange_request_id");
-
-                    b.Property<Guid>("OfferedListingId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("offered_listing_id");
-
-                    b.HasKey("ExchangeRequestId", "OfferedListingId");
-
-                    b.HasIndex("OfferedListingId")
-                        .HasDatabaseName("ix_exchange_request_items_offered_listing_id");
-
-                    b.ToTable("exchange_request_items", "public");
                 });
 
             modelBuilder.Entity("Book_Exchange.Models.Genre", b =>
@@ -516,44 +425,6 @@ namespace Book_Exchange.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Book_Exchange.Models.ExchangeRequest", b =>
-                {
-                    b.HasOne("Book_Exchange.Models.ApplicationUser", "Requester")
-                        .WithMany("ExchangeRequests")
-                        .HasForeignKey("RequesterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Book_Exchange.Models.Listing", "TargetListing")
-                        .WithMany("TargetExchangeRequests")
-                        .HasForeignKey("TargetListingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Requester");
-
-                    b.Navigation("TargetListing");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.ExchangeRequestItem", b =>
-                {
-                    b.HasOne("Book_Exchange.Models.ExchangeRequest", "ExchangeRequest")
-                        .WithMany("ExchangeRequestItems")
-                        .HasForeignKey("ExchangeRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Book_Exchange.Models.Listing", "OfferedListing")
-                        .WithMany("OfferedInExchangeRequestItems")
-                        .HasForeignKey("OfferedListingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ExchangeRequest");
-
-                    b.Navigation("OfferedListing");
-                });
-
             modelBuilder.Entity("Book_Exchange.Models.Listing", b =>
                 {
                     b.HasOne("Book_Exchange.Models.ApplicationUser", "User")
@@ -650,16 +521,9 @@ namespace Book_Exchange.Migrations
                 {
                     b.Navigation("Addresses");
 
-                    b.Navigation("ExchangeRequests");
-
                     b.Navigation("Listings");
 
                     b.Navigation("WishlistItems");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.ExchangeRequest", b =>
-                {
-                    b.Navigation("ExchangeRequestItems");
                 });
 
             modelBuilder.Entity("Book_Exchange.Models.Genre", b =>
@@ -670,10 +534,6 @@ namespace Book_Exchange.Migrations
             modelBuilder.Entity("Book_Exchange.Models.Listing", b =>
                 {
                     b.Navigation("ListingGenres");
-
-                    b.Navigation("OfferedInExchangeRequestItems");
-
-                    b.Navigation("TargetExchangeRequests");
                 });
 #pragma warning restore 612, 618
         }

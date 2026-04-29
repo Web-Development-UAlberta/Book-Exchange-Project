@@ -16,6 +16,9 @@ namespace Book_Exchange.Data
         public DbSet<Genre> Genres => Set<Genre>();
         public DbSet<Listing> Listings => Set<Listing>();
         public DbSet<ListingGenre> ListingGenres => Set<ListingGenre>();
+        public DbSet<WishlistItem> Wishlist => Set<WishlistItem>();
+        public DbSet<ExchangeRequest> ExchangeRequests => Set<ExchangeRequest>();
+        public DbSet<ExchangeRequestItem> ExchangeRequestItems => Set<ExchangeRequestItem>();
 
 
 
@@ -177,6 +180,146 @@ namespace Book_Exchange.Data
 
                 entity.HasIndex(e => e.GenreId)
                     .HasDatabaseName("ix_listing_genres_genre_id");
+            });
+
+            // WishlistItem
+            builder.Entity<WishlistItem>(entity =>
+            {
+                entity.ToTable("wishlist");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.UserId)
+                    .HasColumnName("user_id")
+                    .IsRequired();
+
+                entity.Property(e => e.Isbn)
+                    .HasColumnName("isbn")
+                    .HasMaxLength(13)
+                    .IsRequired();
+
+                entity.Property(e => e.IsActive)
+                    .HasColumnName("is_active")
+                    .HasDefaultValue(true)
+                    .IsRequired();
+
+                entity.HasOne(e => e.User)
+                    .WithMany(e => e.WishlistItems)
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(e => e.UserId)
+                    .HasDatabaseName("ix_wishlist_user_id");
+
+                entity.HasIndex(e => e.Isbn)
+                    .HasDatabaseName("ix_wishlist_isbn");
+
+                entity.HasIndex(e => new { e.UserId, e.Isbn })
+                    .IsUnique()
+                    .HasDatabaseName("ux_wishlist_user_id_isbn");
+
+                entity.ToTable(t =>
+                {
+                    t.HasCheckConstraint("ck_wishlist_isbn", "isbn ~ '^[0-9]{13}$' OR isbn ~ '^[0-9X]{10}$'");
+                });
+            });
+
+            // ExchangeRequest
+            builder.Entity<ExchangeRequest>(entity =>
+            {
+                entity.ToTable("exchange_requests");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.TargetListingId)
+                    .HasColumnName("target_listing_id")
+                    .IsRequired();
+
+                entity.Property(e => e.RequesterId)
+                    .HasColumnName("requester_id")
+                    .IsRequired();
+
+                entity.Property(e => e.Type)
+                    .HasColumnName("type")
+                    .HasColumnType("exchange_type")
+                    .IsRequired();
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("status")
+                    .HasColumnType("exchange_status")
+                    .HasDefaultValueSql("'requested'::exchange_status")
+                    .IsRequired();
+
+                entity.Property(e => e.Price)
+                    .HasColumnName("price")
+                    .HasPrecision(10, 2);
+
+                entity.Property(e => e.CounterOffer)
+                    .HasColumnName("counter_offer")
+                    .HasPrecision(10, 2);
+
+                entity.Property(e => e.Message)
+                    .HasColumnName("message");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()")
+                    .IsRequired();
+
+                entity.Property(e => e.AcceptedAt).HasColumnName("accepted_at");
+
+                entity.Property(e => e.CompletedAt).HasColumnName("completed_at");
+
+                entity.Property(e => e.CancelledAt).HasColumnName("cancelled_at");
+
+                entity.HasOne(e => e.TargetListing)
+                    .WithMany(e => e.TargetExchangeRequests)
+                    .HasForeignKey(e => e.TargetListingId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.Requester)
+                    .WithMany(e => e.ExchangeRequests)
+                    .HasForeignKey(e => e.RequesterId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(e => e.TargetListingId)
+                    .HasDatabaseName("ix_exchange_requests_target_listing_id");
+
+                entity.HasIndex(e => e.RequesterId)
+                    .HasDatabaseName("ix_exchange_requests_requester_id");
+
+                entity.HasIndex(e => e.Status)
+                    .HasDatabaseName("ix_exchange_requests_status");
+
+                entity.ToTable(t =>
+                {
+                    t.HasCheckConstraint("ck_exchange_requests_price", "price IS NULL OR price >= 0");
+                    t.HasCheckConstraint("ck_exchange_requests_counter_offer", "counter_offer IS NULL OR counter_offer >= 0");
+                });
+            });
+
+            // ExchangeRequestItem
+            builder.Entity<ExchangeRequestItem>(entity =>
+            {
+                entity.ToTable("exchange_request_items");
+
+                entity.HasKey(e => new { e.ExchangeRequestId, e.OfferedListingId });
+
+                entity.Property(e => e.ExchangeRequestId)
+                    .HasColumnName("exchange_request_id");
+                entity.Property(e => e.OfferedListingId)
+                    .HasColumnName("offered_listing_id");
+                entity.HasOne(e => e.ExchangeRequest)
+                    .WithMany(e => e.ExchangeRequestItems)
+                    .HasForeignKey(e => e.ExchangeRequestId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.OfferedListing)
+                    .WithMany(e => e.OfferedInExchangeRequestItems)
+                    .HasForeignKey(e => e.OfferedListingId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(e => e.OfferedListingId)
+                    .HasDatabaseName("ix_exchange_request_items_offered_listing_id");
             });
         }
     }
