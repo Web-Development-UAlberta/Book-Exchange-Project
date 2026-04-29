@@ -10,9 +10,17 @@ namespace Book_Exchange.Data
         IdentityRole<Guid>,
         Guid
         >(options)
-    {     
-        protected override void OnModelCreating(ModelBuilder builder)
+    {
 
+        public DbSet<Address> Addresses => Set<Address>();
+        public DbSet<Genre> Genres => Set<Genre>();
+        public DbSet<Listing> Listings => Set<Listing>();
+        public DbSet<ListingGenre> ListingGenres => Set<ListingGenre>();
+
+
+
+
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             // ASP.NET Identity table names
@@ -64,6 +72,111 @@ namespace Book_Exchange.Data
 
                 entity.HasIndex(e => e.UserId)
                     .HasDatabaseName("ix_addresses_user_id");
+            });
+
+            // Genre
+            builder.Entity<Genre>(entity =>
+            {
+                entity.ToTable("genres");
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(100)
+                    .IsRequired();
+
+                entity.HasIndex(e => e.Name)
+                    .IsUnique()
+                    .HasDatabaseName("ux_genres_name");
+
+            });
+
+            // Listing
+            builder.Entity<Listing>(entity =>
+            {
+                entity.ToTable("listings");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.UserId)
+                    .HasColumnName("user_id")
+                    .IsRequired();
+
+                entity.Property(e => e.Isbn)
+                    .HasColumnName("isbn")
+                    .HasMaxLength(13)
+                    .IsRequired();
+
+                entity.Property(e => e.Condition)
+                    .HasColumnName("condition")
+                    .HasColumnType("book_condition")
+                    .IsRequired();
+
+                entity.Property(e => e.Price)
+                    .HasColumnName("price")
+                    .HasPrecision(10, 2)
+                    .IsRequired();
+
+                entity.Property(e => e.WeightGrams)
+                    .HasColumnName("weight_grams")
+                    .IsRequired();
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("status")
+                    .HasColumnType("listing_status")
+                    .HasDefaultValueSql("'active'::listing_status")
+                    .IsRequired();
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()")
+                    .IsRequired();
+
+                entity.HasOne(e => e.User)
+                    .WithMany(e => e.Listings)
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(e => e.UserId)
+                    .HasDatabaseName("ix_listings_user_id");
+
+                entity.HasIndex(e => e.Isbn)
+                    .HasDatabaseName("ix_listings_isbn");
+
+                entity.HasIndex(e => e.Status)
+                    .HasDatabaseName("ix_listings_status");
+
+                entity.ToTable(t =>
+                {
+                    t.HasCheckConstraint("ck_listings_isbn", "isbn ~ '^[0-9]{13}$' OR isbn ~ '^[0-9X]{10}$'");
+                    t.HasCheckConstraint("ck_listings_price", "price >= 0");
+                    t.HasCheckConstraint("ck_listings_weight_grams", "weight_grams > 0");
+
+                });
+            });
+
+            // ListingGenre
+            builder.Entity<ListingGenre>(entity =>
+            {
+                entity.ToTable("listing_genres");
+                entity.HasKey(e => new { e.ListingId, e.GenreId });
+                entity.Property(e => e.ListingId).HasColumnName("listing_id");
+                entity.Property(e => e.GenreId).HasColumnName("genre_id");
+
+                entity.HasOne(e => e.Listing)
+                    .WithMany(e => e.ListingGenres)
+                    .HasForeignKey(e => e.ListingId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.Genre)
+                    .WithMany(e => e.ListingGenres)
+                    .HasForeignKey(e => e.GenreId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(e => e.GenreId)
+                    .HasDatabaseName("ix_listing_genres_genre_id");
             });
         }
     }

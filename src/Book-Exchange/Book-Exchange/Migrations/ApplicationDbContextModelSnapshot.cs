@@ -134,6 +134,109 @@ namespace Book_Exchange.Migrations
                     b.ToTable("asp_net_users", "public");
                 });
 
+            modelBuilder.Entity("Book_Exchange.Models.Genre", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("ux_genres_name");
+
+                    b.ToTable("genres", "public");
+                });
+
+            modelBuilder.Entity("Book_Exchange.Models.Listing", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<int>("Condition")
+                        .HasColumnType("book_condition")
+                        .HasColumnName("condition");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("now()");
+
+                    b.Property<string>("Isbn")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("character varying(13)")
+                        .HasColumnName("isbn");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)")
+                        .HasColumnName("price");
+
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("listing_status")
+                        .HasColumnName("status")
+                        .HasDefaultValueSql("'active'::listing_status");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.Property<int>("WeightGrams")
+                        .HasColumnType("integer")
+                        .HasColumnName("weight_grams");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Isbn")
+                        .HasDatabaseName("ix_listings_isbn");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("ix_listings_status");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_listings_user_id");
+
+                    b.ToTable("listings", "public", t =>
+                        {
+                            t.HasCheckConstraint("ck_listings_isbn", "isbn ~ '^[0-9]{13}$' OR isbn ~ '^[0-9X]{10}$'");
+
+                            t.HasCheckConstraint("ck_listings_price", "price >= 0");
+
+                            t.HasCheckConstraint("ck_listings_weight_grams", "weight_grams > 0");
+                        });
+                });
+
+            modelBuilder.Entity("Book_Exchange.Models.ListingGenre", b =>
+                {
+                    b.Property<Guid>("ListingId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("listing_id");
+
+                    b.Property<Guid>("GenreId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("genre_id");
+
+                    b.HasKey("ListingId", "GenreId");
+
+                    b.HasIndex("GenreId")
+                        .HasDatabaseName("ix_listing_genres_genre_id");
+
+                    b.ToTable("listing_genres", "public");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
                 {
                     b.Property<Guid>("Id")
@@ -278,6 +381,36 @@ namespace Book_Exchange.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Book_Exchange.Models.Listing", b =>
+                {
+                    b.HasOne("Book_Exchange.Models.ApplicationUser", "User")
+                        .WithMany("Listings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Book_Exchange.Models.ListingGenre", b =>
+                {
+                    b.HasOne("Book_Exchange.Models.Genre", "Genre")
+                        .WithMany("ListingGenres")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Book_Exchange.Models.Listing", "Listing")
+                        .WithMany("ListingGenres")
+                        .HasForeignKey("ListingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Genre");
+
+                    b.Navigation("Listing");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -332,6 +465,18 @@ namespace Book_Exchange.Migrations
             modelBuilder.Entity("Book_Exchange.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("Listings");
+                });
+
+            modelBuilder.Entity("Book_Exchange.Models.Genre", b =>
+                {
+                    b.Navigation("ListingGenres");
+                });
+
+            modelBuilder.Entity("Book_Exchange.Models.Listing", b =>
+                {
+                    b.Navigation("ListingGenres");
                 });
 #pragma warning restore 612, 618
         }
