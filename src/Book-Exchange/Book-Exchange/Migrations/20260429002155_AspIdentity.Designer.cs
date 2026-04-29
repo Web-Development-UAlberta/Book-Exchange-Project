@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Book_Exchange.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260422035100_LocationInfo")]
-    partial class LocationInfo
+    [Migration("20260429002155_AspIdentity")]
+    partial class AspIdentity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,16 +24,6 @@ namespace Book_Exchange.Migrations
                 .HasAnnotation("ProductVersion", "10.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "book_condition", new[] { "like_new", "very_good", "good", "acceptable", "poor" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "listing_type", new[] { "sell", "buy", "swap" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "locality_type", new[] { "local", "provincial", "national", "international" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "message_status", new[] { "sent", "read" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "message_type", new[] { "text", "offer" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "notification_status", new[] { "unread", "read", "archived" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "notification_type", new[] { "match_found", "wishlist_available", "new_message", "offer_received", "offer_accepted", "offer_rejected", "transaction_update" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "shipping_status", new[] { "pending", "quoted", "label_created", "shipped", "delivered", "cancelled" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "transaction_status", new[] { "proposed", "negotiating", "confirmed", "shipped", "completed", "cancelled", "disputed" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "transaction_type", new[] { "buy_sell", "swap", "multi_swap" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Book_Exchange.Models.ApplicationUser", b =>
@@ -98,66 +88,7 @@ namespace Book_Exchange.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.ToTable("AspNetUsers", "public");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.Location", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("city");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("country");
-
-                    b.Property<string>("ProvinceState")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("province_state");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("City", "ProvinceState", "Country")
-                        .IsUnique();
-
-                    b.ToTable("locations", "public");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.LocationDistance", b =>
-                {
-                    b.Property<Guid>("FromLocationId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("from_location_id");
-
-                    b.Property<Guid>("ToLocationId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("to_location_id");
-
-                    b.Property<decimal>("DistanceKm")
-                        .HasColumnType("numeric(10,2)")
-                        .HasColumnName("distance_km");
-
-                    b.HasKey("FromLocationId", "ToLocationId");
-
-                    b.HasIndex("ToLocationId");
-
-                    b.ToTable("location_distances", "public", t =>
-                        {
-                            t.HasCheckConstraint("CK_location_distances_distance_nonnegative", "\"distance_km\" >= 0");
-
-                            t.HasCheckConstraint("CK_location_distances_not_same", "\"from_location_id\" <> \"to_location_id\"");
-                        });
+                    b.ToTable("asp_net_users", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -184,7 +115,7 @@ namespace Book_Exchange.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles", "public");
+                    b.ToTable("asp_net_roles", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -208,7 +139,7 @@ namespace Book_Exchange.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", "public");
+                    b.ToTable("asp_net_role_claims", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
@@ -232,7 +163,7 @@ namespace Book_Exchange.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", "public");
+                    b.ToTable("asp_net_user_claims", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
@@ -255,7 +186,7 @@ namespace Book_Exchange.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", "public");
+                    b.ToTable("asp_net_user_logins", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
@@ -270,7 +201,7 @@ namespace Book_Exchange.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", "public");
+                    b.ToTable("asp_net_user_roles", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -291,26 +222,7 @@ namespace Book_Exchange.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", "public");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.LocationDistance", b =>
-                {
-                    b.HasOne("Book_Exchange.Models.Location", "FromLocation")
-                        .WithMany("DistancesFrom")
-                        .HasForeignKey("FromLocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Book_Exchange.Models.Location", "ToLocation")
-                        .WithMany("DistancesTo")
-                        .HasForeignKey("ToLocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FromLocation");
-
-                    b.Navigation("ToLocation");
+                    b.ToTable("asp_net_user_tokens", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -362,13 +274,6 @@ namespace Book_Exchange.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.Location", b =>
-                {
-                    b.Navigation("DistancesFrom");
-
-                    b.Navigation("DistancesTo");
                 });
 #pragma warning restore 612, 618
         }

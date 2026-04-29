@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Book_Exchange.Migrations
 {
     /// <inheritdoc />
-    public partial class InitIdentityGuid : Migration
+    public partial class AspIdentity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,20 +15,8 @@ namespace Book_Exchange.Migrations
             migrationBuilder.EnsureSchema(
                 name: "public");
 
-            migrationBuilder.AlterDatabase()
-                .Annotation("Npgsql:Enum:public.book_condition", "like_new,very_good,good,acceptable,poor")
-                .Annotation("Npgsql:Enum:public.listing_type", "sell,buy,swap")
-                .Annotation("Npgsql:Enum:public.locality_type", "local,provincial,national,international")
-                .Annotation("Npgsql:Enum:public.message_status", "sent,read")
-                .Annotation("Npgsql:Enum:public.message_type", "text,offer")
-                .Annotation("Npgsql:Enum:public.notification_status", "unread,read,archived")
-                .Annotation("Npgsql:Enum:public.notification_type", "match_found,wishlist_available,new_message,offer_received,offer_accepted,offer_rejected,transaction_update")
-                .Annotation("Npgsql:Enum:public.shipping_status", "pending,quoted,label_created,shipped,delivered,cancelled")
-                .Annotation("Npgsql:Enum:public.transaction_status", "proposed,negotiating,confirmed,shipped,completed,cancelled,disputed")
-                .Annotation("Npgsql:Enum:public.transaction_type", "buy_sell,swap,multi_swap");
-
             migrationBuilder.CreateTable(
-                name: "AspNetRoles",
+                name: "asp_net_roles",
                 schema: "public",
                 columns: table => new
                 {
@@ -39,11 +27,11 @@ namespace Book_Exchange.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                    table.PrimaryKey("PK_asp_net_roles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
+                name: "asp_net_users",
                 schema: "public",
                 columns: table => new
                 {
@@ -65,11 +53,11 @@ namespace Book_Exchange.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.PrimaryKey("PK_asp_net_users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
+                name: "asp_net_role_claims",
                 schema: "public",
                 columns: table => new
                 {
@@ -81,18 +69,18 @@ namespace Book_Exchange.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.PrimaryKey("PK_asp_net_role_claims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        name: "FK_asp_net_role_claims_asp_net_roles_RoleId",
                         column: x => x.RoleId,
                         principalSchema: "public",
-                        principalTable: "AspNetRoles",
+                        principalTable: "asp_net_roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserClaims",
+                name: "asp_net_user_claims",
                 schema: "public",
                 columns: table => new
                 {
@@ -104,18 +92,18 @@ namespace Book_Exchange.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.PrimaryKey("PK_asp_net_user_claims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        name: "FK_asp_net_user_claims_asp_net_users_UserId",
                         column: x => x.UserId,
                         principalSchema: "public",
-                        principalTable: "AspNetUsers",
+                        principalTable: "asp_net_users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserLogins",
+                name: "asp_net_user_logins",
                 schema: "public",
                 columns: table => new
                 {
@@ -126,18 +114,18 @@ namespace Book_Exchange.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.PrimaryKey("PK_asp_net_user_logins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
-                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        name: "FK_asp_net_user_logins_asp_net_users_UserId",
                         column: x => x.UserId,
                         principalSchema: "public",
-                        principalTable: "AspNetUsers",
+                        principalTable: "asp_net_users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserRoles",
+                name: "asp_net_user_roles",
                 schema: "public",
                 columns: table => new
                 {
@@ -146,25 +134,25 @@ namespace Book_Exchange.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.PrimaryKey("PK_asp_net_user_roles", x => new { x.UserId, x.RoleId });
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        name: "FK_asp_net_user_roles_asp_net_roles_RoleId",
                         column: x => x.RoleId,
                         principalSchema: "public",
-                        principalTable: "AspNetRoles",
+                        principalTable: "asp_net_roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        name: "FK_asp_net_user_roles_asp_net_users_UserId",
                         column: x => x.UserId,
                         principalSchema: "public",
-                        principalTable: "AspNetUsers",
+                        principalTable: "asp_net_users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserTokens",
+                name: "asp_net_user_tokens",
                 schema: "public",
                 columns: table => new
                 {
@@ -175,57 +163,57 @@ namespace Book_Exchange.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.PrimaryKey("PK_asp_net_user_tokens", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
-                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        name: "FK_asp_net_user_tokens_asp_net_users_UserId",
                         column: x => x.UserId,
                         principalSchema: "public",
-                        principalTable: "AspNetUsers",
+                        principalTable: "asp_net_users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoleClaims_RoleId",
+                name: "IX_asp_net_role_claims_RoleId",
                 schema: "public",
-                table: "AspNetRoleClaims",
+                table: "asp_net_role_claims",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 schema: "public",
-                table: "AspNetRoles",
+                table: "asp_net_roles",
                 column: "NormalizedName",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserClaims_UserId",
+                name: "IX_asp_net_user_claims_UserId",
                 schema: "public",
-                table: "AspNetUserClaims",
+                table: "asp_net_user_claims",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserLogins_UserId",
+                name: "IX_asp_net_user_logins_UserId",
                 schema: "public",
-                table: "AspNetUserLogins",
+                table: "asp_net_user_logins",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_RoleId",
+                name: "IX_asp_net_user_roles_RoleId",
                 schema: "public",
-                table: "AspNetUserRoles",
+                table: "asp_net_user_roles",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 schema: "public",
-                table: "AspNetUsers",
+                table: "asp_net_users",
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 schema: "public",
-                table: "AspNetUsers",
+                table: "asp_net_users",
                 column: "NormalizedUserName",
                 unique: true);
         }
@@ -234,31 +222,31 @@ namespace Book_Exchange.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AspNetRoleClaims",
+                name: "asp_net_role_claims",
                 schema: "public");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserClaims",
+                name: "asp_net_user_claims",
                 schema: "public");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserLogins",
+                name: "asp_net_user_logins",
                 schema: "public");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserRoles",
+                name: "asp_net_user_roles",
                 schema: "public");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserTokens",
+                name: "asp_net_user_tokens",
                 schema: "public");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles",
+                name: "asp_net_roles",
                 schema: "public");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers",
+                name: "asp_net_users",
                 schema: "public");
         }
     }

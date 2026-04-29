@@ -10,16 +10,16 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
-dataSourceBuilder.MapEnum<BookCondition>("public.book_condition");
-dataSourceBuilder.MapEnum<ListingType>("public.listing_type");
-dataSourceBuilder.MapEnum<TransactionType>("public.transaction_type");
-dataSourceBuilder.MapEnum<TransactionStatus>("public.transaction_status");
-dataSourceBuilder.MapEnum<ShippingStatus>("public.shipping_status");
-dataSourceBuilder.MapEnum<NotificationType>("public.notification_type");
-dataSourceBuilder.MapEnum<NotificationStatus>("public.notification_status");
-dataSourceBuilder.MapEnum<MessageType>("public.message_type");
-dataSourceBuilder.MapEnum<MessageStatus>("public.message_status");
-dataSourceBuilder.MapEnum<LocalityType>("public.locality_type");
+//dataSourceBuilder.MapEnum<BookCondition>("public.book_condition");
+//dataSourceBuilder.MapEnum<ListingType>("public.listing_type");
+//dataSourceBuilder.MapEnum<TransactionType>("public.transaction_type");
+//dataSourceBuilder.MapEnum<TransactionStatus>("public.transaction_status");
+//dataSourceBuilder.MapEnum<ShippingStatus>("public.shipping_status");
+//dataSourceBuilder.MapEnum<NotificationType>("public.notification_type");
+//dataSourceBuilder.MapEnum<NotificationStatus>("public.notification_status");
+//dataSourceBuilder.MapEnum<MessageType>("public.message_type");
+//dataSourceBuilder.MapEnum<MessageStatus>("public.message_status");
+//dataSourceBuilder.MapEnum<LocalityType>("public.locality_type");
 
 var dataSource = dataSourceBuilder.Build();
 
