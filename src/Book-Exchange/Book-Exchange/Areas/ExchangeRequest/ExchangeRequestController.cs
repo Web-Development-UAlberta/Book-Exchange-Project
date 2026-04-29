@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // TODO: Once ORM is implemented make sure nothing has changed
-namespace Book_Exchange.Controllers;
+namespace Book_Exchange.Areas.ExchangeRequest;
 
 [Authorize]
 public class ExchangeRequestController : Controller

@@ -1,7 +1,7 @@
 using Book_Exchange.Data;
-using Book_Exchange.Models;
-using Book_Exchange.Models.DTOs;
+using Book_Exchange.Areas.Listing;
 using Book_Exchange.Services.Interfaces;
+using Book_Exchange.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Book_Exchange.Services;
@@ -13,11 +13,10 @@ public class ListingService : IListingService
     // private readonly ApplicationDbContext _context;
 
     // CreateListingAsync
-    // BookId must reference valid existing book
+    // Isbn must be valid ISBN-10 or ISBN-13 format
     // Condition must be specified (Like New, Very Good, Good, Acceptable, Poor)
     // Price must be non-negative
-    // WeightKg must be greater than zero
-    // Tpye must be one of BuySell, BookSwap, BookSwapWithCash
+    // WeightGrams must be greater than zero
     // Status is set to Active on creation
     // UserId is take from the logged in user, not from a form
     public Task<Listing> CreateListingAsync(CreateListingDto dto, Guid userId)
@@ -44,7 +43,7 @@ public class ListingService : IListingService
     // UpdateListingAsync
     // Only the user who created the listing can update it (authorization check needed)
     // Price must be non-negative
-    // WeightKg must be greater than zero
+    // WeightGrams must be greater than zero
     // Status transitions must be valid (Active -> Pending -> Completed or Cancelled)
     // Cannot update a listing that is already Completed or Cancelled
     public Task UpdateListingAsync(Guid id, UpdateListingDto dto, Guid userId)

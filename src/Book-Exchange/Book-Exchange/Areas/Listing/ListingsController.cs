@@ -1,11 +1,11 @@
 using System.Security.Claims;
-using Book_Exchange.Models.DTOs;
+using Book_Exchange.Areas.Listing;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // TODO: Once ORM is implemented make sure nothing has changed
-namespace Book_Exchange.Controllers;
+namespace Book_Exchange.Areas.Listing;
 
 [Authorize]
 public class ListingsController : Controller

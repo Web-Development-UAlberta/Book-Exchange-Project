@@ -1,5 +1,5 @@
 using Book_Exchange.Models;
-using Book_Exchange.Models.DTOs;
+using Book_Exchange.Areas.Listing;
 
 namespace Book_Exchange.Services.Interfaces;
 
