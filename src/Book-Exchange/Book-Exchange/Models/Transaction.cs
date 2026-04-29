@@ -17,4 +17,5 @@ public class Transaction
     public DateTime? CancelledAt { get; set; }
 
     public ICollection<Shipment> Shipments { get; set; } = new List<Shipment>();
+    public ICollection<Review> Reviews { get; set; } = new List<Review>();
 }

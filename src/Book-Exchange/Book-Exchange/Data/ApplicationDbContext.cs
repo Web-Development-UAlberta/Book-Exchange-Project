@@ -22,6 +22,7 @@ namespace Book_Exchange.Data
         public DbSet<Transaction> Transactions => Set<Transaction>();
         public DbSet<Carrier> Carriers => Set<Carrier>();
         public DbSet<Shipment> Shipments => Set<Shipment>();
+        public DbSet<Review> Reviews => Set<Review>();
 
 
 
@@ -522,6 +523,62 @@ namespace Book_Exchange.Data
                     t.HasCheckConstraint("ck_shipments_distance_km", "distance_km IS NULL OR distance_km >= 0");
                     t.HasCheckConstraint("ck_shipments_shipping_cost", "shipping_cost IS NULL OR shipping_cost >= 0");
                 });
+            });
+
+            // Review
+            builder.Entity<Review>(entity =>
+            {
+                entity.ToTable("reviews");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.TransactionId)
+                    .HasColumnName("transaction_id")
+                    .IsRequired();
+
+                entity.Property(e => e.ReviewerId)
+                    .HasColumnName("reviewer_id")
+                    .IsRequired();
+
+                entity.Property(e => e.Rating)
+                    .HasColumnName("rating")
+                    .IsRequired();
+
+                entity.Property(e => e.Comment)
+                    .HasColumnName("comment");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()")
+                    .IsRequired();
+
+                entity.HasOne(e => e.Transaction)
+                    .WithMany(e => e.Reviews)
+                    .HasForeignKey(e => e.TransactionId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.Reviewer)
+                    .WithMany(e => e.Reviews)
+                    .HasForeignKey(e => e.ReviewerId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(e => e.TransactionId)
+                    .HasDatabaseName("ix_reviews_transaction_id");
+
+                entity.HasIndex(e => e.ReviewerId)
+                    .HasDatabaseName("ix_reviews_reviewer_id");
+
+                entity.HasIndex(e => new { e.TransactionId, e.ReviewerId })
+                    .IsUnique()
+                    .HasDatabaseName("ux_reviews_transaction_id_reviewer_id");
+
+                entity.ToTable(t =>
+                {
+                    t.HasCheckConstraint("ck_reviews_rating", "rating BETWEEN 1 AND 5");
+                });
+
             });
         }
     }
