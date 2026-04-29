@@ -34,7 +34,37 @@ namespace Book_Exchange.Data
             builder.HasPostgresEnum<NotificationStatus>("public", "notification_status");
             builder.HasPostgresEnum<NotificationCategory>("public", "notification_category");
             builder.HasPostgresEnum<MessageStatus>("public", "message_status");
+            // Address
+            builder.Entity<Address>(entity =>
+            {
 
+                entity.ToTable("addresses");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.FullName)
+                    .HasColumnName("full_name")
+                    .HasMaxLength(200)
+                    .IsRequired();
+
+                entity.Property(e => e.GooglePlaceId)
+                    .HasColumnName("google_place_id")
+                    .HasMaxLength(255)
+                    .IsRequired();
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()")
+                    .IsRequired();
+
+                entity.HasOne(e => e.User)
+                    .WithMany(e => e.Addresses)
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasIndex(e => e.UserId)
+                    .HasDatabaseName("ix_addresses_user_id");
+            });
         }
     }
 }
