@@ -12,4 +12,6 @@ public class ApplicationUser : IdentityUser<Guid>
     public ICollection<ExchangeRequest> ExchangeRequests { get; set; } = new List<ExchangeRequest>();
     public ICollection<Review> Reviews { get; set; } = new List<Review>();
     public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+    public ICollection<Message> SentMessages { get; set; } = new List<Message>();
+    public ICollection<Message> ReceivedMessages { get; set; } = new List<Message>();
 }

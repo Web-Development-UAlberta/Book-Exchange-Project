@@ -393,6 +393,69 @@ namespace Book_Exchange.Migrations
                     b.ToTable("listing_genres", "public");
                 });
 
+            modelBuilder.Entity("Book_Exchange.Models.Message", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("now()");
+
+                    b.Property<Guid?>("ExchangeRequestId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("exchange_request_id");
+
+                    b.Property<Guid?>("ListingId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("listing_id");
+
+                    b.Property<string>("MessageText")
+                        .HasColumnType("text")
+                        .HasColumnName("message_text");
+
+                    b.Property<Guid>("ReceiverId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("receiver_id");
+
+                    b.Property<Guid>("SenderId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("sender_id");
+
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("message_status")
+                        .HasColumnName("status")
+                        .HasDefaultValueSql("'sent'::message_status");
+
+                    b.Property<Guid?>("TransactionId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("transaction_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExchangeRequestId")
+                        .HasDatabaseName("ix_messages_exchange_request_id");
+
+                    b.HasIndex("ListingId")
+                        .HasDatabaseName("ix_messages_listing_id");
+
+                    b.HasIndex("ReceiverId")
+                        .HasDatabaseName("ix_messages_receiver_id");
+
+                    b.HasIndex("SenderId")
+                        .HasDatabaseName("ix_messages_sender_id");
+
+                    b.HasIndex("TransactionId")
+                        .HasDatabaseName("ix_messages_transaction_id");
+
+                    b.ToTable("messages", "public");
+                });
+
             modelBuilder.Entity("Book_Exchange.Models.Notification", b =>
                 {
                     b.Property<Guid>("Id")
@@ -901,6 +964,46 @@ namespace Book_Exchange.Migrations
                     b.Navigation("Listing");
                 });
 
+            modelBuilder.Entity("Book_Exchange.Models.Message", b =>
+                {
+                    b.HasOne("Book_Exchange.Models.ExchangeRequest", "ExchangeRequest")
+                        .WithMany("Messages")
+                        .HasForeignKey("ExchangeRequestId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Book_Exchange.Models.Listing", "Listing")
+                        .WithMany("Messages")
+                        .HasForeignKey("ListingId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Book_Exchange.Models.ApplicationUser", "Receiver")
+                        .WithMany("ReceivedMessages")
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Book_Exchange.Models.ApplicationUser", "Sender")
+                        .WithMany("SentMessages")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Book_Exchange.Models.Transaction", "Transaction")
+                        .WithMany("Messages")
+                        .HasForeignKey("TransactionId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("ExchangeRequest");
+
+                    b.Navigation("Listing");
+
+                    b.Navigation("Receiver");
+
+                    b.Navigation("Sender");
+
+                    b.Navigation("Transaction");
+                });
+
             modelBuilder.Entity("Book_Exchange.Models.Notification", b =>
                 {
                     b.HasOne("Book_Exchange.Models.ExchangeRequest", "RelatedExchangeRequest")
@@ -1076,7 +1179,11 @@ namespace Book_Exchange.Migrations
 
                     b.Navigation("Notifications");
 
+                    b.Navigation("ReceivedMessages");
+
                     b.Navigation("Reviews");
+
+                    b.Navigation("SentMessages");
 
                     b.Navigation("WishlistItems");
                 });
@@ -1089,6 +1196,8 @@ namespace Book_Exchange.Migrations
             modelBuilder.Entity("Book_Exchange.Models.ExchangeRequest", b =>
                 {
                     b.Navigation("ExchangeRequestItems");
+
+                    b.Navigation("Messages");
 
                     b.Navigation("Notifications");
 
@@ -1104,6 +1213,8 @@ namespace Book_Exchange.Migrations
                 {
                     b.Navigation("ListingGenres");
 
+                    b.Navigation("Messages");
+
                     b.Navigation("Notifications");
 
                     b.Navigation("OfferedInExchangeRequestItems");
@@ -1113,6 +1224,8 @@ namespace Book_Exchange.Migrations
 
             modelBuilder.Entity("Book_Exchange.Models.Transaction", b =>
                 {
+                    b.Navigation("Messages");
+
                     b.Navigation("Notifications");
 
                     b.Navigation("Reviews");

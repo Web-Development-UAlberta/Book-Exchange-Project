@@ -24,9 +24,7 @@ namespace Book_Exchange.Data
         public DbSet<Shipment> Shipments => Set<Shipment>();
         public DbSet<Review> Reviews => Set<Review>();
         public DbSet<Notification> Notifications => Set<Notification>();
-
-
-
+        public DbSet<Message> Messages => Set<Message>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -665,6 +663,88 @@ namespace Book_Exchange.Data
 
                 entity.HasIndex(e => e.RelatedTransactionId)
                     .HasDatabaseName("ix_notifications_related_transaction_id");
+            });
+
+            // Message
+            builder.Entity<Message>(entity =>
+            {
+                entity.ToTable("messages");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.SenderId)
+                    .HasColumnName("sender_id")
+                    .IsRequired();
+
+                entity.Property(e => e.ReceiverId)
+                    .HasColumnName("receiver_id")
+                    .IsRequired();
+
+                entity.Property(e => e.MessageText)
+                    .HasColumnName("message_text");
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("status")
+                    .HasColumnType("message_status")
+                    .HasDefaultValueSql("'sent'::message_status")
+                    .IsRequired();
+
+                entity.Property(e => e.ListingId)
+                    .HasColumnName("listing_id");
+
+                entity.Property(e => e.ExchangeRequestId)
+                    .HasColumnName("exchange_request_id");
+
+                entity.Property(e => e.TransactionId)
+                    .HasColumnName("transaction_id");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()")
+                    .IsRequired();
+
+                entity.HasOne(e => e.Sender)
+                    .WithMany(e => e.SentMessages)
+                    .HasForeignKey(e => e.SenderId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.Receiver)
+                    .WithMany(e => e.ReceivedMessages)
+                    .HasForeignKey(e => e.ReceiverId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.Listing)
+                    .WithMany(e => e.Messages)
+                    .HasForeignKey(e => e.ListingId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasOne(e => e.ExchangeRequest)
+                    .WithMany(e => e.Messages)
+                    .HasForeignKey(e => e.ExchangeRequestId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasOne(e => e.Transaction)
+                    .WithMany(e => e.Messages)
+                    .HasForeignKey(e => e.TransactionId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasIndex(e => e.SenderId)
+                    .HasDatabaseName("ix_messages_sender_id");
+
+                entity.HasIndex(e => e.ReceiverId)
+                    .HasDatabaseName("ix_messages_receiver_id");
+
+                entity.HasIndex(e => e.ListingId)
+                    .HasDatabaseName("ix_messages_listing_id");
+
+                entity.HasIndex(e => e.ExchangeRequestId)
+                    .HasDatabaseName("ix_messages_exchange_request_id");
+
+                entity.HasIndex(e => e.TransactionId)
+                    .HasDatabaseName("ix_messages_transaction_id");
+
             });
         }
     }
