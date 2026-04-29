@@ -24,11 +24,18 @@ public class TransactionService : ITransactionService
     public Task<IEnumerable<Transaction>> GetTransactionsByUserIdAsync(Guid userId)
         => throw new NotImplementedException();
 
-    // ConfirmTransactionAsync
-    // - Status must be Confirmed to proceed
-    // - Sets ConfirmedAt timestamp
-    // - Only a participant in the transaction can confirm
-    public Task ConfirmTransactionAsync(Guid transactionId, Guid userId)
+    // CreateTransactionFromExchangeRequestAsync
+    // - Only creates a transaction if the exchange request is in Accepted status
+    // - Sets transaction status to Confirmed
+    // - Sets CreatedAt timestamp
+    public Task<Transaction> CreateTransactionFromExchangeRequestAsync(ExchangeRequest exchangeRequest)
+        => throw new NotImplementedException();
+
+    // MarkAsShippedAsync
+    // - Status must be Confirmed before it can be marked as Shipped
+    // - Sets ShippedAt timestamp
+    // - Only the user who is shipping can mark as shipped
+    public Task MarkAsShippedAsync(Guid transactionId, Guid userId)
         => throw new NotImplementedException();
 
     // CompleteTransactionAsync
@@ -44,5 +51,12 @@ public class TransactionService : ITransactionService
     // - Sets CancelledAt timestamp
     // - Only a participant in the transaction can cancel
     public Task CancelTransactionAsync(Guid transactionId, Guid userId)
+        => throw new NotImplementedException();
+
+    // DisputeTransactionAsync
+    // - Cannot dispute a transaction that is already Completed
+    // - Sets DisputedAt timestamp
+    // - Only a participant in the transaction can dispute
+    public Task DisputeTransactionAsync(Guid transactionId, Guid userId)
         => throw new NotImplementedException();
 }

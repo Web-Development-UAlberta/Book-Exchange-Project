@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using Book_Exchange.Models.DTOs;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

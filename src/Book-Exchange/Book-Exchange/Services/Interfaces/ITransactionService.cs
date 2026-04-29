@@ -6,8 +6,10 @@ namespace Book_Exchange.Services.Interfaces
     {
         Task<Transaction> GetTransactionByIdAsync(Guid transactionId);
         Task<IEnumerable<Transaction>> GetTransactionsByUserIdAsync(Guid userId);
-        Task ConfirmTransactionAsync(Guid transactionId, Guid userId);
+        Task<Transaction> CreateTransactionFromExchangeRequestAsync(ExchangeRequest exchangeRequest);
+        Task MarkAsShippedAsync(Guid transactionId, Guid userId);
         Task CompleteTransactionAsync(Guid transactionId, Guid userId);
         Task CancelTransactionAsync(Guid transactionId, Guid userId);
+        Task DisputeTransactionAsync(Guid transactionId, Guid userId);
     }
 }
