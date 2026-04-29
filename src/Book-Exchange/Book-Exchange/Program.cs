@@ -1,5 +1,7 @@
 using Book_Exchange.Data;
 using Book_Exchange.Models;
+using Book_Exchange.Services;
+using Book_Exchange.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -34,6 +36,9 @@ builder.Services
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IListingService, ListingService>();
+// builder.Services.AddScoped<IExchangeRequestService, ExchangeRequestService>();
 
 var app = builder.Build();
 
