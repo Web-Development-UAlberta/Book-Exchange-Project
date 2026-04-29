@@ -19,6 +19,9 @@ namespace Book_Exchange.Data
         public DbSet<WishlistItem> Wishlist => Set<WishlistItem>();
         public DbSet<ExchangeRequest> ExchangeRequests => Set<ExchangeRequest>();
         public DbSet<ExchangeRequestItem> ExchangeRequestItems => Set<ExchangeRequestItem>();
+        public DbSet<Transaction> Transactions => Set<Transaction>();
+        public DbSet<Carrier> Carriers => Set<Carrier>();
+        public DbSet<Shipment> Shipments => Set<Shipment>();
 
 
 
@@ -320,6 +323,205 @@ namespace Book_Exchange.Data
 
                 entity.HasIndex(e => e.OfferedListingId)
                     .HasDatabaseName("ix_exchange_request_items_offered_listing_id");
+            });
+
+            // Transaction
+            builder.Entity<Transaction>(entity =>
+            {
+                entity.ToTable("transactions");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ExchangeRequestId)
+                    .HasColumnName("exchange_request_id")
+                    .IsRequired();
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("status")
+                    .HasColumnType("transaction_status")
+                    .HasDefaultValueSql("'confirmed'::transaction_status")
+                    .IsRequired();
+
+                entity.Property(e => e.TotalValue)
+                    .HasColumnName("total_value")
+                    .HasPrecision(10, 2);
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()")
+                    .IsRequired();
+
+                entity.Property(e => e.ConfirmedAt).HasColumnName("confirmed_at");
+
+                entity.Property(e => e.CompletedAt).HasColumnName("completed_at");
+
+                entity.Property(e => e.CancelledAt).HasColumnName("cancelled_at");
+
+                entity.HasOne(e => e.ExchangeRequest)
+                    .WithOne(e => e.Transaction)
+                    .HasForeignKey<Transaction>(e => e.ExchangeRequestId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasIndex(e => e.ExchangeRequestId)
+                    .IsUnique()
+                    .HasDatabaseName("ux_transactions_exchange_request_id");
+
+                entity.ToTable(t =>
+                {
+                    t.HasCheckConstraint("ck_transactions_total_value", "total_value IS NULL OR total_value >= 0");
+                });
+            });
+
+            // Carrier
+            builder.Entity<Carrier>(entity =>
+            {
+                entity.ToTable("carriers");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(100)
+                    .IsRequired();
+
+                entity.Property(e => e.BaseCost)
+                    .HasColumnName("base_cost")
+                    .HasPrecision(10, 2)
+                    .IsRequired();
+
+                entity.Property(e => e.CostPerKg)
+                    .HasColumnName("cost_per_kg")
+                    .HasPrecision(10, 2)
+                    .IsRequired();
+
+                entity.Property(e => e.CostPerKm)
+                    .HasColumnName("cost_per_km")
+                    .HasPrecision(10, 2)
+                    .IsRequired();
+
+                entity.Property(e => e.MaxWeightGrams)
+                    .HasColumnName("max_weight_grams");
+
+                entity.Property(e => e.IsActive)
+                    .HasColumnName("is_active")
+                    .HasDefaultValue(true)
+                    .IsRequired();
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()")
+                    .IsRequired();
+
+                entity.HasIndex(e => e.Name)
+                    .IsUnique()
+                    .HasDatabaseName("ux_carriers_name");
+
+                entity.ToTable(t =>
+                {
+                    t.HasCheckConstraint("ck_carriers_base_cost", "base_cost >= 0");
+                    t.HasCheckConstraint("ck_carriers_cost_per_kg", "cost_per_kg >= 0");
+                    t.HasCheckConstraint("ck_carriers_cost_per_km", "cost_per_km >= 0");
+                    t.HasCheckConstraint("ck_carriers_max_weight_grams", "max_weight_grams IS NULL OR max_weight_grams > 0");
+                });
+            });
+
+            // Shipment
+            builder.Entity<Shipment>(entity =>
+            {
+                entity.ToTable("shipments");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.TransactionId)
+                    .HasColumnName("transaction_id")
+                    .IsRequired();
+
+                entity.Property(e => e.SenderAddressId)
+                    .HasColumnName("sender_address_id")
+                    .IsRequired();
+
+                entity.Property(e => e.ReceiverAddressId)
+                    .HasColumnName("receiver_address_id")
+                    .IsRequired();
+
+                entity.Property(e => e.CarrierId)
+                    .HasColumnName("carrier_id");
+
+                entity.Property(e => e.PackageWeightGrams)
+                    .HasColumnName("package_weight_grams")
+                    .IsRequired();
+
+                entity.Property(e => e.DistanceKm)
+                    .HasColumnName("distance_km")
+                    .HasPrecision(10, 2);
+
+                entity.Property(e => e.ShippingCost)
+                    .HasColumnName("shipping_cost")
+                    .HasPrecision(10, 2);
+
+                entity.Property(e => e.TrackingNumber)
+                    .HasColumnName("tracking_number")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.LabelUrl)
+                    .HasColumnName("label_url");
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("status")
+                    .HasColumnType("shipment_status")
+                    .HasDefaultValueSql("'pending'::shipment_status")
+                    .IsRequired();
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()")
+                    .IsRequired();
+
+                entity.HasOne(e => e.Transaction)
+                    .WithMany(e => e.Shipments)
+                    .HasForeignKey(e => e.TransactionId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.SenderAddress)
+                    .WithMany(e => e.SenderShipments)
+                    .HasForeignKey(e => e.SenderAddressId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(e => e.ReceiverAddress)
+                    .WithMany(e => e.ReceiverShipments)
+                    .HasForeignKey(e => e.ReceiverAddressId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(e => e.Carrier)
+                    .WithMany(e => e.Shipments)
+                    .HasForeignKey(e => e.CarrierId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasIndex(e => e.TransactionId)
+                    .HasDatabaseName("ix_shipments_transaction_id");
+
+                entity.HasIndex(e => e.SenderAddressId)
+                    .HasDatabaseName("ix_shipments_sender_address_id");
+
+                entity.HasIndex(e => e.ReceiverAddressId)
+                    .HasDatabaseName("ix_shipments_receiver_address_id");
+
+                entity.HasIndex(e => e.CarrierId)
+                    .HasDatabaseName("ix_shipments_carrier_id");
+
+                entity.ToTable(t =>
+
+                {
+                    t.HasCheckConstraint("ck_shipments_package_weight_grams", "package_weight_grams > 0");
+                    t.HasCheckConstraint("ck_shipments_distance_km", "distance_km IS NULL OR distance_km >= 0");
+                    t.HasCheckConstraint("ck_shipments_shipping_cost", "shipping_cost IS NULL OR shipping_cost >= 0");
+                });
             });
         }
     }

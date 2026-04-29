@@ -3,6 +3,7 @@ using System;
 using Book_Exchange.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Book_Exchange.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260429023720_AddingTransaction")]
+    partial class AddingTransaction
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,68 +135,6 @@ namespace Book_Exchange.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("asp_net_users", "public");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.Carrier", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<decimal>("BaseCost")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("numeric(10,2)")
-                        .HasColumnName("base_cost");
-
-                    b.Property<decimal>("CostPerKg")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("numeric(10,2)")
-                        .HasColumnName("cost_per_kg");
-
-                    b.Property<decimal>("CostPerKm")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("numeric(10,2)")
-                        .HasColumnName("cost_per_km");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("now()");
-
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(true)
-                        .HasColumnName("is_active");
-
-                    b.Property<int?>("MaxWeightGrams")
-                        .HasColumnType("integer")
-                        .HasColumnName("max_weight_grams");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique()
-                        .HasDatabaseName("ux_carriers_name");
-
-                    b.ToTable("carriers", "public", t =>
-                        {
-                            t.HasCheckConstraint("ck_carriers_base_cost", "base_cost >= 0");
-
-                            t.HasCheckConstraint("ck_carriers_cost_per_kg", "cost_per_kg >= 0");
-
-                            t.HasCheckConstraint("ck_carriers_cost_per_km", "cost_per_km >= 0");
-
-                            t.HasCheckConstraint("ck_carriers_max_weight_grams", "max_weight_grams IS NULL OR max_weight_grams > 0");
-                        });
                 });
 
             modelBuilder.Entity("Book_Exchange.Models.ExchangeRequest", b =>
@@ -391,88 +332,6 @@ namespace Book_Exchange.Migrations
                         .HasDatabaseName("ix_listing_genres_genre_id");
 
                     b.ToTable("listing_genres", "public");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.Shipment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<Guid?>("CarrierId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("carrier_id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("now()");
-
-                    b.Property<decimal?>("DistanceKm")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("numeric(10,2)")
-                        .HasColumnName("distance_km");
-
-                    b.Property<string>("LabelUrl")
-                        .HasColumnType("text")
-                        .HasColumnName("label_url");
-
-                    b.Property<int>("PackageWeightGrams")
-                        .HasColumnType("integer")
-                        .HasColumnName("package_weight_grams");
-
-                    b.Property<Guid>("ReceiverAddressId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("receiver_address_id");
-
-                    b.Property<Guid>("SenderAddressId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("sender_address_id");
-
-                    b.Property<decimal?>("ShippingCost")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("numeric(10,2)")
-                        .HasColumnName("shipping_cost");
-
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("shipment_status")
-                        .HasColumnName("status")
-                        .HasDefaultValueSql("'pending'::shipment_status");
-
-                    b.Property<string>("TrackingNumber")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("tracking_number");
-
-                    b.Property<Guid>("TransactionId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("transaction_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarrierId")
-                        .HasDatabaseName("ix_shipments_carrier_id");
-
-                    b.HasIndex("ReceiverAddressId")
-                        .HasDatabaseName("ix_shipments_receiver_address_id");
-
-                    b.HasIndex("SenderAddressId")
-                        .HasDatabaseName("ix_shipments_sender_address_id");
-
-                    b.HasIndex("TransactionId")
-                        .HasDatabaseName("ix_shipments_transaction_id");
-
-                    b.ToTable("shipments", "public", t =>
-                        {
-                            t.HasCheckConstraint("ck_shipments_distance_km", "distance_km IS NULL OR distance_km >= 0");
-
-                            t.HasCheckConstraint("ck_shipments_package_weight_grams", "package_weight_grams > 0");
-
-                            t.HasCheckConstraint("ck_shipments_shipping_cost", "shipping_cost IS NULL OR shipping_cost >= 0");
-                        });
                 });
 
             modelBuilder.Entity("Book_Exchange.Models.Transaction", b =>
@@ -780,40 +639,6 @@ namespace Book_Exchange.Migrations
                     b.Navigation("Listing");
                 });
 
-            modelBuilder.Entity("Book_Exchange.Models.Shipment", b =>
-                {
-                    b.HasOne("Book_Exchange.Models.Carrier", "Carrier")
-                        .WithMany("Shipments")
-                        .HasForeignKey("CarrierId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("Book_Exchange.Models.Address", "ReceiverAddress")
-                        .WithMany("ReceiverShipments")
-                        .HasForeignKey("ReceiverAddressId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Book_Exchange.Models.Address", "SenderAddress")
-                        .WithMany("SenderShipments")
-                        .HasForeignKey("SenderAddressId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Book_Exchange.Models.Transaction", "Transaction")
-                        .WithMany("Shipments")
-                        .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Carrier");
-
-                    b.Navigation("ReceiverAddress");
-
-                    b.Navigation("SenderAddress");
-
-                    b.Navigation("Transaction");
-                });
-
             modelBuilder.Entity("Book_Exchange.Models.Transaction", b =>
                 {
                     b.HasOne("Book_Exchange.Models.ExchangeRequest", "ExchangeRequest")
@@ -887,13 +712,6 @@ namespace Book_Exchange.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Book_Exchange.Models.Address", b =>
-                {
-                    b.Navigation("ReceiverShipments");
-
-                    b.Navigation("SenderShipments");
-                });
-
             modelBuilder.Entity("Book_Exchange.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Addresses");
@@ -903,11 +721,6 @@ namespace Book_Exchange.Migrations
                     b.Navigation("Listings");
 
                     b.Navigation("WishlistItems");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.Carrier", b =>
-                {
-                    b.Navigation("Shipments");
                 });
 
             modelBuilder.Entity("Book_Exchange.Models.ExchangeRequest", b =>
@@ -929,11 +742,6 @@ namespace Book_Exchange.Migrations
                     b.Navigation("OfferedInExchangeRequestItems");
 
                     b.Navigation("TargetExchangeRequests");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.Transaction", b =>
-                {
-                    b.Navigation("Shipments");
                 });
 #pragma warning restore 612, 618
         }
