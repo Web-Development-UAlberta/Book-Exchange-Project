@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Book_Exchange.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260422040334_Book")]
-    partial class Book
+    [Migration("20260429021610_AddingListingTables")]
+    partial class AddingListingTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,15 +25,14 @@ namespace Book_Exchange.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "book_condition", new[] { "like_new", "very_good", "good", "acceptable", "poor" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "listing_type", new[] { "sell", "buy", "swap" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "locality_type", new[] { "local", "provincial", "national", "international" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "exchange_status", new[] { "requested", "accepted", "rejected", "cancelled", "completed" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "exchange_type", new[] { "buy_sell", "book_swap", "book_swap_with_cash" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "listing_status", new[] { "active", "pending", "completed", "cancelled" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "message_status", new[] { "sent", "read" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "message_type", new[] { "text", "offer" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "notification_category", new[] { "match_found", "wishlist_available", "new_message", "exchange_requested", "exchange_accepted", "exchange_rejected", "transaction_update" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "notification_status", new[] { "unread", "read", "archived" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "notification_type", new[] { "match_found", "wishlist_available", "new_message", "offer_received", "offer_accepted", "offer_rejected", "transaction_update" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "shipping_status", new[] { "pending", "quoted", "label_created", "shipped", "delivered", "cancelled" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "transaction_status", new[] { "proposed", "negotiating", "confirmed", "shipped", "completed", "cancelled", "disputed" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "transaction_type", new[] { "buy_sell", "swap", "multi_swap" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "shipment_status", new[] { "pending", "quoted", "label_created", "shipped", "delivered", "cancelled" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "transaction_status", new[] { "confirmed", "shipped", "completed", "cancelled", "disputed" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Book_Exchange.Models.Address", b =>
@@ -42,17 +41,6 @@ namespace Book_Exchange.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    b.Property<string>("AddressLine1")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
-                        .HasColumnName("address_line1");
-
-                    b.Property<string>("AddressLine2")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
-                        .HasColumnName("address_line2");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -66,15 +54,11 @@ namespace Book_Exchange.Migrations
                         .HasColumnType("character varying(200)")
                         .HasColumnName("full_name");
 
-                    b.Property<Guid>("LocationId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("location_id");
-
-                    b.Property<string>("PostalCode")
+                    b.Property<string>("GooglePlaceId")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)")
-                        .HasColumnName("postal_code");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("google_place_id");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uuid")
@@ -82,9 +66,8 @@ namespace Book_Exchange.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LocationId");
-
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_addresses_user_id");
 
                     b.ToTable("addresses", "public");
                 });
@@ -151,15 +134,41 @@ namespace Book_Exchange.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.ToTable("AspNetUsers", "public");
+                    b.ToTable("asp_net_users", "public");
                 });
 
-            modelBuilder.Entity("Book_Exchange.Models.Book", b =>
+            modelBuilder.Entity("Book_Exchange.Models.Genre", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("ux_genres_name");
+
+                    b.ToTable("genres", "public");
+                });
+
+            modelBuilder.Entity("Book_Exchange.Models.Listing", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<int>("Condition")
+                        .HasColumnType("book_condition")
+                        .HasColumnName("condition");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -167,94 +176,68 @@ namespace Book_Exchange.Migrations
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("now()");
 
-                    b.Property<string>("Isbn10")
-                        .HasMaxLength(10)
-                        .HasColumnType("char(10)")
-                        .HasColumnName("isbn_10");
-
-                    b.Property<string>("Isbn13")
+                    b.Property<string>("Isbn")
+                        .IsRequired()
                         .HasMaxLength(13)
-                        .HasColumnType("char(13)")
-                        .HasColumnName("isbn_13");
+                        .HasColumnType("character varying(13)")
+                        .HasColumnName("isbn");
 
-                    b.Property<DateOnly?>("PublishedDate")
-                        .HasColumnType("date")
-                        .HasColumnName("published_date");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
-                        .HasColumnName("title");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Isbn10")
-                        .IsUnique();
-
-                    b.HasIndex("Isbn13")
-                        .IsUnique();
-
-                    b.ToTable("books", "public");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.Location", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("city");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("country");
-
-                    b.Property<string>("ProvinceState")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("province_state");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("City", "ProvinceState", "Country")
-                        .IsUnique();
-
-                    b.ToTable("locations", "public");
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.LocationDistance", b =>
-                {
-                    b.Property<Guid>("FromLocationId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("from_location_id");
-
-                    b.Property<Guid>("ToLocationId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("to_location_id");
-
-                    b.Property<decimal>("DistanceKm")
+                    b.Property<decimal>("Price")
+                        .HasPrecision(10, 2)
                         .HasColumnType("numeric(10,2)")
-                        .HasColumnName("distance_km");
+                        .HasColumnName("price");
 
-                    b.HasKey("FromLocationId", "ToLocationId");
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("listing_status")
+                        .HasColumnName("status")
+                        .HasDefaultValueSql("'active'::listing_status");
 
-                    b.HasIndex("ToLocationId");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
-                    b.ToTable("location_distances", "public", t =>
+                    b.Property<int>("WeightGrams")
+                        .HasColumnType("integer")
+                        .HasColumnName("weight_grams");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Isbn")
+                        .HasDatabaseName("ix_listings_isbn");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("ix_listings_status");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_listings_user_id");
+
+                    b.ToTable("listings", "public", t =>
                         {
-                            t.HasCheckConstraint("CK_location_distances_distance_nonnegative", "\"distance_km\" >= 0");
+                            t.HasCheckConstraint("ck_listings_isbn", "isbn ~ '^[0-9]{13}$' OR isbn ~ '^[0-9X]{10}$'");
 
-                            t.HasCheckConstraint("CK_location_distances_not_same", "\"from_location_id\" <> \"to_location_id\"");
+                            t.HasCheckConstraint("ck_listings_price", "price >= 0");
+
+                            t.HasCheckConstraint("ck_listings_weight_grams", "weight_grams > 0");
                         });
+                });
+
+            modelBuilder.Entity("Book_Exchange.Models.ListingGenre", b =>
+                {
+                    b.Property<Guid>("ListingId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("listing_id");
+
+                    b.Property<Guid>("GenreId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("genre_id");
+
+                    b.HasKey("ListingId", "GenreId");
+
+                    b.HasIndex("GenreId")
+                        .HasDatabaseName("ix_listing_genres_genre_id");
+
+                    b.ToTable("listing_genres", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -281,7 +264,7 @@ namespace Book_Exchange.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles", "public");
+                    b.ToTable("asp_net_roles", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -305,7 +288,7 @@ namespace Book_Exchange.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", "public");
+                    b.ToTable("asp_net_role_claims", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
@@ -329,7 +312,7 @@ namespace Book_Exchange.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", "public");
+                    b.ToTable("asp_net_user_claims", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
@@ -352,7 +335,7 @@ namespace Book_Exchange.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", "public");
+                    b.ToTable("asp_net_user_logins", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
@@ -367,7 +350,7 @@ namespace Book_Exchange.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", "public");
+                    b.ToTable("asp_net_user_roles", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -388,44 +371,47 @@ namespace Book_Exchange.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", "public");
+                    b.ToTable("asp_net_user_tokens", "public");
                 });
 
             modelBuilder.Entity("Book_Exchange.Models.Address", b =>
                 {
-                    b.HasOne("Book_Exchange.Models.Location", "Location")
-                        .WithMany("Addresses")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Book_Exchange.Models.ApplicationUser", "User")
                         .WithMany("Addresses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.Navigation("Location");
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Book_Exchange.Models.Listing", b =>
+                {
+                    b.HasOne("Book_Exchange.Models.ApplicationUser", "User")
+                        .WithMany("Listings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Book_Exchange.Models.LocationDistance", b =>
+            modelBuilder.Entity("Book_Exchange.Models.ListingGenre", b =>
                 {
-                    b.HasOne("Book_Exchange.Models.Location", "FromLocation")
-                        .WithMany("DistancesFrom")
-                        .HasForeignKey("FromLocationId")
+                    b.HasOne("Book_Exchange.Models.Genre", "Genre")
+                        .WithMany("ListingGenres")
+                        .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Book_Exchange.Models.Location", "ToLocation")
-                        .WithMany("DistancesTo")
-                        .HasForeignKey("ToLocationId")
+                    b.HasOne("Book_Exchange.Models.Listing", "Listing")
+                        .WithMany("ListingGenres")
+                        .HasForeignKey("ListingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("FromLocation");
+                    b.Navigation("Genre");
 
-                    b.Navigation("ToLocation");
+                    b.Navigation("Listing");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -482,15 +468,18 @@ namespace Book_Exchange.Migrations
             modelBuilder.Entity("Book_Exchange.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("Listings");
                 });
 
-            modelBuilder.Entity("Book_Exchange.Models.Location", b =>
+            modelBuilder.Entity("Book_Exchange.Models.Genre", b =>
                 {
-                    b.Navigation("Addresses");
+                    b.Navigation("ListingGenres");
+                });
 
-                    b.Navigation("DistancesFrom");
-
-                    b.Navigation("DistancesTo");
+            modelBuilder.Entity("Book_Exchange.Models.Listing", b =>
+                {
+                    b.Navigation("ListingGenres");
                 });
 #pragma warning restore 612, 618
         }

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Book_Exchange.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260422034106_InitIdentityGuid")]
-    partial class InitIdentityGuid
+    [Migration("20260429014022_AddingApplicationTypes")]
+    partial class AddingApplicationTypes
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,15 +25,14 @@ namespace Book_Exchange.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "book_condition", new[] { "like_new", "very_good", "good", "acceptable", "poor" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "listing_type", new[] { "sell", "buy", "swap" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "locality_type", new[] { "local", "provincial", "national", "international" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "exchange_status", new[] { "requested", "accepted", "rejected", "cancelled", "completed" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "exchange_type", new[] { "buy_sell", "book_swap", "book_swap_with_cash" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "listing_status", new[] { "active", "pending", "completed", "cancelled" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "message_status", new[] { "sent", "read" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "message_type", new[] { "text", "offer" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "notification_category", new[] { "match_found", "wishlist_available", "new_message", "exchange_requested", "exchange_accepted", "exchange_rejected", "transaction_update" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "notification_status", new[] { "unread", "read", "archived" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "notification_type", new[] { "match_found", "wishlist_available", "new_message", "offer_received", "offer_accepted", "offer_rejected", "transaction_update" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "shipping_status", new[] { "pending", "quoted", "label_created", "shipped", "delivered", "cancelled" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "transaction_status", new[] { "proposed", "negotiating", "confirmed", "shipped", "completed", "cancelled", "disputed" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "transaction_type", new[] { "buy_sell", "swap", "multi_swap" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "shipment_status", new[] { "pending", "quoted", "label_created", "shipped", "delivered", "cancelled" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "transaction_status", new[] { "confirmed", "shipped", "completed", "cancelled", "disputed" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Book_Exchange.Models.ApplicationUser", b =>
@@ -98,7 +97,7 @@ namespace Book_Exchange.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.ToTable("AspNetUsers", "public");
+                    b.ToTable("asp_net_users", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -125,7 +124,7 @@ namespace Book_Exchange.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles", "public");
+                    b.ToTable("asp_net_roles", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -149,7 +148,7 @@ namespace Book_Exchange.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", "public");
+                    b.ToTable("asp_net_role_claims", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
@@ -173,7 +172,7 @@ namespace Book_Exchange.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", "public");
+                    b.ToTable("asp_net_user_claims", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
@@ -196,7 +195,7 @@ namespace Book_Exchange.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", "public");
+                    b.ToTable("asp_net_user_logins", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
@@ -211,7 +210,7 @@ namespace Book_Exchange.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", "public");
+                    b.ToTable("asp_net_user_roles", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -232,7 +231,7 @@ namespace Book_Exchange.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", "public");
+                    b.ToTable("asp_net_user_tokens", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

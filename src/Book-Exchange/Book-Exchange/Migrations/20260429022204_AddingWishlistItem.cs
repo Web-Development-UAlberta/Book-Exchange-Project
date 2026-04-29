@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Book_Exchange.Migrations
 {
     /// <inheritdoc />
-    public partial class Wishlist : Migration
+    public partial class AddingWishlistItem : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,39 +18,39 @@ namespace Book_Exchange.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    book_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    is_active = table.Column<bool>(type: "boolean", nullable: false)
+                    isbn = table.Column<string>(type: "character varying(13)", maxLength: 13, nullable: false),
+                    is_active = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_wishlist", x => x.id);
+                    table.CheckConstraint("ck_wishlist_isbn", "isbn ~ '^[0-9]{13}$' OR isbn ~ '^[0-9X]{10}$'");
                     table.ForeignKey(
-                        name: "FK_wishlist_AspNetUsers_user_id",
+                        name: "FK_wishlist_asp_net_users_user_id",
                         column: x => x.user_id,
                         principalSchema: "public",
-                        principalTable: "AspNetUsers",
+                        principalTable: "asp_net_users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_wishlist_books_book_id",
-                        column: x => x.book_id,
-                        principalSchema: "public",
-                        principalTable: "books",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_wishlist_book_id",
+                name: "ix_wishlist_isbn",
                 schema: "public",
                 table: "wishlist",
-                column: "book_id");
+                column: "isbn");
 
             migrationBuilder.CreateIndex(
-                name: "IX_wishlist_user_id_book_id",
+                name: "ix_wishlist_user_id",
                 schema: "public",
                 table: "wishlist",
-                columns: new[] { "user_id", "book_id" },
+                column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ux_wishlist_user_id_isbn",
+                schema: "public",
+                table: "wishlist",
+                columns: new[] { "user_id", "isbn" },
                 unique: true);
         }
 

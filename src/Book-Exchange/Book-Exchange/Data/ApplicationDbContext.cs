@@ -11,396 +11,741 @@ namespace Book_Exchange.Data
         Guid
         >(options)
     {
-        public DbSet<Location> Locations => Set<Location>();
-        public DbSet<LocationDistance> LocationDistances => Set<LocationDistance>();
+
         public DbSet<Address> Addresses => Set<Address>();
-        public DbSet<Book> Books => Set<Book>();
-        public DbSet<Author> Authors => Set<Author>();
-        public DbSet<BookAuthor> BookAuthors => Set<BookAuthor>();
         public DbSet<Genre> Genres => Set<Genre>();
-        public DbSet<BookGenre> BookGenres => Set<BookGenre>();
         public DbSet<Listing> Listings => Set<Listing>();
+        public DbSet<ListingGenre> ListingGenres => Set<ListingGenre>();
         public DbSet<WishlistItem> Wishlist => Set<WishlistItem>();
-        public DbSet<Carrier> Carriers => Set<Carrier>();
-        public DbSet<CarrierRate> CarrierRates => Set<CarrierRate>();
+        public DbSet<ExchangeRequest> ExchangeRequests => Set<ExchangeRequest>();
+        public DbSet<ExchangeRequestItem> ExchangeRequestItems => Set<ExchangeRequestItem>();
         public DbSet<Transaction> Transactions => Set<Transaction>();
-        public DbSet<TransactionListing> TransactionListings => Set<TransactionListing>();
+        public DbSet<Carrier> Carriers => Set<Carrier>();
         public DbSet<Shipment> Shipments => Set<Shipment>();
         public DbSet<Review> Reviews => Set<Review>();
         public DbSet<Notification> Notifications => Set<Notification>();
         public DbSet<Message> Messages => Set<Message>();
 
-
         protected override void OnModelCreating(ModelBuilder builder)
-
         {
             base.OnModelCreating(builder);
-            
+            // ASP.NET Identity table names
             builder.HasDefaultSchema("public");
-
-            builder.Entity<ApplicationUser>().ToTable("AspNetUsers", "public");
-            builder.Entity<IdentityRole<Guid>>().ToTable("AspNetRoles", "public");
-            builder.Entity<IdentityUserRole<Guid>>().ToTable("AspNetUserRoles", "public");
-            builder.Entity<IdentityUserClaim<Guid>>().ToTable("AspNetUserClaims", "public");
-            builder.Entity<IdentityUserLogin<Guid>>().ToTable("AspNetUserLogins", "public");
-            builder.Entity<IdentityRoleClaim<Guid>>().ToTable("AspNetRoleClaims", "public");
-            builder.Entity<IdentityUserToken<Guid>>().ToTable("AspNetUserTokens", "public");
-
-            // PostgreSQL enum mapping
+            builder.Entity<ApplicationUser>().ToTable("asp_net_users", "public");
+            builder.Entity<IdentityRole<Guid>>().ToTable("asp_net_roles", "public");
+            builder.Entity<IdentityUserRole<Guid>>().ToTable("asp_net_user_roles", "public");
+            builder.Entity<IdentityUserClaim<Guid>>().ToTable("asp_net_user_claims", "public");
+            builder.Entity<IdentityUserLogin<Guid>>().ToTable("asp_net_user_logins", "public");
+            builder.Entity<IdentityRoleClaim<Guid>>().ToTable("asp_net_role_claims", "public");
+            builder.Entity<IdentityUserToken<Guid>>().ToTable("asp_net_user_tokens", "public");
+            // PostgreSQL enum types
             builder.HasPostgresEnum<BookCondition>("public", "book_condition");
-            builder.HasPostgresEnum<ListingType>("public", "listing_type");
-            builder.HasPostgresEnum<TransactionType>("public", "transaction_type");
+            builder.HasPostgresEnum<ListingStatus>("public", "listing_status");
+            builder.HasPostgresEnum<ExchangeType>("public", "exchange_type");
+            builder.HasPostgresEnum<ExchangeStatus>("public", "exchange_status");
             builder.HasPostgresEnum<TransactionStatus>("public", "transaction_status");
-            builder.HasPostgresEnum<ShippingStatus>("public", "shipping_status");
-            builder.HasPostgresEnum<NotificationType>("public", "notification_type");
+            builder.HasPostgresEnum<ShipmentStatus>("public", "shipment_status");
             builder.HasPostgresEnum<NotificationStatus>("public", "notification_status");
-            builder.HasPostgresEnum<MessageType>("public", "message_type");
+            builder.HasPostgresEnum<NotificationCategory>("public", "notification_category");
             builder.HasPostgresEnum<MessageStatus>("public", "message_status");
-            builder.HasPostgresEnum<LocalityType>("public", "locality_type");
+            // Address
+            builder.Entity<Address>(entity =>
+            {
 
-            // locations
-            builder.Entity<Location>()
-                .HasIndex(x => new { x.City, x.ProvinceState, x.Country })
-                .IsUnique();
+                entity.ToTable("addresses");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.FullName)
+                    .HasColumnName("full_name")
+                    .HasMaxLength(200)
+                    .IsRequired();
 
-            // location_distances
-            builder.Entity<LocationDistance>()
-                .HasKey(x => new { x.FromLocationId, x.ToLocationId });
+                entity.Property(e => e.GooglePlaceId)
+                    .HasColumnName("google_place_id")
+                    .HasMaxLength(255)
+                    .IsRequired();
 
-            builder.Entity<LocationDistance>()
-                .HasOne(x => x.FromLocation)
-                .WithMany(x => x.DistancesFrom)
-                .HasForeignKey(x => x.FromLocationId)
-                .OnDelete(DeleteBehavior.Cascade);
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()")
+                    .IsRequired();
 
-            builder.Entity<LocationDistance>()
-                .HasOne(x => x.ToLocation)
-                .WithMany(x => x.DistancesTo)
-                .HasForeignKey(x => x.ToLocationId)
-                .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(e => e.User)
+                    .WithMany(e => e.Addresses)
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.SetNull);
 
-            builder.Entity<LocationDistance>()
-                .ToTable(t =>
+                entity.HasIndex(e => e.UserId)
+                    .HasDatabaseName("ix_addresses_user_id");
+            });
+
+            // Genre
+            builder.Entity<Genre>(entity =>
+            {
+                entity.ToTable("genres");
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(100)
+                    .IsRequired();
+
+                entity.HasIndex(e => e.Name)
+                    .IsUnique()
+                    .HasDatabaseName("ux_genres_name");
+
+            });
+
+            // Listing
+            builder.Entity<Listing>(entity =>
+            {
+                entity.ToTable("listings");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.UserId)
+                    .HasColumnName("user_id")
+                    .IsRequired();
+
+                entity.Property(e => e.Isbn)
+                    .HasColumnName("isbn")
+                    .HasMaxLength(13)
+                    .IsRequired();
+
+                entity.Property(e => e.Condition)
+                    .HasColumnName("condition")
+                    .HasColumnType("book_condition")
+                    .IsRequired();
+
+                entity.Property(e => e.Price)
+                    .HasColumnName("price")
+                    .HasPrecision(10, 2)
+                    .IsRequired();
+
+                entity.Property(e => e.WeightGrams)
+                    .HasColumnName("weight_grams")
+                    .IsRequired();
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("status")
+                    .HasColumnType("listing_status")
+                    .HasDefaultValueSql("'active'::listing_status")
+                    .IsRequired();
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()")
+                    .IsRequired();
+
+                entity.HasOne(e => e.User)
+                    .WithMany(e => e.Listings)
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(e => e.UserId)
+                    .HasDatabaseName("ix_listings_user_id");
+
+                entity.HasIndex(e => e.Isbn)
+                    .HasDatabaseName("ix_listings_isbn");
+
+                entity.HasIndex(e => e.Status)
+                    .HasDatabaseName("ix_listings_status");
+
+                entity.ToTable(t =>
                 {
-                    t.HasCheckConstraint("CK_location_distances_not_same", "\"from_location_id\" <> \"to_location_id\"");
-                    t.HasCheckConstraint("CK_location_distances_distance_nonnegative", "\"distance_km\" >= 0");
+                    t.HasCheckConstraint("ck_listings_isbn", "isbn ~ '^[0-9]{13}$' OR isbn ~ '^[0-9X]{10}$'");
+                    t.HasCheckConstraint("ck_listings_price", "price >= 0");
+                    t.HasCheckConstraint("ck_listings_weight_grams", "weight_grams > 0");
 
                 });
+            });
 
-            // addresses
-            builder.Entity<Address>()
-                .HasOne(x => x.User)
-                .WithMany(x => x.Addresses)
-                .HasForeignKey(x => x.UserId)
-                .OnDelete(DeleteBehavior.SetNull);
+            // ListingGenre
+            builder.Entity<ListingGenre>(entity =>
+            {
+                entity.ToTable("listing_genres");
+                entity.HasKey(e => new { e.ListingId, e.GenreId });
+                entity.Property(e => e.ListingId).HasColumnName("listing_id");
+                entity.Property(e => e.GenreId).HasColumnName("genre_id");
 
-            builder.Entity<Address>()
-                .HasOne(x => x.Location)
-                .WithMany(x => x.Addresses)
-                .HasForeignKey(x => x.LocationId)
-                .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(e => e.Listing)
+                    .WithMany(e => e.ListingGenres)
+                    .HasForeignKey(e => e.ListingId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<Address>()
-                .Property(x => x.CreatedAt)
-                .HasDefaultValueSql("now()");
+                entity.HasOne(e => e.Genre)
+                    .WithMany(e => e.ListingGenres)
+                    .HasForeignKey(e => e.GenreId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            // books
-            builder.Entity<Book>()
-                .HasIndex(x => x.Isbn13)
-                .IsUnique();
+                entity.HasIndex(e => e.GenreId)
+                    .HasDatabaseName("ix_listing_genres_genre_id");
+            });
 
-            builder.Entity<Book>()
-                .HasIndex(x => x.Isbn10)
-                .IsUnique();
+            // WishlistItem
+            builder.Entity<WishlistItem>(entity =>
+            {
+                entity.ToTable("wishlist");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
 
-            builder.Entity<Book>()
-                .Property(x => x.CreatedAt)
-                .HasDefaultValueSql("now()");
+                entity.Property(e => e.UserId)
+                    .HasColumnName("user_id")
+                    .IsRequired();
 
-            // authors
-            builder.Entity<Author>()
-                .HasIndex(x => x.Name)
-                .IsUnique();
+                entity.Property(e => e.Isbn)
+                    .HasColumnName("isbn")
+                    .HasMaxLength(13)
+                    .IsRequired();
 
-            // book_authors
-            builder.Entity<BookAuthor>()
-                .HasKey(x => new { x.BookId, x.AuthorId });
+                entity.Property(e => e.IsActive)
+                    .HasColumnName("is_active")
+                    .HasDefaultValue(true)
+                    .IsRequired();
 
-            builder.Entity<BookAuthor>()
-                .HasOne(x => x.Book)
-                .WithMany(x => x.BookAuthors)
-                .HasForeignKey(x => x.BookId)
-                .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(e => e.User)
+                    .WithMany(e => e.WishlistItems)
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<BookAuthor>()
-                .HasOne(x => x.Author)
-                .WithMany(x => x.BookAuthors)
-                .HasForeignKey(x => x.AuthorId)
-                .OnDelete(DeleteBehavior.Cascade);
+                entity.HasIndex(e => e.UserId)
+                    .HasDatabaseName("ix_wishlist_user_id");
 
-            // genres
-            builder.Entity<Genre>()
-                .HasIndex(x => x.Name)
-                .IsUnique();
+                entity.HasIndex(e => e.Isbn)
+                    .HasDatabaseName("ix_wishlist_isbn");
 
-            // book_genres
-            builder.Entity<BookGenre>()
-                .HasKey(x => new { x.BookId, x.GenreId });
+                entity.HasIndex(e => new { e.UserId, e.Isbn })
+                    .IsUnique()
+                    .HasDatabaseName("ux_wishlist_user_id_isbn");
 
-            builder.Entity<BookGenre>()
-                .HasOne(x => x.Book)
-                .WithMany(x => x.BookGenres)
-                .HasForeignKey(x => x.BookId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<BookGenre>()
-                .HasOne(x => x.Genre)
-                .WithMany(x => x.BookGenres)
-                .HasForeignKey(x => x.GenreId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            // listings
-            builder.Entity<Listing>()
-                .HasOne(x => x.User)
-                .WithMany(x => x.Listings)
-                .HasForeignKey(x => x.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<Listing>()
-                .HasOne(x => x.Book)
-                .WithMany(x => x.Listings)
-                .HasForeignKey(x => x.BookId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Listing>()
-                .Property(x => x.CreatedAt)
-                .HasDefaultValueSql("now()");
-
-            // wishlist
-            builder.Entity<WishlistItem>()
-                .HasIndex(x => new { x.UserId, x.BookId })
-                .IsUnique();
-
-            builder.Entity<WishlistItem>()
-                .HasOne(x => x.User)
-                .WithMany(x => x.WishlistItems)
-                .HasForeignKey(x => x.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<WishlistItem>()
-                .HasOne(x => x.Book)
-                .WithMany(x => x.WishlistItems)
-                .HasForeignKey(x => x.BookId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // carriers
-
-            builder.Entity<Carrier>()
-                .HasIndex(x => x.Name)
-                .IsUnique();
-
-            // carrier_rates
-            builder.Entity<CarrierRate>()
-                .HasOne(x => x.Carrier)
-                .WithMany(x => x.Rates)
-                .HasForeignKey(x => x.CarrierId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<CarrierRate>()
-                .Property(x => x.CreatedAt)
-                .HasDefaultValueSql("now()");
-
-            // transactions
-            builder.Entity<Transaction>()
-                .HasOne(x => x.Buyer)
-                .WithMany(x => x.BuyerTransactions)
-                .HasForeignKey(x => x.BuyerId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Transaction>()
-                .HasOne(x => x.Seller)
-                .WithMany(x => x.SellerTransactions)
-                .HasForeignKey(x => x.SellerId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Transaction>()
-                .HasOne(x => x.Listing)
-                .WithMany(x => x.PrimaryTransactions)
-                .HasForeignKey(x => x.ListingId)
-                .OnDelete(DeleteBehavior.SetNull);
-
-            builder.Entity<Transaction>()
-                .Property(x => x.Status)
-                .HasDefaultValue(TransactionStatus.Proposed);
-
-            builder.Entity<Transaction>()
-                .Property(x => x.CreatedAt)
-                .HasDefaultValueSql("now()");
-
-            builder.Entity<Transaction>()
-                .ToTable(t =>
+                entity.ToTable(t =>
                 {
-                    t.HasCheckConstraint("CK_transactions_buyer_or_seller", "\"buyer_id\" IS NOT NULL OR \"seller_id\" IS NOT NULL");
+                    t.HasCheckConstraint("ck_wishlist_isbn", "isbn ~ '^[0-9]{13}$' OR isbn ~ '^[0-9X]{10}$'");
                 });
+            });
 
-            // transaction_listings
-            builder.Entity<TransactionListing>()
-                .HasKey(x => new { x.TransactionId, x.ListingId });
+            // ExchangeRequest
+            builder.Entity<ExchangeRequest>(entity =>
+            {
+                entity.ToTable("exchange_requests");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.TargetListingId)
+                    .HasColumnName("target_listing_id")
+                    .IsRequired();
 
-            builder.Entity<TransactionListing>()
-                .HasOne(x => x.Transaction)
-                .WithMany(x => x.TransactionListings)
-                .HasForeignKey(x => x.TransactionId)
-                .OnDelete(DeleteBehavior.Cascade);
+                entity.Property(e => e.RequesterId)
+                    .HasColumnName("requester_id")
+                    .IsRequired();
 
-            builder.Entity<TransactionListing>()
-                .HasOne(x => x.Listing)
-                .WithMany(x => x.TransactionListings)
-                .HasForeignKey(x => x.ListingId)
-                .OnDelete(DeleteBehavior.Cascade);
+                entity.Property(e => e.Type)
+                    .HasColumnName("type")
+                    .HasColumnType("exchange_type")
+                    .IsRequired();
 
-            // shipments
-            builder.Entity<Shipment>()
-                .HasOne(x => x.Transaction)
-                .WithMany(x => x.Shipments)
-                .HasForeignKey(x => x.TransactionId)
-                .OnDelete(DeleteBehavior.Cascade);
+                entity.Property(e => e.Status)
+                    .HasColumnName("status")
+                    .HasColumnType("exchange_status")
+                    .HasDefaultValueSql("'requested'::exchange_status")
+                    .IsRequired();
 
-            builder.Entity<Shipment>()
-                .HasOne(x => x.SenderAddress)
-                .WithMany(x => x.SenderShipments)
-                .HasForeignKey(x => x.SenderAddressId)
-                .OnDelete(DeleteBehavior.Restrict);
+                entity.Property(e => e.Price)
+                    .HasColumnName("price")
+                    .HasPrecision(10, 2);
 
-            builder.Entity<Shipment>()
-                .HasOne(x => x.ReceiverAddress)
-                .WithMany(x => x.ReceiverShipments)
-                .HasForeignKey(x => x.ReceiverAddressId)
-                .OnDelete(DeleteBehavior.Restrict);
+                entity.Property(e => e.CounterOffer)
+                    .HasColumnName("counter_offer")
+                    .HasPrecision(10, 2);
 
-            builder.Entity<Shipment>()
-                .HasOne(x => x.Carrier)
-                .WithMany(x => x.Shipments)
-                .HasForeignKey(x => x.CarrierId)
-                .OnDelete(DeleteBehavior.SetNull);
+                entity.Property(e => e.Message)
+                    .HasColumnName("message");
 
-            builder.Entity<Shipment>()
-                .Property(x => x.Status)
-                .HasDefaultValue(ShippingStatus.Pending);
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()")
+                    .IsRequired();
 
-            builder.Entity<Shipment>()
-                .Property(x => x.CreatedAt)
-                .HasDefaultValueSql("now()");
+                entity.Property(e => e.AcceptedAt).HasColumnName("accepted_at");
 
-            // reviews
-            builder.Entity<Review>()
-                .HasIndex(x => new { x.TransactionId, x.ReviewerId, x.RevieweeId })
-                .IsUnique();
+                entity.Property(e => e.CompletedAt).HasColumnName("completed_at");
 
-            builder.Entity<Review>()
-                .HasOne(x => x.Transaction)
-                .WithMany(x => x.Reviews)
-                .HasForeignKey(x => x.TransactionId)
-                .OnDelete(DeleteBehavior.Cascade);
+                entity.Property(e => e.CancelledAt).HasColumnName("cancelled_at");
 
-            builder.Entity<Review>()
-                .HasOne(x => x.Reviewer)
-                .WithMany(x => x.ReviewsWritten)
-                .HasForeignKey(x => x.ReviewerId)
-                .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(e => e.TargetListing)
+                    .WithMany(e => e.TargetExchangeRequests)
+                    .HasForeignKey(e => e.TargetListingId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<Review>()
-                .HasOne(x => x.Reviewee)
-                .WithMany(x => x.ReviewsReceived)
-                .HasForeignKey(x => x.RevieweeId)
-                .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(e => e.Requester)
+                    .WithMany(e => e.ExchangeRequests)
+                    .HasForeignKey(e => e.RequesterId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<Review>()
-                .Property(x => x.CreatedAt)
-                .HasDefaultValueSql("now()");
+                entity.HasIndex(e => e.TargetListingId)
+                    .HasDatabaseName("ix_exchange_requests_target_listing_id");
 
-            builder.Entity<Review>()
-                .ToTable(t =>
+                entity.HasIndex(e => e.RequesterId)
+                    .HasDatabaseName("ix_exchange_requests_requester_id");
+
+                entity.HasIndex(e => e.Status)
+                    .HasDatabaseName("ix_exchange_requests_status");
+
+                entity.ToTable(t =>
                 {
-                    t.HasCheckConstraint("CK_reviews_rating_range", "\"rating\" BETWEEN 1 AND 5");
-                    t.HasCheckConstraint("CK_reviews_reviewer_not_reviewee", "\"reviewer_id\" <> \"reviewee_id\"");
+                    t.HasCheckConstraint("ck_exchange_requests_price", "price IS NULL OR price >= 0");
+                    t.HasCheckConstraint("ck_exchange_requests_counter_offer", "counter_offer IS NULL OR counter_offer >= 0");
                 });
+            });
 
-            // notifications
-            builder.Entity<Notification>()
-                .HasOne(x => x.User)
-                .WithMany(x => x.Notifications)
-                .HasForeignKey(x => x.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+            // ExchangeRequestItem
+            builder.Entity<ExchangeRequestItem>(entity =>
+            {
+                entity.ToTable("exchange_request_items");
 
-            builder.Entity<Notification>()
-                .HasOne(x => x.RelatedListing)
-                .WithMany(x => x.Notifications)
-                .HasForeignKey(x => x.RelatedListingId)
-                .OnDelete(DeleteBehavior.SetNull);
+                entity.HasKey(e => new { e.ExchangeRequestId, e.OfferedListingId });
 
-            builder.Entity<Notification>()
-                .HasOne(x => x.RelatedBook)
-                .WithMany(x => x.Notifications)
-                .HasForeignKey(x => x.RelatedBookId)
-                .OnDelete(DeleteBehavior.SetNull);
+                entity.Property(e => e.ExchangeRequestId)
+                    .HasColumnName("exchange_request_id");
+                entity.Property(e => e.OfferedListingId)
+                    .HasColumnName("offered_listing_id");
+                entity.HasOne(e => e.ExchangeRequest)
+                    .WithMany(e => e.ExchangeRequestItems)
+                    .HasForeignKey(e => e.ExchangeRequestId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<Notification>()
-                .HasOne(x => x.RelatedWishlist)
-                .WithMany(x => x.Notifications)
-                .HasForeignKey(x => x.RelatedWishlistId)
-                .OnDelete(DeleteBehavior.SetNull);
+                entity.HasOne(e => e.OfferedListing)
+                    .WithMany(e => e.OfferedInExchangeRequestItems)
+                    .HasForeignKey(e => e.OfferedListingId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<Notification>()
-                .HasOne(x => x.RelatedTransaction)
-                .WithMany(x => x.Notifications)
-                .HasForeignKey(x => x.RelatedTransactionId)
-                .OnDelete(DeleteBehavior.SetNull);
+                entity.HasIndex(e => e.OfferedListingId)
+                    .HasDatabaseName("ix_exchange_request_items_offered_listing_id");
+            });
 
-            builder.Entity<Notification>()
-                .Property(x => x.Status)
-                .HasDefaultValue(NotificationStatus.Unread);
+            // Transaction
+            builder.Entity<Transaction>(entity =>
+            {
+                entity.ToTable("transactions");
 
-            builder.Entity<Notification>()
-                .Property(x => x.CreatedAt)
-                .HasDefaultValueSql("now()");
+                entity.HasKey(e => e.Id);
 
-            // messages
-            builder.Entity<Message>()
-                .HasOne(x => x.Sender)
-                .WithMany(x => x.SentMessages)
-                .HasForeignKey(x => x.SenderId)
-                .OnDelete(DeleteBehavior.Cascade);
+                entity.Property(e => e.Id).HasColumnName("id");
 
-            builder.Entity<Message>()
-                .HasOne(x => x.Receiver)
-                .WithMany(x => x.ReceivedMessages)
-                .HasForeignKey(x => x.ReceiverId)
-                .OnDelete(DeleteBehavior.Cascade);
+                entity.Property(e => e.ExchangeRequestId)
+                    .HasColumnName("exchange_request_id")
+                    .IsRequired();
 
-            builder.Entity<Message>()
-                .HasOne(x => x.Listing)
-                .WithMany(x => x.Messages)
-                .HasForeignKey(x => x.ListingId)
-                .OnDelete(DeleteBehavior.SetNull);
+                entity.Property(e => e.Status)
+                    .HasColumnName("status")
+                    .HasColumnType("transaction_status")
+                    .HasDefaultValueSql("'confirmed'::transaction_status")
+                    .IsRequired();
 
-            builder.Entity<Message>()
-                .HasOne(x => x.Transaction)
-                .WithMany(x => x.Messages)
-                .HasForeignKey(x => x.TransactionId)
-                .OnDelete(DeleteBehavior.SetNull);
+                entity.Property(e => e.TotalValue)
+                    .HasColumnName("total_value")
+                    .HasPrecision(10, 2);
 
-            builder.Entity<Message>()
-                .Property(x => x.Status)
-                .HasDefaultValue(MessageStatus.Sent);
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()")
+                    .IsRequired();
 
-            builder.Entity<Message>()
-                .Property(x => x.MessageType)
-                .HasDefaultValue(MessageType.Text);
+                entity.Property(e => e.ConfirmedAt).HasColumnName("confirmed_at");
 
-            builder.Entity<Message>()
-                .Property(x => x.CreatedAt)
-                .HasDefaultValueSql("now()");
+                entity.Property(e => e.CompletedAt).HasColumnName("completed_at");
+
+                entity.Property(e => e.CancelledAt).HasColumnName("cancelled_at");
+
+                entity.HasOne(e => e.ExchangeRequest)
+                    .WithOne(e => e.Transaction)
+                    .HasForeignKey<Transaction>(e => e.ExchangeRequestId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasIndex(e => e.ExchangeRequestId)
+                    .IsUnique()
+                    .HasDatabaseName("ux_transactions_exchange_request_id");
+
+                entity.ToTable(t =>
+                {
+                    t.HasCheckConstraint("ck_transactions_total_value", "total_value IS NULL OR total_value >= 0");
+                });
+            });
+
+            // Carrier
+            builder.Entity<Carrier>(entity =>
+            {
+                entity.ToTable("carriers");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(100)
+                    .IsRequired();
+
+                entity.Property(e => e.BaseCost)
+                    .HasColumnName("base_cost")
+                    .HasPrecision(10, 2)
+                    .IsRequired();
+
+                entity.Property(e => e.CostPerKg)
+                    .HasColumnName("cost_per_kg")
+                    .HasPrecision(10, 2)
+                    .IsRequired();
+
+                entity.Property(e => e.CostPerKm)
+                    .HasColumnName("cost_per_km")
+                    .HasPrecision(10, 2)
+                    .IsRequired();
+
+                entity.Property(e => e.MaxWeightGrams)
+                    .HasColumnName("max_weight_grams");
+
+                entity.Property(e => e.IsActive)
+                    .HasColumnName("is_active")
+                    .HasDefaultValue(true)
+                    .IsRequired();
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()")
+                    .IsRequired();
+
+                entity.HasIndex(e => e.Name)
+                    .IsUnique()
+                    .HasDatabaseName("ux_carriers_name");
+
+                entity.ToTable(t =>
+                {
+                    t.HasCheckConstraint("ck_carriers_base_cost", "base_cost >= 0");
+                    t.HasCheckConstraint("ck_carriers_cost_per_kg", "cost_per_kg >= 0");
+                    t.HasCheckConstraint("ck_carriers_cost_per_km", "cost_per_km >= 0");
+                    t.HasCheckConstraint("ck_carriers_max_weight_grams", "max_weight_grams IS NULL OR max_weight_grams > 0");
+                });
+            });
+
+            // Shipment
+            builder.Entity<Shipment>(entity =>
+            {
+                entity.ToTable("shipments");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.TransactionId)
+                    .HasColumnName("transaction_id")
+                    .IsRequired();
+
+                entity.Property(e => e.SenderAddressId)
+                    .HasColumnName("sender_address_id")
+                    .IsRequired();
+
+                entity.Property(e => e.ReceiverAddressId)
+                    .HasColumnName("receiver_address_id")
+                    .IsRequired();
+
+                entity.Property(e => e.CarrierId)
+                    .HasColumnName("carrier_id");
+
+                entity.Property(e => e.PackageWeightGrams)
+                    .HasColumnName("package_weight_grams")
+                    .IsRequired();
+
+                entity.Property(e => e.DistanceKm)
+                    .HasColumnName("distance_km")
+                    .HasPrecision(10, 2);
+
+                entity.Property(e => e.ShippingCost)
+                    .HasColumnName("shipping_cost")
+                    .HasPrecision(10, 2);
+
+                entity.Property(e => e.TrackingNumber)
+                    .HasColumnName("tracking_number")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.LabelUrl)
+                    .HasColumnName("label_url");
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("status")
+                    .HasColumnType("shipment_status")
+                    .HasDefaultValueSql("'pending'::shipment_status")
+                    .IsRequired();
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()")
+                    .IsRequired();
+
+                entity.HasOne(e => e.Transaction)
+                    .WithMany(e => e.Shipments)
+                    .HasForeignKey(e => e.TransactionId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.SenderAddress)
+                    .WithMany(e => e.SenderShipments)
+                    .HasForeignKey(e => e.SenderAddressId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(e => e.ReceiverAddress)
+                    .WithMany(e => e.ReceiverShipments)
+                    .HasForeignKey(e => e.ReceiverAddressId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(e => e.Carrier)
+                    .WithMany(e => e.Shipments)
+                    .HasForeignKey(e => e.CarrierId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasIndex(e => e.TransactionId)
+                    .HasDatabaseName("ix_shipments_transaction_id");
+
+                entity.HasIndex(e => e.SenderAddressId)
+                    .HasDatabaseName("ix_shipments_sender_address_id");
+
+                entity.HasIndex(e => e.ReceiverAddressId)
+                    .HasDatabaseName("ix_shipments_receiver_address_id");
+
+                entity.HasIndex(e => e.CarrierId)
+                    .HasDatabaseName("ix_shipments_carrier_id");
+
+                entity.ToTable(t =>
+
+                {
+                    t.HasCheckConstraint("ck_shipments_package_weight_grams", "package_weight_grams > 0");
+                    t.HasCheckConstraint("ck_shipments_distance_km", "distance_km IS NULL OR distance_km >= 0");
+                    t.HasCheckConstraint("ck_shipments_shipping_cost", "shipping_cost IS NULL OR shipping_cost >= 0");
+                });
+            });
+
+            // Review
+            builder.Entity<Review>(entity =>
+            {
+                entity.ToTable("reviews");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.TransactionId)
+                    .HasColumnName("transaction_id")
+                    .IsRequired();
+
+                entity.Property(e => e.ReviewerId)
+                    .HasColumnName("reviewer_id")
+                    .IsRequired();
+
+                entity.Property(e => e.Rating)
+                    .HasColumnName("rating")
+                    .IsRequired();
+
+                entity.Property(e => e.Comment)
+                    .HasColumnName("comment");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()")
+                    .IsRequired();
+
+                entity.HasOne(e => e.Transaction)
+                    .WithMany(e => e.Reviews)
+                    .HasForeignKey(e => e.TransactionId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.Reviewer)
+                    .WithMany(e => e.Reviews)
+                    .HasForeignKey(e => e.ReviewerId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(e => e.TransactionId)
+                    .HasDatabaseName("ix_reviews_transaction_id");
+
+                entity.HasIndex(e => e.ReviewerId)
+                    .HasDatabaseName("ix_reviews_reviewer_id");
+
+                entity.HasIndex(e => new { e.TransactionId, e.ReviewerId })
+                    .IsUnique()
+                    .HasDatabaseName("ux_reviews_transaction_id_reviewer_id");
+
+                entity.ToTable(t =>
+                {
+                    t.HasCheckConstraint("ck_reviews_rating", "rating BETWEEN 1 AND 5");
+                });
+            });
+
+            // Notification
+            builder.Entity<Notification>(entity =>
+            {
+                entity.ToTable("notifications");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.UserId)
+                    .HasColumnName("user_id")
+                    .IsRequired();
+
+                entity.Property(e => e.Category)
+                    .HasColumnName("category")
+                    .HasColumnType("notification_category")
+                    .IsRequired();
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("status")
+                    .HasColumnType("notification_status")
+                    .HasDefaultValueSql("'unread'::notification_status")
+                    .IsRequired();
+
+                entity.Property(e => e.Title)
+                    .HasColumnName("title")
+                    .HasMaxLength(255)
+                    .IsRequired();
+
+                entity.Property(e => e.Message)
+                    .HasColumnName("message")
+                    .IsRequired();
+
+                entity.Property(e => e.RelatedListingId)
+                    .HasColumnName("related_listing_id");
+
+                entity.Property(e => e.RelatedExchangeRequestId)
+                    .HasColumnName("related_exchange_request_id");
+
+                entity.Property(e => e.RelatedTransactionId)
+                    .HasColumnName("related_transaction_id");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()")
+                    .IsRequired();
+
+                entity.Property(e => e.ReadAt)
+                    .HasColumnName("read_at");
+
+                entity.HasOne(e => e.User)
+                    .WithMany(e => e.Notifications)
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.RelatedListing)
+                    .WithMany(e => e.Notifications)
+                    .HasForeignKey(e => e.RelatedListingId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasOne(e => e.RelatedExchangeRequest)
+                    .WithMany(e => e.Notifications)
+                    .HasForeignKey(e => e.RelatedExchangeRequestId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasOne(e => e.RelatedTransaction)
+                    .WithMany(e => e.Notifications)
+                    .HasForeignKey(e => e.RelatedTransactionId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasIndex(e => e.UserId)
+                    .HasDatabaseName("ix_notifications_user_id");
+
+                entity.HasIndex(e => e.Status)
+                    .HasDatabaseName("ix_notifications_status");
+
+                entity.HasIndex(e => e.RelatedListingId)
+                    .HasDatabaseName("ix_notifications_related_listing_id");
+
+                entity.HasIndex(e => e.RelatedExchangeRequestId)
+                    .HasDatabaseName("ix_notifications_related_exchange_request_id");
+
+                entity.HasIndex(e => e.RelatedTransactionId)
+                    .HasDatabaseName("ix_notifications_related_transaction_id");
+            });
+
+            // Message
+            builder.Entity<Message>(entity =>
+            {
+                entity.ToTable("messages");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.SenderId)
+                    .HasColumnName("sender_id")
+                    .IsRequired();
+
+                entity.Property(e => e.ReceiverId)
+                    .HasColumnName("receiver_id")
+                    .IsRequired();
+
+                entity.Property(e => e.MessageText)
+                    .HasColumnName("message_text");
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("status")
+                    .HasColumnType("message_status")
+                    .HasDefaultValueSql("'sent'::message_status")
+                    .IsRequired();
+
+                entity.Property(e => e.ListingId)
+                    .HasColumnName("listing_id");
+
+                entity.Property(e => e.ExchangeRequestId)
+                    .HasColumnName("exchange_request_id");
+
+                entity.Property(e => e.TransactionId)
+                    .HasColumnName("transaction_id");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()")
+                    .IsRequired();
+
+                entity.HasOne(e => e.Sender)
+                    .WithMany(e => e.SentMessages)
+                    .HasForeignKey(e => e.SenderId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.Receiver)
+                    .WithMany(e => e.ReceivedMessages)
+                    .HasForeignKey(e => e.ReceiverId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.Listing)
+                    .WithMany(e => e.Messages)
+                    .HasForeignKey(e => e.ListingId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasOne(e => e.ExchangeRequest)
+                    .WithMany(e => e.Messages)
+                    .HasForeignKey(e => e.ExchangeRequestId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasOne(e => e.Transaction)
+                    .WithMany(e => e.Messages)
+                    .HasForeignKey(e => e.TransactionId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasIndex(e => e.SenderId)
+                    .HasDatabaseName("ix_messages_sender_id");
+
+                entity.HasIndex(e => e.ReceiverId)
+                    .HasDatabaseName("ix_messages_receiver_id");
+
+                entity.HasIndex(e => e.ListingId)
+                    .HasDatabaseName("ix_messages_listing_id");
+
+                entity.HasIndex(e => e.ExchangeRequestId)
+                    .HasDatabaseName("ix_messages_exchange_request_id");
+
+                entity.HasIndex(e => e.TransactionId)
+                    .HasDatabaseName("ix_messages_transaction_id");
+
+            });
         }
     }
 }

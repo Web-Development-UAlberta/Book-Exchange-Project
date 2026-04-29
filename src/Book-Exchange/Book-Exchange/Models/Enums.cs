@@ -9,24 +9,32 @@ public enum BookCondition
     Poor
 }
 
-public enum ListingType
+public enum ListingStatus
 {
-    Sell,
-    Buy,
-    Swap
+    Active,
+    Pending,
+    Completed,
+    Cancelled
 }
 
-public enum TransactionType
+public enum ExchangeType
 {
     BuySell,
-    Swap,
-    MultiSwap
+    BookSwap,
+    BookSwapWithCash
+}
+
+public enum ExchangeStatus
+{
+    Requested,
+    Accepted,
+    Rejected,
+    Cancelled,
+    Completed
 }
 
 public enum TransactionStatus
 {
-    Proposed,
-    Negotiating,
     Confirmed,
     Shipped,
     Completed,
@@ -34,7 +42,7 @@ public enum TransactionStatus
     Disputed
 }
 
-public enum ShippingStatus
+public enum ShipmentStatus
 {
     Pending,
     Quoted,
@@ -44,17 +52,6 @@ public enum ShippingStatus
     Cancelled
 }
 
-public enum NotificationType
-{
-    MatchFound,
-    WishlistAvailable,
-    NewMessage,
-    OfferReceived,
-    OfferAccepted,
-    OfferRejected,
-    TransactionUpdate
-}
-
 public enum NotificationStatus
 {
     Unread,
@@ -62,22 +59,19 @@ public enum NotificationStatus
     Archived
 }
 
-public enum MessageType
+public enum NotificationCategory
 {
-    Text,
-    Offer
+    MatchFound,
+    WishlistAvailable,
+    NewMessage,
+    ExchangeRequested,
+    ExchangeAccepted,
+    ExchangeRejected,
+    TransactionUpdate
 }
 
 public enum MessageStatus
 {
     Sent,
     Read
-}
-
-public enum LocalityType
-{
-    Local,
-    Provincial,
-    National,
-    International
 }

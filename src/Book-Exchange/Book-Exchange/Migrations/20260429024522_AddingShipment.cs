@@ -6,11 +6,34 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Book_Exchange.Migrations
 {
     /// <inheritdoc />
-    public partial class Shipment : Migration
+    public partial class AddingShipment : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "carriers",
+                schema: "public",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    base_cost = table.Column<decimal>(type: "numeric(10,2)", precision: 10, scale: 2, nullable: false),
+                    cost_per_kg = table.Column<decimal>(type: "numeric(10,2)", precision: 10, scale: 2, nullable: false),
+                    cost_per_km = table.Column<decimal>(type: "numeric(10,2)", precision: 10, scale: 2, nullable: false),
+                    max_weight_grams = table.Column<int>(type: "integer", nullable: true),
+                    is_active = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_carriers", x => x.id);
+                    table.CheckConstraint("ck_carriers_base_cost", "base_cost >= 0");
+                    table.CheckConstraint("ck_carriers_cost_per_kg", "cost_per_kg >= 0");
+                    table.CheckConstraint("ck_carriers_cost_per_km", "cost_per_km >= 0");
+                    table.CheckConstraint("ck_carriers_max_weight_grams", "max_weight_grams IS NULL OR max_weight_grams > 0");
+                });
+
             migrationBuilder.CreateTable(
                 name: "shipments",
                 schema: "public",
@@ -21,17 +44,20 @@ namespace Book_Exchange.Migrations
                     sender_address_id = table.Column<Guid>(type: "uuid", nullable: false),
                     receiver_address_id = table.Column<Guid>(type: "uuid", nullable: false),
                     carrier_id = table.Column<Guid>(type: "uuid", nullable: true),
-                    locality = table.Column<int>(type: "integer", nullable: true),
-                    package_weight_kg = table.Column<decimal>(type: "numeric(8,2)", nullable: false),
-                    shipping_cost = table.Column<decimal>(type: "numeric(8,2)", nullable: true),
+                    package_weight_grams = table.Column<int>(type: "integer", nullable: false),
+                    distance_km = table.Column<decimal>(type: "numeric(10,2)", precision: 10, scale: 2, nullable: true),
+                    shipping_cost = table.Column<decimal>(type: "numeric(10,2)", precision: 10, scale: 2, nullable: true),
                     tracking_number = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     label_url = table.Column<string>(type: "text", nullable: true),
-                    status = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    status = table.Column<int>(type: "shipment_status", nullable: false, defaultValueSql: "'pending'::shipment_status"),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_shipments", x => x.id);
+                    table.CheckConstraint("ck_shipments_distance_km", "distance_km IS NULL OR distance_km >= 0");
+                    table.CheckConstraint("ck_shipments_package_weight_grams", "package_weight_grams > 0");
+                    table.CheckConstraint("ck_shipments_shipping_cost", "shipping_cost IS NULL OR shipping_cost >= 0");
                     table.ForeignKey(
                         name: "FK_shipments_addresses_receiver_address_id",
                         column: x => x.receiver_address_id,
@@ -63,25 +89,32 @@ namespace Book_Exchange.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_shipments_carrier_id",
+                name: "ux_carriers_name",
+                schema: "public",
+                table: "carriers",
+                column: "name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_shipments_carrier_id",
                 schema: "public",
                 table: "shipments",
                 column: "carrier_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_shipments_receiver_address_id",
+                name: "ix_shipments_receiver_address_id",
                 schema: "public",
                 table: "shipments",
                 column: "receiver_address_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_shipments_sender_address_id",
+                name: "ix_shipments_sender_address_id",
                 schema: "public",
                 table: "shipments",
                 column: "sender_address_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_shipments_transaction_id",
+                name: "ix_shipments_transaction_id",
                 schema: "public",
                 table: "shipments",
                 column: "transaction_id");
@@ -92,6 +125,10 @@ namespace Book_Exchange.Migrations
         {
             migrationBuilder.DropTable(
                 name: "shipments",
+                schema: "public");
+
+            migrationBuilder.DropTable(
+                name: "carriers",
                 schema: "public");
         }
     }

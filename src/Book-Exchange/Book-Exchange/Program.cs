@@ -8,19 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-
 var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
 dataSourceBuilder.MapEnum<BookCondition>("public.book_condition");
-dataSourceBuilder.MapEnum<ListingType>("public.listing_type");
-dataSourceBuilder.MapEnum<TransactionType>("public.transaction_type");
+dataSourceBuilder.MapEnum<ListingStatus>("public.listing_status");
+dataSourceBuilder.MapEnum<ExchangeType>("public.exchange_type");
+dataSourceBuilder.MapEnum<ExchangeStatus>("public.exchange_status");
 dataSourceBuilder.MapEnum<TransactionStatus>("public.transaction_status");
-dataSourceBuilder.MapEnum<ShippingStatus>("public.shipping_status");
-dataSourceBuilder.MapEnum<NotificationType>("public.notification_type");
+dataSourceBuilder.MapEnum<ShipmentStatus>("public.shipment_status");
 dataSourceBuilder.MapEnum<NotificationStatus>("public.notification_status");
-dataSourceBuilder.MapEnum<MessageType>("public.message_type");
+dataSourceBuilder.MapEnum<NotificationCategory>("public.notification_category");
 dataSourceBuilder.MapEnum<MessageStatus>("public.message_status");
-dataSourceBuilder.MapEnum<LocalityType>("public.locality_type");
-
 var dataSource = dataSourceBuilder.Build();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

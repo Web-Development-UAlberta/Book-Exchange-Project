@@ -1,21 +1,20 @@
 ﻿namespace Book_Exchange.Models;
 
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-
-[Table("carriers")]
 public class Carrier
 {
-    [Key]
-    [Column("id")]
     public Guid Id { get; set; }
 
-    [Required]
-    [MaxLength(100)]
-    [Column("name")]
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = null!;
 
-    public ICollection<CarrierRate> Rates { get; set; } = new List<CarrierRate>();
+    public decimal BaseCost { get; set; }
+    public decimal CostPerKg { get; set; }
+    public decimal CostPerKm { get; set; }
+
+    public int? MaxWeightGrams { get; set; }
+
+    public bool IsActive { get; set; } = true;
+
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
     public ICollection<Shipment> Shipments { get; set; } = new List<Shipment>();
 }
