@@ -289,13 +289,15 @@ Testing for a release candidate is complete when:
 
 ### 8.9 Transactions
 
-| Number      | Scenario                                            | Expected Result                              |
-| ----------- | --------------------------------------------------- | -------------------------------------------- |
-| UT-TRANS-01 | Create transaction from accepted exchange request   | Transaction is created with Confirmed status |
-| UT-TRANS-02 | Attempt to create transaction from rejected request | Transaction creation is rejected             |
-| UT-TRANS-03 | Complete transaction                                | Transaction status changes to Completed      |
-| UT-TRANS-04 | Cancel transaction                                  | Transaction status changes to Cancelled      |
-| UT-TRANS-05 | Invalid status transition                           | System rejects invalid transition            |
+| Number      | Scenario                                            | Expected Result                               |
+| ----------- | --------------------------------------------------- | --------------------------------------------- |
+| UT-TRANS-01 | Create transaction from accepted exchange request   | Transaction is created with Confirmed status  |
+| UT-TRANS-02 | Attempt to create transaction from rejected request | Transaction creation is rejected              |
+| UT-TRANS-03 | Complete transaction                                | Transaction status changes to Completed       |
+| UT-TRANS-04 | Cancel transaction                                  | Transaction status changes to Cancelled       |
+| UT-TRANS-05 | Invalid status transition                           | System rejects invalid transition             |
+| UT-TRANS-06 | Mark transaction as shipped                         | Transaction status confrimed moves to shipped |
+| UT-TRANS-07 | Dispute a Transaction                               | Transaction status transition is valid        |
 
 ---
 
