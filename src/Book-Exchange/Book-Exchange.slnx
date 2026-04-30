@@ -1,4 +1,5 @@
 <Solution>
-  <Project Path="../../Book-Exchange.Tests/BackEnd/Book-Exchange.Tests.BackEnd.csproj" />
+  <Project Path="../../Book-Exchange.Tests/BackEnd/BackEnd.csproj" />
+  <Project Path="../../Book-Exchange.Tests/Integration/Integration.csproj" />
   <Project Path="Book-Exchange/Book-Exchange.csproj" />
 </Solution>
