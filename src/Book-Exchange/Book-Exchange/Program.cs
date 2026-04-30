@@ -38,7 +38,10 @@ builder.Services
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IListingService, ListingService>();
+builder.Services.AddScoped<IWishlistService, WishlistService>();
 // builder.Services.AddScoped<IExchangeRequestService, ExchangeRequestService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<IShippingService, ShippingService>();
 
 var app = builder.Build();
 

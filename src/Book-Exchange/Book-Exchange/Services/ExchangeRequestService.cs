@@ -6,7 +6,7 @@ namespace Book_Exchange.Services;
 // public class ExchangeRequestService : IExchangeRequestService
 // {
 // TODO: Implement the methods defined in IExchangeRequestService once ORM is set up and database context is available.
-// TODO: ExchangeRequest Model not yet defined
+// TODO: Rework this service based on the Exchange models
 // private readonly ApplicationDbContext _context;
 
 // CreateExchangeRequestAsync
