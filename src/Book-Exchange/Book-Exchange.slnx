@@ -1,6 +1,6 @@
 <Solution>
   <Folder Name="/Book-Exchange.Tests/">
-    <Project Path="Book-Exchange.Tests/BackEnd/BackEnd.csproj" />
+    <Project Path="Book-Exchange.Tests/Unit/Unit.csproj" />
     <Project Path="Book-Exchange.Tests/Integration/Integration.csproj" />
   </Folder>
   <Project Path="Book-Exchange/Book-Exchange.csproj" />
