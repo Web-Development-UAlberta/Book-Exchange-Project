@@ -72,22 +72,41 @@ namespace Book_Exchange.Tests.Integration;
 
 //         var transactionId = Guid.NewGuid();
 
+//         Transaction no longer has a direct status field. Status is derived from TransactionStatusHistory.
+//         var transaction = new Transaction
+//         {
+//                 Id = transactionId,
+//                 ExchangeRequestId = Guid.NewGuid(),
+//                 CreatedAt = DateTime.UtcNow
+//          };
+
+//         var statusHistory = new TransactionStatusHistory
+//         {
+//             Id = Guid.NewGuid(),
+//             TransactionId = transactionId,
+//             Status = TransactionStatus.Confirmed,
+//             UpdatedByUserId = sender.Id,
+//             UpdatedAt = DateTime.UtcNow
+//         };
+//
 //         _db.Users.AddRange(sender, receiver);
 //         _db.Addresses.AddRange(senderAddress, receiverAddress);
 //         _db.Carriers.Add(carrier);
+//         _db.Transactions.Add(transaction);
+//         _db.TransactionStatusHistory.Add(statusHistory);
 //         await _db.SaveChangesAsync();
-
+//
 //         var result = await _service.CreateShipmentAsync(
 //             transactionId,
 //             senderAddress.Id,
 //             receiverAddress.Id,
 //             carrier.Id,
 //             400);
-
+//
 //         Assert.NotNull(result);
 //         Assert.Equal(transactionId, result.TransactionId);
 //         Assert.Equal(ShipmentStatus.Quoted, result.Status);
-
+//
 //         var saved = await _db.Shipments.FirstOrDefaultAsync(s => s.Id == result.Id);
 //         Assert.NotNull(saved);
 //     }

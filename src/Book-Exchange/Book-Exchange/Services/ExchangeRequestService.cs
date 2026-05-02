@@ -13,12 +13,16 @@ namespace Book_Exchange.Services;
 // CreateExchangeRequestAsync
 // - TargetListingId must reference a valid existing listing
 // - A user cannot create an exchange request against their own listing
-// - Type must be one of: BuySell, BookSwap, BookSwapWithCash
-// - OfferedListingIds must be empty for BuySell
-// - OfferedListingIds must have 1-3 items for BookSwap and BookSwapWithCash
+// - Exchange type is derived from the submitted data (no explicit Type field):
+//     - No OfferedListingIds + CashAmount present  → Buy/Sell
+//     - OfferedListingIds present, no CashAmount   → Swap
+//     - OfferedListingIds present + CashAmount     → Swap with cash
+// - OfferedListingIds must be empty for a Buy/Sell request
+// - OfferedListingIds must contain 1–3 items for a Swap or Swap with cash request
 // - OfferedListingIds must reference valid existing listings owned by the requester
-// - CashAmount is only used for BookSwapWithCash, ignored otherwise
-// - UserId is taken from the logged in user, not from a form
+// - CashAmount must be null for a books-only Swap
+// - CashAmount must be provided and > 0 for Buy/Sell and Swap with cash
+// - UserId is taken from the logged-in user, not from the form
 // public Task<ExchangeRequest> CreateExchangeRequestAsync(CreateExchangeRequestDto dto, Guid userId)
 // {
 //     throw new NotImplementedException();
@@ -50,8 +54,9 @@ namespace Book_Exchange.Services;
 
 // AcceptExchangeRequestAsync
 // - Only the owner of the target listing can accept
-// - Exchange request must be in Pending status to accept
-// - Accepting triggers transaction creation
+// - Exchange request must be in Requested status to accept
+// - Accepting triggers transaction creation via ITransactionService
+// - Listing status is no longer updated here (ListingStatus removed; state is derived)
 // public Task AcceptExchangeRequestAsync(Guid exchangeRequestId, Guid userId)
 // {
 //     throw new NotImplementedException();
@@ -59,7 +64,7 @@ namespace Book_Exchange.Services;
 
 // RejectExchangeRequestAsync
 // - Only the owner of the target listing can reject
-// - Exchange request must be in Pending status to reject
+// - Exchange request must be in Requested status to reject
 // public Task RejectExchangeRequestAsync(Guid exchangeRequestId, Guid userId)
 // {
 //     throw new NotImplementedException();

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Book_Exchange.Controllers;
 
+// TODO: Once ORM is implemented make sure nothing has changed
+
 [Authorize]
 public class WishlistController : Controller
 {
@@ -37,7 +39,7 @@ public class WishlistController : Controller
         {
             Id = item.Id,
             Isbn = item.Isbn,
-            // TODO: Replace with real book metadata lookup once mock API service is wired up
+            // TODO: Replace with real book metadata lookup once API service is wired up
             Title = "Unknown Title",
             Author = "Unknown Author",
             CoverImageUrl = null,

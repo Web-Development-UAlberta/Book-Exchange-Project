@@ -47,8 +47,10 @@ public class ShippingService : IShippingService
     // - Throws ArgumentException if senderAddressId, receiverAddressId, or carrierId does not exist
     // - Throws InvalidOperationException if the carrier is not active
     // - Throws InvalidOperationException if packageWeightGrams exceeds the carrier's MaxWeightGrams
+    // - Throws InvalidOperationException if the transactions' current status (TransactionStatusHistory - UpdatedAt) is Cancelled
     // - Calculates and stores DistanceKm and ShippingCost at creation time
     // - Creates the shipment with Status = Quoted
+    // Note: Status must be derived from TransactionStatusHistory by selecting the most recent record for the given TransactionId
     public Task<Shipment> CreateShipmentAsync(Guid transactionId, Guid senderAddressId, Guid receiverAddressId, Guid carrierId, int packageWeightGrams)
         => throw new NotImplementedException();
 

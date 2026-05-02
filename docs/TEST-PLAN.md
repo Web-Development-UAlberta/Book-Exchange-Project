@@ -374,11 +374,11 @@ Testing for a release candidate is complete when:
 
 ### 9.4 Matching Integration
 
-| Number      | Scenario                                            | Expected Result          |
-| ----------- | --------------------------------------------------- | ------------------------ |
-| IT-MATCH-01 | User wishlist matches another user's active listing | Match suggestion appears |
-| IT-MATCH-02 | Matching listing belongs to same user               | Match is excluded        |
-| IT-MATCH-03 | Listing status is Completed                         | Match is excluded        |
+| Number      | Scenario                                                                  | Expected Result          |
+| ----------- | ------------------------------------------------------------------------- | ------------------------ |
+| IT-MATCH-01 | User wishlist matches another user's active listing                       | Match suggestion appears |
+| IT-MATCH-02 | Matching listing belongs to same user                                     | Match is excluded        |
+| IT-MATCH-03 | Listing has an accepted exchange request with a non-cancelled transaction | Match is excluded        |
 
 ---
 

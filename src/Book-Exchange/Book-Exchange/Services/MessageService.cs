@@ -8,8 +8,9 @@ namespace Book_Exchange.Services;
 public class MessageService : IMessageService
 {
     /// TODO: Once ORM is implemented make sure nothing changes. 
+    /// TODO: Ensure Boolean name is changed to IsRead in the Message model and database.
 
-    private readonly ApplicationDbContext _context;
+    // private readonly ApplicationDbContext _context;
 
     // SendMessageAsync
     // - SenderId is taken from the logged-in user, not from a form
@@ -20,7 +21,7 @@ public class MessageService : IMessageService
     // - If provided, ListingId must reference a valid existing listing
     // - If provided, ExchangeRequestId must reference a valid existing exchange request
     // - If provided, TransactionId must reference a valid existing transaction
-    // - Message is created with status MessageStatus.Sent
+    // - Message is created with IsRead = false and CreatedAt = DateTime.UtcNow
     public Task<Message> SendMessageAsync(SendMessageDto dto, Guid senderId)
     {
         throw new NotImplementedException();
@@ -57,7 +58,7 @@ public class MessageService : IMessageService
     // - Only the receiver of the message can mark it as read
     // - Throws UnauthorizedAccessException if userId is not the receiver
     // - Throws KeyNotFoundException if the message does not exist
-    // - Sets Status to MessageStatus.Read
+    // - Sets IsRead to true
     public Task MarkAsReadAsync(Guid messageId, Guid userId)
     {
         throw new NotImplementedException();
@@ -72,7 +73,7 @@ public class MessageService : IMessageService
     }
 
     // GetUnreadCountAsync
-    // - Returns the total count of messages where ReceiverId == userId and Status != Read
+    // - Returns the total count of messages where ReceiverId == userId and IsRead == false
     // - Returns 0 if no unread messages exist
     public Task<int> GetUnreadCountAsync(Guid userId)
     {

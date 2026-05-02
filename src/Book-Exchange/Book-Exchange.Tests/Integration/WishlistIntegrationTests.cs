@@ -143,7 +143,7 @@ namespace Book_Exchange.Tests.Integration;
 //     }
 
 //     /// <summary>
-//     /// IT-MATCH-01: User wishlist matches another user's active listing
+//     /// IT-MATCH-01: User wishlist matches another user's listing with no accepted exchange request
 //     /// Expected: Match suggestion appears
 //     /// </summary>
 //     /// <returns>
@@ -169,7 +169,6 @@ namespace Book_Exchange.Tests.Integration;
 //             Id = Guid.NewGuid(),
 //             UserId = lister.Id,
 //             Isbn = isbn,
-//             Status = ListingStatus.Active,
 //             Price = 10.00m,
 //             WeightGrams = 300,
 //             Condition = BookCondition.Good,
@@ -214,7 +213,6 @@ namespace Book_Exchange.Tests.Integration;
 //             Id = Guid.NewGuid(),
 //             UserId = user.Id, // same user
 //             Isbn = isbn,
-//             Status = ListingStatus.Active,
 //             Price = 10.00m,
 //             WeightGrams = 300,
 //             Condition = BookCondition.Good,
@@ -233,14 +231,14 @@ namespace Book_Exchange.Tests.Integration;
 //     }
 
 //     /// <summary>
-//     /// IT-MATCH-03: Listing status is Completed
+//     /// IT-MATCH-03: Listing has an accepted exchange request with a non-cancelled transaction
 //     /// Expected: Match is excluded
 //     /// </summary>
 //     /// <returns>
-//     /// An empty list of matches, since completed listings should not be considered as matches to wishlist items.
+//     /// An empty list of matches, since the listing is tied to an active transaction.
 //     /// </returns>
 //     [Fact]
-//     public async Task IT_MATCH_03_CompletedListingMatchesWishlist_IsExcluded()
+//     public async Task IT_MATCH_03_ListingTiedToActiveTransaction_IsExcluded()
 //     {
 //         var wisher = new ApplicationUser { Id = Guid.NewGuid(), UserName = "wisher2" };
 //         var lister = new ApplicationUser { Id = Guid.NewGuid(), UserName = "lister2" };
@@ -259,16 +257,48 @@ namespace Book_Exchange.Tests.Integration;
 //             Id = Guid.NewGuid(),
 //             UserId = lister.Id,
 //             Isbn = isbn,
-//             Status = ListingStatus.Completed, // not active
 //             Price = 10.00m,
 //             WeightGrams = 300,
 //             Condition = BookCondition.Good,
 //             CreatedAt = DateTime.UtcNow
 //         };
 
+//         // Seed an accepted exchange request pointing at the listing.
+//         var exchangeRequest = new ExchangeRequest
+//         {
+//             Id = Guid.NewGuid(),
+//             TargetListingId = listing.Id,
+//             RequesterId = wisher.Id,
+//             Status = ExchangeStatus.Accepted,
+//             CreatedAt = DateTime.UtcNow,
+//             AcceptedAt = DateTime.UtcNow
+//         };
+
+//         // Seed a Transaction for the accepted exchange request.
+//         var transaction = new Transaction
+//         {
+//             Id = Guid.NewGuid(),
+//             ExchangeRequestId = exchangeRequest.Id,
+//             CreatedAt = DateTime.UtcNow
+//         };
+
+//         // Seed a TransactionStatusHistory record with a non-Cancelled status,
+//         // which makes the listing unavailable under the derived availability rules.
+//         var statusHistory = new TransactionStatusHistory
+//         {
+//             Id = Guid.NewGuid(),
+//             TransactionId = transaction.Id,
+//             Status = TransactionStatus.Confirmed,
+//             UpdatedByUserId = lister.Id,
+//             UpdatedAt = DateTime.UtcNow
+//         };
+
 //         _db.Users.AddRange(wisher, lister);
 //         _db.WishlistItems.Add(wishlistItem);
 //         _db.Listings.Add(listing);
+//         _db.ExchangeRequests.Add(exchangeRequest);
+//         _db.Transactions.Add(transaction);
+//         _db.TransactionStatusHistories.Add(statusHistory);
 //         await _db.SaveChangesAsync();
 
 //         var matches = await _service.GetMatchingListingsAsync(wisher.Id);
@@ -277,4 +307,3 @@ namespace Book_Exchange.Tests.Integration;
 //         Assert.Empty(matches);
 //     }
 // }
-
