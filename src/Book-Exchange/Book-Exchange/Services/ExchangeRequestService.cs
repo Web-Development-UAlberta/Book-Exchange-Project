@@ -1,5 +1,6 @@
 using Book_Exchange.Models;
 using Book_Exchange.Services.Interfaces;
+using Book_Exchange.Models.DTOs.ExchangeRequest;
 
 namespace Book_Exchange.Services;
 

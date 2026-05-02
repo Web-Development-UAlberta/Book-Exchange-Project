@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Book_Exchange.Areas.Wishlist;
+namespace Book_Exchange.Models.DTOs.Wishlist;
 
 public class AddWishlistItemDto
 {

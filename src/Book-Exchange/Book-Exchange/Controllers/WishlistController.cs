@@ -1,12 +1,12 @@
 using Book_Exchange.Models;
+using Book_Exchange.Models.DTOs.Wishlist;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Book_Exchange.Areas.Wishlist;
+namespace Book_Exchange.Controllers;
 
-[Area("Wishlist")]
 [Authorize]
 public class WishlistController : Controller
 {

@@ -1,6 +1,6 @@
 using Book_Exchange.Models;
 using Book_Exchange.Services.Interfaces;
-using Book_Exchange.Areas.Message;
+using Book_Exchange.Models.DTOs.Message;
 using Book_Exchange.Data;
 
 namespace Book_Exchange.Services;

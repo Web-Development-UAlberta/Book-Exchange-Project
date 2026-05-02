@@ -1,7 +1,7 @@
 using Book_Exchange.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace Book_Exchange.Areas.ExchangeRequest;
+namespace Book_Exchange.Models.DTOs.ExchangeRequest;
 
 // TODO: make sure nothing changes when the ORM is done. This is the DTO for creating an exchange request, so it should be separate from the ExchangeRequest model.
 public class CreateExchangeRequestDto

@@ -1,6 +1,6 @@
 using Book_Exchange.Models;
 using Book_Exchange.Services.Interfaces;
-using Book_Exchange.Areas.Shipping;
+using Book_Exchange.Models.DTOs.Shipping;
 
 namespace Book_Exchange.Services;
 

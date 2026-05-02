@@ -1,13 +1,13 @@
 using Book_Exchange.Models;
+using Book_Exchange.Models.DTOs.Message;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // TODO: Once ORM is implemented make sure nothing changes. 
-namespace Book_Exchange.Areas.Message;
+namespace Book_Exchange.Controllers;
 
-[Area("Message")]
 [Authorize]
 public class MessageController : Controller
 {

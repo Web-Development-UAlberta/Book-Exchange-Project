@@ -1,13 +1,13 @@
 using Book_Exchange.Models;
+using Book_Exchange.Models.DTOs.Shipping;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 // TODO: Once ORM is implemented make sure nothing has changed
-namespace Book_Exchange.Areas.Shipping;
+namespace Book_Exchange.Controllers;
 
-[Area("Shipping")]
 [Authorize]
 public class ShippingController : Controller
 {

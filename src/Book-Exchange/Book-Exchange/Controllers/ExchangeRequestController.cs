@@ -1,42 +1,51 @@
 using Book_Exchange.Models;
+using Book_Exchange.Models.DTOs.ExchangeRequest;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 // TODO: Once ORM is implemented make sure nothing has changed
-namespace Book_Exchange.Areas.Listing;
+namespace Book_Exchange.Controllers;
 
-[Area("Listing")]
 [Authorize]
-public class ListingsController : Controller
+public class ExchangeRequestController : Controller
 {
-    private readonly IListingService _listingService;
+    private readonly IExchangeRequestService _exchangeRequestService;
     private readonly UserManager<ApplicationUser> _userManager;
 
-    public ListingsController(IListingService listingService, UserManager<ApplicationUser> userManager)
+    public ExchangeRequestController(
+        IExchangeRequestService exchangeRequestService,
+        UserManager<ApplicationUser> userManager)
     {
-        _listingService = listingService;
+        _exchangeRequestService = exchangeRequestService;
         _userManager = userManager;
     }
 
-    // GET /Listing
+    // Shows both sent and received exchange requests for the current user
+    // GET /ExchangeRequest
     [HttpGet]
     public async Task<IActionResult> Index()
     {
         var userId = Guid.Parse(_userManager.GetUserId(User)!);
-        var listings = await _listingService.GetListingsByUserIdAsync(userId);
-        return View(listings);
+        var sent = await _exchangeRequestService.GetSentExchangeRequestsAsync(userId);
+        var received = await _exchangeRequestService.GetReceivedExchangeRequestsAsync(userId);
+
+        // TODO: Replace with a proper ViewModel once ORM is finalized
+        ViewBag.Sent = sent;
+        ViewBag.Received = received;
+
+        return View();
     }
 
-    // GET /Listing/Details/{id}
+    // GET /ExchangeRequest/Details/{id}
     [HttpGet]
     public async Task<IActionResult> Details(Guid id)
     {
         try
         {
-            var listing = await _listingService.GetListingByIdAsync(id);
-            return View(listing);
+            var request = await _exchangeRequestService.GetExchangeRequestByIdAsync(id);
+            return View(request);
         }
         catch (KeyNotFoundException)
         {
@@ -44,17 +53,17 @@ public class ListingsController : Controller
         }
     }
 
-    // GET /Listing/Create
+    // GET /ExchangeRequest/Create
     [HttpGet]
     public IActionResult Create()
     {
         return View();
     }
 
-    // POST /Listing/Create
+    // POST /ExchangeRequest/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(CreateListingDto dto)
+    public async Task<IActionResult> Create(CreateExchangeRequestDto dto)
     {
         if (!ModelState.IsValid)
             return View(dto);
@@ -63,8 +72,8 @@ public class ListingsController : Controller
 
         try
         {
-            await _listingService.CreateListingAsync(dto, userId);
-            TempData["Success"] = "Listing created successfully.";
+            await _exchangeRequestService.CreateExchangeRequestAsync(dto, userId);
+            TempData["Success"] = "Exchange request submitted.";
             return RedirectToAction(nameof(Index));
         }
         catch (InvalidOperationException ex)
@@ -74,36 +83,17 @@ public class ListingsController : Controller
         }
     }
 
-    // GET /Listing/Edit/{id}
-    [HttpGet]
-    public async Task<IActionResult> Edit(Guid id)
-    {
-        try
-        {
-            var listing = await _listingService.GetListingByIdAsync(id);
-            return View(listing);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
-    }
-
-    // POST /Listing/Edit/{id}
+    // POST /ExchangeRequest/Accept/{id}
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(Guid id, UpdateListingDto dto)
+    public async Task<IActionResult> Accept(Guid id)
     {
-        if (!ModelState.IsValid)
-            return View(dto);
-
         var userId = Guid.Parse(_userManager.GetUserId(User)!);
 
         try
         {
-            await _listingService.UpdateListingAsync(id, dto, userId);
-            TempData["Success"] = "Listing updated successfully.";
-            return RedirectToAction(nameof(Index));
+            await _exchangeRequestService.AcceptExchangeRequestAsync(id, userId);
+            TempData["Success"] = "Exchange request accepted.";
         }
         catch (KeyNotFoundException)
         {
@@ -111,22 +101,23 @@ public class ListingsController : Controller
         }
         catch (InvalidOperationException ex)
         {
-            ModelState.AddModelError(string.Empty, ex.Message);
-            return View(dto);
+            TempData["Error"] = ex.Message;
         }
+
+        return RedirectToAction(nameof(Index));
     }
 
-    // POST /Listing/Delete/{id}
+    // POST /ExchangeRequest/Reject/{id}
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Delete(Guid id)
+    public async Task<IActionResult> Reject(Guid id)
     {
         var userId = Guid.Parse(_userManager.GetUserId(User)!);
 
         try
         {
-            await _listingService.DeleteListingAsync(id, userId);
-            TempData["Success"] = "Listing deleted successfully.";
+            await _exchangeRequestService.RejectExchangeRequestAsync(id, userId);
+            TempData["Success"] = "Exchange request rejected.";
         }
         catch (KeyNotFoundException)
         {

@@ -1,4 +1,5 @@
 using Book_Exchange.Models;
+using Book_Exchange.Models.DTOs.Wishlist;
 
 namespace Book_Exchange.Services.Interfaces;
 
