@@ -220,18 +220,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-### 8.4 Genre Management
-
-| Number      | Scenario                                | Expected Result                     |
-| ----------- | --------------------------------------- | ----------------------------------- |
-| UT-GENRE-01 | Create genre with valid name            | Genre is created successfully       |
-| UT-GENRE-02 | Create duplicate genre                  | Duplicate is rejected               |
-| UT-GENRE-03 | Assign genre to listing                 | ListingGenres record is created     |
-| UT-GENRE-04 | Assign same genre to same listing twice | Duplicate relationship is prevented |
-
----
-
-### 8.5 Wishlist Management
+### 8.4 Wishlist Management
 
 | Number     | Scenario                                             | Expected Result              |
 | ---------- | ---------------------------------------------------- | ---------------------------- |
@@ -245,7 +234,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-### 8.6 Search and Filtering
+### 8.5 Search and Filtering
 
 | Number       | Scenario                                        | Expected Result                                             |
 | ------------ | ----------------------------------------------- | ----------------------------------------------------------- |
@@ -260,7 +249,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-### 8.7 Match Logic
+### 8.6 Match Logic
 
 | Number      | Scenario                                                      | Expected Result                       |
 | ----------- | ------------------------------------------------------------- | ------------------------------------- |
@@ -272,7 +261,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-### 8.8 Exchange Requests
+### 8.7 Exchange Requests
 
 | Number     | Scenario                                                       | Expected Result                                      |
 | ---------- | -------------------------------------------------------------- | ---------------------------------------------------- |
@@ -287,7 +276,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-### 8.9 Transactions
+### 8.8 Transactions
 
 | Number      | Scenario                                            | Expected Result                               |
 | ----------- | --------------------------------------------------- | --------------------------------------------- |
@@ -301,7 +290,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-### 8.10 Shipping
+### 8.9 Shipping
 
 | Number     | Scenario                                                         | Expected Result                                      |
 | ---------- | ---------------------------------------------------------------- | ---------------------------------------------------- |
@@ -313,7 +302,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-### 8.11 Reviews / Ratings
+### 8.10 Reviews / Ratings
 
 | Number       | Scenario                                               | Expected Result                        |
 | ------------ | ------------------------------------------------------ | -------------------------------------- |
@@ -325,7 +314,7 @@ Testing for a release candidate is complete when:
 
 ---
 
-### 8.12 Notifications
+### 8.11 Notifications
 
 | Number      | Scenario                                               | Expected Result                                |
 | ----------- | ------------------------------------------------------ | ---------------------------------------------- |
@@ -333,6 +322,24 @@ Testing for a release candidate is complete when:
 | UT-NOTIF-02 | Trigger notification when message is received          | Notification is created                        |
 | UT-NOTIF-03 | Trigger notification when exchange request is accepted | Notification is created                        |
 | UT-NOTIF-04 | Mark notification as read                              | Status changes to Read and ReadAt is populated |
+
+---
+
+### 8.12 Messages
+
+| Number    | Scenario                                   | Expected Result                                           |
+| --------- | ------------------------------------------ | --------------------------------------------------------- |
+| UT-MSG-01 | Send message with valid data               | Message is created and sent                               |
+| UT-MSG-02 | Send message to self                       | Validation fails                                          |
+| UT-MSG-03 | Send message with empty text               | Validation fails                                          |
+| UT-MSG-04 | Send message to a user that does not exist | Validation fails                                          |
+| UT-MSG-05 | Retrieve a message by its ID               | The correct message is received                           |
+| UT-MSG-06 | Retrieve a message by non-existent ID      | Validation fails                                          |
+| UT-MSG-07 | Mark message as read by the receiver       | Operation Completes successfully                          |
+| UT-MSG-08 | Get unread message count                   | Correct count of messages is received                     |
+| UT-MSG-09 | Get conversation between users             | Messages are returned in ascending order                  |
+| UT-MSG-10 | Get inbox for user                         | Conversations are listed by latest messages in descending |
+| UT-MSG-11 | Mark conversation as read                  | All messages in coversation are marked as read            |
 
 ---
 
@@ -357,7 +364,6 @@ Testing for a release candidate is complete when:
 | IT-LIST-03 | Edit existing listing                     | Updated values are saved and displayed              |
 | IT-LIST-04 | Delete listing                            | Listing is removed or marked unavailable            |
 | IT-LIST-05 | User tries to edit another user's listing | Access is denied or operation is blocked            |
-| IT-LIST-06 | User assigns genres to listing            | ListingGenres records are saved correctly           |
 
 ---
 
@@ -416,10 +422,13 @@ Testing for a release candidate is complete when:
 
 ### 9.8 Messaging Integration
 
-| Number    | Scenario                             | Expected Result                                      |
-| --------- | ------------------------------------ | ---------------------------------------------------- |
-| IT-MSG-01 | Send message between users           | Message is stored and visible in conversation thread |
-| IT-MSG-02 | Receive notification for new message | Related notification record appears                  |
+| Number    | Scenario                                 | Expected Result                                       |
+| --------- | ---------------------------------------- | ----------------------------------------------------- |
+| IT-MSG-01 | Send message between users               | Message is stored and visible in conversation thread  |
+| IT-MSG-02 | Conversation thread is returned in order | Messages between users is returned in ascending order |
+| IT-MSG-03 | Received marks unread message as read    | Operation completes successfully                      |
+| IT-MSG-04 | Mark conversation as read                | All messages in coversation are marked as read        |
+| IT-MSG-05 | Get unread message count                 | Correct count of messages is received                 |
 
 ---
 
@@ -575,7 +584,6 @@ Suggested sample data:
 
 - 3 test users
 - 8–10 listings with ISBNs
-- 5 genres
 - Wishlist entries with matching and non-matching ISBNs
 - Exchange requests:
   - BuySell
