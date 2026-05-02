@@ -1,4 +1,4 @@
-namespace Book_Exchange.Models;
+namespace Book_Exchange.Areas.Wishlist;
 
 public class WishlistItemViewModel
 {

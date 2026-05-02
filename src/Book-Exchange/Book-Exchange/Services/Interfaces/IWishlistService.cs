@@ -2,6 +2,7 @@ using Book_Exchange.Models;
 
 namespace Book_Exchange.Services.Interfaces;
 
+// TODO: Once ORM is implemented make sure nothing changes. 
 public interface IWishlistService
 {
     Task<WishlistItem> GetWishlistItemByIdAsync(Guid wishlistItemId, Guid userId);

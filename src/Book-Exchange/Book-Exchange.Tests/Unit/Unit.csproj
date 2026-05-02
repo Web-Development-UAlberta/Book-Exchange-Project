@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <RootNamespace>Book_Exchange.Tests.Integration</RootNamespace>
+    <RootNamespace>Book_Exchange.Tests.Unit</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Book-Exchange\Book-Exchange\Book-Exchange.csproj" />
+    <ProjectReference Include="..\..\Book-Exchange\Book-Exchange.csproj" />
   </ItemGroup>
 
 </Project>
