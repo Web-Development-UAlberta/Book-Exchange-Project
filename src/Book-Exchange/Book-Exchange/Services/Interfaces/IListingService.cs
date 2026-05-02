@@ -2,7 +2,7 @@ using Book_Exchange.Models;
 using Book_Exchange.Areas.Listing;
 
 namespace Book_Exchange.Services.Interfaces;
-
+// TODO: Once ORM is implemented make sure nothing changes. 
 public interface IListingService
 {
     Task<Listing> CreateListingAsync(CreateListingDto dto, Guid userId);
