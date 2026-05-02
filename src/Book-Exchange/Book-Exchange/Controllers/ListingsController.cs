@@ -5,9 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 // TODO: Once ORM is implemented make sure nothing has changed
-namespace Book_Exchange.Areas.Listing;
+namespace Book_Exchange.Controllers;
 
-[Area("Listing")]
 [Authorize]
 public class ListingsController : Controller
 {

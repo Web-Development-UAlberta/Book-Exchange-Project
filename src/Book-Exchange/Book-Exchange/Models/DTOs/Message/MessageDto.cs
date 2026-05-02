@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Book_Exchange.Areas.Message;
+namespace Book_Exchange.Models.DTOs.Message;
 // TODO: make sure nothing changes when the ORM is done. These are the DTOs for messaging, so they should be separate from the Message model.
 public class SendMessageDto
 {

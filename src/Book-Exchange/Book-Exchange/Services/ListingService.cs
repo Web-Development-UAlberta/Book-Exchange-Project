@@ -1,8 +1,8 @@
 using Book_Exchange.Data;
-using Book_Exchange.Areas.Listing;
 using Book_Exchange.Services.Interfaces;
 using Book_Exchange.Models;
 using Microsoft.EntityFrameworkCore;
+using Book_Exchange.Models.DTOs.Listing;
 
 namespace Book_Exchange.Services;
 

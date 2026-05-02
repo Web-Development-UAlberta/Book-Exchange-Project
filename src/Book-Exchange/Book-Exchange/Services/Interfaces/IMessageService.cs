@@ -1,5 +1,5 @@
 using Book_Exchange.Models;
-using Book_Exchange.Areas.Message;
+using Book_Exchange.Models.DTOs.Message;
 
 namespace Book_Exchange.Services.Interfaces;
 // TODO: Once ORM is implemented make sure nothing changes. 

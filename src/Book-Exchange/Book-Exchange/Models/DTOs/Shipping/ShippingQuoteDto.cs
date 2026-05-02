@@ -1,6 +1,6 @@
 using Book_Exchange.Models;
 
-namespace Book_Exchange.Areas.Shipping;
+namespace Book_Exchange.Models.DTOs.Shipping;
 
 public class ShippingQuoteDto
 {

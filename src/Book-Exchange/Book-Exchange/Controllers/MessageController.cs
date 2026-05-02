@@ -5,9 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // TODO: Once ORM is implemented make sure nothing changes. 
-namespace Book_Exchange.Areas.Message;
+namespace Book_Exchange.Controllers;
 
-[Area("Message")]
 [Authorize]
 public class MessageController : Controller
 {
