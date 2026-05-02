@@ -1,4 +1,5 @@
 using Book_Exchange.Models;
+using Book_Exchange.Models.DTOs.Message;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;

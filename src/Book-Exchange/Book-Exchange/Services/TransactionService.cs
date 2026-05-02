@@ -1,7 +1,6 @@
 using Book_Exchange.Models;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Book_Exchange.Models.DTOs.Transaction;
 
 namespace Book_Exchange.Services;
 
