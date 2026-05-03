@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace Book_Exchange.Data
 {
@@ -13,13 +14,12 @@ namespace Book_Exchange.Data
     {
 
         public DbSet<Address> Addresses => Set<Address>();
-        public DbSet<Genre> Genres => Set<Genre>();
         public DbSet<Listing> Listings => Set<Listing>();
-        public DbSet<ListingGenre> ListingGenres => Set<ListingGenre>();
         public DbSet<WishlistItem> Wishlist => Set<WishlistItem>();
         public DbSet<ExchangeRequest> ExchangeRequests => Set<ExchangeRequest>();
         public DbSet<ExchangeRequestItem> ExchangeRequestItems => Set<ExchangeRequestItem>();
         public DbSet<Transaction> Transactions => Set<Transaction>();
+        public DbSet<TransactionStatusHistory> TransactionStatusHistories { get; set; }
         public DbSet<Carrier> Carriers => Set<Carrier>();
         public DbSet<Shipment> Shipments => Set<Shipment>();
         public DbSet<Review> Reviews => Set<Review>();
@@ -40,14 +40,10 @@ namespace Book_Exchange.Data
             builder.Entity<IdentityUserToken<Guid>>().ToTable("asp_net_user_tokens", "public");
             // PostgreSQL enum types
             builder.HasPostgresEnum<BookCondition>("public", "book_condition");
-            builder.HasPostgresEnum<ListingStatus>("public", "listing_status");
-            builder.HasPostgresEnum<ExchangeType>("public", "exchange_type");
             builder.HasPostgresEnum<ExchangeStatus>("public", "exchange_status");
             builder.HasPostgresEnum<TransactionStatus>("public", "transaction_status");
             builder.HasPostgresEnum<ShipmentStatus>("public", "shipment_status");
-            builder.HasPostgresEnum<NotificationStatus>("public", "notification_status");
             builder.HasPostgresEnum<NotificationCategory>("public", "notification_category");
-            builder.HasPostgresEnum<MessageStatus>("public", "message_status");
             // Address
             builder.Entity<Address>(entity =>
             {
@@ -79,26 +75,7 @@ namespace Book_Exchange.Data
                 entity.HasIndex(e => e.UserId)
                     .HasDatabaseName("ix_addresses_user_id");
             });
-
-            // Genre
-            builder.Entity<Genre>(entity =>
-            {
-                entity.ToTable("genres");
-                entity.HasKey(e => e.Id);
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Name)
-                    .HasColumnName("name")
-                    .HasMaxLength(100)
-                    .IsRequired();
-
-                entity.HasIndex(e => e.Name)
-                    .IsUnique()
-                    .HasDatabaseName("ux_genres_name");
-
-            });
-
+           
             // Listing
             builder.Entity<Listing>(entity =>
             {
@@ -129,12 +106,6 @@ namespace Book_Exchange.Data
                     .HasColumnName("weight_grams")
                     .IsRequired();
 
-                entity.Property(e => e.Status)
-                    .HasColumnName("status")
-                    .HasColumnType("listing_status")
-                    .HasDefaultValueSql("'active'::listing_status")
-                    .IsRequired();
-
                 entity.Property(e => e.CreatedAt)
                     .HasColumnName("created_at")
                     .HasDefaultValueSql("now()")
@@ -151,8 +122,6 @@ namespace Book_Exchange.Data
                 entity.HasIndex(e => e.Isbn)
                     .HasDatabaseName("ix_listings_isbn");
 
-                entity.HasIndex(e => e.Status)
-                    .HasDatabaseName("ix_listings_status");
 
                 entity.ToTable(t =>
                 {
@@ -162,29 +131,7 @@ namespace Book_Exchange.Data
 
                 });
             });
-
-            // ListingGenre
-            builder.Entity<ListingGenre>(entity =>
-            {
-                entity.ToTable("listing_genres");
-                entity.HasKey(e => new { e.ListingId, e.GenreId });
-                entity.Property(e => e.ListingId).HasColumnName("listing_id");
-                entity.Property(e => e.GenreId).HasColumnName("genre_id");
-
-                entity.HasOne(e => e.Listing)
-                    .WithMany(e => e.ListingGenres)
-                    .HasForeignKey(e => e.ListingId)
-                    .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasOne(e => e.Genre)
-                    .WithMany(e => e.ListingGenres)
-                    .HasForeignKey(e => e.GenreId)
-                    .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasIndex(e => e.GenreId)
-                    .HasDatabaseName("ix_listing_genres_genre_id");
-            });
-
+            
             // WishlistItem
             builder.Entity<WishlistItem>(entity =>
             {
@@ -241,11 +188,6 @@ namespace Book_Exchange.Data
                     .HasColumnName("requester_id")
                     .IsRequired();
 
-                entity.Property(e => e.Type)
-                    .HasColumnName("type")
-                    .HasColumnType("exchange_type")
-                    .IsRequired();
-
                 entity.Property(e => e.Status)
                     .HasColumnName("status")
                     .HasColumnType("exchange_status")
@@ -254,10 +196,6 @@ namespace Book_Exchange.Data
 
                 entity.Property(e => e.Price)
                     .HasColumnName("price")
-                    .HasPrecision(10, 2);
-
-                entity.Property(e => e.CounterOffer)
-                    .HasColumnName("counter_offer")
                     .HasPrecision(10, 2);
 
                 entity.Property(e => e.Message)
@@ -336,13 +274,7 @@ namespace Book_Exchange.Data
 
                 entity.Property(e => e.ExchangeRequestId)
                     .HasColumnName("exchange_request_id")
-                    .IsRequired();
-
-                entity.Property(e => e.Status)
-                    .HasColumnName("status")
-                    .HasColumnType("transaction_status")
-                    .HasDefaultValueSql("'confirmed'::transaction_status")
-                    .IsRequired();
+                    .IsRequired();                
 
                 entity.Property(e => e.TotalValue)
                     .HasColumnName("total_value")
@@ -372,6 +304,34 @@ namespace Book_Exchange.Data
                 {
                     t.HasCheckConstraint("ck_transactions_total_value", "total_value IS NULL OR total_value >= 0");
                 });
+            });
+
+            builder.Entity<TransactionStatusHistory>(entity =>
+            {
+                entity.ToTable("transaction_status_history");
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.TransactionId).HasColumnName("transaction_id");
+                entity.Property(e => e.UpdatedByUserId).HasColumnName("updated_by_user_id");
+                entity.Property(e => e.Status).HasColumnName("status");
+                entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne(e => e.Transaction)
+                .WithMany(e => e.StatusHistory)
+                .HasForeignKey(e => e.TransactionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.UpdatedByUser)
+                .WithMany(e => e.TransactionStatusUpdatedByUser)
+                .HasForeignKey(e => e.UpdatedByUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("status")
+                    .HasColumnType("transaction_status")
+                    .HasDefaultValueSql("'confirmed'::transaction_status")
+                    .IsRequired();
             });
 
             // Carrier
@@ -597,10 +557,9 @@ namespace Book_Exchange.Data
                     .HasColumnType("notification_category")
                     .IsRequired();
 
-                entity.Property(e => e.Status)
-                    .HasColumnName("status")
-                    .HasColumnType("notification_status")
-                    .HasDefaultValueSql("'unread'::notification_status")
+                entity.Property(e => e.IsRead)
+                    .HasColumnName("is_read")
+                    .HasDefaultValue(false)
                     .IsRequired();
 
                 entity.Property(e => e.Title)
@@ -652,8 +611,8 @@ namespace Book_Exchange.Data
                 entity.HasIndex(e => e.UserId)
                     .HasDatabaseName("ix_notifications_user_id");
 
-                entity.HasIndex(e => e.Status)
-                    .HasDatabaseName("ix_notifications_status");
+                entity.HasIndex(e => e.IsRead)
+                    .HasDatabaseName("ix_notifications_is_read");
 
                 entity.HasIndex(e => e.RelatedListingId)
                     .HasDatabaseName("ix_notifications_related_listing_id");
@@ -685,10 +644,9 @@ namespace Book_Exchange.Data
                 entity.Property(e => e.MessageText)
                     .HasColumnName("message_text");
 
-                entity.Property(e => e.Status)
-                    .HasColumnName("status")
-                    .HasColumnType("message_status")
-                    .HasDefaultValueSql("'sent'::message_status")
+                entity.Property(e => e.IsRead)
+                    .HasColumnName("is_read")
+                    .HasDefaultValue(false)
                     .IsRequired();
 
                 entity.Property(e => e.ListingId)

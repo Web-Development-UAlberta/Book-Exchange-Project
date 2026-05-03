@@ -14,4 +14,6 @@ public class ApplicationUser : IdentityUser<Guid>
     public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
     public ICollection<Message> SentMessages { get; set; } = new List<Message>();
     public ICollection<Message> ReceivedMessages { get; set; } = new List<Message>();
+    public ICollection<TransactionStatusHistory> TransactionStatusUpdatedByUser { get; set; } = new List<TransactionStatusHistory>();
+
 }

@@ -18,16 +18,12 @@ namespace Book_Exchange.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("public")
-                .HasAnnotation("ProductVersion", "10.0.6")
+                .HasAnnotation("ProductVersion", "10.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "book_condition", new[] { "like_new", "very_good", "good", "acceptable", "poor" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "exchange_status", new[] { "requested", "accepted", "rejected", "cancelled", "completed" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "exchange_type", new[] { "buy_sell", "book_swap", "book_swap_with_cash" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "listing_status", new[] { "active", "pending", "completed", "cancelled" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "message_status", new[] { "sent", "read" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "notification_category", new[] { "match_found", "wishlist_available", "new_message", "exchange_requested", "exchange_accepted", "exchange_rejected", "transaction_update" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "notification_status", new[] { "unread", "read", "archived" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "shipment_status", new[] { "pending", "quoted", "label_created", "shipped", "delivered", "cancelled" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "public", "transaction_status", new[] { "confirmed", "shipped", "completed", "cancelled", "disputed" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -215,11 +211,6 @@ namespace Book_Exchange.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("completed_at");
 
-                    b.Property<decimal?>("CounterOffer")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("numeric(10,2)")
-                        .HasColumnName("counter_offer");
-
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
@@ -248,10 +239,6 @@ namespace Book_Exchange.Migrations
                     b.Property<Guid>("TargetListingId")
                         .HasColumnType("uuid")
                         .HasColumnName("target_listing_id");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("exchange_type")
-                        .HasColumnName("type");
 
                     b.HasKey("Id");
 
@@ -290,28 +277,6 @@ namespace Book_Exchange.Migrations
                     b.ToTable("exchange_request_items", "public");
                 });
 
-            modelBuilder.Entity("Book_Exchange.Models.Genre", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique()
-                        .HasDatabaseName("ux_genres_name");
-
-                    b.ToTable("genres", "public");
-                });
-
             modelBuilder.Entity("Book_Exchange.Models.Listing", b =>
                 {
                     b.Property<Guid>("Id")
@@ -340,12 +305,6 @@ namespace Book_Exchange.Migrations
                         .HasColumnType("numeric(10,2)")
                         .HasColumnName("price");
 
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("listing_status")
-                        .HasColumnName("status")
-                        .HasDefaultValueSql("'active'::listing_status");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
@@ -359,9 +318,6 @@ namespace Book_Exchange.Migrations
                     b.HasIndex("Isbn")
                         .HasDatabaseName("ix_listings_isbn");
 
-                    b.HasIndex("Status")
-                        .HasDatabaseName("ix_listings_status");
-
                     b.HasIndex("UserId")
                         .HasDatabaseName("ix_listings_user_id");
 
@@ -373,24 +329,6 @@ namespace Book_Exchange.Migrations
 
                             t.HasCheckConstraint("ck_listings_weight_grams", "weight_grams > 0");
                         });
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.ListingGenre", b =>
-                {
-                    b.Property<Guid>("ListingId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("listing_id");
-
-                    b.Property<Guid>("GenreId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("genre_id");
-
-                    b.HasKey("ListingId", "GenreId");
-
-                    b.HasIndex("GenreId")
-                        .HasDatabaseName("ix_listing_genres_genre_id");
-
-                    b.ToTable("listing_genres", "public");
                 });
 
             modelBuilder.Entity("Book_Exchange.Models.Message", b =>
@@ -410,6 +348,12 @@ namespace Book_Exchange.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("exchange_request_id");
 
+                    b.Property<bool>("IsRead")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_read");
+
                     b.Property<Guid?>("ListingId")
                         .HasColumnType("uuid")
                         .HasColumnName("listing_id");
@@ -425,12 +369,6 @@ namespace Book_Exchange.Migrations
                     b.Property<Guid>("SenderId")
                         .HasColumnType("uuid")
                         .HasColumnName("sender_id");
-
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("message_status")
-                        .HasColumnName("status")
-                        .HasDefaultValueSql("'sent'::message_status");
 
                     b.Property<Guid?>("TransactionId")
                         .HasColumnType("uuid")
@@ -473,6 +411,12 @@ namespace Book_Exchange.Migrations
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("now()");
 
+                    b.Property<bool>("IsRead")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_read");
+
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("text")
@@ -494,12 +438,6 @@ namespace Book_Exchange.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("related_transaction_id");
 
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("notification_status")
-                        .HasColumnName("status")
-                        .HasDefaultValueSql("'unread'::notification_status");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -512,6 +450,9 @@ namespace Book_Exchange.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IsRead")
+                        .HasDatabaseName("ix_notifications_is_read");
+
                     b.HasIndex("RelatedExchangeRequestId")
                         .HasDatabaseName("ix_notifications_related_exchange_request_id");
 
@@ -520,9 +461,6 @@ namespace Book_Exchange.Migrations
 
                     b.HasIndex("RelatedTransactionId")
                         .HasDatabaseName("ix_notifications_related_transaction_id");
-
-                    b.HasIndex("Status")
-                        .HasDatabaseName("ix_notifications_status");
 
                     b.HasIndex("UserId")
                         .HasDatabaseName("ix_notifications_user_id");
@@ -688,12 +626,6 @@ namespace Book_Exchange.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("exchange_request_id");
 
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("transaction_status")
-                        .HasColumnName("status")
-                        .HasDefaultValueSql("'confirmed'::transaction_status");
-
                     b.Property<decimal?>("TotalValue")
                         .HasPrecision(10, 2)
                         .HasColumnType("numeric(10,2)")
@@ -709,6 +641,40 @@ namespace Book_Exchange.Migrations
                         {
                             t.HasCheckConstraint("ck_transactions_total_value", "total_value IS NULL OR total_value >= 0");
                         });
+                });
+
+            modelBuilder.Entity("Book_Exchange.Models.TransactionStatusHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("transaction_status")
+                        .HasColumnName("status")
+                        .HasDefaultValueSql("'confirmed'::transaction_status");
+
+                    b.Property<Guid>("TransactionId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("transaction_id");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<Guid>("UpdatedByUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("updated_by_user_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TransactionId");
+
+                    b.HasIndex("UpdatedByUserId");
+
+                    b.ToTable("transaction_status_history", "public");
                 });
 
             modelBuilder.Entity("Book_Exchange.Models.WishlistItem", b =>
@@ -945,25 +911,6 @@ namespace Book_Exchange.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Book_Exchange.Models.ListingGenre", b =>
-                {
-                    b.HasOne("Book_Exchange.Models.Genre", "Genre")
-                        .WithMany("ListingGenres")
-                        .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Book_Exchange.Models.Listing", "Listing")
-                        .WithMany("ListingGenres")
-                        .HasForeignKey("ListingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Genre");
-
-                    b.Navigation("Listing");
-                });
-
             modelBuilder.Entity("Book_Exchange.Models.Message", b =>
                 {
                     b.HasOne("Book_Exchange.Models.ExchangeRequest", "ExchangeRequest")
@@ -1100,6 +1047,25 @@ namespace Book_Exchange.Migrations
                     b.Navigation("ExchangeRequest");
                 });
 
+            modelBuilder.Entity("Book_Exchange.Models.TransactionStatusHistory", b =>
+                {
+                    b.HasOne("Book_Exchange.Models.Transaction", "Transaction")
+                        .WithMany("StatusHistory")
+                        .HasForeignKey("TransactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Book_Exchange.Models.ApplicationUser", "UpdatedByUser")
+                        .WithMany("TransactionStatusUpdatedByUser")
+                        .HasForeignKey("UpdatedByUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Transaction");
+
+                    b.Navigation("UpdatedByUser");
+                });
+
             modelBuilder.Entity("Book_Exchange.Models.WishlistItem", b =>
                 {
                     b.HasOne("Book_Exchange.Models.ApplicationUser", "User")
@@ -1185,6 +1151,8 @@ namespace Book_Exchange.Migrations
 
                     b.Navigation("SentMessages");
 
+                    b.Navigation("TransactionStatusUpdatedByUser");
+
                     b.Navigation("WishlistItems");
                 });
 
@@ -1204,15 +1172,8 @@ namespace Book_Exchange.Migrations
                     b.Navigation("Transaction");
                 });
 
-            modelBuilder.Entity("Book_Exchange.Models.Genre", b =>
-                {
-                    b.Navigation("ListingGenres");
-                });
-
             modelBuilder.Entity("Book_Exchange.Models.Listing", b =>
                 {
-                    b.Navigation("ListingGenres");
-
                     b.Navigation("Messages");
 
                     b.Navigation("Notifications");
@@ -1231,6 +1192,8 @@ namespace Book_Exchange.Migrations
                     b.Navigation("Reviews");
 
                     b.Navigation("Shipments");
+
+                    b.Navigation("StatusHistory");
                 });
 #pragma warning restore 612, 618
         }

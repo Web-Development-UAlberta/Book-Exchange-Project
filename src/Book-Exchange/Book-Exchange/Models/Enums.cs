@@ -9,21 +9,6 @@ public enum BookCondition
     Poor
 }
 
-public enum ListingStatus
-{
-    Active,
-    Pending,
-    Completed,
-    Cancelled
-}
-
-public enum ExchangeType
-{
-    BuySell,
-    BookSwap,
-    BookSwapWithCash
-}
-
 public enum ExchangeStatus
 {
     Requested,
@@ -52,13 +37,6 @@ public enum ShipmentStatus
     Cancelled
 }
 
-public enum NotificationStatus
-{
-    Unread,
-    Read,
-    Archived
-}
-
 public enum NotificationCategory
 {
     MatchFound,
@@ -68,10 +46,4 @@ public enum NotificationCategory
     ExchangeAccepted,
     ExchangeRejected,
     TransactionUpdate
-}
-
-public enum MessageStatus
-{
-    Sent,
-    Read
 }

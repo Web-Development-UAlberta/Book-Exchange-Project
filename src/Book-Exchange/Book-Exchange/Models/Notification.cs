@@ -9,7 +9,7 @@ public class Notification
 
     public NotificationCategory Category { get; set; }
 
-    public NotificationStatus Status { get; set; } = NotificationStatus.Unread;
+    public bool IsRead { get; set; } = false;
 
     public string Title { get; set; } = null!;
 
