@@ -34,6 +34,7 @@ builder.Services
 builder.Services.AddControllersWithViews();
 
 // TODO: uncomment once services are implemented
+builder.Services.AddScoped<IAddressService, AddressService>();
 // builder.Services.AddScoped<IExchangeRequestService, ExchangeRequestService>();
 builder.Services.AddScoped<IListingService, ListingService>();
 builder.Services.AddScoped<IMessageService, MessageService>();
