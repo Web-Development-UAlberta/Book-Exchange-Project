@@ -1,9 +1,11 @@
-name: Build
+name: Build and Test
 
 on:
   push:
     branches: [main]
   pull_request:
+    branches: [main]
+  push:
     branches: [main]
   workflow_dispatch:
 
@@ -39,3 +41,6 @@ jobs:
            echo "No build output directory found. Expected 'bin' or 'publish'."
            exit 1
           fi
+
+      - name: Run tests
+        run: dotnet test ./src/Book-Exchange/Book-Exchange.slnx --no-build --configuration Release --verbosity normal
