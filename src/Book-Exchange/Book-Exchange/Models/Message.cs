@@ -12,7 +12,7 @@ public class Message
 
     public string? MessageText { get; set; }
 
-    public MessageStatus Status { get; set; } = MessageStatus.Sent;
+    public bool IsRead { get; set; } = false;
 
     public Guid? ListingId { get; set; }
     public Listing? Listing { get; set; }

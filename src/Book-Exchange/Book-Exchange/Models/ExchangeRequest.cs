@@ -9,13 +9,8 @@ public class ExchangeRequest
 
     public Guid RequesterId { get; set; }
     public ApplicationUser Requester { get; set; } = null!;
-
-    public ExchangeType Type { get; set; }
     public ExchangeStatus Status { get; set; } = ExchangeStatus.Requested;
-
     public decimal? Price { get; set; }
-    public decimal? CounterOffer { get; set; }
-
     public string? Message { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

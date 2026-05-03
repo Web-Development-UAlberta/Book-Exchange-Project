@@ -441,7 +441,21 @@ Testing for a release candidate is complete when:
 
 ---
 
-### 9.10 Search Integration
+## 9.10 Notification Integration Tests
+
+| Number       | Scenario                                              | Expected Result                                                                 |
+|--------------|-------------------------------------------------------|----------------------------------------------------------------------------------|
+| IT-NOTIF-01  | System creates notification for user                  | Notification is saved in database with IsRead = false and ReadAt = null         |
+| IT-NOTIF-02  | User retrieves notifications                          | Only notifications belonging to the user are returned                           |
+| IT-NOTIF-03  | User retrieves unread notifications                   | Only notifications with IsRead = false are returned                             |
+| IT-NOTIF-04  | User marks notification as read                       | IsRead = true and ReadAt is populated                                           |
+| IT-NOTIF-05  | User attempts to mark another user’s notification     | Operation is rejected and notification remains unchanged                        |
+| IT-NOTIF-06  | System counts unread notifications                    | Correct number of unread notifications is returned                              |
+| IT-NOTIF-07  | System creates notification with related entities     | Notification is saved with correct RelatedListingId / ExchangeRequestId / etc.  |
+
+---
+
+### 9.11 Search Integration
 
 | Number       | Scenario                                                  | Expected Result                                               |
 | ------------ | --------------------------------------------------------- | ------------------------------------------------------------- |

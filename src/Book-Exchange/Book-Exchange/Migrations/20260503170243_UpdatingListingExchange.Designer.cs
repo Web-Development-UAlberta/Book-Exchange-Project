@@ -3,6 +3,7 @@ using System;
 using Book_Exchange.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Book_Exchange.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260503170243_UpdatingListingExchange")]
+    partial class UpdatingListingExchange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -626,6 +629,12 @@ namespace Book_Exchange.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("exchange_request_id");
 
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("transaction_status")
+                        .HasColumnName("status")
+                        .HasDefaultValueSql("'confirmed'::transaction_status");
+
                     b.Property<decimal?>("TotalValue")
                         .HasPrecision(10, 2)
                         .HasColumnType("numeric(10,2)")
@@ -641,40 +650,6 @@ namespace Book_Exchange.Migrations
                         {
                             t.HasCheckConstraint("ck_transactions_total_value", "total_value IS NULL OR total_value >= 0");
                         });
-                });
-
-            modelBuilder.Entity("Book_Exchange.Models.TransactionStatusHistory", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("transaction_status")
-                        .HasColumnName("status")
-                        .HasDefaultValueSql("'confirmed'::transaction_status");
-
-                    b.Property<Guid>("TransactionId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("transaction_id");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
-                    b.Property<Guid>("UpdatedByUserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("updated_by_user_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TransactionId");
-
-                    b.HasIndex("UpdatedByUserId");
-
-                    b.ToTable("transaction_status_history", "public");
                 });
 
             modelBuilder.Entity("Book_Exchange.Models.WishlistItem", b =>
@@ -1047,25 +1022,6 @@ namespace Book_Exchange.Migrations
                     b.Navigation("ExchangeRequest");
                 });
 
-            modelBuilder.Entity("Book_Exchange.Models.TransactionStatusHistory", b =>
-                {
-                    b.HasOne("Book_Exchange.Models.Transaction", "Transaction")
-                        .WithMany("StatusHistory")
-                        .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Book_Exchange.Models.ApplicationUser", "UpdatedByUser")
-                        .WithMany("TransactionStatusUpdatedByUser")
-                        .HasForeignKey("UpdatedByUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Transaction");
-
-                    b.Navigation("UpdatedByUser");
-                });
-
             modelBuilder.Entity("Book_Exchange.Models.WishlistItem", b =>
                 {
                     b.HasOne("Book_Exchange.Models.ApplicationUser", "User")
@@ -1151,8 +1107,6 @@ namespace Book_Exchange.Migrations
 
                     b.Navigation("SentMessages");
 
-                    b.Navigation("TransactionStatusUpdatedByUser");
-
                     b.Navigation("WishlistItems");
                 });
 
@@ -1192,8 +1146,6 @@ namespace Book_Exchange.Migrations
                     b.Navigation("Reviews");
 
                     b.Navigation("Shipments");
-
-                    b.Navigation("StatusHistory");
                 });
 #pragma warning restore 612, 618
         }

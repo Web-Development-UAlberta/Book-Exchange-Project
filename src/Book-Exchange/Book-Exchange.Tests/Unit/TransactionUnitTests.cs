@@ -39,7 +39,6 @@ public class TransactionServiceUnitTests
         {
             Id = Guid.NewGuid(),
             ExchangeRequestId = exchangeRequestId,
-            Status = TransactionStatus.Confirmed,
             CreatedAt = DateTime.UtcNow,
             ConfirmedAt = DateTime.UtcNow
         };
@@ -52,7 +51,6 @@ public class TransactionServiceUnitTests
 
         Assert.NotNull(result);
         Assert.Equal(exchangeRequestId, result.ExchangeRequestId);
-        Assert.Equal(TransactionStatus.Confirmed, result.Status);
         Assert.NotNull(result.ConfirmedAt);
     }
 
@@ -99,7 +97,6 @@ public class TransactionServiceUnitTests
             .ReturnsAsync(new Transaction
             {
                 Id = transactionId,
-                Status = TransactionStatus.Shipped
             });
 
         _serviceMock

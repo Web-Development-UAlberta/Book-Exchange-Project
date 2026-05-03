@@ -12,14 +12,10 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
 dataSourceBuilder.MapEnum<BookCondition>("public.book_condition");
-dataSourceBuilder.MapEnum<ListingStatus>("public.listing_status");
-dataSourceBuilder.MapEnum<ExchangeType>("public.exchange_type");
 dataSourceBuilder.MapEnum<ExchangeStatus>("public.exchange_status");
 dataSourceBuilder.MapEnum<TransactionStatus>("public.transaction_status");
 dataSourceBuilder.MapEnum<ShipmentStatus>("public.shipment_status");
-dataSourceBuilder.MapEnum<NotificationStatus>("public.notification_status");
 dataSourceBuilder.MapEnum<NotificationCategory>("public.notification_category");
-dataSourceBuilder.MapEnum<MessageStatus>("public.message_status");
 var dataSource = dataSourceBuilder.Build();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
