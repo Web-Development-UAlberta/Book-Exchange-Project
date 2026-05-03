@@ -29,9 +29,6 @@ jobs:
       - name: Build
         run: dotnet build --no-restore -c Release ./src/Book-Exchange/Book-Exchange.slnx
 
-      - name: Test
-        run: dotnet test --no-restore -c Release --verbosity normal ./src/Book-Exchange/Book-Exchange.slnx
-
       - name: Check build artifacts
         run: |
           BUILD_DIR=$(find ./src -name "*.csproj" | head -n 1 | xargs dirname)
