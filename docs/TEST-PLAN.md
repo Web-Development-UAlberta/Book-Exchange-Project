@@ -196,12 +196,17 @@ Testing for a release candidate is complete when:
 
 ### 8.2 Address Management
 
-| Number     | Scenario                                       | Expected Result                 |
-| ---------- | ---------------------------------------------- | ------------------------------- |
-| UT-ADDR-01 | Create address with valid GooglePlaceId        | Address is accepted             |
-| UT-ADDR-02 | Create address without GooglePlaceId           | Validation fails                |
-| UT-ADDR-03 | User updates own address                       | Address is updated successfully |
-| UT-ADDR-04 | User attempts to update another user's address | Operation is rejected           |
+| Number     | Scenario                                             | Expected Result     |
+| ---------- | ---------------------------------------------------- | ------------------- |
+| UT-ADDR-01 | Create address with valid FullName and GooglePlaceId | Address is accepted |
+| UT-ADDR-02 | Create address with null or empty FullName           | Validation fails    |
+| UT-ADDR-03 | Create address with null or empty FullName           | Validation fails    |
+| UT-ADDR-04 | Create address with invalid GooglePlaceId            | Validation fails    |
+| UT-ADDR-05 | Get address by ID belonging to the user              | Address is returned |
+| UT-ADDR-06 | Get another users address                            | Access is denied    |
+| UT-ADDR-07 | Update Address with new GooglePlaceID                | Address is accepted |
+| UT-ADDR-08 | Delete an address not being used on a shipment       | Address is deleted  |
+| UT-ADDR-09 | Delete an address that is being used on a shipment   | Validation Fails    |
 
 ### 8.3 Listing Management
 
@@ -443,15 +448,15 @@ Testing for a release candidate is complete when:
 
 ## 9.10 Notification Integration Tests
 
-| Number       | Scenario                                              | Expected Result                                                                 |
-|--------------|-------------------------------------------------------|----------------------------------------------------------------------------------|
-| IT-NOTIF-01  | System creates notification for user                  | Notification is saved in database with IsRead = false and ReadAt = null         |
-| IT-NOTIF-02  | User retrieves notifications                          | Only notifications belonging to the user are returned                           |
-| IT-NOTIF-03  | User retrieves unread notifications                   | Only notifications with IsRead = false are returned                             |
-| IT-NOTIF-04  | User marks notification as read                       | IsRead = true and ReadAt is populated                                           |
-| IT-NOTIF-05  | User attempts to mark another user’s notification     | Operation is rejected and notification remains unchanged                        |
-| IT-NOTIF-06  | System counts unread notifications                    | Correct number of unread notifications is returned                              |
-| IT-NOTIF-07  | System creates notification with related entities     | Notification is saved with correct RelatedListingId / ExchangeRequestId / etc.  |
+| Number      | Scenario                                          | Expected Result                                                                |
+| ----------- | ------------------------------------------------- | ------------------------------------------------------------------------------ |
+| IT-NOTIF-01 | System creates notification for user              | Notification is saved in database with IsRead = false and ReadAt = null        |
+| IT-NOTIF-02 | User retrieves notifications                      | Only notifications belonging to the user are returned                          |
+| IT-NOTIF-03 | User retrieves unread notifications               | Only notifications with IsRead = false are returned                            |
+| IT-NOTIF-04 | User marks notification as read                   | IsRead = true and ReadAt is populated                                          |
+| IT-NOTIF-05 | User attempts to mark another user’s notification | Operation is rejected and notification remains unchanged                       |
+| IT-NOTIF-06 | System counts unread notifications                | Correct number of unread notifications is returned                             |
+| IT-NOTIF-07 | System creates notification with related entities | Notification is saved with correct RelatedListingId / ExchangeRequestId / etc. |
 
 ---
 
@@ -459,9 +464,22 @@ Testing for a release candidate is complete when:
 
 | Number       | Scenario                                                  | Expected Result                                               |
 | ------------ | --------------------------------------------------------- | ------------------------------------------------------------- |
-| IT-SEARCH-03 | Search listings by title keyword through request pipeline | Matching active listings are returned from the database       |
-| IT-SEARCH-04 | Search listings by author name through request pipeline   | Matching active listings are returned from the database       |
-| IT-SEARCH-05 | Combine keyword search with genre and condition filters   | Results satisfy all search and filter criteria simultaneously |
+| IT-SEARCH-01 | Search listings by title keyword through request pipeline | Matching active listings are returned from the database       |
+| IT-SEARCH-02 | Search listings by author name through request pipeline   | Matching active listings are returned from the database       |
+| IT-SEARCH-03 | Combine keyword search with genre and condition filters   | Results satisfy all search and filter criteria simultaneously |
+
+---
+
+### 9.12 Address Integration
+
+| Number     | Scenario                                                | Expected Result                               |
+| ---------- | ------------------------------------------------------- | --------------------------------------------- |
+| IT-ADDR-01 | User creates a valid address                            | Address is saved                              |
+| IT-ADDR-02 | Create address with invalid GooglePlaceId               | Validation fails                              |
+| IT-ADDR-03 | User retrieves all their saved addresses                | Only addresses belonging to them are returned |
+| IT-ADDR-04 | User updates their address                              | New address is saved with new GooglePlaceID   |
+| IT-ADDR-05 | User deletes their address that has no active shipments | Address is removed                            |
+| IT-ADDR-06 | User deletes their address that has active shipments    | Validation fails                              |
 
 ---
 

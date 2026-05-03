@@ -8,7 +8,6 @@ public class Address
     public string FullName { get; set; } = null!;
     public string GooglePlaceId { get; set; } = null!;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
     public ICollection<Shipment> SenderShipments { get; set; } = new List<Shipment>();
     public ICollection<Shipment> ReceiverShipments { get; set; } = new List<Shipment>();
 }
