@@ -51,6 +51,9 @@ public class WishlistService : IWishlistService
     // - Returns active listings whose ISBN matches any of the user's active wishlist ISBNs
     // - Excludes listings owned by the user themselves
     // - Excludes listings that are not in Active status
+    // - A listing is considered unavailable(excluded) if it has an accepted ExchangeRequest whose Transaction has a non-Cancelled
+    //   status in its most recent TransactionStatusHistory entry, OR if it has any ExchangeRequest 
+    //   with ExchangeStatus.Accepted and no associated Transaction yet.
     // - Returns empty list if there are no matches
     public Task<IEnumerable<Listing>> GetMatchingListingsAsync(Guid userId)
         => throw new NotImplementedException();
@@ -60,6 +63,7 @@ public class WishlistService : IWishlistService
     // - Returns empty list if the wishlist item is not active
     // - Returns active listings whose ISBN matches the wishlist item's ISBN
     // - Excludes listings owned by the user themselves
+    // - Uses the same derived availability logic as GetMatchingListingsAsync
     public Task<IEnumerable<Listing>> GetMatchingListingsForItemAsync(Guid wishlistItemId, Guid userId)
         => throw new NotImplementedException();
 }

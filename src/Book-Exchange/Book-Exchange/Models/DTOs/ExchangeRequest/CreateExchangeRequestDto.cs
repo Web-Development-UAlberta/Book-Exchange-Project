@@ -1,4 +1,3 @@
-using Book_Exchange.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace Book_Exchange.Models.DTOs.ExchangeRequest;
@@ -8,9 +7,6 @@ public class CreateExchangeRequestDto
 {
     [Required(ErrorMessage = "Target listing ID is required.")]
     public Guid TargetListingId { get; set; }
-
-    [Required(ErrorMessage = "Exchange type is required.")]
-    public ExchangeType Type { get; set; }
 
     // Only populated for BookSwap and BookSwapWithCash — max 3 offered books per scope rules
     [MaxLength(3, ErrorMessage = "You may offer a maximum of 3 books.")]
