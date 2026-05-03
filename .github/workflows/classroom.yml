@@ -1,6 +1,8 @@
 name: Build
 
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -26,6 +28,9 @@ jobs:
 
       - name: Build
         run: dotnet build --no-restore -c Release ./src/Book-Exchange/Book-Exchange.slnx
+
+      - name: Test
+        run: dotnet test --no-restore -c Release --verbosity normal ./src/Book-Exchange/Book-Exchange.slnx
 
       - name: Check build artifacts
         run: |
