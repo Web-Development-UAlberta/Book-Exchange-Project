@@ -37,11 +37,16 @@ builder.Services
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IListingService, ListingService>();
-builder.Services.AddScoped<IWishlistService, WishlistService>();
+// TODO: uncomment once services are implemented
 // builder.Services.AddScoped<IExchangeRequestService, ExchangeRequestService>();
-builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<IListingService, ListingService>();
+builder.Services.AddScoped<IMessageService, MessageService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IShippingService, ShippingService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<IWishlistService, WishlistService>();
+
 
 var app = builder.Build();
 
