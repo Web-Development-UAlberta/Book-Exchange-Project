@@ -26,6 +26,12 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore ./src/Book-Exchange/Book-Exchange.slnx
 
+      - name: Build
+        run: dotnet build --no-restore -c Release ./src/Book-Exchange/Book-Exchange.slnx
+
+      - name: Test
+        run: dotnet test --no-restore -c Release --verbosity normal ./src/Book-Exchange/Book-Exchange.slnx
+
       - name: Check build artifacts
         run: |
           BUILD_DIR=$(find ./src -name "*.csproj" | head -n 1 | xargs dirname)
@@ -33,6 +39,7 @@ jobs:
            echo "No build output directory found. Expected 'bin' or 'publish'."
            exit 1
           fi
-      # This should be here after we are sure we have a successfull build
+
+      # This shoule be here after we are sure we have a sucessed build
       - name: Run tests
         run: dotnet test ./src/Book-Exchange/Book-Exchange.slnx --no-build --configuration Release --verbosity normal

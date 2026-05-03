@@ -348,6 +348,24 @@ Testing for a release candidate is complete when:
 
 ---
 
+### 8.13 Messages
+
+| Number    | Scenario                                   | Expected Result                                           |
+| --------- | ------------------------------------------ | --------------------------------------------------------- |
+| UT-MSG-01 | Send message with valid data               | Message is created and sent                               |
+| UT-MSG-02 | Send message to self                       | Validation fails                                          |
+| UT-MSG-03 | Send message with empty text               | Validation fails                                          |
+| UT-MSG-04 | Send message to a user that does not exist | Validation fails                                          |
+| UT-MSG-05 | Retrieve a message by its ID               | The correct message is received                           |
+| UT-MSG-06 | Retrieve a message by non-existent ID      | Validation fails                                          |
+| UT-MSG-07 | Mark message as read by the receiver       | Operation Completes successfully                          |
+| UT-MSG-08 | Get unread message count                   | Correct count of messages is received                     |
+| UT-MSG-09 | Get conversation between users             | Messages are returned in ascending order                  |
+| UT-MSG-10 | Get inbox for user                         | Conversations are listed by latest messages in descending |
+| UT-MSG-11 | Mark conversation as read                  | All messages in coversation are marked as read            |
+
+---
+
 ## 9. Integration Test Scenarios
 
 ### 9.1 Authentication Integration
