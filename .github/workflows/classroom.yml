@@ -1,0 +1,42 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        dotnet-version: ["10.0.x"]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Restore dependencies
+        run: dotnet restore ./src/Book-Exchange/Book-Exchange.slnx
+
+      - name: Build
+        run: dotnet build --no-restore -c Release ./src/Book-Exchange/Book-Exchange.slnx
+
+      - name: Check build artifacts
+        run: |
+          BUILD_DIR=$(find ./src -name "*.csproj" | head -n 1 | xargs dirname)
+          if [ ! -d "$BUILD_DIR/bin" ] && [ ! -d "$BUILD_DIR/publish" ]; then
+           echo "No build output directory found. Expected 'bin' or 'publish'."
+           exit 1
+          fi
+
+      # This shoule be here after we are sure we have a sucessed build
+      - name: Run tests
+        run: dotnet test ./src/Book-Exchange/Book-Exchange.slnx --no-build --configuration Release --verbosity normal
