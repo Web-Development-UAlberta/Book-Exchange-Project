@@ -1,7 +1,8 @@
 using Xunit;
 using Microsoft.EntityFrameworkCore;
 using Book_Exchange.Models;
-using Book_Exchange.Services.Interfaces;
+using Book_Exchange.Models.DTOs.Transaction;
+using Book_Exchange.Services;
 using Book_Exchange.Data;
 
 // INTEGRATION TESTS
@@ -9,169 +10,175 @@ using Book_Exchange.Data;
 
 namespace Book_Exchange.Tests.Integration;
 
+public class TransactionServiceIntegrationTests : IDisposable
+{
+    private readonly ApplicationDbContext _db;
+    private readonly TransactionService _service;
 
-// TODO: Uncomment when TransactionService is implemented
-// public class TransactionServiceIntegrationTests : IDisposable
-// {
-//     private readonly ApplicationDbContext _db;
-//     private readonly ITransactionService _service;
+    public TransactionServiceIntegrationTests()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+            .Options;
 
-//     public TransactionServiceIntegrationTests()
-//     {
-//         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-//             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-//             .Options;
+        _db = new ApplicationDbContext(options);
+        _service = new TransactionService(_db);
+    }
 
-//         _db = new ApplicationDbContext(options);
-//         _service = new TransactionService(_db);
-//     }
+    public void Dispose() => _db.Dispose();
 
-//     public void Dispose() => _db.Dispose();
+    // Helpers - to seed data for tests
+    private async Task<(ApplicationUser requester, ApplicationUser listingOwner)> SeedUsersAsync()
+    {
+        var requester = new ApplicationUser
+        {
+            Id = Guid.NewGuid(),
+            UserName = "requester",
+            Email = "requester@test.com",
+            NormalizedEmail = "REQUESTER@TEST.COM",
+            NormalizedUserName = "REQUESTER",
+            SecurityStamp = Guid.NewGuid().ToString()
+        };
 
-//     // Helper: seed a Listing and ExchangeRequest with the given status
-//     private async Task<ExchangeRequest> SeedExchangeRequestAsync(ExchangeStatus status)
-//     {
-//         var listing = new Listing
-//         {
-//             Id = Guid.NewGuid(),
-//             UserId = Guid.NewGuid(),
-//             Isbn = "9780593311615",
-//             Condition = BookCondition.Good,
-//             Price = 10.00m,
-//             WeightGrams = 300,
-//             Status = ListingStatus.Active
-//         };
+        var listingOwner = new ApplicationUser
+        {
+            Id = Guid.NewGuid(),
+            UserName = "listingowner",
+            Email = "owner@test.com",
+            NormalizedEmail = "OWNER@TEST.COM",
+            NormalizedUserName = "LISTINGOWNER",
+            SecurityStamp = Guid.NewGuid().ToString()
+        };
 
-//         var request = new ExchangeRequest
-//         {
-//             Id = Guid.NewGuid(),
-//             RequesterId = Guid.NewGuid(),
-//             TargetListingId = listing.Id,
-//             Type = ExchangeType.BuySell,
-//             Status = status,
-//             CreatedAt = DateTime.UtcNow
-//         };
+        _db.Users.AddRange(requester, listingOwner);
+        await _db.SaveChangesAsync();
 
-//         _db.Listings.Add(listing);
-//         _db.ExchangeRequests.Add(request);
-//         await _db.SaveChangesAsync();
+        return (requester, listingOwner);
+    }
 
-//         return request;
-//     }
+    private async Task<ExchangeRequest> SeedAcceptedExchangeRequestAsync(
+        Guid requesterId,
+        Guid listingOwnerId,
+        decimal? price = 10.00m)
+    {
+        var listing = new Listing
+        {
+            Id = Guid.NewGuid(),
+            UserId = listingOwnerId,
+            Isbn = "9780593311615",
+            Condition = BookCondition.Good,
+            Price = price ?? 10.00m,
+            WeightGrams = 300,
+            CreatedAt = DateTime.UtcNow
+        };
 
-//     /// <summary>
-//     /// IT-TRANS-01: Accepted exchange creates transaction
-//     /// Expected: Transaction is linked to ExchangeRequest
-//     /// </summary>
-//     /// <returns>
-//     /// Transaction linked to the ExchangeRequest
-//     /// </returns>
-//     [Fact]
-//     public async Task IT_TRANS_01_AcceptedExchange_CreatesTransactionLinkedToRequest()
-//     {
-//         var acceptedRequest = await SeedExchangeRequestAsync(ExchangeStatus.Accepted);
+        var request = new ExchangeRequest
+        {
+            Id = Guid.NewGuid(),
+            RequesterId = requesterId,
+            TargetListingId = listing.Id,
+            Status = ExchangeStatus.Accepted,
+            Price = price,
+            CreatedAt = DateTime.UtcNow,
+            AcceptedAt = DateTime.UtcNow
+        };
 
-//         var transaction = await _service.CreateTransactionFromExchangeRequestAsync(acceptedRequest);
+        _db.Listings.Add(listing);
+        _db.ExchangeRequests.Add(request);
+        await _db.SaveChangesAsync();
 
-//         Assert.NotNull(transaction);
-//         Assert.Equal(acceptedRequest.Id, transaction.ExchangeRequestId);
-//         Assert.Equal(TransactionStatus.Confirmed, transaction.Status);
+        // Reload with navigation properties the service depends on
+        return await _db.ExchangeRequests
+            .Include(er => er.TargetListing)
+                .ThenInclude(l => l.User)
+            .Include(er => er.Requester)
+            .Include(er => er.ExchangeRequestItems)
+            .FirstAsync(er => er.Id == request.Id);
+    }
 
-//         var persisted = await _db.Transactions.FindAsync(transaction.Id);
-//         Assert.NotNull(persisted);
-//         Assert.Equal(acceptedRequest.Id, persisted.ExchangeRequestId);
-//     }
+    /// <summary>
+    /// IT-TRANS-01: Accepted exchange creates transaction
+    /// Expected: Transaction is created with Confirmed status linked to ExchangeRequest
+    /// </summary>
+    [Fact]
+    public async Task IT_TRANS_01_AcceptedExchange_CreatesTransactionLinkedToRequest()
+    {
+        var (requester, listingOwner) = await SeedUsersAsync();
+        var acceptedRequest = await SeedAcceptedExchangeRequestAsync(requester.Id, listingOwner.Id);
 
-//     /// <summary>
-//     /// IT-TRANS-02: Completing transaction updates listing status
-//     /// Expected: Related listing(s) are no longer active
-//     /// </summary>
-//     /// <returns>
-//     /// If successful, completes without exception. Verify that CompleteTransactionAsync was called with correct parameters.
-//     /// </returns>
-//     [Fact]
-//     public async Task IT_TRANS_02_CompletingTransaction_DeactivatesRelatedListings()
-//     {
-//         var acceptedRequest = await SeedExchangeRequestAsync(ExchangeStatus.Accepted);
-//         var transaction = await _service.CreateTransactionFromExchangeRequestAsync(acceptedRequest);
-//         var userId = Guid.NewGuid();
+        var transaction = await _service.CreateTransactionFromExchangeRequestAsync(acceptedRequest);
 
-//         await _service.CompleteTransactionAsync(transaction.Id, userId);
+        Assert.NotNull(transaction);
+        Assert.Equal(acceptedRequest.Id, transaction.ExchangeRequestId);
 
-//         var completed = await _db.Transactions.FindAsync(transaction.Id);
-//         Assert.NotNull(completed);
-//         Assert.Equal(TransactionStatus.Completed, completed.Status);
-//         Assert.NotNull(completed.CompletedAt);
+        var persisted = await _db.Transactions
+            .Include(t => t.StatusHistory)
+            .FirstOrDefaultAsync(t => t.Id == transaction.Id);
 
-//         var listing = await _db.Listings.FindAsync(acceptedRequest.TargetListingId);
-//         Assert.NotNull(listing);
-//         Assert.NotEqual(ListingStatus.Active, listing.Status);
-//     }
+        Assert.NotNull(persisted);
+        Assert.Equal(acceptedRequest.Id, persisted.ExchangeRequestId);
 
-//     /// <summary>
-//     /// IT-TRANS-03: Transaction history is requested
-//     /// Expected: User sees only their relevant transactions
-//     /// </summary>
-//     /// <returns>
-//     /// List of transactions belonging to the specified user
-//     /// </returns>
-//     [Fact]
-//     public async Task IT_TRANS_03_GetTransactionHistory_ReturnsOnlyUsersTransactions()
-//     {
-//         var userId = Guid.NewGuid();
+        var status = persisted.StatusHistory
+            .OrderByDescending(h => h.UpdatedAt)
+            .FirstOrDefault()?.Status;
 
-//         // Seed two transactions belonging to this user
-//         for (int i = 0; i < 2; i++)
-//         {
-//             var listing = new Listing
-//             {
-//                 Id = Guid.NewGuid(),
-//                 UserId = Guid.NewGuid(),
-//                 Isbn = "9780593311615",
-//                 Condition = BookCondition.Good,
-//                 Price = 10.00m,
-//                 WeightGrams = 300,
-//                 Status = ListingStatus.Active
-//             };
+        Assert.Equal(TransactionStatus.Confirmed, status);
+    }
 
-//             var request = new ExchangeRequest
-//             {
-//                 Id = Guid.NewGuid(),
-//                 RequesterId = userId,
-//                 TargetListingId = listing.Id,
-//                 Type = ExchangeType.BuySell,
-//                 Status = ExchangeStatus.Accepted,
-//                 CreatedAt = DateTime.UtcNow
-//             };
+    /// <summary>
+    /// IT-TRANS-02: Completing a shipped transaction sets CompletedAt timestamp
+    /// Expected: Transaction status history contains Completed entry and CompletedAt is set
+    /// </summary>
+    [Fact]
+    public async Task IT_TRANS_02_CompletingShippedTransaction_SetsCompletedAt()
+    {
+        var (requester, listingOwner) = await SeedUsersAsync();
+        var acceptedRequest = await SeedAcceptedExchangeRequestAsync(requester.Id, listingOwner.Id);
 
-//             var tx = new Transaction
-//             {
-//                 Id = Guid.NewGuid(),
-//                 ExchangeRequestId = request.Id,
-//                 ExchangeRequest = request,
-//                 Status = TransactionStatus.Confirmed,
-//                 CreatedAt = DateTime.UtcNow
-//             };
+        var transaction = await _service.CreateTransactionFromExchangeRequestAsync(acceptedRequest);
 
-//             _db.Listings.Add(listing);
-//             _db.ExchangeRequests.Add(request);
-//             _db.Transactions.Add(tx);
-//         }
+        // Shipped then completed
+        await _service.MarkAsShippedAsync(transaction.Id, requester.Id);
+        await _service.CompleteTransactionAsync(transaction.Id, requester.Id);
 
-//         // Seed one unrelated transaction for a different user
-//         _db.Transactions.Add(new Transaction
-//         {
-//             Id = Guid.NewGuid(),
-//             ExchangeRequestId = Guid.NewGuid(),
-//             Status = TransactionStatus.Confirmed,
-//             CreatedAt = DateTime.UtcNow
-//         });
+        var completed = await _db.Transactions
+            .Include(t => t.StatusHistory)
+            .FirstOrDefaultAsync(t => t.Id == transaction.Id);
 
-//         await _db.SaveChangesAsync();
+        Assert.NotNull(completed);
+        Assert.NotNull(completed.CompletedAt);
 
-//         var results = await _service.GetTransactionsByUserIdAsync(userId);
+        var currentStatus = completed.StatusHistory
+            .OrderByDescending(h => h.UpdatedAt)
+            .FirstOrDefault()?.Status;
 
-//         Assert.NotNull(results);
-//         Assert.Equal(2, results.Count());
-//     }
-// }
+        Assert.Equal(TransactionStatus.Completed, currentStatus);
+    }
+
+    /// <summary>
+    /// IT-TRANS-03: GetTransactionsByUserIdAsync returns only the user's transactions
+    /// Expected: User sees only transactions they are a participant in
+    /// </summary>
+    [Fact]
+    public async Task IT_TRANS_03_GetTransactionHistory_ReturnsOnlyUsersTransactions()
+    {
+        var (requester, listingOwner) = await SeedUsersAsync();
+
+        // Seed two transactions for this user
+        for (int i = 0; i < 2; i++)
+        {
+            var request = await SeedAcceptedExchangeRequestAsync(requester.Id, listingOwner.Id);
+            await _service.CreateTransactionFromExchangeRequestAsync(request);
+        }
+
+        // Seed one unrelated transaction for a different user
+        var (otherRequester, otherOwner) = await SeedUsersAsync();
+        var otherRequest = await SeedAcceptedExchangeRequestAsync(otherRequester.Id, otherOwner.Id);
+        await _service.CreateTransactionFromExchangeRequestAsync(otherRequest);
+
+        var results = await _service.GetTransactionsByUserIdAsync(requester.Id);
+
+        Assert.NotNull(results);
+        Assert.Equal(2, results.Count());
+    }
+}
