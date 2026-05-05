@@ -1,0 +1,190 @@
+@model IEnumerable<Book_Exchange.Models.DTOs.Transaction.TransactionViewModel>
+
+@{
+    ViewData["Title"] = "Transactions";
+    var active = Model.Where(t => t.IsActive).ToList();
+    var history = Model.Where(t => !t.IsActive).ToList();
+}
+
+<h1>Transactions</h1>
+
+@if (TempData["Success"] != null)
+{
+    <div id="alert-success" class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div id="alert-error" class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<ul id="transactions-tabs" class="nav nav-tabs mb-3" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link transactions-tab active"
+                id="active-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#active-panel"
+                type="button"
+                role="tab">
+            Active
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link transactions-tab"
+                id="history-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#history-panel"
+                type="button"
+                role="tab">
+            History
+        </button>
+    </li>
+</ul>
+
+<div class="tab-content">
+
+    {{!-- Active Tab --}}
+    <div class="tab-pane fade show active" id="active-panel" role="tabpanel">
+        @if (!active.Any())
+        {
+            <p id="no-active-message" class="text-muted">No active transactions.</p>
+        }
+        else
+        {
+            <div id="transactions-list">
+                @foreach (var t in active)
+                {
+                    <div id="transaction-card-@t.Id" class="transactions-card card mb-3 p-3">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="mb-1 fw-semibold">@t.Description</p>
+                                <p class="mb-1 text-muted small">With @t.WithUserName &middot; Started @t.CreatedAt.ToLocalTime().ToString("MMM dd, yyyy")</p>
+                                @if (t.TotalValue.HasValue)
+                                {
+                                    <p class="mb-1 text-muted small">$@t.TotalValue.Value.ToString("F2")</p>
+                                }
+                            </div>
+                            <span class="transactions-status-badge badge 
+                                @(t.CurrentStatus == Book_Exchange.Models.TransactionStatus.Confirmed ? "bg-warning text-dark" :
+                                  t.CurrentStatus == Book_Exchange.Models.TransactionStatus.Shipped ? "bg-primary" :
+                                  t.CurrentStatus == Book_Exchange.Models.TransactionStatus.Disputed ? "bg-danger" : "bg-secondary")">
+                                @t.CurrentStatus
+                            </span>
+                        </div>
+
+                        <div class="mt-2 d-flex gap-2">
+                            @if (t.CurrentStatus == Book_Exchange.Models.TransactionStatus.Confirmed)
+                            {
+                                <a class="transactions-message-btn btn btn-sm btn-outline-primary"
+                                   asp-controller="Message"
+                                   asp-action="Index">
+                                    Message
+                                </a>
+                                <form asp-controller="Transaction" asp-action="Cancel" asp-route-id="@t.Id" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <button id="cancel-btn-@t.Id"
+                                            class="transactions-cancel-btn btn btn-sm btn-outline-danger"
+                                            type="submit">
+                                        Cancel
+                                    </button>
+                                </form>
+                            }
+
+                            @if (t.CurrentStatus == Book_Exchange.Models.TransactionStatus.Shipped)
+                            {
+                                @if (t.ShipmentId.HasValue)
+                                {
+                                    <a id="view-shipment-btn-@t.Id"
+                                       class="btn btn-sm btn-outline-primary"
+                                       asp-controller="Shipping"
+                                       asp-action="Details"
+                                       asp-route-id="@t.ShipmentId">
+                                        View Shipment
+                                    </a>
+                                }
+                                <a class="transactions-message-btn btn btn-sm btn-outline-secondary"
+                                   asp-controller="Message"
+                                   asp-action="Index">
+                                    Message
+                                </a>
+                            }
+
+                            @if (t.CurrentStatus == Book_Exchange.Models.TransactionStatus.Disputed)
+                            {
+                                <a class="transactions-message-btn btn btn-sm btn-outline-secondary"
+                                   asp-controller="Message"
+                                   asp-action="Index">
+                                    Message
+                                </a>
+                                <a class="btn btn-sm btn-outline-dark"
+                                   asp-controller="Transaction"
+                                   asp-action="Details"
+                                   asp-route-id="@t.Id">
+                                    View Details
+                                </a>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    {{!-- History Tab --}}
+    <div class="tab-pane fade" id="history-panel" role="tabpanel">
+        @if (!history.Any())
+        {
+            <p id="no-history-message" class="text-muted">No past transactions.</p>
+        }
+        else
+        {
+            <div id="transactions-history-list">
+                @foreach (var t in history)
+                {
+                    <div id="transaction-card-@t.Id" class="transactions-card card mb-3 p-3">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="mb-1 fw-semibold">@t.Description</p>
+                                <p class="mb-1 text-muted small">With @t.WithUserName &middot; @t.CreatedAt.ToLocalTime().ToString("MMM dd, yyyy")</p>
+                                @if (t.TotalValue.HasValue)
+                                {
+                                    <p class="mb-1 text-muted small">$@t.TotalValue.Value.ToString("F2")</p>
+                                }
+                            </div>
+                            <span class="transactions-status-badge badge
+                                @(t.CurrentStatus == Book_Exchange.Models.TransactionStatus.Completed ? "bg-success" : "bg-secondary")">
+                                @t.CurrentStatus
+                            </span>
+                        </div>
+
+                        <div class="mt-2 d-flex gap-2">
+                            @if (t.CurrentStatus == Book_Exchange.Models.TransactionStatus.Completed && !t.HasReview)
+                            {
+                                <a id="review-btn-@t.Id"
+                                   class="transactions-review-btn btn btn-sm btn-outline-warning"
+                                   asp-controller="Review"
+                                   asp-action="Create"
+                                   asp-route-transactionId="@t.Id">
+                                    Leave Review
+                                </a>
+                            }
+                            <a id="details-btn-@t.Id"
+                               class="btn btn-sm btn-outline-dark"
+                               asp-controller="Transaction"
+                               asp-action="Details"
+                               asp-route-id="@t.Id">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+</div>
