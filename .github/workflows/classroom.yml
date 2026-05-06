@@ -52,14 +52,6 @@ jobs:
       - name: Run integration tests
         run: dotnet test ./src/Book-Exchange/Book-Exchange.Tests/Integration/Integration.csproj --no-build --configuration Release --verbosity normal
 
-      - name: Install EF tools
-        run: dotnet tool install --global dotnet-ef
-
-      - name: Run database migrations
-        run: dotnet ef database update --project ./src/Book-Exchange/Book-Exchange/Book-Exchange.csproj
-        env:
-          ConnectionStrings__DefaultConnection: "Host=localhost;Port=5432;Database=BookExchangeDb;Username=postgres;Password=postgres;"
-
       # Install Playwright browsers on the CI runner
       - name: Install Playwright browsers
         run: pwsh ./src/Book-Exchange/Book-Exchange.Tests/UI/bin/Release/net10.0/playwright.ps1 install --with-deps chromium

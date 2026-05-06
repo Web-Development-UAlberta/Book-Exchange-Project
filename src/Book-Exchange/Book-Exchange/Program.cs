@@ -71,12 +71,36 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// Added to troubleshoot GitHub Actions UI test run failures - can be removed once we confirm the fix
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
+if (app.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await db.Database.MigrateAsync();
+
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    var testEmail = "test@test.com";
+    if (await userManager.FindByEmailAsync(testEmail) == null)
+    {
+        var testUser = new ApplicationUser
+        {
+            UserName = testEmail,
+            Email = testEmail,
+            EmailConfirmed = true
+        };
+        await userManager.CreateAsync(testUser, "Test1234!");
+    }
+}
 app.MapStaticAssets();
 
 app.MapControllerRoute(
