@@ -1,6 +1,7 @@
 ﻿using Xunit;
 using Moq;
 using Book_Exchange.Models;
+using Book_Exchange.Models.DTOs.Transaction;
 using Book_Exchange.Services.Interfaces;
 
 // Transaction Tests
@@ -93,8 +94,8 @@ public class TransactionServiceUnitTests
         var userId = Guid.NewGuid();
 
         _serviceMock
-            .Setup(s => s.GetTransactionByIdAsync(transactionId))
-            .ReturnsAsync(new Transaction
+            .Setup(s => s.GetTransactionByIdAsync(transactionId, userId))
+            .ReturnsAsync(new TransactionViewModel
             {
                 Id = transactionId,
             });

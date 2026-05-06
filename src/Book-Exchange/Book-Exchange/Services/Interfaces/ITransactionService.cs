@@ -1,12 +1,12 @@
 using Book_Exchange.Models;
+using Book_Exchange.Models.DTOs.Transaction;
 
 namespace Book_Exchange.Services.Interfaces
 {
-    // TODO: Once ORM is implemented make sure nothing changes. 
     public interface ITransactionService
     {
-        Task<Transaction> GetTransactionByIdAsync(Guid transactionId);
-        Task<IEnumerable<Transaction>> GetTransactionsByUserIdAsync(Guid userId);
+        Task<TransactionViewModel> GetTransactionByIdAsync(Guid transactionId, Guid currentUserId);
+        Task<IEnumerable<TransactionViewModel>> GetTransactionsByUserIdAsync(Guid userId);
         Task<Transaction> CreateTransactionFromExchangeRequestAsync(ExchangeRequest exchangeRequest);
         Task MarkAsShippedAsync(Guid transactionId, Guid userId);
         Task CompleteTransactionAsync(Guid transactionId, Guid userId);

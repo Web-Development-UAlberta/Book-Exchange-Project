@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-// TODO: Once ORM is implemented make sure nothing changes. 
 namespace Book_Exchange.Controllers;
 
 [Authorize]
@@ -34,9 +33,11 @@ public class TransactionController : Controller
     [HttpGet]
     public async Task<IActionResult> Details(Guid id)
     {
+        var userId = Guid.Parse(_userManager.GetUserId(User)!);
+
         try
         {
-            var transaction = await _transactionService.GetTransactionByIdAsync(id);
+            var transaction = await _transactionService.GetTransactionByIdAsync(id, userId);
             return View(transaction);
         }
         catch (KeyNotFoundException)
