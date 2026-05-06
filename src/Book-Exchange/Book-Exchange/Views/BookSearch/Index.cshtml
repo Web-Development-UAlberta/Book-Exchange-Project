@@ -119,7 +119,7 @@
 
         </div>
     }
-    else if (!string.IsNullOrWhiteSpace(ViewBag.SearchText))
+    else if (Model != null || !string.IsNullOrWhiteSpace(ViewBag.SearchText))
     {
         <div id="no-books-found"
              class="alert alert-warning mt-4">

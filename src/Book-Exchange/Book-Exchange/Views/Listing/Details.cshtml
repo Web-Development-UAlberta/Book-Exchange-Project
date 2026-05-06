@@ -118,6 +118,21 @@
                             asp-route-listingId="@Model.Id">
                         Message Seller
                     </a>
+                    <!-- TODO: check this buttons -->
+                    <a id= "propose-swap-btn"
+                            class="btn btn-outline-secondary mt-2"
+                            asp-controller="ExchangeRequest"
+                            asp-action="ProposeSwap"
+                            asp-route-listingId="@Model.Id">
+                        Propose Swap
+                    </a>
+                    <a id= "send-offer-btn"
+                            class="btn btn-outline-secondary mt-2"
+                            asp-controller="Offer"
+                            asp-action="Create"
+                            asp-route-listingId="@Model.Id">
+                        Send Offer
+                    </a>
 
             </div>
             <!--<div id="shipping-estimate" class="card p-3 mt-4 text-center">
