@@ -35,6 +35,10 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddHttpClient<IPlaceApiService, GooglePlaceApiService>();
+builder.Services.AddHttpClient<IBookSearchApi, GoogleBookSearchApi>(client =>
+{
+    client.BaseAddress = new Uri("https://www.googleapis.com/books/v1/");
+});
 
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IExchangeRequestService, ExchangeRequestService>();
