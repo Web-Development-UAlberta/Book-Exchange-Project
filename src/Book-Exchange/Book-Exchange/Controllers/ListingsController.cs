@@ -14,7 +14,7 @@ public class ListingController : Controller
     private readonly ApplicationDbContext _context;
     private readonly IListingService _listingService;
     private readonly IBookSearchApi _bookSearchApi;
-
+  
     public ListingController(
         ApplicationDbContext context,
         IListingService listingService,
@@ -25,10 +25,12 @@ public class ListingController : Controller
         _bookSearchApi = bookSearchApi;
     }
 
-    [AllowAnonymous]
     public async Task<IActionResult> Index()
     {
+        var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
         var listings = await _context.Listings
+            .Where(l => l.UserId == userId)
             .Include(l => l.User)
             .OrderByDescending(l => l.CreatedAt)
             .ToListAsync();
@@ -54,7 +56,6 @@ public class ListingController : Controller
         return View(viewModels);
     }
 
-    [AllowAnonymous]
     public async Task<IActionResult> Details(Guid id)
     {
         var listing = await _listingService.GetListingByIdAsync(id);

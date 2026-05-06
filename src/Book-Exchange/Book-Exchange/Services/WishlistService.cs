@@ -1,69 +1,159 @@
+using System.Text.RegularExpressions;
+using Book_Exchange.Data;
 using Book_Exchange.Models;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Book_Exchange.Models.DTOs.Wishlist;
 
 namespace Book_Exchange.Services;
 
 public class WishlistService : IWishlistService
 {
-    // TODO: Implement once ORM is set up and database context is available.
-    // private readonly ApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
 
-    // public WishlistService(ApplicationDbContext context)
-    // {
-    //     _context = context;
-    // }
+    public WishlistService(ApplicationDbContext context)
+    {
+        _context = context;
+    }
 
-    //GetWishlistItembyIdAsync
-    // - Returns the wishlist item if it exists
-    // - Throws KeyNotFoundException if the wishlist item does not exist
-    // - UserId must match the item's UserId (users cannot view each other's wishlist items directly)
-    public Task<WishlistItem> GetWishlistItemByIdAsync(Guid wishlistItemId, Guid userId)
-        => throw new NotImplementedException();
+    public async Task<WishlistItem> GetWishlistItemByIdAsync(Guid wishlistItemId, Guid userId)
+    {
+        return await _context.Wishlist
+            .FirstOrDefaultAsync(w => w.Id == wishlistItemId && w.UserId == userId)
+            ?? throw new KeyNotFoundException("Wishlist item not found.");
+    }
 
-    // GetWishlistByUserIdAsync
-    // - Returns all wishlist items belonging to the user
-    // - Returns empty list if the user has no wishlist items
-    public Task<IEnumerable<WishlistItem>> GetWishlistByUserIdAsync(Guid userId)
-        => throw new NotImplementedException();
+    public async Task<IEnumerable<WishlistItem>> GetWishlistByUserIdAsync(Guid userId)
+    {
+        return await _context.Wishlist
+            .Where(w => w.UserId == userId)
+            .OrderByDescending(w => w.IsActive)
+            .ThenBy(w => w.Isbn)
+            .ToListAsync();
+    }
 
-    // AddWishlistItemAsync
-    // - ISBN must not be null or whitespace
-    // - Throws InvalidOperationException if the ISBN is already on the user's wishlist (active or inactive)
-    // - Creates the item with IsActive = true
-    public Task<WishlistItem> AddWishlistItemAsync(Guid userId, string isbn)
-        => throw new NotImplementedException();
+    public async Task<WishlistItem> AddWishlistItemAsync(Guid userId, string isbn)
+    {
+        isbn = NormalizeIsbn(isbn);
 
-    // RemoveWishlistItemAsync
-    // - Throws KeyNotFoundException if the item does not exist or does not belong to the user
-    // - Soft deletes the item by setting IsActive = false
-    public Task RemoveWishlistItemAsync(Guid wishlistItemId, Guid userId)
-        => throw new NotImplementedException();
+        if (!IsValidIsbn(isbn))
+        {
+            throw new ArgumentException("ISBN must be a valid ISBN 10 or ISBN 13.");
+        }
 
-    // RestoreWishlistItemAsync
-    // - Throws KeyNotFoundException if the item does not exist or does not belong to the user
-    // - Reactivates a previously removed item by setting IsActive = true
-    public Task RestoreWishlistItemAsync(Guid wishlistItemId, Guid userId)
-        => throw new NotImplementedException();
+        var existing = await _context.Wishlist
+            .FirstOrDefaultAsync(w => w.UserId == userId && w.Isbn == isbn);
 
-    // GetMatchingListingsAsync
-    // - Returns active listings whose ISBN matches any of the user's active wishlist ISBNs
-    // - Excludes listings owned by the user themselves
-    // - Excludes listings that are not in Active status
-    // - A listing is considered unavailable(excluded) if it has an accepted ExchangeRequest whose Transaction has a non-Cancelled
-    //   status in its most recent TransactionStatusHistory entry, OR if it has any ExchangeRequest 
-    //   with ExchangeStatus.Accepted and no associated Transaction yet.
-    // - Returns empty list if there are no matches
-    public Task<IEnumerable<Listing>> GetMatchingListingsAsync(Guid userId)
-        => throw new NotImplementedException();
+        if (existing != null)
+        {
+            existing.IsActive = true;
+            await _context.SaveChangesAsync();
+            await CreateWishlistMatchNotificationsAsync(existing);
+            return existing;
+        }
 
-    // GetMatchingListingsForItemAsync
-    // - Throws KeyNotFoundException if the wishlist item does not exist or does not belong to the user
-    // - Returns empty list if the wishlist item is not active
-    // - Returns active listings whose ISBN matches the wishlist item's ISBN
-    // - Excludes listings owned by the user themselves
-    // - Uses the same derived availability logic as GetMatchingListingsAsync
-    public Task<IEnumerable<Listing>> GetMatchingListingsForItemAsync(Guid wishlistItemId, Guid userId)
-        => throw new NotImplementedException();
+        var item = new WishlistItem
+        {
+            Id = Guid.NewGuid(),
+            UserId = userId,
+            Isbn = isbn,
+            IsActive = true
+        };
+
+        _context.Wishlist.Add(item);
+        await _context.SaveChangesAsync();
+        await CreateWishlistMatchNotificationsAsync(item);
+        return item;
+    }
+
+    private async Task CreateWishlistMatchNotificationsAsync(WishlistItem item)
+    {
+        var matchingListings = await _context.Listings
+            .Where(l =>
+                l.Isbn == item.Isbn &&
+                l.UserId != item.UserId)
+            .ToListAsync();
+
+        foreach (var listing in matchingListings)
+        {
+            var alreadyExists = await _context.Notifications.AnyAsync(n =>
+                n.UserId == item.UserId &&
+                n.RelatedListingId == listing.Id &&
+                n.Category == NotificationCategory.MatchFound &&
+                !n.IsRead);
+
+            if (alreadyExists)
+            {
+                continue;
+            }
+
+            var notification = new Notification
+            {
+                Id = Guid.NewGuid(),
+                UserId = item.UserId,
+                Category = NotificationCategory.MatchFound,
+                Title = "Wishlist Match Found",
+                Message = $"A book from your wishlist is available now. ISBN: {item.Isbn}",
+                RelatedListingId = listing.Id,
+                CreatedAt = DateTime.UtcNow,
+                IsRead = false
+            };
+
+            _context.Notifications.Add(notification);
+        }
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task RemoveWishlistItemAsync(Guid wishlistItemId, Guid userId)
+    {
+        var item = await GetWishlistItemByIdAsync(wishlistItemId, userId);
+
+        item.IsActive = false;
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task RestoreWishlistItemAsync(Guid wishlistItemId, Guid userId)
+    {
+        var item = await GetWishlistItemByIdAsync(wishlistItemId, userId);
+
+        item.IsActive = true;
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<IEnumerable<Listing>> GetMatchingListingsAsync(Guid userId)
+    {
+        var activeIsbns = await _context.Wishlist
+            .Where(w => w.UserId == userId && w.IsActive)
+            .Select(w => w.Isbn)
+            .ToListAsync();
+
+        return await _context.Listings
+            .Include(l => l.User)
+            .Where(l => activeIsbns.Contains(l.Isbn) && l.UserId != userId)
+            .OrderByDescending(l => l.CreatedAt)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Listing>> GetMatchingListingsForItemAsync(Guid wishlistItemId, Guid userId)
+    {
+        var item = await GetWishlistItemByIdAsync(wishlistItemId, userId);
+
+        return await _context.Listings
+            .Include(l => l.User)
+            .Where(l => l.Isbn == item.Isbn && l.UserId != userId)
+            .OrderByDescending(l => l.CreatedAt)
+            .ToListAsync();
+    }
+
+    private static string NormalizeIsbn(string isbn)
+    {
+        return isbn.Trim().Replace("-", "").Replace(" ", "").ToUpper();
+    }
+
+    private static bool IsValidIsbn(string isbn)
+    {
+        return Regex.IsMatch(isbn, @"^([0-9]{13}|[0-9X]{10})$");
+    }
 }

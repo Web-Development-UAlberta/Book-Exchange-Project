@@ -1,7 +1,12 @@
-﻿@model Book_Exchange.Models.DTOs.Listing.ListingViewDto
+﻿@using System.Security.Claims
+@model Book_Exchange.Models.DTOs.Listing.ListingViewDto
 
 @{
     ViewData["Title"] = "Listing Details";
+    var currentUserId =
+            User.FindFirstValue(ClaimTypes.NameIdentifier);
+    var isOwner =
+        currentUserId == Model.UserId.ToString();
 }
 
 <div id="listing-detail-page" class="container mt-4">
@@ -83,8 +88,10 @@
         </div>
 
         <div class="col-md-3">
+            @if (!isOwner)
 
-            <!--<div id="listing-seller-card" class="card p-3">
+            {
+                <div id="listing-seller-card" class="card p-3">
 
                 <p>Listed by</p>
 
@@ -92,31 +99,33 @@
                     @Model.SellerName
                 </p>
 
-                <p id="listing-seller-rating">
+                <!---<p id="listing-seller-rating">
                     ★★★★☆ - 18 trades
-                </p>
+                </p>-->
+                <!-- TODO: check this buttons -->
+                    <a id="exchange-request-btn"
+                            class="btn btn-outline-primary mb-2"
+                            asp-controller="ExchangeRequest"
+                            asp-action="Create"
+                            asp-route-listingId="@Model.Id">
+                        Exchange Request
+                    </a>
 
-                <button id="propose-swap-btn"
-                        class="btn btn-outline-primary mb-2">
-                    Propose Swap
-                </button>
+                    <a id="message-seller-btn"
+                            class="btn btn-outline-primary"
+                            asp-controller="Message"
+                            asp-action="Create"
+                            asp-route-listingId="@Model.Id">
+                        Message Seller
+                    </a>
 
-                <button id="send-offer-btn"
-                        class="btn btn-outline-primary mb-2">
-                    Send Offer
-                </button>
-
-                <button id="message-seller-btn"
-                        class="btn btn-outline-primary">
-                    Message Seller
-                </button>
-
-            </div>-->
+            </div>
             <!--<div id="shipping-estimate" class="card p-3 mt-4 text-center">
                 <p>Estimated Shipping</p>
                 <strong>$12.00</strong>
                 <small>Based on weight and location</small>
             </div>-->
+            }
 
             <a id="listing-view-btn"
                    asp-controller="Listing"
