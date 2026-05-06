@@ -1,133 +1,169 @@
+using System.Security.Claims;
 using Book_Exchange.Models;
 using Book_Exchange.Models.DTOs.ExchangeRequest;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-// TODO: Once ORM is implemented make sure nothing has changed
 namespace Book_Exchange.Controllers;
 
 [Authorize]
 public class ExchangeRequestController : Controller
 {
     private readonly IExchangeRequestService _exchangeRequestService;
-    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IListingService _listingService;
+    private readonly IBookSearchApi _bookSearchApi;
 
     public ExchangeRequestController(
         IExchangeRequestService exchangeRequestService,
-        UserManager<ApplicationUser> userManager)
+        IListingService listingService,
+        IBookSearchApi bookSearchApi)
     {
         _exchangeRequestService = exchangeRequestService;
-        _userManager = userManager;
+        _listingService = listingService;
+        _bookSearchApi = bookSearchApi;
     }
 
-    // Shows both sent and received exchange requests for the current user
-    // GET /ExchangeRequest
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string tab = "received")
     {
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
-        var sent = await _exchangeRequestService.GetSentExchangeRequestsAsync(userId);
-        var received = await _exchangeRequestService.GetReceivedExchangeRequestsAsync(userId);
+        var userId = GetCurrentUserId();
 
-        // TODO: Replace with a proper ViewModel once ORM is finalized
-        ViewBag.Sent = sent;
-        ViewBag.Received = received;
+        var received = await BuildViewDtos(
+            await _exchangeRequestService.GetReceivedExchangeRequestsAsync(userId));
 
-        return View();
-    }
+        var sent = await BuildViewDtos(
+            await _exchangeRequestService.GetSentExchangeRequestsAsync(userId));
 
-    // GET /ExchangeRequest/Details/{id}
-    [HttpGet]
-    public async Task<IActionResult> Details(Guid id)
-    {
-        try
+        ViewBag.Tab = tab;
+
+        return View(new ExchangeRequestIndexViewModel
         {
-            var request = await _exchangeRequestService.GetExchangeRequestByIdAsync(id);
-            return View(request);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+            Received = received,
+            Sent = sent,
+            History = received.Concat(sent)
+                .Where(x => x.Status != ExchangeStatus.Requested)
+                .OrderByDescending(x => x.CreatedAt)
+                .ToList()
+        });
     }
 
-    // GET /ExchangeRequest/Create
     [HttpGet]
-    public IActionResult Create()
+    public async Task<IActionResult> Create(Guid listingId)
     {
-        return View();
+        var userId = GetCurrentUserId();
+        var targetListing = await _listingService.GetListingByIdAsync(listingId);
+
+        if (targetListing.UserId == userId)
+        {
+            return RedirectToAction("Details", "Listing", new { id = listingId });
+        }
+
+        var myListings = await _listingService.GetListingsByUserIdAsync(userId);
+
+        ViewBag.TargetListing = targetListing;
+        ViewBag.TargetBook = await _bookSearchApi.GetBookByIsbnAsync(targetListing.Isbn);
+        ViewBag.MyListings = myListings;
+
+        return View(new CreateExchangeRequestDto
+        {
+            TargetListingId = listingId
+        });
     }
 
-    // POST /ExchangeRequest/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateExchangeRequestDto dto)
     {
         if (!ModelState.IsValid)
-            return View(dto);
-
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
-
-        try
         {
-            await _exchangeRequestService.CreateExchangeRequestAsync(dto, userId);
-            TempData["Success"] = "Exchange request submitted.";
-            return RedirectToAction(nameof(Index));
-        }
-        catch (InvalidOperationException ex)
-        {
-            ModelState.AddModelError(string.Empty, ex.Message);
             return View(dto);
         }
+
+        var userId = GetCurrentUserId();
+
+        await _exchangeRequestService.CreateExchangeRequestAsync(dto, userId);
+
+        return RedirectToAction(nameof(Index), new { tab = "sent" });
     }
 
-    // POST /ExchangeRequest/Accept/{id}
+    [HttpGet]
+    public async Task<IActionResult> Details(Guid id)
+    {
+        var request = await _exchangeRequestService.GetExchangeRequestByIdAsync(id);
+        var userId = GetCurrentUserId();
+
+        if (request.RequesterId != userId && request.TargetListing.UserId != userId)
+        {
+            return Forbid();
+        }
+
+        var dto = await BuildViewDto(request);
+
+        return View(dto);
+    }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Accept(Guid id)
     {
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
-
-        try
-        {
-            await _exchangeRequestService.AcceptExchangeRequestAsync(id, userId);
-            TempData["Success"] = "Exchange request accepted.";
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
-        catch (InvalidOperationException ex)
-        {
-            TempData["Error"] = ex.Message;
-        }
-
-        return RedirectToAction(nameof(Index));
+        await _exchangeRequestService.AcceptExchangeRequestAsync(id, GetCurrentUserId());
+        return RedirectToAction(nameof(Index), new { tab = "received" });
     }
 
-    // POST /ExchangeRequest/Reject/{id}
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Reject(Guid id)
     {
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
-
-        try
-        {
-            await _exchangeRequestService.RejectExchangeRequestAsync(id, userId);
-            TempData["Success"] = "Exchange request rejected.";
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
-        catch (InvalidOperationException ex)
-        {
-            TempData["Error"] = ex.Message;
-        }
-
-        return RedirectToAction(nameof(Index));
+        await _exchangeRequestService.RejectExchangeRequestAsync(id, GetCurrentUserId());
+        return RedirectToAction(nameof(Index), new { tab = "received" });
     }
+
+    private Guid GetCurrentUserId()
+    {
+        return Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+    }
+
+    private async Task<List<ExchangeRequestViewDto>> BuildViewDtos(IEnumerable<ExchangeRequest> requests)
+    {
+        var list = new List<ExchangeRequestViewDto>();
+
+        foreach (var request in requests)
+        {
+            list.Add(await BuildViewDto(request));
+        }
+
+        return list;
+    }
+
+    private async Task<ExchangeRequestViewDto> BuildViewDto(ExchangeRequest request)
+    {
+        return new ExchangeRequestViewDto
+        {
+            Id = request.Id,
+            TargetListingId = request.TargetListingId,
+            TargetIsbn = request.TargetListing.Isbn,
+            TargetBook = await _bookSearchApi.GetBookByIsbnAsync(request.TargetListing.Isbn),
+            RequesterId = request.RequesterId,
+            RequesterName = request.Requester.UserName ?? "Unknown",
+            OwnerId = request.TargetListing.UserId,
+            OwnerName = request.TargetListing.User.UserName ?? "Unknown",
+            Status = request.Status,
+            Price = request.Price,
+            Message = request.Message,
+            CreatedAt = request.CreatedAt,
+            AcceptedAt = request.AcceptedAt,
+            CancelledAt = request.CancelledAt,
+            OfferedIsbns = request.ExchangeRequestItems
+                .Select(i => i.OfferedListing.Isbn)
+                .ToList()
+        };
+    }
+}
+
+public class ExchangeRequestIndexViewModel
+{
+    public List<ExchangeRequestViewDto> Received { get; set; } = new();
+    public List<ExchangeRequestViewDto> Sent { get; set; } = new();
+    public List<ExchangeRequestViewDto> History { get; set; } = new();
 }
