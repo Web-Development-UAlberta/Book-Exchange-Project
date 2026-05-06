@@ -11,6 +11,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: BookExchangeDb
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     strategy:
       matrix:
         dotnet-version: ["10.0.x"]
@@ -29,14 +44,22 @@ jobs:
       - name: Build
         run: dotnet build --no-restore -c Release ./src/Book-Exchange/Book-Exchange.slnx
 
-      - name: Check build artifacts
-        run: |
-          BUILD_DIR=$(find ./src -name "*.csproj" | head -n 1 | xargs dirname)
-          if [ ! -d "$BUILD_DIR/bin" ] && [ ! -d "$BUILD_DIR/publish" ]; then
-           echo "No build output directory found. Expected 'bin' or 'publish'."
-           exit 1
-          fi
+      - name: Run unit tests
+        run: dotnet test ./src/Book-Exchange/Book-Exchange.Tests/Unit/Unit.csproj --no-build --configuration Release --verbosity normal
 
-      # This shoule be here after we are sure we have a sucessed build
-      - name: Run tests
-        run: dotnet test ./src/Book-Exchange/Book-Exchange.slnx --no-build --configuration Release --verbosity normal
+      - name: Run integration tests
+        run: dotnet test ./src/Book-Exchange/Book-Exchange.Tests/Integration/Integration.csproj --no-build --configuration Release --verbosity normal
+
+      - name: Install EF tools
+        run: dotnet tool install --global dotnet-ef
+
+      - name: Run database migrations
+        run: dotnet ef database update --project ./src/Book-Exchange/Book-Exchange.Data/Book-Exchange.Data.csproj --startup-project ./src/Book-Exchange/Book-Exchange.Api/Book-Exchange.Api.csproj
+        env:
+          ConnectionStrings__DefaultConnection: "Host=localhost;Port=5432;Database=BookExchangeDb;Username=postgres;Password=postgres"
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run playwright tests
+        run: npx playwright test --project=chromium --reporter=list
