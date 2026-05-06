@@ -25,7 +25,7 @@ public class TransactionTests : PageTest
     public async Task TransactionIndex_LoadsWithActiveTabs()
     {
         await LoginAsync("test@test.com", "Test1234!");
-        await Page.GotoAsync($"{BaseUrl}/Transaction");
+        await Page.GotoAsync($"{BaseUrl}/Transactions");
 
         await Expect(Page).ToHaveTitleAsync("Transactions - Book_Exchange");
         await Expect(Page.Locator("#transactions-tabs")).ToBeVisibleAsync();
@@ -39,7 +39,7 @@ public class TransactionTests : PageTest
     [Fact]
     public async Task TransactionIndex_UnauthenticatedUser_RedirectsToLogin()
     {
-        await Page.GotoAsync($"{BaseUrl}/Transaction");
+        await Page.GotoAsync($"{BaseUrl}/Transactions");
         await Expect(Page).ToHaveURLAsync(new Regex(".*/Account/Login.*"));
     }
 
@@ -50,7 +50,7 @@ public class TransactionTests : PageTest
     public async Task TransactionIndex_HistoryTab_ShowsCompletedTransactions()
     {
         await LoginAsync("test@test.com", "Test1234!");
-        await Page.GotoAsync($"{BaseUrl}/Transaction");
+        await Page.GotoAsync($"{BaseUrl}/Transactions");
 
         await Page.ClickAsync("#history-tab");
         await Expect(Page.Locator("#history-panel")).ToBeVisibleAsync();
