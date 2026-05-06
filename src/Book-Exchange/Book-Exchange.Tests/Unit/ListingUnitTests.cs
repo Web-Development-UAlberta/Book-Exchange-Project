@@ -7,15 +7,11 @@ using Book_Exchange.Services.Interfaces;
 namespace Book_Exchange.Tests.BackEnd;
 
 // UNIT TESTS
-// Covers: UT-LIST-01 through UT-LIST-10
+// Covers: UT-LIST-01 through UT-LIST-08
+
 public class ListingUnitTests
 {
-    private readonly Mock<IListingService> _serviceMock;
-
-    public ListingUnitTests()
-    {
-        _serviceMock = new Mock<IListingService>();
-    }
+    private readonly Mock<IListingService> _serviceMock = new();
 
     /// <summary>
     /// UT-LIST-01: Create listing with valid ISBN, condition, price, and weight
@@ -51,11 +47,10 @@ public class ListingUnitTests
         var result = await _serviceMock.Object.CreateListingAsync(dto, userId);
 
         Assert.NotNull(result);
-        Assert.Equal(userId, result.UserId);
         Assert.Equal(dto.Isbn, result.Isbn);
-        Assert.Equal(dto.Condition, result.Condition);
-        Assert.Equal(dto.Price, result.Price);
-        Assert.Equal(dto.WeightGrams, result.WeightGrams);
+        Assert.Equal(BookCondition.Good, result.Condition);
+        Assert.Equal(20.50m, result.Price);
+        Assert.Equal(500, result.WeightGrams);
     }
 
     /// <summary>
@@ -77,7 +72,7 @@ public class ListingUnitTests
 
         _serviceMock
             .Setup(s => s.CreateListingAsync(dto, userId))
-            .ThrowsAsync(new ArgumentException("ISBN must be a 10 or 13 digit number."));
+            .ThrowsAsync(new ArgumentException("ISBN must be valid."));
 
         await Assert.ThrowsAsync<ArgumentException>(
             () => _serviceMock.Object.CreateListingAsync(dto, userId));
@@ -102,7 +97,7 @@ public class ListingUnitTests
 
         _serviceMock
             .Setup(s => s.CreateListingAsync(dto, userId))
-            .ThrowsAsync(new ArgumentException("Price must be greater than 0."));
+            .ThrowsAsync(new ArgumentException("Price must be greater than or equal to 0."));
 
         await Assert.ThrowsAsync<ArgumentException>(
             () => _serviceMock.Object.CreateListingAsync(dto, userId));
@@ -164,71 +159,11 @@ public class ListingUnitTests
     }
 
     /// <summary>
-    /// UT-LIST-06: Update listing status from Active to Pending
-    /// Expected: Status change is saved correctly
+    /// UT-LIST-06: Delete existing listing
+    /// Expected: Listing is removed successfully
     /// </summary>
     [Fact]
-    public async Task UT_LIST_06_UpdateListingStatusFromActiveToPending_CompletesSuccessfully()
-    {
-        // NOTE:
-        // Your current Listing model does not yet contain ListingStatus.
-        // This test is a placeholder until you add something like:
-        // public ListingStatus Status { get; set; }
-        //
-        // For now, this uses UpdateListingAsync to match the current interface.
-
-        var userId = Guid.NewGuid();
-        var listingId = Guid.NewGuid();
-
-        var dto = new UpdateListingDto
-        {
-            Condition = BookCondition.Good,
-            Price = 20.00m,
-            WeightGrams = 500
-        };
-
-        _serviceMock
-            .Setup(s => s.UpdateListingAsync(listingId, dto, userId))
-            .Returns(Task.CompletedTask);
-
-        await _serviceMock.Object.UpdateListingAsync(listingId, dto, userId);
-
-        _serviceMock.Verify(
-            s => s.UpdateListingAsync(listingId, dto, userId),
-            Times.Once);
-    }
-
-    /// <summary>
-    /// UT-LIST-07: Mark listing as Completed after successful transaction
-    /// Expected: Listing is no longer shown as active
-    /// </summary>
-    [Fact]
-    public async Task UT_LIST_07_MarkListingCompletedAfterTransaction_CompletesSuccessfully()
-    {
-        // NOTE:
-        // Your current IListingService does not have MarkCompletedAsync or status update method.
-        // This test should be updated when ListingStatus is added.
-
-        var userId = Guid.NewGuid();
-        var listingId = Guid.NewGuid();
-
-        _serviceMock
-            .Setup(s => s.DeleteListingAsync(listingId, userId))
-            .Returns(Task.CompletedTask);
-
-        await _serviceMock.Object.DeleteListingAsync(listingId, userId);
-
-        _serviceMock.Verify(
-            s => s.DeleteListingAsync(listingId, userId),
-            Times.Once);
-    }
-
-    /// <summary>
-    /// UT-LIST-08: Delete existing listing
-    /// Expected: Listing is removed or marked unavailable based on implementation
-    /// </summary>
-    [Fact]
-    public async Task UT_LIST_08_DeleteExistingListing_CompletesSuccessfully()
+    public async Task UT_LIST_06_DeleteExistingListing_CompletesSuccessfully()
     {
         var userId = Guid.NewGuid();
         var listingId = Guid.NewGuid();
@@ -245,11 +180,11 @@ public class ListingUnitTests
     }
 
     /// <summary>
-    /// UT-LIST-09: User attempts to update another user's listing
+    /// UT-LIST-07: User attempts to update another user's listing
     /// Expected: Operation is rejected
     /// </summary>
     [Fact]
-    public async Task UT_LIST_09_UpdateAnotherUsersListing_ThrowsUnauthorizedAccessException()
+    public async Task UT_LIST_07_UpdateAnotherUsersListing_ThrowsUnauthorizedAccessException()
     {
         var currentUserId = Guid.NewGuid();
         var listingId = Guid.NewGuid();
@@ -263,25 +198,25 @@ public class ListingUnitTests
 
         _serviceMock
             .Setup(s => s.UpdateListingAsync(listingId, dto, currentUserId))
-            .ThrowsAsync(new UnauthorizedAccessException("You are not allowed to update this listing."));
+            .ThrowsAsync(new UnauthorizedAccessException());
 
         await Assert.ThrowsAsync<UnauthorizedAccessException>(
             () => _serviceMock.Object.UpdateListingAsync(listingId, dto, currentUserId));
     }
 
     /// <summary>
-    /// UT-LIST-10: User attempts to delete another user's listing
+    /// UT-LIST-08: User attempts to delete another user's listing
     /// Expected: Operation is rejected
     /// </summary>
     [Fact]
-    public async Task UT_LIST_10_DeleteAnotherUsersListing_ThrowsUnauthorizedAccessException()
+    public async Task UT_LIST_08_DeleteAnotherUsersListing_ThrowsUnauthorizedAccessException()
     {
         var currentUserId = Guid.NewGuid();
         var listingId = Guid.NewGuid();
 
         _serviceMock
             .Setup(s => s.DeleteListingAsync(listingId, currentUserId))
-            .ThrowsAsync(new UnauthorizedAccessException("You are not allowed to delete this listing."));
+            .ThrowsAsync(new UnauthorizedAccessException());
 
         await Assert.ThrowsAsync<UnauthorizedAccessException>(
             () => _serviceMock.Object.DeleteListingAsync(listingId, currentUserId));

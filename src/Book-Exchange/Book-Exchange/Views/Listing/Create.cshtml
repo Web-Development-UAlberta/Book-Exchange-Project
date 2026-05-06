@@ -1,0 +1,193 @@
+﻿@model Book_Exchange.Models.DTOs.Listing.CreateListingDto
+@{
+    ViewData["Title"] = "Create Listing";
+}
+<div class="container mt-4">
+    <h2>Create Listing</h2>
+    <form id="create-listing-form"
+          asp-controller="Listing"
+          asp-action="Create"
+          method="post">
+        @Html.AntiForgeryToken()
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="mb-3">1. Search and Select Book</h5>
+                <div class="mb-3">
+                    <label class="form-label">Search Book</label>
+                    <div class="input-group">
+                        <input id="book-search-input"
+                               type="text"
+                               class="form-control"
+                               placeholder="Search by title, author, or ISBN" />
+                        <button id="book-search-btn"
+                                type="button"
+                                class="btn btn-outline-primary">
+                            Search
+                        </button>
+                    </div>
+                </div>
+                <div id="book-search-results" class="list-group mb-4"></div>
+                <div id="selected-book-card" class="card mb-4 d-none">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-2">
+                                <img id="selected-book-thumbnail"
+                                     class="img-fluid"
+                                     alt="Book Cover" />
+                            </div>
+                            <div class="col-md-10">
+                                <h5 id="selected-book-title"></h5>
+                                <p id="selected-book-authors" class="mb-1"></p>
+                                <p id="selected-book-year" class="mb-1"></p>
+                                <p class="mb-0">
+                                    <strong>Selected ISBN:</strong>
+                                    <span id="selected-book-isbn"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Isbn" class="form-label"></label>
+                    <input id="listing-isbn-input"
+                           asp-for="Isbn"
+                           class="form-control"
+                           readonly />
+                    <span asp-validation-for="Isbn"
+                          class="text-danger">
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="mb-3">2. Listing Details</h5>
+                <div class="mb-3">
+                    <label asp-for="Condition" class="form-label"></label>
+                    <select id="listing-condition-select"
+                            asp-for="Condition"
+                            asp-items="Html.GetEnumSelectList<Book_Exchange.Models.BookCondition>()"
+                            class="form-select">
+                    </select>
+                    <span asp-validation-for="Condition"
+                          class="text-danger">
+                    </span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Price" class="form-label"></label>
+                    <input id="listing-price-input"
+                           asp-for="Price"
+                           class="form-control"
+                           placeholder="Example: 12.50" />
+                    <span asp-validation-for="Price"
+                          class="text-danger">
+                    </span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="WeightGrams" class="form-label"></label>
+                    <input id="listing-weight-input"
+                           asp-for="WeightGrams"
+                           class="form-control"
+                           placeholder="Example: 400" />
+                    <span asp-validation-for="WeightGrams"
+                          class="text-danger">
+                    </span>
+                </div>
+            </div>
+        </div>
+        <button id="create-listing-submit-btn"
+                type="submit"
+                class="btn btn-primary">
+            Create Listing
+        </button>
+        <a asp-controller="Listing"
+               asp-action="Index"
+               class="btn btn-secondary">
+            Back to Listings
+        </a>
+    </form>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document
+            .getElementById("book-search-btn")
+            .addEventListener("click", async function () {
+                const searchText =
+                    document.getElementById("book-search-input").value;
+                if (!searchText || searchText.trim() === "") {
+                    return;
+                }
+                const response =
+                    await fetch(`/Listing/SearchBooks?searchText=${encodeURIComponent(searchText)}`);
+                const books = await response.json();
+                const resultsDiv =
+                    document.getElementById("book-search-results");
+                resultsDiv.innerHTML = "";
+                if (!books || books.length === 0) {
+                    resultsDiv.innerHTML =
+                        `<div class="alert alert-warning">No books found.</div>`;
+                    return;
+                }
+                books.forEach(book => {
+                    const isbn =
+                        book.isbn13 || book.isbn10 || "";
+                    if (!isbn) {
+                        return;
+                    }
+                    const item = document.createElement("button");
+                    item.type = "button";
+                    item.className = "list-group-item list-group-item-action book-result-item";
+                    item.innerHTML = `
+                        <div class="d-flex align-items-center">
+                            <img src="${book.thumbnail ?? ""}"
+                                 style="height:80px; width:60px; object-fit:contain;"
+                                 class="me-3 border"
+                                 alt="Book Cover" />
+                            <div class="text-start">
+                                <strong class="book-result-title">
+                                    ${book.title ?? "Unknown Title"}
+                                </strong>
+                                <div class="book-result-authors">
+                                    ${(book.authors || []).join(", ")}
+                                </div>
+                                <small>
+                                    Published: ${book.publishedYear ?? "N/A"}
+                                </small>
+                                <br />
+                                <small>
+                                    ISBN: ${isbn}
+                                </small>
+                            </div>
+                        </div>
+                    `;
+                    item.addEventListener("click", function () {
+                        document.getElementById("listing-isbn-input").value = isbn;
+                        document
+                            .getElementById("selected-book-card")
+                            .classList.remove("d-none");
+                        document
+                            .getElementById("selected-book-thumbnail")
+                            .src = book.thumbnail ?? "";
+                        document
+                            .getElementById("selected-book-title")
+                            .innerText = book.title ?? "Unknown Title";
+                        document
+                            .getElementById("selected-book-authors")
+                            .innerText =
+                                "Authors: " + ((book.authors || []).join(", ") || "N/A");
+                        document
+                            .getElementById("selected-book-year")
+                            .innerText =
+                                "Published: " + (book.publishedYear ?? "N/A");
+                        document
+                            .getElementById("selected-book-isbn")
+                            .innerText = isbn;
+                    });
+                    resultsDiv.appendChild(item);
+                });
+            });
+    </script>
+}

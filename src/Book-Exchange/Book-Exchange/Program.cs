@@ -11,15 +11,24 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
-dataSourceBuilder.MapEnum<BookCondition>("public.book_condition");
-dataSourceBuilder.MapEnum<ExchangeStatus>("public.exchange_status");
-dataSourceBuilder.MapEnum<TransactionStatus>("public.transaction_status");
-dataSourceBuilder.MapEnum<ShipmentStatus>("public.shipment_status");
-dataSourceBuilder.MapEnum<NotificationCategory>("public.notification_category");
+dataSourceBuilder.MapEnum<BookCondition>("book_condition");
+dataSourceBuilder.MapEnum<ExchangeStatus>("exchange_status");
+dataSourceBuilder.MapEnum<TransactionStatus>("transaction_status");
+dataSourceBuilder.MapEnum<ShipmentStatus>("shipment_status");
+dataSourceBuilder.MapEnum<NotificationCategory>("notification_category");
 var dataSource = dataSourceBuilder.Build();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(dataSource));
+{
+    options.UseNpgsql(dataSource, o =>
+    {
+        o.MapEnum<BookCondition>("book_condition");
+        o.MapEnum<ExchangeStatus>("exchange_status");
+        o.MapEnum<TransactionStatus>("transaction_status");
+        o.MapEnum<ShipmentStatus>("shipment_status");
+        o.MapEnum<NotificationCategory>("notification_category");
+    });
+});
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -34,15 +43,9 @@ builder.Services
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IAddressService, AddressService>();
-builder.Services.AddHttpClient<IPlaceApiService, GooglePlaceApiService>();
-builder.Services.AddHttpClient<IBookSearchApi, GoogleBookSearchApi>(client =>
-{
-    client.BaseAddress = new Uri("https://www.googleapis.com/books/v1/");
-});
-
-builder.Services.AddScoped<IAddressService, AddressService>();
-builder.Services.AddScoped<IExchangeRequestService, ExchangeRequestService>();
 builder.Services.AddScoped<IListingService, ListingService>();
+builder.Services.AddScoped<IMatchingService, MatchingService>();
+builder.Services.AddScoped<IExchangeRequestService, ExchangeRequestService>();
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
@@ -50,6 +53,11 @@ builder.Services.AddScoped<IShippingService, ShippingService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IWishlistService, WishlistService>();
 
+builder.Services.AddHttpClient<IPlaceApiService, GooglePlaceApiService>();
+builder.Services.AddHttpClient<IBookSearchApi, GoogleBookSearchApi>(client =>
+{
+    client.BaseAddress = new Uri("https://www.googleapis.com/books/v1/");
+});
 
 var app = builder.Build();
 

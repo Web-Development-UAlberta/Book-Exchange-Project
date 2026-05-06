@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Book_Exchange.Models.DTOs.Listing.ListingViewDto>
+
+@{
+    ViewData["Title"] = "Listings";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Listings</h2>
+
+        <a id="create-listing-btn"
+               asp-controller="Listing"
+               asp-action="Create"
+               class="btn btn-primary">
+            Create Listing
+        </a>
+    </div>
+
+    <div id="listing-list" class="row">
+
+        @foreach (var listing in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 listing-card">
+
+                    @if (!string.IsNullOrWhiteSpace(listing.Book?.ThumbnailUrl))
+                    {
+                        <img src="@listing.Book.ThumbnailUrl"
+                             class="card-img-top p-3"
+                             style="height:250px; object-fit:contain;"
+                             alt="@listing.Book.Title" />
+                    }
+
+                    <div class="card-body">
+                        <h5 class="card-title listing-book-title">
+                            @(listing.Book?.Title ?? "Unknown Title")
+                        </h5>
+
+                        <p>
+                            <strong>Author:</strong>
+                            @(listing.Book?.Authors.Any() == true
+                                ? string.Join(", ", listing.Book.Authors)
+                                : "N/A")
+                        </p>
+
+                        <p>
+                            <strong>ISBN:</strong> @listing.Isbn
+                        </p>
+
+                        <p>
+                            <strong>Condition:</strong> @listing.Condition
+                        </p>
+
+                        <p>
+                            <strong>Price:</strong> $@listing.Price
+                        </p>
+                    </div>
+
+                    <div class="card-footer bg-white">
+                        <a class="btn btn-outline-primary w-100 listing-view-btn"
+                               asp-controller="Listing"
+                               asp-action="Details"
+                               asp-route-id="@listing.Id">
+                            View Listing
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        }
+
+    </div>
+
+</div>

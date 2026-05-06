@@ -1,57 +1,87 @@
-using Book_Exchange.Models;
+using System.Security.Claims;
+using Book_Exchange.Data;
 using Book_Exchange.Models.DTOs.Listing;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-// TODO: Once ORM is implemented make sure nothing has changed
 namespace Book_Exchange.Controllers;
 
 [Authorize]
-public class ListingsController : Controller
+public class ListingController : Controller
 {
+    private readonly ApplicationDbContext _context;
     private readonly IListingService _listingService;
-    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IBookSearchApi _bookSearchApi;
 
-    public ListingsController(IListingService listingService, UserManager<ApplicationUser> userManager)
+    public ListingController(
+        ApplicationDbContext context,
+        IListingService listingService,
+        IBookSearchApi bookSearchApi)
     {
+        _context = context;
         _listingService = listingService;
-        _userManager = userManager;
+        _bookSearchApi = bookSearchApi;
     }
 
-    // GET /Listing
-    [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> Index()
     {
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
-        var listings = await _listingService.GetListingsByUserIdAsync(userId);
-        return View(listings);
+        var listings = await _context.Listings
+            .Include(l => l.User)
+            .OrderByDescending(l => l.CreatedAt)
+            .ToListAsync();
+
+        var viewModels = new List<ListingViewDto>();
+
+        foreach (var listing in listings)
+        {
+            viewModels.Add(new ListingViewDto
+            {
+                Id = listing.Id,
+                UserId = listing.UserId,
+                Isbn = listing.Isbn,
+                Condition = listing.Condition,
+                Price = listing.Price,
+                WeightGrams = listing.WeightGrams,
+                CreatedAt = listing.CreatedAt,
+                SellerName = listing.User.UserName ?? "Unknown",
+                Book = await _bookSearchApi.GetBookByIsbnAsync(listing.Isbn)
+            });
+        }
+
+        return View(viewModels);
     }
 
-    // GET /Listing/Details/{id}
-    [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> Details(Guid id)
     {
-        try
+        var listing = await _listingService.GetListingByIdAsync(id);
+        var book = await _bookSearchApi.GetBookByIsbnAsync(listing.Isbn);
+
+        var vm = new ListingViewDto
         {
-            var listing = await _listingService.GetListingByIdAsync(id);
-            return View(listing);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+            Id = listing.Id,
+            UserId = listing.UserId,
+            Isbn = listing.Isbn,
+            Condition = listing.Condition,
+            Price = listing.Price,
+            WeightGrams = listing.WeightGrams,
+            CreatedAt = listing.CreatedAt,
+            SellerName = listing.User.UserName ?? "Unknown",
+            Book = book
+        };
+
+        return View(vm);
     }
 
-    // GET /Listing/Create
     [HttpGet]
     public IActionResult Create()
     {
-        return View();
+        return View(new CreateListingDto());
     }
 
-    // POST /Listing/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateListingDto dto)
@@ -59,84 +89,33 @@ public class ListingsController : Controller
         if (!ModelState.IsValid)
             return View(dto);
 
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
+        var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        try
-        {
-            await _listingService.CreateListingAsync(dto, userId);
-            TempData["Success"] = "Listing created successfully.";
-            return RedirectToAction(nameof(Index));
-        }
-        catch (InvalidOperationException ex)
-        {
-            ModelState.AddModelError(string.Empty, ex.Message);
-            return View(dto);
-        }
+        var listing = await _listingService.CreateListingAsync(dto, userId);
+
+        return RedirectToAction(nameof(Details), new { id = listing.Id });
     }
 
-    // GET /Listing/Edit/{id}
     [HttpGet]
-    public async Task<IActionResult> Edit(Guid id)
+    public async Task<IActionResult> SearchBooks(string searchText)
     {
-        try
+        if (string.IsNullOrWhiteSpace(searchText))
         {
-            var listing = await _listingService.GetListingByIdAsync(id);
-            return View(listing);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
-    }
-
-    // POST /Listing/Edit/{id}
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(Guid id, UpdateListingDto dto)
-    {
-        if (!ModelState.IsValid)
-            return View(dto);
-
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
-
-        try
-        {
-            await _listingService.UpdateListingAsync(id, dto, userId);
-            TempData["Success"] = "Listing updated successfully.";
-            return RedirectToAction(nameof(Index));
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
-        catch (InvalidOperationException ex)
-        {
-            ModelState.AddModelError(string.Empty, ex.Message);
-            return View(dto);
-        }
-    }
-
-    // POST /Listing/Delete/{id}
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Delete(Guid id)
-    {
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
-
-        try
-        {
-            await _listingService.DeleteListingAsync(id, userId);
-            TempData["Success"] = "Listing deleted successfully.";
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
-        catch (InvalidOperationException ex)
-        {
-            TempData["Error"] = ex.Message;
+            return Json(new List<object>());
         }
 
-        return RedirectToAction(nameof(Index));
+        var books = await _bookSearchApi.SearchBooksAsync(searchText, 10);
+
+        var result = books.Select(b => new
+        {
+            title = b.Title,
+            isbn13 = b.Isbn13,
+            isbn10 = b.Isbn10,
+            thumbnail = b.ThumbnailUrl,
+            authors = b.Authors,
+            publishedYear = b.PublishedYear
+        });
+
+        return Json(result);
     }
 }
