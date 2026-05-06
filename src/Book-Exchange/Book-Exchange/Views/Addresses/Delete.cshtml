@@ -1,0 +1,33 @@
+﻿@model Book_Exchange.Models.Address
+
+@{
+    ViewData["Title"] = "Delete Address";
+}
+
+<div class="container mt-4" data-testid="delete-address-page">
+    <h2>Delete Address</h2>
+
+    <div class="alert alert-warning">
+        Are you sure you want to delete this address?
+    </div>
+
+    <dl class="row">
+        <dt class="col-sm-3">Address</dt>
+        <dd class="col-sm-9" data-testid="delete-address-full-name">@Model.FullName</dd>
+
+        <dt class="col-sm-3">Google Place Id</dt>
+        <dd class="col-sm-9">@Model.GooglePlaceId</dd>
+    </dl>
+
+    <form asp-action="Delete" method="post" data-testid="delete-address-form">
+        <input type="hidden" asp-for="Id" />
+
+        <button type="submit" class="btn btn-danger" data-testid="confirm-delete-address-button">
+            Delete
+        </button>
+
+        <a asp-action="Index" class="btn btn-secondary" data-testid="back-to-address-list">
+            Cancel
+        </a>
+    </form>
+</div>

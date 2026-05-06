@@ -1,59 +1,37 @@
-using Book_Exchange.Models;
+using System.Security.Claims;
 using Book_Exchange.Models.DTOs.Address;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-// TODO: Once ORM is implemented make sure nothing has changed.
 namespace Book_Exchange.Controllers;
 
 [Authorize]
-public class AddressController : Controller
+public class AddressesController : Controller
 {
     private readonly IAddressService _addressService;
-    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IPlaceApiService _placeApiService;
 
-    public AddressController(IAddressService addressService, UserManager<ApplicationUser> userManager)
+    public AddressesController(
+        IAddressService addressService,
+        IPlaceApiService placeApiService)
     {
         _addressService = addressService;
-        _userManager = userManager;
+        _placeApiService = placeApiService;
     }
 
-    // GET /Address
-    [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
+        var userId = GetUserId();
         var addresses = await _addressService.GetAddressesByUserIdAsync(userId);
         return View(addresses);
     }
 
-    // GET /Address/Details/{id}
-    [HttpGet]
-    public async Task<IActionResult> Details(Guid id)
-    {
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
-
-        try
-        {
-            var address = await _addressService.GetAddressByIdAsync(id, userId);
-            return View(address);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
-    }
-
-    // GET /Address/Create
-    [HttpGet]
     public IActionResult Create()
     {
-        return View();
+        return View(new CreateAddressDto());
     }
 
-    // POST /Address/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateAddressDto dto)
@@ -61,91 +39,83 @@ public class AddressController : Controller
         if (!ModelState.IsValid)
             return View(dto);
 
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
-
         try
         {
-            await _addressService.CreateAddressAsync(dto, userId);
-            TempData["Success"] = "Address saved successfully.";
+            await _addressService.CreateAddressAsync(dto, GetUserId());
             return RedirectToAction(nameof(Index));
         }
-        catch (InvalidOperationException ex)
+        catch (Exception ex)
         {
             ModelState.AddModelError(string.Empty, ex.Message);
             return View(dto);
         }
     }
 
-    // GET /Address/Edit/{id}
-    [HttpGet]
     public async Task<IActionResult> Edit(Guid id)
     {
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
+        var address = await _addressService.GetAddressByIdAsync(id, GetUserId());
 
-        try
+        var dto = new UpdateAddressDto
         {
-            var address = await _addressService.GetAddressByIdAsync(id, userId);
-            var dto = new UpdateAddressDto
-            {
-                FullName = address.FullName,
-                GooglePlaceId = address.GooglePlaceId
-            };
-            return View(dto);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+            FullName = address.FullName,
+            GooglePlaceId = address.GooglePlaceId
+        };
+
+        ViewBag.AddressId = id;
+        return View(dto);
     }
 
-    // POST /Address/Edit/{id}
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Guid id, UpdateAddressDto dto)
     {
         if (!ModelState.IsValid)
+        {
+            ViewBag.AddressId = id;
             return View(dto);
-
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
+        }
 
         try
         {
-            await _addressService.UpdateAddressAsync(id, dto, userId);
-            TempData["Success"] = "Address updated successfully.";
+            await _addressService.UpdateAddressAsync(id, dto, GetUserId());
             return RedirectToAction(nameof(Index));
         }
-        catch (KeyNotFoundException)
+        catch (Exception ex)
         {
-            return NotFound();
-        }
-        catch (InvalidOperationException ex)
-        {
+            ViewBag.AddressId = id;
             ModelState.AddModelError(string.Empty, ex.Message);
             return View(dto);
         }
     }
 
-    // POST /Address/Delete/{id}
-    [HttpPost]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
+        var address = await _addressService.GetAddressByIdAsync(id, GetUserId());
+        return View(address);
+    }
 
-        try
-        {
-            await _addressService.DeleteAddressAsync(id, userId);
-            TempData["Success"] = "Address deleted successfully.";
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
-        catch (InvalidOperationException ex)
-        {
-            TempData["Error"] = ex.Message;
-        }
-
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(Guid id)
+    {
+        await _addressService.DeleteAddressAsync(id, GetUserId());
         return RedirectToAction(nameof(Index));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> SearchGoogleAddress(string query)
+    {
+        var results = await _placeApiService.SearchAddressAsync(query);
+        return Json(results);
+    }
+
+    private Guid GetUserId()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (userId == null)
+            throw new UnauthorizedAccessException();
+
+        return Guid.Parse(userId);
     }
 }

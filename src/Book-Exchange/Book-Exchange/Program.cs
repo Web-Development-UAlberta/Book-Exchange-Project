@@ -34,6 +34,9 @@ builder.Services
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IAddressService, AddressService>();
+builder.Services.AddHttpClient<IPlaceApiService, GooglePlaceApiService>();
+
+builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IExchangeRequestService, ExchangeRequestService>();
 builder.Services.AddScoped<IListingService, ListingService>();
 builder.Services.AddScoped<IMessageService, MessageService>();
