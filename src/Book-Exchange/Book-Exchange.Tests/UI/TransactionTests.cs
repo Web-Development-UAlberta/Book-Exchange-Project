@@ -15,7 +15,11 @@ public class TransactionTests : PageTest
         await Page.FillAsync("#Input_Email", email);
         await Page.FillAsync("#Input_Password", password);
         await Page.ClickAsync("#login-submit");
-        await Page.WaitForURLAsync($"{BaseUrl}/");
+        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+
+        // Verify login succeeded
+        if (Page.Url.Contains("/Account/Login"))
+            throw new Exception($"Login failed for {email} - check user exists in database.");
     }
 
     /// <summary>
@@ -25,7 +29,8 @@ public class TransactionTests : PageTest
     public async Task TransactionIndex_LoadsWithActiveTabs()
     {
         await LoginAsync("test@test.com", "Test1234!");
-        await Page.GotoAsync($"{BaseUrl}/Transactions");
+        await Page.GotoAsync($"{BaseUrl}/Transaction");
+        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
 
         await Expect(Page).ToHaveTitleAsync("Transactions - Book_Exchange");
         await Expect(Page.Locator("#transactions-tabs")).ToBeVisibleAsync();
@@ -39,7 +44,7 @@ public class TransactionTests : PageTest
     [Fact]
     public async Task TransactionIndex_UnauthenticatedUser_RedirectsToLogin()
     {
-        await Page.GotoAsync($"{BaseUrl}/Transactions");
+        await Page.GotoAsync($"{BaseUrl}/Transaction");
         await Expect(Page).ToHaveURLAsync(new Regex(".*/Account/Login.*"));
     }
 
@@ -50,7 +55,8 @@ public class TransactionTests : PageTest
     public async Task TransactionIndex_HistoryTab_ShowsCompletedTransactions()
     {
         await LoginAsync("test@test.com", "Test1234!");
-        await Page.GotoAsync($"{BaseUrl}/Transactions");
+        await Page.GotoAsync($"{BaseUrl}/Transaction");
+        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
 
         await Page.ClickAsync("#history-tab");
         await Expect(Page.Locator("#history-panel")).ToBeVisibleAsync();
