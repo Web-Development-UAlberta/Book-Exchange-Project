@@ -73,23 +73,33 @@ public class WishlistServiceUnitTests
 
     /// <summary>
     /// UT-WISH-03: Add duplicate ISBN to same user's wishlist
-    /// Expected: Duplicate is prevented
+    /// Expected: Existing wishlist item is returned and set to active
     /// </summary>
     /// <returns>
-    /// InvalidOperationException with message "ISBN '{isbn}' is already on this user's wishlist."
+    /// Existing WishlistItem with IsActive = true
     /// </returns>
     [Fact]
-    public async Task UT_WISH_03_AddDuplicateIsbn_ThrowsInvalidOperationException()
+    public async Task UT_WISH_03_AddDuplicateIsbn_ReturnsExistingActiveItem()
     {
         var userId = Guid.NewGuid();
         var isbn = "9780141036144";
-
+        var existingItem = new WishlistItem
+        {
+            Id = Guid.NewGuid(),
+            UserId = userId,
+            Isbn = isbn,
+            IsActive = true
+        };
         _serviceMock
             .Setup(s => s.AddWishlistItemAsync(userId, isbn))
-            .ThrowsAsync(new InvalidOperationException($"ISBN '{isbn}' is already on this user's wishlist."));
+            .ReturnsAsync(existingItem);
 
-        await Assert.ThrowsAsync<InvalidOperationException>(
-            () => _serviceMock.Object.AddWishlistItemAsync(userId, isbn));
+        var result = await _serviceMock.Object.AddWishlistItemAsync(userId, isbn);
+
+        Assert.NotNull(result);
+        Assert.Equal(isbn, result.Isbn);
+        Assert.Equal(userId, result.UserId);
+        Assert.True(result.IsActive);
     }
 
     /// <summary>
@@ -137,25 +147,30 @@ public class WishlistServiceUnitTests
     }
 
     /// <summary>
-    /// UT-WISH-06: User attempts to update another user's wishlist item
+
+    /// UT-WISH-06: User attempts to restore another user's wishlist item
+
     /// Expected: Operation is rejected — KeyNotFoundException is thrown
+
     /// </summary>
+
     /// <returns>
+
     /// KeyNotFoundException with message "Wishlist item not found for this user."
+
     /// </returns>
+
     [Fact]
+
     public async Task UT_WISH_06_RestoreAnotherUsersItem_ThrowsKeyNotFoundException()
     {
-        var userId = Guid.NewGuid();
-        var otherUserId = Guid.NewGuid();
+        var currentUserId = Guid.NewGuid();
         var itemId = Guid.NewGuid();
-
         _serviceMock
-            .Setup(s => s.RestoreWishlistItemAsync(itemId, userId))
+            .Setup(s => s.RestoreWishlistItemAsync(itemId, currentUserId))
             .ThrowsAsync(new KeyNotFoundException("Wishlist item not found for this user."));
-
         await Assert.ThrowsAsync<KeyNotFoundException>(
-            () => _serviceMock.Object.RestoreWishlistItemAsync(itemId, userId));
+            () => _serviceMock.Object.RestoreWishlistItemAsync(itemId, currentUserId));
     }
 
     /// <summary>

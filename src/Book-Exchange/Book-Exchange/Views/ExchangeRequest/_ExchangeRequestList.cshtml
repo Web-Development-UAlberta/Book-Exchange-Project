@@ -1,0 +1,110 @@
+﻿@model IEnumerable<Book_Exchange.Models.DTOs.ExchangeRequest.ExchangeRequestViewDto>
+@using Book_Exchange.Models
+@using System.Security.Claims
+
+@{
+    var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        No exchange requests found.
+    </div>
+}
+else
+{
+    foreach (var request in Model)
+    {
+        var isOwner = currentUserId == request.OwnerId.ToString();
+
+        <div class="exchange-request-card card mb-3">
+            <div class="card-body">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-6">
+                        <h5 class="exchange-book-title">
+                            @(request.TargetBook?.Title ?? "Unknown Book")
+                        </h5>
+
+                        <p class="mb-1">
+                            <strong>ISBN:</strong> @request.TargetIsbn
+                        </p>
+
+                        <p class="mb-1">
+                            <strong>Status:</strong>
+                            <span class="exchange-status badge bg-secondary">
+                                @request.Status
+                            </span>
+                        </p>
+
+                        <p class="mb-1">
+                            <strong>Requester:</strong> @request.RequesterName
+                        </p>
+
+                        <p class="mb-1">
+                            <strong>Owner:</strong> @request.OwnerName
+                        </p>
+
+                        @if (request.Price.HasValue)
+                        {
+                            <p class="mb-1">
+                                <strong>Cash offer:</strong> $@request.Price
+                            </p>
+                        }
+
+                        @if (!string.IsNullOrWhiteSpace(request.Message))
+                        {
+                            <p class="mb-1">
+                                <strong>Message:</strong> @request.Message
+                            </p>
+                        }
+                    </div>
+
+                    <div class="col-md-6 text-md-end">
+
+                        <a class="exchange-details-btn btn btn-outline-primary btn-sm"
+                               asp-controller="ExchangeRequest"
+                               asp-action="Details"
+                               asp-route-id="@request.Id">
+                            Details
+                        </a>
+
+                        @if (isOwner && request.Status == ExchangeStatus.Requested)
+                        {
+                            <form asp-controller="ExchangeRequest"
+                                  asp-action="Accept"
+                                  asp-route-id="@request.Id"
+                                  method="post"
+                                  class="d-inline">
+                                @Html.AntiForgeryToken()
+
+                                <button type="submit"
+                                        class="exchange-accept-btn btn btn-success btn-sm">
+                                    Accept
+                                </button>
+                            </form>
+
+                            <form asp-controller="ExchangeRequest"
+                                  asp-action="Reject"
+                                  asp-route-id="@request.Id"
+                                  method="post"
+                                  class="d-inline">
+                                @Html.AntiForgeryToken()
+
+                                <button type="submit"
+                                        class="exchange-reject-btn btn btn-danger btn-sm">
+                                    Reject
+                                </button>
+                            </form>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    }
+}

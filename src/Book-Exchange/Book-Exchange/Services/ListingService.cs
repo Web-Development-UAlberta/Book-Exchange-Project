@@ -1,60 +1,104 @@
 using Book_Exchange.Data;
-using Book_Exchange.Services.Interfaces;
 using Book_Exchange.Models;
-using Microsoft.EntityFrameworkCore;
 using Book_Exchange.Models.DTOs.Listing;
+using Book_Exchange.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 
 namespace Book_Exchange.Services;
 
 public class ListingService : IListingService
 {
-    // TODO: Implement the methods defined in IListingService once ORM is set up and database context is available.
+    private readonly ApplicationDbContext _context;
+    private readonly IMatchingService _matchingService;
 
-    // private readonly ApplicationDbContext _context;
-
-    // CreateListingAsync
-    // Isbn must be valid ISBN-10 or ISBN-13 format
-    // Condition must be specified (Like New, Very Good, Good, Acceptable, Poor)
-    // Price must be non-negative
-    // WeightGrams must be greater than zero
-    // UserId is take from the logged in user, not from a form
-    public Task<Listing> CreateListingAsync(CreateListingDto dto, Guid userId)
+    public ListingService(
+        ApplicationDbContext context,
+        IMatchingService matchingService)
     {
-        throw new NotImplementedException();
+        _context = context;
+        _matchingService = matchingService;
     }
 
-    // GetListingByIdAsync
-    // Returns the listing if it exists
-    // Throws an exception if the listing does not exist
-    public Task<Listing> GetListingByIdAsync(Guid listingId)
+    public async Task<Listing> CreateListingAsync(CreateListingDto dto, Guid userId)
     {
-        throw new NotImplementedException();
+        var isbn = dto.Isbn.Trim().Replace("-", "").ToUpper();
+
+        if (!IsValidIsbn(isbn))
+        {
+            throw new ArgumentException("ISBN must be a 10 or 13 digit number.");
+        }
+
+        if (dto.Price < 0)
+        {
+            throw new ArgumentException("Price must be greater than or equal to 0.");
+        }
+
+        if (dto.WeightGrams <= 0)
+        {
+            throw new ArgumentException("Weight must be greater than 0.");
+        }
+
+        var listing = new Listing
+        {
+            Id = Guid.NewGuid(),
+            UserId = userId,
+            Isbn = isbn,
+            Condition = dto.Condition,
+            Price = dto.Price,
+            WeightGrams = dto.WeightGrams,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _context.Listings.Add(listing);
+        await _context.SaveChangesAsync();
+
+        await _matchingService.CreateMatchNotificationsAsync(listing);
+
+        return listing;
     }
 
-    // GetListingsByUserIdAsync
-    // Returns all listings created by the specified user
-    // Returns an empty list if the user has no listings
-    public Task<IEnumerable<Listing>> GetListingsByUserIdAsync(Guid userId)
+    private static bool IsValidIsbn(string isbn)
     {
-        throw new NotImplementedException();
+        return Regex.IsMatch(isbn, @"^([0-9]{13}|[0-9X]{10})$");
     }
 
-    // UpdateListingAsync
-    // Only the user who created the listing can update it (authorization check needed)
-    // Price must be non-negative
-    // WeightGrams must be greater than zero
-    // Cannot update a listing that has an accepted or completed exchange request
-    public Task UpdateListingAsync(Guid id, UpdateListingDto dto, Guid userId)
+    public async Task<Listing> GetListingByIdAsync(Guid listingId)
     {
-        throw new NotImplementedException();
+        return await _context.Listings
+            .Include(l => l.User)
+            .FirstOrDefaultAsync(l => l.Id == listingId)
+            ?? throw new KeyNotFoundException("Listing not found.");
     }
 
-    // DeleteListingAsync
-    // Only the user who created the listing can delete it (authorization check needed)
-    // Cannot delete a listing that has an active (requested or accepted) exchange request
-    // Cannot delete a listing that is associated with a completed or in-progress exchange request
-    public Task DeleteListingAsync(Guid id, Guid userId)
+    public async Task<IEnumerable<Listing>> GetListingsByUserIdAsync(Guid userId)
     {
-        throw new NotImplementedException();
+        return await _context.Listings
+            .Where(l => l.UserId == userId)
+            .OrderByDescending(l => l.CreatedAt)
+            .ToListAsync();
+    }
+
+    public async Task UpdateListingAsync(Guid id, UpdateListingDto dto, Guid userId)
+    {
+        var listing = await _context.Listings
+            .FirstOrDefaultAsync(l => l.Id == id && l.UserId == userId)
+            ?? throw new UnauthorizedAccessException("Listing not found or not owned by user.");
+
+        listing.Condition = dto.Condition;
+        listing.Price = dto.Price;
+        listing.WeightGrams = dto.WeightGrams;
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteListingAsync(Guid id, Guid userId)
+    {
+        var listing = await _context.Listings
+            .FirstOrDefaultAsync(l => l.Id == id && l.UserId == userId)
+            ?? throw new UnauthorizedAccessException("Listing not found or not owned by user.");
+
+        _context.Listings.Remove(listing);
+        await _context.SaveChangesAsync();
     }
 }

@@ -8,6 +8,7 @@ namespace Book_Exchange.Tests.BackEnd;
 
 // UNIT TESTS
 // Covers: UT-EXCH-01 through UT-EXCH-08
+
 public class ExchangeRequestUnitTests
 {
     private readonly Mock<IExchangeRequestService> _serviceMock;
@@ -30,7 +31,7 @@ public class ExchangeRequestUnitTests
         {
             TargetListingId = Guid.NewGuid(),
             OfferedListingIds = new List<Guid>(),
-            CashAmount = 25.00m
+            Price = 25.00m
         };
 
         var expectedRequest = new ExchangeRequest
@@ -39,7 +40,7 @@ public class ExchangeRequestUnitTests
             TargetListingId = dto.TargetListingId,
             RequesterId = userId,
             Status = ExchangeStatus.Requested,
-            Price = dto.CashAmount
+            Price = dto.Price
         };
 
         _serviceMock
@@ -52,7 +53,7 @@ public class ExchangeRequestUnitTests
         Assert.Equal(dto.TargetListingId, result.TargetListingId);
         Assert.Equal(userId, result.RequesterId);
         Assert.Equal(ExchangeStatus.Requested, result.Status);
-        Assert.Equal(dto.CashAmount, result.Price);
+        Assert.Equal(dto.Price, result.Price);
     }
 
     /// <summary>
@@ -69,12 +70,14 @@ public class ExchangeRequestUnitTests
         {
             TargetListingId = Guid.NewGuid(),
             OfferedListingIds = new List<Guid> { offeredListingId },
-            CashAmount = null
+            Price = null
         };
+
+        var requestId = Guid.NewGuid();
 
         var expectedRequest = new ExchangeRequest
         {
-            Id = Guid.NewGuid(),
+            Id = requestId,
             TargetListingId = dto.TargetListingId,
             RequesterId = userId,
             Status = ExchangeStatus.Requested,
@@ -83,7 +86,7 @@ public class ExchangeRequestUnitTests
             {
                 new ExchangeRequestItem
                 {
-                    ExchangeRequestId = Guid.NewGuid(),
+                    ExchangeRequestId = requestId,
                     OfferedListingId = offeredListingId
                 }
             }
@@ -116,21 +119,23 @@ public class ExchangeRequestUnitTests
         {
             TargetListingId = Guid.NewGuid(),
             OfferedListingIds = new List<Guid> { offeredListingId },
-            CashAmount = 10.00m
+            Price = 10.00m
         };
+
+        var requestId = Guid.NewGuid();
 
         var expectedRequest = new ExchangeRequest
         {
-            Id = Guid.NewGuid(),
+            Id = requestId,
             TargetListingId = dto.TargetListingId,
             RequesterId = userId,
             Status = ExchangeStatus.Requested,
-            Price = dto.CashAmount,
+            Price = dto.Price,
             ExchangeRequestItems = new List<ExchangeRequestItem>
             {
                 new ExchangeRequestItem
                 {
-                    ExchangeRequestId = Guid.NewGuid(),
+                    ExchangeRequestId = requestId,
                     OfferedListingId = offeredListingId
                 }
             }
@@ -144,7 +149,7 @@ public class ExchangeRequestUnitTests
 
         Assert.NotNull(result);
         Assert.Equal(ExchangeStatus.Requested, result.Status);
-        Assert.Equal(dto.CashAmount, result.Price);
+        Assert.Equal(dto.Price, result.Price);
         Assert.Single(result.ExchangeRequestItems);
     }
 
@@ -167,14 +172,14 @@ public class ExchangeRequestUnitTests
                 Guid.NewGuid(),
                 Guid.NewGuid()
             },
-            CashAmount = null
+            Price = null
         };
 
         _serviceMock
             .Setup(s => s.CreateExchangeRequestAsync(dto, userId))
-            .ThrowsAsync(new ArgumentException("You may offer a maximum of 3 books."));
+            .ThrowsAsync(new InvalidOperationException("You can offer up to 3 books."));
 
-        await Assert.ThrowsAsync<ArgumentException>(
+        await Assert.ThrowsAsync<InvalidOperationException>(
             () => _serviceMock.Object.CreateExchangeRequestAsync(dto, userId));
     }
 
@@ -191,7 +196,7 @@ public class ExchangeRequestUnitTests
         {
             TargetListingId = Guid.NewGuid(),
             OfferedListingIds = new List<Guid>(),
-            CashAmount = 20.00m
+            Price = 20.00m
         };
 
         _serviceMock
@@ -256,7 +261,7 @@ public class ExchangeRequestUnitTests
 
         _serviceMock
             .Setup(s => s.AcceptExchangeRequestAsync(exchangeRequestId, ownerUserId))
-            .ThrowsAsync(new InvalidOperationException("Exchange request must be in Requested status."));
+            .ThrowsAsync(new InvalidOperationException("Only requested exchange requests can be accepted."));
 
         await Assert.ThrowsAsync<InvalidOperationException>(
             () => _serviceMock.Object.AcceptExchangeRequestAsync(exchangeRequestId, ownerUserId));

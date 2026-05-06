@@ -1,136 +1,150 @@
-using Book_Exchange.Models;
+using System.Security.Claims;
 using Book_Exchange.Models.DTOs.Wishlist;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Book_Exchange.Controllers;
-
-// TODO: Once ORM is implemented make sure nothing has changed
 
 [Authorize]
 public class WishlistController : Controller
 {
     private readonly IWishlistService _wishlistService;
-    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IBookSearchApi _bookSearchApi;
 
-    public WishlistController(IWishlistService wishlistService, UserManager<ApplicationUser> userManager)
+    public WishlistController(
+        IWishlistService wishlistService,
+        IBookSearchApi bookSearchApi)
     {
         _wishlistService = wishlistService;
-        _userManager = userManager;
+        _bookSearchApi = bookSearchApi;
     }
 
-    // GET /Wishlist
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string? searchText, bool availableOnly = false)
     {
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
+        var userId = GetCurrentUserId();
 
-        var wishlistItems = await _wishlistService.GetWishlistByUserIdAsync(userId);
+        var wishlist = await _wishlistService.GetWishlistByUserIdAsync(userId);
         var matchingListings = await _wishlistService.GetMatchingListingsAsync(userId);
 
-        // Group matching listings by ISBN to count how many matches each wishlist item has
-        var matchCountByIsbn = matchingListings
-            .GroupBy(l => l.Isbn)
-            .ToDictionary(g => g.Key, g => g.Count());
+        var matchingIsbns = matchingListings
+            .Select(l => l.Isbn)
+            .Distinct()
+            .ToHashSet();
 
-        var viewModels = wishlistItems.Select(item => new WishlistItemViewModel
+        var viewModel = new WishlistIndexViewDto
         {
-            Id = item.Id,
-            Isbn = item.Isbn,
-            // TODO: Replace with real book metadata lookup once API service is wired up
-            Title = "Unknown Title",
-            Author = "Unknown Author",
-            CoverImageUrl = null,
-            IsActive = item.IsActive,
-            IsAvailable = matchCountByIsbn.ContainsKey(item.Isbn),
-            MatchingListingCount = matchCountByIsbn.GetValueOrDefault(item.Isbn, 0)
-        }).ToList();
+            SearchText = searchText,
+            AvailableOnly = availableOnly
+        };
 
-        return View(viewModels);
+        foreach (var item in wishlist)
+        {
+            var book = await _bookSearchApi.GetBookByIsbnAsync(item.Isbn);
+
+            var hasMatch = matchingIsbns.Contains(item.Isbn);
+
+            var dto = new WishlistItemViewDto
+            {
+                Id = item.Id,
+                Isbn = item.Isbn,
+                IsActive = item.IsActive,
+                Book = book,
+                HasMatchingListing = hasMatch
+            };
+
+            viewModel.Items.Add(dto);
+        }
+
+        if (!string.IsNullOrWhiteSpace(searchText))
+        {
+            viewModel.Items = viewModel.Items
+                .Where(i =>
+                    i.Isbn.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                    (i.Book?.Title?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                    (i.Book?.Authors.Any(a => a.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ?? false))
+                .ToList();
+        }
+
+        if (availableOnly)
+        {
+            viewModel.Items = viewModel.Items
+                .Where(i => i.HasMatchingListing)
+                .ToList();
+        }
+
+        return View(viewModel);
     }
 
-    // GET /Wishlist/Matches/{id}
     [HttpGet]
-    public async Task<IActionResult> Matches(Guid id)
+    public async Task<IActionResult> SearchBooks(string searchText)
     {
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
+        if (string.IsNullOrWhiteSpace(searchText))
+        {
+            return Json(new List<object>());
+        }
 
-        try
+        var books = await _bookSearchApi.SearchBooksAsync(searchText, 10);
+
+        var result = books.Select(b => new
         {
-            var listings = await _wishlistService.GetMatchingListingsForItemAsync(id, userId);
-            return View(listings);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+            title = b.Title,
+            authors = b.Authors,
+            isbn13 = b.Isbn13,
+            isbn10 = b.Isbn10,
+            thumbnail = b.ThumbnailUrl,
+            publishedYear = b.PublishedYear
+        });
+
+        return Json(result);
     }
 
-    // POST /Wishlist/Add
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Add(AddWishlistItemDto dto)
+    public async Task<IActionResult> Add(string isbn)
     {
-        if (!ModelState.IsValid)
-        {
-            TempData["Error"] = "Please enter a valid ISBN.";
-            return RedirectToAction(nameof(Index));
-        }
+        var userId = GetCurrentUserId();
 
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
-
-        try
-        {
-            await _wishlistService.AddWishlistItemAsync(userId, dto.Isbn);
-            TempData["Success"] = "Book added to your wishlist.";
-        }
-        catch (InvalidOperationException ex)
-        {
-            TempData["Error"] = ex.Message;
-        }
+        await _wishlistService.AddWishlistItemAsync(userId, isbn);
 
         return RedirectToAction(nameof(Index));
     }
 
-    // POST /Wishlist/Remove/{id} - Soft-deletes (deactivates) a wishlist item.
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Remove(Guid id)
     {
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
+        var userId = GetCurrentUserId();
 
-        try
-        {
-            await _wishlistService.RemoveWishlistItemAsync(id, userId);
-            TempData["Success"] = "Book removed from your wishlist.";
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+        await _wishlistService.RemoveWishlistItemAsync(id, userId);
 
         return RedirectToAction(nameof(Index));
     }
 
-    // POST /Wishlist/Restore/{id} - Reactivates a previously removed wishlist item.
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Restore(Guid id)
     {
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
+        var userId = GetCurrentUserId();
 
-        try
-        {
-            await _wishlistService.RestoreWishlistItemAsync(id, userId);
-            TempData["Success"] = "Book restored to your wishlist.";
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+        await _wishlistService.RestoreWishlistItemAsync(id, userId);
 
         return RedirectToAction(nameof(Index));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Matches(Guid id)
+    {
+        var userId = GetCurrentUserId();
+
+        var listings = await _wishlistService.GetMatchingListingsForItemAsync(id, userId);
+
+        return View(listings);
+    }
+
+    private Guid GetCurrentUserId()
+    {
+        return Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
     }
 }

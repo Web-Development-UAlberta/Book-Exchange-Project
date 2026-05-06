@@ -1,0 +1,76 @@
+﻿@model Book_Exchange.Models.DTOs.ExchangeRequest.ExchangeRequestViewDto
+
+@{
+    ViewData["Title"] = "Exchange Request Details";
+}
+
+<div id="exchange-details-page" class="container mt-4">
+
+    <h2>Exchange Request Details</h2>
+
+    <div class="card">
+        <div class="card-body">
+
+            <h4 id="exchange-detail-book-title">
+                @(Model.TargetBook?.Title ?? "Unknown Book")
+            </h4>
+
+            <p>
+                <strong>ISBN:</strong> @Model.TargetIsbn
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+                <span id="exchange-detail-status" class="badge bg-secondary">
+                    @Model.Status
+                </span>
+            </p>
+
+            <p>
+                <strong>Requester:</strong> @Model.RequesterName
+            </p>
+
+            <p>
+                <strong>Owner:</strong> @Model.OwnerName
+            </p>
+
+            <p>
+                <strong>Created:</strong> @Model.CreatedAt.ToString("MMM dd, yyyy")
+            </p>
+
+            @if (Model.Price.HasValue)
+            {
+                <p>
+                    <strong>Cash offer:</strong> $@Model.Price
+                </p>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Model.Message))
+            {
+                <p>
+                    <strong>Message:</strong> @Model.Message
+                </p>
+            }
+
+            @if (Model.OfferedIsbns.Any())
+            {
+                <h5>Offered Books</h5>
+
+                <ul>
+                    @foreach (var isbn in Model.OfferedIsbns)
+                    {
+                        <li>@isbn</li>
+                    }
+                </ul>
+            }
+
+            <a asp-controller="ExchangeRequest"
+                   asp-action="Index"
+                   class="btn btn-secondary">
+                Back
+            </a>
+
+        </div>
+    </div>
+
+</div>
