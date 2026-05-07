@@ -1,0 +1,90 @@
+@model IEnumerable<Book_Exchange.Models.Review>
+
+@{
+    ViewData["Title"] = "Reviews";
+    var averageRating = (double)(ViewBag.AverageRating ?? 0.0);
+    var reviewList    = Model.ToList();
+    int fullStars     = (int)Math.Floor(averageRating);
+}
+
+<div class="container mt-4" style="max-width: 720px;">
+
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h2 class="mb-0">Reviews</h2>
+        <a asp-action="Index" asp-controller="Transaction" class="btn btn-outline-secondary btn-sm">
+            &larr; Back to Transactions
+        </a>
+    </div>
+
+    {{!-- Aggregate score card --}}
+    <div id="review-aggregate-card" class="card mb-4 border-0 bg-light">
+        <div class="card-body py-3 px-4 d-flex align-items-center gap-4">
+            <div class="text-center">
+                <div id="review-average-score" style="font-size:3rem;font-weight:700;line-height:1;">
+                    @averageRating.ToString("F2")
+                </div>
+                <div class="text-muted small">out of 5</div>
+            </div>
+            <div>
+                <div id="review-aggregate-stars" class="mb-1" style="font-size:1.6rem;color:#f5a623;">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        <span>@(i <= fullStars ? "★" : "☆")</span>
+                    }
+                </div>
+                <div id="review-total-count" class="text-muted small">
+                    Based on @reviewList.Count @(reviewList.Count == 1 ? "review" : "reviews")
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{!-- Review list --}}
+    @if (!reviewList.Any())
+    {
+        <div id="review-empty-state" class="text-center text-muted py-5">
+            <p class="mb-0">No reviews yet.</p>
+        </div>
+    }
+    else
+    {
+        <div id="review-list" class="d-flex flex-column gap-3">
+            @foreach (var review in reviewList)
+            {
+                <div class="review-card card border shadow-sm" id="review-card-@review.Id">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="review-card-username fw-semibold">
+                                    @(review.Reviewer?.UserName ?? "Unknown")
+                                </div>
+                                <div class="review-card-date text-muted small">
+                                    @review.CreatedAt.ToString("MMMM d, yyyy")
+                                </div>
+                            </div>
+                            <div class="review-card-stars" style="font-size:1.2rem;color:#f5a623;">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <span>@(i <= review.Rating ? "★" : "☆")</span>
+                                }
+                            </div>
+                        </div>
+
+                        @if (!string.IsNullOrWhiteSpace(review.Comment))
+                        {
+                            <p class="review-card-comment mt-2 mb-1">@review.Comment</p>
+                        }
+
+                        <div class="mt-2">
+                            <a class="review-card-details-link text-decoration-none small text-secondary"
+                               asp-action="Details"
+                               asp-route-id="@review.Id">
+                                View details &rarr;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

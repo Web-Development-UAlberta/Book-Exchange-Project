@@ -1,0 +1,151 @@
+@model Book_Exchange.Models.DTOs.Review.CreateReviewDto
+
+@{
+    ViewData["Title"] = "Leave a Review";
+
+    var modelErrors = ViewData.ModelState
+        .SelectMany(kvp => kvp.Value!.Errors.Select(e => e.ErrorMessage))
+        .ToList();
+}
+
+<div class="container mt-4" style="max-width: 640px;">
+
+    <h2 class="mb-1">Leave a Review</h2>
+    <p class="text-muted mb-3">
+        Transaction # @ViewBag.TransactionCode &mdash; @ViewBag.CompletedDate
+    </p>
+
+    {{-- Transaction summary card (wireframe: ID="review-transaction-summary", CLASS="review-txn-card") --}}
+    <div id="review-transaction-summary" class="review-txn-card card mb-4 p-3 d-flex flex-row align-items-center gap-3">
+        <div class="border rounded d-flex align-items-center justify-content-center text-muted"
+             style="width:64px;height:80px;min-width:64px;font-size:0.7rem;">Cover</div>
+        <div>
+            <div class="fw-semibold">@ViewBag.BookTitle</div>
+            <div class="text-muted small">@ViewBag.BookSnap</div>
+            <div class="text-muted small mt-1">Book Swap with @ViewBag.RevieweeName</div>
+        </div>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div id="review-success-msg" class="alert alert-success" role="alert">
+            @TempData["Success"]
+        </div>
+    }
+
+    @if (modelErrors.Any())
+    {
+        <div id="review-error-msg" class="alert alert-danger" role="alert">
+            @foreach (var error in modelErrors)
+            {
+                <div>@error</div>
+            }
+        </div>
+    }
+
+    <form id="review-form" asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" asp-for="TransactionId" />
+        <input type="hidden" asp-for="RevieweeId" />
+
+        <div class="card p-4">
+
+            <p class="mb-3 fw-semibold">Reviewing @ViewBag.RevieweeName</p>
+
+            {{-- Star rating (wireframe: CLASS="star-rating-btn", data-value=1..5) --}}
+            <div class="mb-4">
+                <label class="form-label">
+                    Rating <span class="text-danger">*</span>
+                </label>
+
+                <div class="d-flex gap-2 mb-1" style="font-size:2rem;">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        <button type="button"
+                                class="star-rating-btn border-0 bg-transparent p-0"
+                                data-value="@i"
+                                aria-label="Rate @i out of 5"
+                                style="color:#ccc;font-size:2rem;cursor:pointer;">&#9733;</button>
+                    }
+                </div>
+
+                <input type="hidden" asp-for="Rating" id="review-rating-input" />
+                <span asp-validation-for="Rating" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Comment" class="form-label">Comments (optional)</label>
+            <div class="mb-4">
+                <label asp-for="Comment" class="form-label">Comments (optional)</label>
+                <textarea asp-for="Comment"
+                          id="review-comment-input"
+                          class="form-control"
+                          rows="4"
+                          maxlength="1000"
+                          placeholder=""></textarea>
+                <div class="d-flex justify-content-between mt-1">
+                    <span asp-validation-for="Comment" class="text-danger small"></span>
+                    <span class="text-muted small"><span id="comment-char-count">0</span> / 1000</span>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit"
+                        id="submit-review-btn"
+                        class="btn btn-primary"
+                        disabled>
+                    Submit Review
+                </button>
+                <a id="cancel-review-btn"
+                   asp-action="Index"
+                   asp-controller="Transaction"
+                   class="btn btn-outline-secondary">
+                    Cancel
+                </a>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        const stars       = document.querySelectorAll('.star-rating-btn');
+        const ratingInput = document.getElementById('review-rating-input');
+        const submitBtn   = document.getElementById('submit-review-btn');
+        const commentBox  = document.getElementById('review-comment-input');
+        const charCount   = document.getElementById('comment-char-count');
+
+        let currentRating = parseInt(ratingInput.value) || 0;
+        if (currentRating > 0) {
+            highlightStars(currentRating);
+            submitBtn.disabled = false;
+        }
+
+        stars.forEach(btn => {
+            btn.addEventListener('mouseover', () => highlightStars(parseInt(btn.dataset.value)));
+            btn.addEventListener('mouseout',  () => highlightStars(currentRating));
+            btn.addEventListener('click', () => {
+                currentRating = parseInt(btn.dataset.value);
+                ratingInput.value = currentRating;
+                highlightStars(currentRating);
+                submitBtn.disabled = false;
+            });
+        });
+
+        function highlightStars(value) {
+            stars.forEach(s => {
+                s.style.color = parseInt(s.dataset.value) <= value ? '#f5a623' : '#ccc';
+            });
+        }
+
+        commentBox.addEventListener('input', () => {
+            charCount.textContent = commentBox.value.length;
+        });
+
+        charCount.textContent = commentBox.value.length;
+    </script>
+}
