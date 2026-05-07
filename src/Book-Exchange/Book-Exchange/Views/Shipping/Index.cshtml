@@ -1,0 +1,99 @@
+@model IEnumerable<Book_Exchange.Models.Shipment>
+
+@{
+    ViewData["Title"] = "My Shipments";
+}
+
+<div class="container mt-4" id="shipping-index-page">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 id="shipping-index-title">My Shipments</h2>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" id="shipping-success-alert" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" id="shipping-error-alert" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info" id="shipping-empty-message">
+            You have no shipments yet.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive" id="shipments-section">
+            <table class="table table-bordered table-hover" id="shipping-list-table">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Transaction</th>
+                        <th>Carrier</th>
+                        <th>Weight (g)</th>
+                        <th>Distance (km)</th>
+                        <th>Shipping Cost</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="shipping-list-body">
+                    @foreach (var shipment in Model)
+                    {
+                        <tr class="shipment-card" data-shipment-id="@shipment.Id">
+                            <td class="shipment-description">
+                                @shipment.TransactionId.ToString().Substring(0, 8)…
+                            </td>
+                            <td class="shipment-carrier">@(shipment.Carrier?.Name ?? "—")</td>
+                            <td class="shipment-cost-summary">@shipment.PackageWeightGrams</td>
+                            <td>
+                                @(shipment.DistanceKm.HasValue ? shipment.DistanceKm.Value.ToString("F2") : "—")
+                            </td>
+                            <td>
+                                @(shipment.ShippingCost.HasValue ? shipment.ShippingCost.Value.ToString("C") : "—")
+                            </td>
+                            <td>
+                                <span class="badge @GetStatusBadgeClass(shipment.Status) shipment-status-badge">
+                                    @shipment.Status
+                                </span>
+                            </td>
+                            <td>@shipment.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd")</td>
+                            <td>
+                                <a asp-action="Details"
+                                   asp-route-transactionId="@shipment.TransactionId"
+                                   class="btn btn-sm btn-outline-primary shipment-track-btn"
+                                   id="shipment-track-btn-@shipment.Id">
+                                    Details
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@functions {
+    string GetStatusBadgeClass(Book_Exchange.Models.ShipmentStatus status) => status switch
+    {
+        Book_Exchange.Models.ShipmentStatus.Pending      => "bg-secondary",
+        Book_Exchange.Models.ShipmentStatus.Quoted       => "bg-info text-dark",
+        Book_Exchange.Models.ShipmentStatus.LabelCreated => "bg-primary",
+        Book_Exchange.Models.ShipmentStatus.Shipped      => "bg-warning text-dark",
+        Book_Exchange.Models.ShipmentStatus.Delivered    => "bg-success",
+        Book_Exchange.Models.ShipmentStatus.Cancelled    => "bg-danger",
+        _                                                => "bg-secondary"
+    };
+}

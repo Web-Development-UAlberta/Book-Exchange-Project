@@ -1,87 +1,87 @@
-﻿using System.Text.RegularExpressions;
-using Microsoft.Playwright;
-using Microsoft.Playwright.Xunit;
+﻿// using System.Text.RegularExpressions;
+// using Microsoft.Playwright;
+// using Microsoft.Playwright.Xunit;
 
-namespace UI;
+// namespace UI;
 
-public class BookSearchTests : PageTest
-{
-    //private const string BaseUrl = "http://localhost:5261";
+// public class BookSearchTests : PageTest
+// {
+//     private const string BaseUrl = "http://localhost:5261";
 
-    ///// <summary>
-    ///// UI-BOOK-01: Book search page loads with search bar
-    ///// </summary>
-    //[Fact]
-    //public async Task BookSearch_LoadsWithSearchBar()
-    //{
-    //    await Page.GotoAsync($"{BaseUrl}/BookSearch");
+//     /// <summary>
+//     /// UI-BOOK-01: Book search page loads with search bar
+//     /// </summary>
+//     [Fact]
+//     public async Task BookSearch_LoadsWithSearchBar()
+//     {
+//         await Page.GotoAsync($"{BaseUrl}/BookSearch");
 
-    //    await Expect(Page).ToHaveTitleAsync("Book Search - Book_Exchange");
-    //    await Expect(Page.Locator("#book-search-form")).ToBeVisibleAsync();
-    //    await Expect(Page.Locator("#book-search-input")).ToBeVisibleAsync();
-    //    await Expect(Page.Locator("#book-search-button")).ToBeVisibleAsync();
-    //}
+//         await Expect(Page).ToHaveTitleAsync("Book Search - Book_Exchange");
+//         await Expect(Page.Locator("#book-search-form")).ToBeVisibleAsync();
+//         await Expect(Page.Locator("#book-search-input")).ToBeVisibleAsync();
+//         await Expect(Page.Locator("#book-search-button")).ToBeVisibleAsync();
+//     }
 
-    ///// <summary>
-    ///// UI-BOOK-02: User can search books
-    ///// </summary>
-    //[Fact]
-    //public async Task BookSearch_UserCanSearchBooks()
-    //{
-    //    await Page.GotoAsync($"{BaseUrl}/BookSearch");
+//     /// <summary>
+//     /// UI-BOOK-02: User can search books
+//     /// </summary>
+//     [Fact]
+//     public async Task BookSearch_UserCanSearchBooks()
+//     {
+//         await Page.GotoAsync($"{BaseUrl}/BookSearch");
 
-    //    await Page.FillAsync("#book-search-input", "harry");
-    //    await Page.ClickAsync("#book-search-button");
+//         await Page.FillAsync("#book-search-input", "harry");
+//         await Page.ClickAsync("#book-search-button");
 
-    //    await Expect(Page).ToHaveURLAsync(new Regex(".*/BookSearch/Search.*searchText=harry.*"));
-    //    await Expect(Page.Locator("#book-search-results")).ToBeVisibleAsync();
-    //}
+//         await Expect(Page).ToHaveURLAsync(new Regex(".*/BookSearch/Search.*searchText=harry.*"));
+//         await Expect(Page.Locator("#book-search-results")).ToBeVisibleAsync();
+//     }
 
-    ///// <summary>
-    ///// UI-BOOK-03: Empty search shows no books found
-    ///// </summary>
-    //[Fact]
-    //public async Task BookSearch_EmptySearch_ShowsNoBooksFound()
-    //{
-    //    await Page.GotoAsync($"{BaseUrl}/BookSearch");
+//     /// <summary>
+//     /// UI-BOOK-03: Empty search shows no books found
+//     /// </summary>
+//     [Fact]
+//     public async Task BookSearch_EmptySearch_ShowsNoBooksFound()
+//     {
+//         await Page.GotoAsync($"{BaseUrl}/BookSearch");
 
-    //    await Page.FillAsync("#book-search-input", "");
-    //    await Page.ClickAsync("#book-search-button");
+//         await Page.FillAsync("#book-search-input", "");
+//         await Page.ClickAsync("#book-search-button");
 
-    //    await Expect(Page.Locator("#no-books-found")).ToBeVisibleAsync();
-    //}
+//         await Expect(Page.Locator("#no-books-found")).ToBeVisibleAsync();
+//     }
 
-    ///// <summary>
-    ///// UI-BOOK-04: Search result book cards are visible
-    ///// </summary>
-    //[Fact]
-    //public async Task BookSearch_SearchResults_ShowBookCards()
-    //{
-    //    await Page.GotoAsync($"{BaseUrl}/BookSearch");
+//     /// <summary>
+//     /// UI-BOOK-04: Search result book cards are visible
+//     /// </summary>
+//     [Fact]
+//     public async Task BookSearch_SearchResults_ShowBookCards()
+//     {
+//         await Page.GotoAsync($"{BaseUrl}/BookSearch");
 
-    //    await Page.FillAsync("#book-search-input", "harry");
-    //    await Page.ClickAsync("#book-search-button");
+//         await Page.FillAsync("#book-search-input", "harry");
+//         await Page.ClickAsync("#book-search-button");
 
-    //    await Expect(Page.Locator(".book-card").First).ToBeVisibleAsync();
-    //    await Expect(Page.Locator(".book-title").First).ToBeVisibleAsync();
-    //}
+//         await Expect(Page.Locator(".book-card").First).ToBeVisibleAsync();
+//         await Expect(Page.Locator(".book-title").First).ToBeVisibleAsync();
+//     }
 
-    ///// <summary>
-    ///// UI-BOOK-05: Preview link is visible when available
-    ///// </summary>
-    //[Fact]
-    //public async Task BookSearch_ResultWithPreview_ShowsPreviewButton()
-    //{
-    //    await Page.GotoAsync($"{BaseUrl}/BookSearch");
+//     /// <summary>
+//     /// UI-BOOK-05: Preview link is visible when available
+//     /// </summary>
+//     [Fact]
+//     public async Task BookSearch_ResultWithPreview_ShowsPreviewButton()
+//     {
+//         await Page.GotoAsync($"{BaseUrl}/BookSearch");
 
-    //    await Page.FillAsync("#book-search-input", "harry");
-    //    await Page.ClickAsync("#book-search-button");
+//         await Page.FillAsync("#book-search-input", "harry");
+//         await Page.ClickAsync("#book-search-button");
 
-    //    var previewButton = Page.Locator(".book-preview-link").First;
+//         var previewButton = Page.Locator(".book-preview-link").First;
 
-    //    if (await previewButton.CountAsync() > 0)
-    //    {
-    //        await Expect(previewButton).ToBeVisibleAsync();
-    //    }
-    //}
-}
+//         if (await previewButton.CountAsync() > 0)
+//         {
+//             await Expect(previewButton).ToBeVisibleAsync();
+//         }
+//     }
+// }

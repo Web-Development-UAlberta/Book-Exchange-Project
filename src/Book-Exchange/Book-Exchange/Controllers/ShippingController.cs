@@ -5,20 +5,22 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-// TODO: Once ORM is implemented make sure nothing has changed
 namespace Book_Exchange.Controllers;
 
 [Authorize]
 public class ShippingController : Controller
 {
     private readonly IShippingService _shippingService;
+    private readonly IAddressService _addressService;
     private readonly UserManager<ApplicationUser> _userManager;
 
     public ShippingController(
         IShippingService shippingService,
+        IAddressService addressService,
         UserManager<ApplicationUser> userManager)
     {
         _shippingService = shippingService;
+        _addressService = addressService;
         _userManager = userManager;
     }
 
@@ -45,10 +47,29 @@ public class ShippingController : Controller
 
     // GET /Shipping/Quote/{transactionId}
     [HttpGet]
-    public async Task<IActionResult> Quote(Guid transactionId)
+    public async Task<IActionResult> Quote(Guid transactionId, Guid senderAddressId, Guid receiverAddressId, int packageWeightGrams)
     {
-        // TODO: Once ORM is done resolve senderAddressId, receiverAddressId, and packageWeightGrams
-        throw new NotImplementedException();
+        try
+        {
+            var quotes = await _shippingService.GetQuotesAsync(transactionId, senderAddressId, receiverAddressId, packageWeightGrams);
+
+            ViewBag.TransactionId = transactionId;
+            ViewBag.SenderAddressId = senderAddressId;
+            ViewBag.ReceiverAddressId = receiverAddressId;
+            ViewBag.PackageWeightGrams = packageWeightGrams;
+
+            return View(quotes);
+        }
+        catch (ArgumentException ex)
+        {
+            TempData["Error"] = ex.Message;
+            return RedirectToAction(nameof(Index));
+        }
+        catch (InvalidOperationException ex)
+        {
+            TempData["Error"] = ex.Message;
+            return RedirectToAction(nameof(Index));
+        }
     }
 
     // POST /Shipping/Create
@@ -66,12 +87,12 @@ public class ShippingController : Controller
         catch (ArgumentException ex)
         {
             ModelState.AddModelError(string.Empty, ex.Message);
-            return RedirectToAction(nameof(Quote), new { transactionId });
+            return RedirectToAction(nameof(Quote), new { transactionId, senderAddressId, receiverAddressId, packageWeightGrams });
         }
         catch (InvalidOperationException ex)
         {
             ModelState.AddModelError(string.Empty, ex.Message);
-            return RedirectToAction(nameof(Quote), new { transactionId });
+            return RedirectToAction(nameof(Quote), new { transactionId, senderAddressId, receiverAddressId, packageWeightGrams });
         }
     }
 

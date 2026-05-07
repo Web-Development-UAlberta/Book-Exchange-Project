@@ -17,4 +17,5 @@ public class ListingViewDto
     public BookInfoDto? Book { get; set; }
 
     public string SellerName { get; set; } = "Unknown";
+
 }
