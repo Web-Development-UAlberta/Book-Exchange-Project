@@ -1,0 +1,176 @@
+@model Book_Exchange.Models.Shipment
+
+@{
+    ViewData["Title"] = "Shipment Details";
+}
+
+<div class="container mt-4" id="shipping-details-page">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 id="shipping-details-title">Shipment Details</h2>
+        <a asp-action="Index" class="btn btn-outline-secondary" id="shipping-back-btn">← Back to My Shipments</a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" id="shipping-details-success-alert" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" id="shipping-details-error-alert" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card mb-4" id="shipping-details-card">
+        <div class="card-header">
+            <strong>Shipment</strong>
+            <span class="badge @GetStatusBadgeClass(Model.Status) ms-2" id="shipping-status-badge">
+                @Model.Status
+            </span>
+        </div>
+        <div class="card-body">
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <h5 class="card-title">Carrier</h5>
+                    <p class="card-text" id="shipping-carrier-name">
+                        @(Model.Carrier?.Name ?? "No carrier selected")
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="card-title">Transaction</h5>
+                    <p class="card-text" id="shipping-transaction-id">@Model.TransactionId</p>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <h6>Package Weight</h6>
+                    <p id="shipping-package-weight">@Model.PackageWeightGrams g</p>
+                </div>
+                <div class="col-md-4">
+                    <h6>Distance</h6>
+                    <p id="shipping-distance-km">
+                        @(Model.DistanceKm.HasValue ? $"{Model.DistanceKm.Value:F2} km" : "—")
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h6>Shipping Cost</h6>
+                    <p id="shipping-cost-value">
+                        @(Model.ShippingCost.HasValue ? Model.ShippingCost.Value.ToString("C") : "—")
+                    </p>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <h6>From</h6>
+                    <p id="shipping-sender-address">@Model.SenderAddress?.FullName</p>
+                </div>
+                <div class="col-md-6">
+                    <h6>To</h6>
+                    <p id="shipping-receiver-address">@Model.ReceiverAddress?.FullName</p>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(Model.TrackingNumber))
+            {
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <h6>Tracking Number</h6>
+                        <p id="shipping-tracking-number">@Model.TrackingNumber</p>
+                    </div>
+                    @if (!string.IsNullOrWhiteSpace(Model.LabelUrl))
+                    {
+                        <div class="col-md-6">
+                            <h6>Shipping Label</h6>
+                            <a href="@Model.LabelUrl"
+                               target="_blank"
+                               class="btn btn-sm btn-outline-secondary"
+                               id="shipping-label-link">
+                                View Label
+                            </a>
+                        </div>
+                    }
+                </div>
+            }
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <h6>Created</h6>
+                    <p id="shipping-created-at">@Model.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    @* Status Update *@
+    @if (Model.Status != Book_Exchange.Models.ShipmentStatus.Delivered &&
+         Model.Status != Book_Exchange.Models.ShipmentStatus.Cancelled)
+    {
+        <div class="card mb-3" id="shipping-update-status-card">
+            <div class="card-header">Update Status</div>
+            <div class="card-body">
+                <form asp-action="UpdateStatus" method="post" id="shipping-update-status-form">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.Id" id="shipping-update-id" />
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-4">
+                            <label for="shipping-new-status-select" class="form-label">New Status</label>
+                            <select name="newStatus" class="form-select" id="shipping-new-status-select">
+                                @foreach (var status in GetAllowedTransitions(Model.Status))
+                                {
+                                    <option value="@((int)status)">@status</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit"
+                                    class="btn btn-primary w-100"
+                                    id="shipping-update-status-btn">
+                                Update
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <form asp-action="Cancel" method="post" id="shipping-cancel-form"
+              onsubmit="return confirm('Are you sure you want to cancel this shipment?');">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.Id" id="shipping-cancel-id" />
+            <button type="submit" class="btn btn-danger" id="shipping-cancel-btn">Cancel Shipment</button>
+        </form>
+    }
+
+</div>
+
+@functions {
+    string GetStatusBadgeClass(Book_Exchange.Models.ShipmentStatus status) => status switch
+    {
+        Book_Exchange.Models.ShipmentStatus.Pending      => "bg-secondary",
+        Book_Exchange.Models.ShipmentStatus.Quoted       => "bg-info text-dark",
+        Book_Exchange.Models.ShipmentStatus.LabelCreated => "bg-primary",
+        Book_Exchange.Models.ShipmentStatus.Shipped      => "bg-warning text-dark",
+        Book_Exchange.Models.ShipmentStatus.Delivered    => "bg-success",
+        Book_Exchange.Models.ShipmentStatus.Cancelled    => "bg-danger",
+        _                                                => "bg-secondary"
+    };
+
+    IEnumerable<Book_Exchange.Models.ShipmentStatus> GetAllowedTransitions(Book_Exchange.Models.ShipmentStatus current) => current switch
+    {
+        Book_Exchange.Models.ShipmentStatus.Pending      => new[] { Book_Exchange.Models.ShipmentStatus.Quoted },
+        Book_Exchange.Models.ShipmentStatus.Quoted       => new[] { Book_Exchange.Models.ShipmentStatus.LabelCreated },
+        Book_Exchange.Models.ShipmentStatus.LabelCreated => new[] { Book_Exchange.Models.ShipmentStatus.Shipped },
+        Book_Exchange.Models.ShipmentStatus.Shipped      => new[] { Book_Exchange.Models.ShipmentStatus.Delivered },
+        _                                                => Array.Empty<Book_Exchange.Models.ShipmentStatus>()
+    };
+}

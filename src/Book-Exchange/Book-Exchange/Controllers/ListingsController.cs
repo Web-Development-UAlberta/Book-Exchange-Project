@@ -14,7 +14,7 @@ public class ListingController : Controller
     private readonly ApplicationDbContext _context;
     private readonly IListingService _listingService;
     private readonly IBookSearchApi _bookSearchApi;
-  
+
     public ListingController(
         ApplicationDbContext context,
         IListingService listingService,

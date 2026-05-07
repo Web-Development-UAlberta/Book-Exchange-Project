@@ -1,0 +1,123 @@
+@model IEnumerable<Book_Exchange.Models.DTOs.Shipping.ShippingQuoteDto>
+
+@{
+    ViewData["Title"] = "Shipping Quote";
+    var transactionId = ViewBag.TransactionId as Guid?;
+    var senderAddressId = ViewBag.SenderAddressId as Guid?;
+    var receiverAddressId = ViewBag.ReceiverAddressId as Guid?;
+    var packageWeightGrams = ViewBag.PackageWeightGrams as int? ?? 0;
+}
+
+<div class="container mt-4" id="shipping-quote-page">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 id="shipping-quote-title">Shipping Quote</h2>
+        <a asp-action="Index" class="btn btn-outline-secondary" id="shipping-quote-back-btn">← Back to Shipments</a>
+    </div>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger" id="shipping-quote-error-alert">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p class="mb-0">@error.ErrorMessage</p>
+            }
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" id="shipping-quote-tempdata-error" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @* Quote Summary *@
+    <div class="card mb-4" id="shipping-quote-summary-card">
+        <div class="card-header">Shipment Summary</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <strong>Transaction ID</strong>
+                    <p id="shipping-quote-transaction-id" class="text-muted">@transactionId</p>
+                </div>
+                <div class="col-md-4">
+                    <strong>Package Weight</strong>
+                    <p id="shipping-quote-weight" class="text-muted">@packageWeightGrams g</p>
+                </div>
+                @if (Model.Any())
+                {
+                    <div class="col-md-4">
+                        <strong>Distance</strong>
+                        <p id="shipping-quote-distance" class="text-muted">@Model.First().DistanceKm.ToString("F2") km</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    @* Carrier Quotes Table *@
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning" id="shipping-quote-no-carriers">
+            No eligible carriers are available for the given weight. Please adjust the package details.
+        </div>
+    }
+    else
+    {
+        <h4 class="mb-3" id="shipping-quote-carriers-heading">Available Carriers</h4>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="shipping-quote-carriers-table">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Carrier</th>
+                        <th>Base Cost</th>
+                        <th>Per kg</th>
+                        <th>Per km</th>
+                        <th>Weight (kg)</th>
+                        <th>Distance (km)</th>
+                        <th>Estimated Cost</th>
+                        <th>Select</th>
+                    </tr>
+                </thead>
+                <tbody id="shipping-quote-carriers-body">
+                    @foreach (var quote in Model.OrderBy(q => q.EstimatedCost))
+                    {
+                        <tr class="shipping-quote-carrier-row" data-carrier-id="@quote.Carrier.Id">
+                            <td class="shipping-quote-carrier-name">@quote.Carrier.Name</td>
+                            <td class="shipping-quote-base-cost">@quote.Carrier.BaseCost.ToString("C")</td>
+                            <td class="shipping-quote-cost-per-kg">@quote.Carrier.CostPerKg.ToString("C")</td>
+                            <td class="shipping-quote-cost-per-km">@quote.Carrier.CostPerKm.ToString("C")</td>
+                            <td class="shipping-quote-weight-kg">@quote.WeightKg.ToString("F3")</td>
+                            <td class="shipping-quote-distance-km">@quote.DistanceKm.ToString("F2")</td>
+                            <td class="shipping-quote-estimated-cost">
+                                <strong>@quote.EstimatedCost.ToString("C")</strong>
+                            </td>
+                            <td>
+                                <form asp-action="Create" method="post"
+                                      class="shipping-select-carrier-form"
+                                      id="shipping-select-form-@quote.Carrier.Id">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="transactionId"      value="@transactionId" />
+                                    <input type="hidden" name="senderAddressId"    value="@senderAddressId" />
+                                    <input type="hidden" name="receiverAddressId"  value="@receiverAddressId" />
+                                    <input type="hidden" name="carrierId"          value="@quote.Carrier.Id"
+                                           class="shipping-select-carrier-id" />
+                                    <input type="hidden" name="packageWeightGrams" value="@packageWeightGrams" />
+                                    <button type="submit"
+                                            class="btn btn-sm btn-success shipping-select-carrier-btn"
+                                            id="shipping-select-btn-@quote.Carrier.Id">
+                                        Select
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+</div>
