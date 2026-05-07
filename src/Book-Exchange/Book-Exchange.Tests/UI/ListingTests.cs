@@ -21,7 +21,7 @@ public class ListingTests : PageTest
 
     /// <summary>
     /// UI-LIST-01: Listing index page loads
-    /// Expected: Listing page and listing list are visible
+    /// Expected: Listing page loads, if a listing exists it is shown, otherwise no listings message is shown
     /// </summary>
     [Fact]
     public async Task UI_LIST_01_Index_Loads()
@@ -31,8 +31,14 @@ public class ListingTests : PageTest
         await Page.GotoAsync($"{BaseUrl}/Listing");
 
         await Expect(Page).ToHaveTitleAsync("Listings - Book_Exchange");
-        await Expect(Page.Locator("#listing-list")).ToBeVisibleAsync();
         await Expect(Page.Locator("#create-listing-btn")).ToBeVisibleAsync();
+
+        var hasListings = await Page.Locator("#listing-list .listing-item").CountAsync() > 0;
+
+        if (hasListings)
+            await Expect(Page.Locator("#listing-list")).ToBeVisibleAsync();
+        else
+            await Expect(Page.Locator("#no-listings-message")).ToBeVisibleAsync();
     }
 
     /// <summary>

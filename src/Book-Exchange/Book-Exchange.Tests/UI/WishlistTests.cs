@@ -21,7 +21,7 @@ public class WishlistTests : PageTest
 
     /// <summary>
     /// UI-WISH-01: Wishlist page loads
-    /// Expected: Wishlist page and Add Book button are visible
+    /// Expected: Wishlist page loads, if items exist they are shown, otherwise no items message is shown
     /// </summary>
     [Fact]
     public async Task UI_WISH_01_Index_Loads()
@@ -31,9 +31,14 @@ public class WishlistTests : PageTest
         await Page.GotoAsync($"{BaseUrl}/Wishlist");
 
         await Expect(Page).ToHaveTitleAsync("My Wishlist - Book_Exchange");
-        await Expect(Page.Locator("#wishlist-page")).ToBeVisibleAsync();
-        await Expect(Page.Locator("#wishlist-add-btn")).ToBeVisibleAsync();
-        await Expect(Page.Locator("#wishlist-items-list")).ToBeVisibleAsync();
+        await Expect(Page.Locator("#add-wishlist-item-btn")).ToBeVisibleAsync();
+
+        var hasItems = await Page.Locator("#wishlist-items-list .wishlist-item").CountAsync() > 0;
+
+        if (hasItems)
+            await Expect(Page.Locator("#wishlist-items-list")).ToBeVisibleAsync();
+        else
+            await Expect(Page.Locator("#no-wishlist-message")).ToBeVisibleAsync();
     }
 
     /// <summary>
