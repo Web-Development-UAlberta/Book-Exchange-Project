@@ -2,7 +2,7 @@ using Book_Exchange.Models;
 using Book_Exchange.Models.DTOs.ExchangeRequest;
 
 namespace Book_Exchange.Services.Interfaces;
-// TODO: Once ORM is implemented make sure nothing changes. 
+
 public interface IExchangeRequestService
 {
     Task<ExchangeRequest> CreateExchangeRequestAsync(CreateExchangeRequestDto dto, Guid userId);

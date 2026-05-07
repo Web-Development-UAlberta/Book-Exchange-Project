@@ -9,10 +9,12 @@ namespace Book_Exchange.Services;
 public class ExchangeRequestService : IExchangeRequestService
 {
     private readonly ApplicationDbContext _context;
+    private readonly ITransactionService _transactionService;
 
-    public ExchangeRequestService(ApplicationDbContext context)
+    public ExchangeRequestService(ApplicationDbContext context, ITransactionService transactionService)
     {
         _context = context;
+        _transactionService = transactionService;
     }
 
     public async Task<ExchangeRequest> CreateExchangeRequestAsync(
@@ -61,17 +63,13 @@ public class ExchangeRequestService : IExchangeRequestService
             Status = ExchangeStatus.Requested,
             Price = dto.Price,
             Message = dto.Message,
-            CreatedAt = DateTime.UtcNow
-        };
-
-        foreach (var offeredListingId in dto.OfferedListingIds)
-        {
-            request.ExchangeRequestItems.Add(new ExchangeRequestItem
+            CreatedAt = DateTime.UtcNow,
+            ExchangeRequestItems = offeredListings.Select(l => new ExchangeRequestItem
             {
-                ExchangeRequestId = request.Id,
-                OfferedListingId = offeredListingId
-            });
-        }
+                ExchangeRequestId = Guid.NewGuid(),
+                OfferedListingId = l.Id
+            }).ToList()
+        };
 
         _context.ExchangeRequests.Add(request);
 
@@ -134,6 +132,8 @@ public class ExchangeRequestService : IExchangeRequestService
     {
         var request = await _context.ExchangeRequests
             .Include(e => e.TargetListing)
+            .Include(e => e.ExchangeRequestItems)
+                .ThenInclude(i => i.OfferedListing)
             .FirstOrDefaultAsync(e => e.Id == exchangeRequestId)
             ?? throw new KeyNotFoundException("Exchange request not found.");
 
@@ -161,7 +161,38 @@ public class ExchangeRequestService : IExchangeRequestService
             RelatedExchangeRequestId = request.Id,
             CreatedAt = DateTime.UtcNow
         });
-        // TODO: HERE WE HAVE TO CREATE TRANSACTION AND CALCULATE SHIPING
+
+        await _context.SaveChangesAsync();
+
+        var transaction = await _transactionService.CreateTransactionFromExchangeRequestAsync(request);
+
+        _context.Notifications.AddRange(
+            new Notification
+            {
+                Id = Guid.NewGuid(),
+                UserId = request.RequesterId,
+                Category = NotificationCategory.TransactionUpdate,
+                Title = "Transaction Created",
+                Message = $"A transaction has been created for ISBN {request.TargetListing.Isbn}. You can now arrange shipping.",
+                RelatedListingId = request.TargetListingId,
+                RelatedExchangeRequestId = request.Id,
+                RelatedTransactionId = transaction.Id,
+                CreatedAt = DateTime.UtcNow
+            },
+            new Notification
+            {
+                Id = Guid.NewGuid(),
+                UserId = userId,
+                Category = NotificationCategory.TransactionUpdate,
+                Title = "Transaction Created",
+                Message = $"A transaction has been created for ISBN {request.TargetListing.Isbn}. You can now arrange shipping.",
+                RelatedListingId = request.TargetListingId,
+                RelatedExchangeRequestId = request.Id,
+                RelatedTransactionId = transaction.Id,
+                CreatedAt = DateTime.UtcNow
+            }
+        );
+
         await _context.SaveChangesAsync();
     }
 

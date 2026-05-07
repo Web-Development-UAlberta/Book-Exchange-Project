@@ -3,7 +3,6 @@ using Book_Exchange.Models.DTOs.Address;
 
 namespace Book_Exchange.Services.Interfaces;
 
-// TODO: Once ORM is implemented make sure nothing has changed.
 public interface IAddressService
 {
     Task<Address> GetAddressByIdAsync(Guid addressId, Guid userId);

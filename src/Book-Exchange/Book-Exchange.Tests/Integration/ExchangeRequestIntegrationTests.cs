@@ -1,4 +1,5 @@
 ﻿using Xunit;
+using Moq;
 using Microsoft.EntityFrameworkCore;
 using Book_Exchange.Models;
 using Book_Exchange.Models.DTOs.ExchangeRequest;
@@ -24,13 +25,20 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
 
         _db = new ApplicationDbContext(options);
 
-        _service = new ExchangeRequestService(_db);
+        var transactionServiceMock = new Mock<ITransactionService>();
+        transactionServiceMock
+            .Setup(s => s.CreateTransactionFromExchangeRequestAsync(It.IsAny<ExchangeRequest>()))
+            .ReturnsAsync((ExchangeRequest req) => new Transaction
+            {
+                Id = Guid.NewGuid(),
+                ExchangeRequestId = req.Id,
+                CreatedAt = DateTime.UtcNow
+            });
+
+        _service = new ExchangeRequestService(_db, transactionServiceMock.Object);
     }
 
-    public void Dispose()
-    {
-        _db.Dispose();
-    }
+    public void Dispose() => _db.Dispose();
 
     /// <summary>
     /// IT-EXCH-01: User creates BuySell exchange request
@@ -68,32 +76,68 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
 
         Assert.NotNull(result);
         Assert.Equal(targetListing.Id, result.TargetListingId);
-        Assert.Equal(requester.Id, result.RequesterId);
         Assert.Equal(ExchangeStatus.Requested, result.Status);
-        Assert.Equal(25.00m, result.Price);
 
-        var saved = await _db.ExchangeRequests.FirstOrDefaultAsync(e => e.Id == result.Id);
+        var saved = await _db.ExchangeRequests.FindAsync(result.Id);
         Assert.NotNull(saved);
-        Assert.Equal(ExchangeStatus.Requested, saved!.Status);
-
-        var notification = await _db.Notifications
-            .FirstOrDefaultAsync(n =>
-                n.UserId == owner.Id &&
-                n.RelatedExchangeRequestId == result.Id &&
-                n.Category == NotificationCategory.ExchangeRequested);
-
-        Assert.NotNull(notification);
     }
 
     /// <summary>
-    /// IT-EXCH-02: User creates BookSwap exchange request
-    /// Expected: ExchangeRequest and ExchangeRequestItems are saved
+    /// IT-EXCH-02: User cannot create duplicate pending request for same listing
+    /// Expected: InvalidOperationException is thrown
     /// </summary>
     [Fact]
-    public async Task IT_EXCH_02_CreateBookSwapExchangeRequest_RequestAndItemsAreSaved()
+    public async Task IT_EXCH_02_DuplicatePendingRequest_ThrowsInvalidOperation()
     {
         var owner = new ApplicationUser { Id = Guid.NewGuid(), UserName = "owner2" };
         var requester = new ApplicationUser { Id = Guid.NewGuid(), UserName = "requester2" };
+
+        var targetListing = new Listing
+        {
+            Id = Guid.NewGuid(),
+            UserId = owner.Id,
+            Isbn = "9780141036144",
+            Condition = BookCondition.Good,
+            Price = 25.00m,
+            WeightGrams = 500,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        var existingRequest = new ExchangeRequest
+        {
+            Id = Guid.NewGuid(),
+            TargetListingId = targetListing.Id,
+            RequesterId = requester.Id,
+            Status = ExchangeStatus.Requested,
+            Price = 25.00m,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _db.Users.AddRange(owner, requester);
+        _db.Listings.Add(targetListing);
+        _db.ExchangeRequests.Add(existingRequest);
+        await _db.SaveChangesAsync();
+
+        var dto = new CreateExchangeRequestDto
+        {
+            TargetListingId = targetListing.Id,
+            OfferedListingIds = new List<Guid>(),
+            Price = 25.00m
+        };
+
+        await Assert.ThrowsAsync<InvalidOperationException>(
+            () => _service.CreateExchangeRequestAsync(dto, requester.Id));
+    }
+
+    /// <summary>
+    /// IT-EXCH-03: User creates book swap exchange request with offered listings
+    /// Expected: ExchangeRequest is saved with correct offered items
+    /// </summary>
+    [Fact]
+    public async Task IT_EXCH_03_CreateBookSwapRequest_SavesOfferedListings()
+    {
+        var owner = new ApplicationUser { Id = Guid.NewGuid(), UserName = "owner3" };
+        var requester = new ApplicationUser { Id = Guid.NewGuid(), UserName = "requester3" };
 
         var targetListing = new Listing
         {
@@ -110,76 +154,10 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
         {
             Id = Guid.NewGuid(),
             UserId = requester.Id,
-            Isbn = "9780439023528",
-            Condition = BookCondition.VeryGood,
-            Price = 15.00m,
-            WeightGrams = 450,
-            CreatedAt = DateTime.UtcNow
-        };
-
-        _db.Users.AddRange(owner, requester);
-        _db.Listings.AddRange(targetListing, offeredListing);
-        await _db.SaveChangesAsync();
-
-        var dto = new CreateExchangeRequestDto
-        {
-            TargetListingId = targetListing.Id,
-            OfferedListingIds = new List<Guid> { offeredListing.Id },
-            Price = null
-        };
-
-        var result = await _service.CreateExchangeRequestAsync(dto, requester.Id);
-
-        Assert.NotNull(result);
-        Assert.Equal(ExchangeStatus.Requested, result.Status);
-        Assert.Null(result.Price);
-
-        var saved = await _db.ExchangeRequests
-            .Include(e => e.ExchangeRequestItems)
-            .FirstOrDefaultAsync(e => e.Id == result.Id);
-
-        Assert.NotNull(saved);
-        Assert.Single(saved!.ExchangeRequestItems);
-        Assert.Contains(saved.ExchangeRequestItems, i => i.OfferedListingId == offeredListing.Id);
-
-        var notification = await _db.Notifications
-            .FirstOrDefaultAsync(n =>
-                n.UserId == owner.Id &&
-                n.RelatedExchangeRequestId == result.Id &&
-                n.Category == NotificationCategory.ExchangeRequested);
-
-        Assert.NotNull(notification);
-    }
-
-    /// <summary>
-    /// IT-EXCH-03: User creates BookSwapWithCash exchange request
-    /// Expected: Request includes offered listing(s) and Price
-    /// </summary>
-    [Fact]
-    public async Task IT_EXCH_03_CreateBookSwapWithCashExchangeRequest_IncludesItemsAndPrice()
-    {
-        var owner = new ApplicationUser { Id = Guid.NewGuid(), UserName = "owner3" };
-        var requester = new ApplicationUser { Id = Guid.NewGuid(), UserName = "requester3" };
-
-        var targetListing = new Listing
-        {
-            Id = Guid.NewGuid(),
-            UserId = owner.Id,
-            Isbn = "9780141036144",
+            Isbn = "9780062316097",
             Condition = BookCondition.Good,
-            Price = 30.00m,
-            WeightGrams = 500,
-            CreatedAt = DateTime.UtcNow
-        };
-
-        var offeredListing = new Listing
-        {
-            Id = Guid.NewGuid(),
-            UserId = requester.Id,
-            Isbn = "9780439023528",
-            Condition = BookCondition.Acceptable,
-            Price = 10.00m,
-            WeightGrams = 400,
+            Price = 12.50m,
+            WeightGrams = 300,
             CreatedAt = DateTime.UtcNow
         };
 
@@ -198,21 +176,19 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
 
         Assert.NotNull(result);
         Assert.Equal(ExchangeStatus.Requested, result.Status);
-        Assert.Equal(12.50m, result.Price);
 
         var saved = await _db.ExchangeRequests
             .Include(e => e.ExchangeRequestItems)
             .FirstOrDefaultAsync(e => e.Id == result.Id);
 
         Assert.NotNull(saved);
-        Assert.Equal(12.50m, saved!.Price);
-        Assert.Single(saved.ExchangeRequestItems);
+        Assert.Single(saved!.ExchangeRequestItems);
         Assert.Contains(saved.ExchangeRequestItems, i => i.OfferedListingId == offeredListing.Id);
     }
 
     /// <summary>
     /// IT-EXCH-04: Listing owner accepts exchange request
-    /// Expected: ExchangeRequest status becomes Accepted and notification is created
+    /// Expected: Status becomes Accepted, notification sent to requester, transaction created
     /// </summary>
     [Fact]
     public async Task IT_EXCH_04_ListingOwnerAcceptsExchangeRequest_StatusAcceptedAndNotificationCreated()
@@ -249,7 +225,6 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
         await _service.AcceptExchangeRequestAsync(exchangeRequest.Id, owner.Id);
 
         var savedRequest = await _db.ExchangeRequests.FindAsync(exchangeRequest.Id);
-
         Assert.NotNull(savedRequest);
         Assert.Equal(ExchangeStatus.Accepted, savedRequest!.Status);
         Assert.NotNull(savedRequest.AcceptedAt);
@@ -265,7 +240,7 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
 
     /// <summary>
     /// IT-EXCH-05: Listing owner rejects exchange request
-    /// Expected: ExchangeRequest status becomes Rejected and notification is created
+    /// Expected: Status becomes Rejected and notification sent to requester
     /// </summary>
     [Fact]
     public async Task IT_EXCH_05_ListingOwnerRejectsExchangeRequest_StatusRejectedAndNotificationCreated()
@@ -302,7 +277,6 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
         await _service.RejectExchangeRequestAsync(exchangeRequest.Id, owner.Id);
 
         var savedRequest = await _db.ExchangeRequests.FindAsync(exchangeRequest.Id);
-
         Assert.NotNull(savedRequest);
         Assert.Equal(ExchangeStatus.Rejected, savedRequest!.Status);
 

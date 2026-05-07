@@ -1,0 +1,63 @@
+@model IEnumerable<Book_Exchange.Models.DTOs.Message.ConversationSummaryDto>
+@{
+    ViewData["Title"] = "Messages";
+}
+
+<div id="messages-page">
+
+    <div id="chat-panel" class="d-flex" style="height: calc(100vh - 180px); border: 1px solid #dee2e6; border-radius: 6px; overflow: hidden;">
+
+        @* Conversation List Sidebar *@
+        <div id="conversation-list" style="width: 280px; min-width: 220px; border-right: 1px solid #dee2e6; overflow-y: auto; background: #f8f9fa;">
+            <div class="p-3 border-bottom fw-semibold text-muted" style="font-size: 0.85rem; letter-spacing: 0.05em;">
+                Conversations
+            </div>
+
+            @if (!Model.Any())
+            {
+                <div class="p-4 text-muted text-center" style="font-size: 0.9rem;">
+                    No conversations yet.
+                </div>
+            }
+            else
+            {
+                @foreach (var convo in Model)
+                {
+                    <a asp-action="Conversation" asp-route-otherUserId="@convo.OtherUserId"
+                       class="conversation-item d-flex align-items-center gap-3 p-3 text-decoration-none text-dark border-bottom"
+                       data-user-id="@convo.OtherUserId">
+
+                        @* Avatar *@
+                        <div class="conversation-item-avatar rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center flex-shrink-0"
+                             style="width: 44px; height: 44px; font-size: 1.1rem; font-weight: 600;">
+                            @convo.OtherUserName.FirstOrDefault().ToString().ToUpper()
+                        </div>
+
+                        <div class="flex-grow-1 overflow-hidden">
+                            <div class="conversation-item-name fw-semibold" style="font-size: 0.9rem;">
+                                @convo.OtherUserName
+                            </div>
+                            <div class="text-muted text-truncate" style="font-size: 0.8rem;">
+                                @convo.LatestMessageText
+                            </div>
+                        </div>
+
+                        @if (convo.UnreadCount > 0)
+                        {
+                            <span class="badge bg-primary rounded-pill">@convo.UnreadCount</span>
+                        }
+                    </a>
+                }
+            }
+        </div>
+
+        @* Empty State when no conversation is selected *@
+        <div id="message-thread" class="flex-grow-1 d-flex align-items-center justify-content-center text-muted">
+            <div class="text-center">
+                <div style="font-size: 2.5rem;">💬</div>
+                <div class="mt-2">Select a conversation to view messages.</div>
+            </div>
+        </div>
+    </div>
+
+</div>

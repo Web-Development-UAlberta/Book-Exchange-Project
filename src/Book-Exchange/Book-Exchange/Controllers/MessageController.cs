@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-// TODO: Once ORM is implemented make sure nothing changes. 
 namespace Book_Exchange.Controllers;
 
 [Authorize]
