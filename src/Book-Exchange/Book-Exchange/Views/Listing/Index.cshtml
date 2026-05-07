@@ -54,7 +54,7 @@
 
                         <p>
                             <strong>Price:</strong> $@listing.Price
-                        </p>
+                        </p>                        
                     </div>
 
                     <div class="card-footer bg-white">
@@ -68,6 +68,11 @@
 
                 </div>
             </div>
+        }
+
+        @if (!Model.Any())
+        {
+            <p id="no-listings-message">You have no listings yet.</p>
         }
 
     </div>

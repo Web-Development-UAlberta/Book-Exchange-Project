@@ -31,7 +31,7 @@ public class WishlistTests : PageTest
         await Page.GotoAsync($"{BaseUrl}/Wishlist");
 
         await Expect(Page).ToHaveTitleAsync("My Wishlist - Book_Exchange");
-        await Expect(Page.Locator("#add-wishlist-item-btn")).ToBeVisibleAsync();
+        await Expect(Page.Locator("#wishlist-add-btn")).ToBeVisibleAsync();
 
         var hasItems = await Page.Locator("#wishlist-items-list .wishlist-item").CountAsync() > 0;
 

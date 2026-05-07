@@ -165,7 +165,10 @@
                 </div>
             </div>
         }
-
+        @if (!Model.Items.Any())
+        {
+            <p id="no-wishlist-message" class="text-muted">You have no books in your wishlist yet.</p>
+        }
     </div>
 
 </div>
