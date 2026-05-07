@@ -4,7 +4,7 @@
 
 // namespace UI;
 
-// // ── Seeding notes ─────────────────────────────────────────────────────────────
+// // ── Motes ─────────────────────────────────────────────────────────────
 // // Some tests require the test database to be seeded before the run.
 // // UI-REVIEW-05 additionally requires a transaction that has NOT yet been reviewed
 // // by User1 — re-seed or use a fresh transaction ID after each run of that test.
