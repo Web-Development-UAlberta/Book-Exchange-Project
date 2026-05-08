@@ -1,0 +1,114 @@
+@model IEnumerable<Book_Exchange.Models.DTOs.Notification.NotificationDto>
+
+@{
+    ViewData["Title"] = "Notifications";
+    Layout = "_Layout";
+}
+
+<div id="notifications-panel" class="container mt-4">
+
+    <div class="d-flex align-items-center justify-content-between mb-1">
+        <h2 class="mb-0">Notifications</h2>
+
+        @if (Model.Any())
+        {
+            <form asp-action="MarkAllAsRead" method="post" class="d-inline">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-outline-secondary btn-sm" id="mark-all-read-btn">
+                    Mark all as read
+                </button>
+            </form>
+        }
+    </div>
+
+    <p class="text-muted small mb-3">
+        Showing unread notifications and notifications read within the last 30 days.
+    </p>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="notification-empty text-center text-muted py-5">
+            <p class="mb-0">You have no notifications.</p>
+        </div>
+    }
+    else
+    {
+        <ul class="list-unstyled notification-list">
+            @foreach (var notification in Model)
+            {
+                <li class="notification-item @(notification.IsRead ? "" : "notification-item--unread") mb-2">
+                    <div class="card @(notification.IsRead ? "" : "border-primary")">
+                        <div class="card-body d-flex align-items-start justify-content-between">
+
+                            <div class="notification-content flex-grow-1">
+                                <div class="d-flex align-items-center gap-2 mb-1">
+                                    @if (!notification.IsRead)
+                                    {
+                                        <span class="notification-dot bg-primary rounded-circle d-inline-block"
+                                              style="width:10px;height:10px;" title="Unread"></span>
+                                    }
+                                    <a asp-action="Details" asp-route-id="@notification.Id"
+                                       class="notification-title fw-semibold text-decoration-none text-dark stretched-link">
+                                        @notification.Title
+                                    </a>
+                                </div>
+                                <p class="notification-message text-muted small mb-1">@notification.Message</p>
+                                <small class="notification-timestamp text-muted">
+                                    @notification.CreatedAt.ToString("MMM d, yyyy h:mm tt")
+                                </small>
+                            </div>
+
+                            <div class="notification-actions d-flex flex-column align-items-end gap-1 ms-3 position-relative" style="z-index:1;">
+                                @if (!notification.IsRead)
+                                {
+                                    <form asp-action="MarkAsRead" asp-route-id="@notification.Id" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-link btn-sm p-0 notification-mark-read-btn"
+                                                title="Mark as read">
+                                            Mark read
+                                        </button>
+                                    </form>
+                                }
+
+                                <form asp-action="Archive" asp-route-id="@notification.Id" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-link btn-sm p-0 text-muted notification-archive-btn"
+                                            title="Dismiss notification">
+                                        Dismiss
+                                    </button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        (async function () {
+            try {
+                const res = await fetch('/Notification/UnreadCount');
+                const data = await res.json();
+                const badge = document.getElementById('notification-badge');
+                if (badge) {
+                    badge.textContent = data.unreadCount > 0 ? data.unreadCount : '';
+                    badge.style.display = data.unreadCount > 0 ? 'inline' : 'none';
+                }
+            } catch (e) {
+                @* silently fail — badge just won't update *@
+            }
+        })();
+    </script>
+}
