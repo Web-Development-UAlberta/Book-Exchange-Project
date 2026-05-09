@@ -1,0 +1,59 @@
+@* 
+    _NotificationPanel.cshtml — Partial view
+    Used on the Dashboard to show the latest notifications snippet.
+    Model: IEnumerable<Book_Exchange.Models.DTOs.Notification.NotificationDto>
+    
+    Usage in Dashboard/Index.cshtml:
+        @await Html.PartialAsync("_NotificationPanel", notificationsForPanel)
+    
+    OR inject directly via ViewData / a view model.
+*@
+@model IEnumerable<Book_Exchange.Models.DTOs.Notification.NotificationDto>
+
+<div id="notifications-panel" class="dashboard-panel h-100">
+    <div class="d-flex align-items-center justify-content-between mb-2">
+        <h6 class="mb-0 fw-semibold">Notifications</h6>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <p class="text-muted small mb-0">No new notifications.</p>
+    }
+    else
+    {
+        <ul class="list-unstyled mb-0">
+            @foreach (var n in Model.Take(5))
+            {
+                <li class="notification-item @(n.IsRead ? "" : "notification-item--unread") py-1 border-bottom">
+                    <div class="d-flex align-items-start gap-2">
+                        @if (!n.IsRead)
+                        {
+                            <span class="notification-dot bg-primary rounded-circle flex-shrink-0 mt-1"
+                                  style="width:8px;height:8px;"></span>
+                        }
+                        else
+                        {
+                            <span style="width:8px;" class="flex-shrink-0"></span>
+                        }
+                        <div>
+                            <a asp-controller="Notification" asp-action="Details" asp-route-id="@n.Id"
+                               class="notification-title small fw-semibold text-dark text-decoration-none">
+                                @n.Title
+                            </a>
+                            <div class="notification-timestamp text-muted" style="font-size:0.75rem;">
+                                @n.CreatedAt.ToString("MMM d, h:mm tt")
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+
+    <div class="mt-2">
+        <a asp-controller="Notification" asp-action="Index"
+           class="btn btn-outline-secondary btn-sm w-100" id="view-all-notifications-btn">
+            View all
+        </a>
+    </div>
+</div>
