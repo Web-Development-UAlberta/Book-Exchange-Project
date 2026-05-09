@@ -71,7 +71,7 @@ else
     app.UseHsts();
 }
 
-// TODO: Added to troubleshoot GitHub Actions UI test run failures - can be removed once we confirm the fix
+// Required for GitHub Actions UI test runs
 if (!app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
@@ -108,7 +108,7 @@ app.MapRazorPages()
 
 app.Run();
 
-// TODO: Added to troubleshoot GitHub Actions UI test run failures - can be removed once we confirm the fix
+// Required for GitHub Actions UI test runs
 static async Task<ApplicationUser> SeedUserAsync(
     UserManager<ApplicationUser> userManager,
     string email,
