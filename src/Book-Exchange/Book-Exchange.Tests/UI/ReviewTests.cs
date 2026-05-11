@@ -27,13 +27,17 @@
 //     private const string FreshTransactionId = "REPLACE-WITH-FRESH-UNREVIEWD-TRANSACTION-ID";
 
 //     // Helpers - to seed data for tests
-//     private async Task LoginAsync(string email = User1Email, string password = User1Password)
+//     private async Task LoginAsync(string email, string password)
 //     {
 //         await Page.GotoAsync($"{BaseUrl}/Identity/Account/Login");
+
 //         await Page.FillAsync("#Input_Email", email);
 //         await Page.FillAsync("#Input_Password", password);
 //         await Page.ClickAsync("#login-submit");
-//         await Page.WaitForURLAsync($"{BaseUrl}/");
+//         await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+
+//         if (Page.Url.Contains("/Account/Login"))
+//             throw new Exception($"Login failed for {email} – verify the user exists in the database.");
 //     }
 
 //     private string CreateUrl(string transactionId, string revieweeId)

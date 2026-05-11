@@ -1,8 +1,112 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model List<Book_Exchange.Models.DTOs.Listing.ListingViewDto>
+@{
+    ViewData["Title"] = "Exchange, Buy & Sell Books";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>   
-    <h2>Book Exchange Platform</h2>
+<div class="bx-hero py-5 mb-4" id="hero-section">
+    <div class="text-center">
+        <h1 class="display-5 fw-bold text-white mb-2">Exchange, Buy &amp; Sell Books</h1>
+        <p class="text-white-50 small text-uppercase letter-spacing mb-1">Give Books. Get Stories.</p>
+        <p class="text-white-50 mb-4">Find your next read. Pass on your last one.</p>
+        <form id="home-search-form" asp-action="Search" asp-controller="Home" method="get"
+              class="d-flex gap-2 justify-content-center">
+            <input id="search-input"
+                   name="q"
+                   type="text"
+                   class="form-control"
+                   style="max-width: 360px;"
+                   placeholder="Search by title, author, or genre…"
+                   autocomplete="off" />
+            <button id="search-btn" type="submit" class="btn btn-light fw-semibold" asp-controller="BookSearch"
+                          asp-action="Search"
+                          method="get">Search</button> 
+        </form>
+    </div>
 </div>
+
+@* Featured Listings *@
+<section id="featured-listings" class="mb-5">
+    <h2 class="h4 mb-3">Featured Listings</h2>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row row-cols-2 row-cols-md-4 g-3" id="featured-listings-grid">
+            @foreach (var listing in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 listings-card">
+                        @if (!string.IsNullOrEmpty(listing.Book?.ThumbnailUrl))
+                        {
+                            <img src="@listing.Book.ThumbnailUrl"
+                                 class="card-img-top listing-card-img"
+                                 alt="@listing.Book.Title cover"
+                                 style="height: 200px; object-fit: cover;" />
+                        }
+                        else
+                        {
+                            <div class="listing-card-img--placeholder d-flex align-items-center justify-content-center text-muted"
+                                 style="height: 200px; background: #E0F7F5; font-size: 0.8rem;">
+                                Cover
+                            </div>
+                        }
+                        <div class="card-body p-2">
+                            <div class="fw-semibold small text-truncate listing-card-title">
+                                @(listing.Book?.Title ?? listing.Isbn)
+                            </div>
+                            <div class="text-muted small text-truncate listing-card-author">
+                                @(listing.Book?.Authors?.FirstOrDefault() ?? "")
+                            </div>
+                            <div class="d-flex align-items-center gap-1 mt-1 listing-card-meta">
+                                @if (listing.Price > 0)
+                                {
+                                    <span class="badge bg-warning badge-sell">Sell</span>
+                                    <span class="small fw-semibold listings-card-price">$@listing.Price.ToString("F2")</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success badge-swap">Swap</span>
+                                }
+                                <span class="text-muted small listing-card-condition">@listing.Condition</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-muted">No listings yet. Be the first to list a book!</p>
+    }
+
+    <div class="text-center mt-4">
+        <a id="view-all-listings-btn"
+           asp-action="Index" asp-controller="Listing"
+           class="btn btn-outline-primary">
+            View all listings
+        </a>
+    </div>
+</section>
+
+@* How It Works *@
+<section id="how-it-works" class="py-4 mb-4" style="background:#fff; border-radius:8px; border:1px solid #DDE3ED;">
+    <h2 class="h4 text-center mb-4">How it works</h2>
+    <div class="row text-center g-3 px-3">
+        <div class="col-md-4 how-it-works-step step1" id="step1">
+            <div class="bx-step-number mx-auto mb-2">1</div>
+            <h3 class="h6 fw-semibold">List your books</h3>
+            <p class="text-muted small mb-0">Add books you own or want</p>
+        </div>
+        <div class="col-md-4 how-it-works-step step2" id="step2">
+            <div class="bx-step-number mx-auto mb-2">2</div>
+            <h3 class="h6 fw-semibold">Get matched</h3>
+            <p class="text-muted small mb-0">System finds compatible swaps</p>
+        </div>
+        <div class="col-md-4 how-it-works-step step3" id="step3">
+            <div class="bx-step-number mx-auto mb-2">3</div>
+            <h3 class="h6 fw-semibold">Exchange &amp; enjoy</h3>
+            <p class="text-muted small mb-0">Confirm, ship, and review</p>
+        </div>
+    </div>
+</section>

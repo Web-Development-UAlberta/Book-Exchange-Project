@@ -15,8 +15,10 @@ public class ListingTests : PageTest
         await Page.FillAsync("#Input_Email", email);
         await Page.FillAsync("#Input_Password", password);
         await Page.ClickAsync("#login-submit");
+        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
 
-        await Page.WaitForURLAsync($"{BaseUrl}/");
+        if (Page.Url.Contains("/Account/Login"))
+            throw new Exception($"Login failed for {email} – verify the user exists in the database.");
     }
 
     /// <summary>
@@ -33,7 +35,7 @@ public class ListingTests : PageTest
         await Expect(Page).ToHaveTitleAsync("Listings - Book_Exchange");
         await Expect(Page.Locator("#create-listing-btn")).ToBeVisibleAsync();
 
-        var hasListings = await Page.Locator("#listing-list .listing-item").CountAsync() > 0;
+        var hasListings = await Page.Locator("#listing-list .listing-card").CountAsync() > 0;
 
         if (hasListings)
             await Expect(Page.Locator("#listing-list")).ToBeVisibleAsync();

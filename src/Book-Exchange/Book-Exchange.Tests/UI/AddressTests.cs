@@ -15,10 +15,11 @@ public class AddressTests : PageTest
 
         await Page.FillAsync("#Input_Email", email);
         await Page.FillAsync("#Input_Password", password);
-
         await Page.ClickAsync("#login-submit");
+        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
 
-        await Page.WaitForURLAsync($"{BaseUrl}/");
+        if (Page.Url.Contains("/Account/Login"))
+            throw new Exception($"Login failed for {email} – verify the user exists in the database.");
     }
 
     /// <summary>
