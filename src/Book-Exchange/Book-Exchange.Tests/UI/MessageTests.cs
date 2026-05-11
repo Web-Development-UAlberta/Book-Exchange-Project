@@ -1,3 +1,4 @@
+using Npgsql;
 using System.Text.RegularExpressions;
 using Microsoft.Playwright;
 using Microsoft.Playwright.Xunit;
@@ -48,6 +49,49 @@ public class MessageTests : PageTest
             ?? throw new Exception("First .conversation-item has no href attribute.");
 
         return href.StartsWith("http") ? href : BaseUrl + href;
+    }
+
+    /// <summary>
+    /// Runs before every test, deletes any message with "UI test message" in the text to clean up messages sent by these tests.
+    /// </summary>
+    /// <returns></returns>
+    public override async Task InitializeAsync()
+    {
+        await base.InitializeAsync();
+
+        await CleanupTestMessagesAsync();
+    }
+
+    public override async Task DisposeAsync()
+    {
+        await CleanupTestMessagesAsync();
+        await base.DisposeAsync();
+    }
+
+    /// <summary>
+    /// Deletes all messages whose text starts with "UI test message" from the dev database directly via Npgsql 
+    /// </summary>
+    private static async Task CleanupTestMessagesAsync()
+    {
+        const string connectionString =
+        "Host=localhost;Port=5432;Database=BookExchangeDb;Username=postgres;Password=postgres;";
+
+        await using var conn = new NpgsqlConnection(connectionString);
+        await conn.OpenAsync();
+
+        await using var cmd = new NpgsqlCommand(
+            @"DELETE FROM messages WHERE ""message_text"" LIKE 'UI test message%'",
+            conn);
+
+        try
+        {
+            await cmd.ExecuteNonQueryAsync();
+        }
+        catch (Npgsql.PostgresException ex) when (ex.SqlState == "42P01")
+        {
+            cmd.CommandText = @"DELETE FROM messages WHERE ""message_text"" LIKE 'UI test message%'";
+            await cmd.ExecuteNonQueryAsync();
+        }
     }
 
     /// <summary>
@@ -328,4 +372,5 @@ public class MessageTests : PageTest
         await Expect(Page).ToHaveURLAsync(new Regex(".*/Message$"));
         await Expect(Page.Locator("#messages-page")).ToBeVisibleAsync();
     }
+
 }

@@ -71,7 +71,7 @@ else
     app.UseHsts();
 }
 
-// TODO: Added to troubleshoot GitHub Actions UI test run failures - can be removed once we confirm the fix
+// Required for GitHub Actions UI test run
 if (!app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
@@ -93,6 +93,10 @@ if (app.Environment.IsDevelopment())
     var testUser = await SeedUserAsync(userManager, "test@test.com", "Test1234!");
     var otherUser = await SeedUserAsync(userManager, "otheruser@test.com", "Test1234!");
 
+    await SeedAddressesAsync(db, testUser.Id, otherUser.Id);
+    await SeedCarriersAsync(db);
+    await SeedListingsAndWishlistsAsync(db, testUser.Id, otherUser.Id);
+    await SeedExchangeRequestsTransactionsAndShipmentsAsync(db, testUser.Id, otherUser.Id);
     await SeedMessagesAsync(db, testUser.Id, otherUser.Id);
     await SeedNotificationsAsync(db, testUser.Id, otherUser.Id);
 }
@@ -103,12 +107,13 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+app.UseStaticFiles();
 app.MapRazorPages()
     .WithStaticAssets();
 
 app.Run();
 
-// TODO: Added to troubleshoot GitHub Actions UI test run failures - can be removed once we confirm the fix
+// Required for GitHub Actions UI test run
 static async Task<ApplicationUser> SeedUserAsync(
     UserManager<ApplicationUser> userManager,
     string email,
@@ -128,6 +133,255 @@ static async Task<ApplicationUser> SeedUserAsync(
     return user;
 }
 
+static async Task SeedAddressesAsync(
+    ApplicationDbContext db,
+    Guid testUserId,
+    Guid otherUserId)
+{
+    var address1 = new Guid("aaaaaaaa-0001-0000-0000-000000000001");
+    if (await db.Addresses.AnyAsync(a => a.Id == address1)) return;
+
+    db.Addresses.AddRange(
+        new Address
+        {
+            Id = address1,
+            UserId = testUserId,
+            FullName = "Test User Edmonton Address",
+            GooglePlaceId = "ChIJI__egEUioFMRXRX2SgygH0E",
+            CreatedAt = new DateTime(2025, 1, 5, 0, 0, 0, DateTimeKind.Utc)
+        },
+        new Address
+        {
+            Id = new Guid("aaaaaaaa-0002-0000-0000-000000000002"),
+            UserId = otherUserId,
+            FullName = "Other User Calgary Address",
+            GooglePlaceId = "ChIJ1T-EnwNwcVMROrZStrE7bSY",
+            CreatedAt = new DateTime(2025, 1, 5, 0, 0, 0, DateTimeKind.Utc)
+        }
+    );
+
+    await db.SaveChangesAsync();
+}
+
+static async Task SeedCarriersAsync(ApplicationDbContext db)
+{
+    var carrier1 = new Guid("bbbbbbbb-0001-0000-0000-000000000001");
+    if (await db.Carriers.AnyAsync(c => c.Id == carrier1)) return;
+
+    db.Carriers.AddRange(
+        new Carrier
+        {
+            Id = carrier1,
+            Name = "Canada Post",
+            BaseCost = 9.99m,
+            CostPerKg = 2.25m,
+            CostPerKm = 0.035m,
+            MaxWeightGrams = 30000,
+            IsActive = true
+        },
+        new Carrier
+        {
+            Id = new Guid("bbbbbbbb-0002-0000-0000-000000000002"),
+            Name = "Purolator",
+            BaseCost = 12.99m,
+            CostPerKg = 2.75m,
+            CostPerKm = 0.045m,
+            MaxWeightGrams = 32000,
+            IsActive = true
+        },
+        new Carrier
+        {
+            Id = new Guid("bbbbbbbb-0003-0000-0000-000000000003"),
+            Name = "FedEx Canada",
+            BaseCost = 14.99m,
+            CostPerKg = 3.00m,
+            CostPerKm = 0.050m,
+            MaxWeightGrams = 30000,
+            IsActive = true
+        },
+        new Carrier
+        {
+            Id = new Guid("bbbbbbbb-0004-0000-0000-000000000004"),
+            Name = "UPS Canada",
+            BaseCost = 13.49m,
+            CostPerKg = 2.95m,
+            CostPerKm = 0.048m,
+            MaxWeightGrams = 30000,
+            IsActive = true
+        }
+    );
+
+    await db.SaveChangesAsync();
+}
+
+static async Task SeedListingsAndWishlistsAsync(
+    ApplicationDbContext db,
+    Guid testUserId,
+    Guid otherUserId)
+{
+    var listing1 = new Guid("cccccccc-0001-0000-0000-000000000001");
+    if (await db.Listings.AnyAsync(l => l.Id == listing1)) return;
+
+    db.Listings.AddRange(
+        new Listing { Id = listing1, UserId = testUserId, Isbn = "9780141439600", Condition = BookCondition.Good, Price = 10.00m, WeightGrams = 320 },
+        new Listing { Id = new Guid("cccccccc-0002-0000-0000-000000000002"), UserId = testUserId, Isbn = "9780141439518", Condition = BookCondition.VeryGood, Price = 12.50m, WeightGrams = 350 },
+        new Listing { Id = new Guid("cccccccc-0003-0000-0000-000000000003"), UserId = testUserId, Isbn = "9780140449136", Condition = BookCondition.LikeNew, Price = 15.00m, WeightGrams = 420 },
+        new Listing { Id = new Guid("cccccccc-0004-0000-0000-000000000004"), UserId = testUserId, Isbn = "9780061120084", Condition = BookCondition.Good, Price = 11.00m, WeightGrams = 300 },
+
+        new Listing { Id = new Guid("cccccccc-0005-0000-0000-000000000005"), UserId = otherUserId, Isbn = "9780439064873", Condition = BookCondition.VeryGood, Price = 9.50m, WeightGrams = 310 },
+        new Listing { Id = new Guid("cccccccc-0006-0000-0000-000000000006"), UserId = otherUserId, Isbn = "9780743273565", Condition = BookCondition.Good, Price = 13.00m, WeightGrams = 340 },
+        new Listing { Id = new Guid("cccccccc-0007-0000-0000-000000000007"), UserId = otherUserId, Isbn = "9780307474278", Condition = BookCondition.Acceptable, Price = 8.00m, WeightGrams = 360 },
+        new Listing { Id = new Guid("cccccccc-0008-0000-0000-000000000008"), UserId = otherUserId, Isbn = "9780385472579", Condition = BookCondition.LikeNew, Price = 14.00m, WeightGrams = 390 }
+    );
+
+    db.Wishlist.AddRange(
+        new WishlistItem { Id = new Guid("dddddddd-0001-0000-0000-000000000001"), UserId = testUserId, Isbn = "9780439064873", IsActive = true },
+        new WishlistItem { Id = new Guid("dddddddd-0002-0000-0000-000000000002"), UserId = testUserId, Isbn = "9780743273565", IsActive = true },
+        new WishlistItem { Id = new Guid("dddddddd-0003-0000-0000-000000000003"), UserId = testUserId, Isbn = "9780307474278", IsActive = true },
+        new WishlistItem { Id = new Guid("dddddddd-0004-0000-0000-000000000004"), UserId = testUserId, Isbn = "9780385472579", IsActive = true },
+
+        new WishlistItem { Id = new Guid("dddddddd-0005-0000-0000-000000000005"), UserId = otherUserId, Isbn = "9780141439600", IsActive = true },
+        new WishlistItem { Id = new Guid("dddddddd-0006-0000-0000-000000000006"), UserId = otherUserId, Isbn = "9780141439518", IsActive = true },
+        new WishlistItem { Id = new Guid("dddddddd-0007-0000-0000-000000000007"), UserId = otherUserId, Isbn = "9780140449136", IsActive = true },
+        new WishlistItem { Id = new Guid("dddddddd-0008-0000-0000-000000000008"), UserId = otherUserId, Isbn = "9780061120084", IsActive = true }
+    );
+
+    await db.SaveChangesAsync();
+}
+
+static async Task SeedExchangeRequestsTransactionsAndShipmentsAsync(
+    ApplicationDbContext db,
+    Guid testUserId,
+    Guid otherUserId)
+{
+    var request1 = new Guid("eeeeeeee-1001-0000-0000-000000000001");
+    if (await db.ExchangeRequests.AnyAsync(e => e.Id == request1)) return;
+
+    var now = new DateTime(2025, 1, 10, 0, 0, 0, DateTimeKind.Utc);
+
+    db.ExchangeRequests.AddRange(
+        new ExchangeRequest
+        {
+            Id = request1,
+            TargetListingId = new Guid("cccccccc-0005-0000-0000-000000000005"),
+            RequesterId = testUserId,
+            Status = ExchangeStatus.Accepted,
+            Price = 0,
+            Message = "I can offer Pride and Prejudice for your Harry Potter book.",
+            CreatedAt = now.AddHours(9),
+            AcceptedAt = now.AddHours(10)
+        },
+        new ExchangeRequest
+        {
+            Id = new Guid("eeeeeeee-1002-0000-0000-000000000002"),
+            TargetListingId = new Guid("cccccccc-0006-0000-0000-000000000006"),
+            RequesterId = testUserId,
+            Status = ExchangeStatus.Requested,
+            Price = 3.00m,
+            Message = "I am interested in this book and can add a small cash top-up.",
+            CreatedAt = now.AddHours(11)
+        },
+        new ExchangeRequest
+        {
+            Id = new Guid("eeeeeeee-1003-0000-0000-000000000003"),
+            TargetListingId = new Guid("cccccccc-0001-0000-0000-000000000001"),
+            RequesterId = otherUserId,
+            Status = ExchangeStatus.Accepted,
+            Price = 0,
+            Message = "I can offer Harry Potter for your A Tale of Two Cities.",
+            CreatedAt = now.AddHours(12),
+            AcceptedAt = now.AddHours(13)
+        },
+        new ExchangeRequest
+        {
+            Id = new Guid("eeeeeeee-1004-0000-0000-000000000004"),
+            TargetListingId = new Guid("cccccccc-0002-0000-0000-000000000002"),
+            RequesterId = otherUserId,
+            Status = ExchangeStatus.Requested,
+            Price = 2.00m,
+            Message = "I would like to request this listing.",
+            CreatedAt = now.AddHours(14)
+        }
+    );
+
+    db.ExchangeRequestItems.AddRange(
+        new ExchangeRequestItem
+        {
+            ExchangeRequestId = request1,
+            OfferedListingId = new Guid("cccccccc-0001-0000-0000-000000000001")
+        },
+        new ExchangeRequestItem
+        {
+            ExchangeRequestId = new Guid("eeeeeeee-1002-0000-0000-000000000002"),
+            OfferedListingId = new Guid("cccccccc-0002-0000-0000-000000000002")
+        },
+        new ExchangeRequestItem
+        {
+            ExchangeRequestId = new Guid("eeeeeeee-1003-0000-0000-000000000003"),
+            OfferedListingId = new Guid("cccccccc-0005-0000-0000-000000000005")
+        },
+        new ExchangeRequestItem
+        {
+            ExchangeRequestId = new Guid("eeeeeeee-1004-0000-0000-000000000004"),
+            OfferedListingId = new Guid("cccccccc-0006-0000-0000-000000000006")
+        }
+    );
+
+    db.Transactions.AddRange(
+        new Transaction
+        {
+            Id = new Guid("99999999-0001-0000-0000-000000000001"),
+            ExchangeRequestId = request1,
+            TotalValue = 19.50m,
+            CreatedAt = now.AddHours(10),
+            ConfirmedAt = now.AddHours(10).AddMinutes(10)
+        },
+        new Transaction
+        {
+            Id = new Guid("99999999-0002-0000-0000-000000000002"),
+            ExchangeRequestId = new Guid("eeeeeeee-1003-0000-0000-000000000003"),
+            TotalValue = 19.50m,
+            CreatedAt = now.AddHours(13),
+            ConfirmedAt = now.AddHours(13).AddMinutes(10)
+        }
+    );
+
+    db.Shipments.AddRange(
+        new Shipment
+        {
+            Id = new Guid("88888888-0001-0000-0000-000000000001"),
+            TransactionId = new Guid("99999999-0001-0000-0000-000000000001"),
+            SenderAddressId = new Guid("aaaaaaaa-0001-0000-0000-000000000001"),
+            ReceiverAddressId = new Guid("aaaaaaaa-0002-0000-0000-000000000002"),
+            CarrierId = new Guid("bbbbbbbb-0001-0000-0000-000000000001"),
+            PackageWeightGrams = 320,
+            DistanceKm = 300.00m,
+            ShippingCost = 21.21m,
+            TrackingNumber = "CPMOCK000001",
+            LabelUrl = "https://example.com/mock-labels/CPMOCK000001.pdf",
+            Status = ShipmentStatus.Shipped,
+            CreatedAt = now.AddDays(1)
+        },
+        new Shipment
+        {
+            Id = new Guid("88888888-0002-0000-0000-000000000002"),
+            TransactionId = new Guid("99999999-0002-0000-0000-000000000002"),
+            SenderAddressId = new Guid("aaaaaaaa-0002-0000-0000-000000000002"),
+            ReceiverAddressId = new Guid("aaaaaaaa-0001-0000-0000-000000000001"),
+            CarrierId = new Guid("bbbbbbbb-0002-0000-0000-000000000002"),
+            PackageWeightGrams = 310,
+            DistanceKm = 300.00m,
+            ShippingCost = 27.34m,
+            TrackingNumber = "PUROMOCK000001",
+            LabelUrl = "https://example.com/mock-labels/PUROMOCK000001.pdf",
+            Status = ShipmentStatus.LabelCreated,
+            CreatedAt = now.AddDays(1).AddHours(2)
+        }
+    );
+
+    await db.SaveChangesAsync();
+}
+
 static async Task SeedMessagesAsync(
     ApplicationDbContext db,
     Guid testUserId,
@@ -136,7 +390,7 @@ static async Task SeedMessagesAsync(
     var msg1 = new Guid("eeeeeeee-0001-0000-0000-000000000001");
     if (await db.Messages.AnyAsync(m => m.Id == msg1)) return;
 
-    var now = new DateTime(2025, 1, 10, 0, 0, 0, DateTimeKind.Utc);
+    var now = new DateTime(2026, 5, 01, 0, 0, 0, DateTimeKind.Utc);
 
     db.Messages.AddRange(
         new Message { Id = msg1, SenderId = testUserId, ReceiverId = otherUserId, MessageText = "Hi! Is your copy of A Tale of Two Cities still available?", IsRead = false, CreatedAt = now.AddHours(9) },
@@ -158,13 +412,13 @@ static async Task SeedNotificationsAsync(
     if (await db.Notifications.AnyAsync(n => n.Id == notif1)) return;
 
     db.Notifications.AddRange(
-        new Notification { Id = notif1, UserId = testUserId, Category = NotificationCategory.MatchFound, Title = "Book Match Found", Message = "A book matching your wishlist is now available.", IsRead = false, ReadAt = null, CreatedAt = new DateTime(2025, 1, 9, 8, 0, 0, DateTimeKind.Utc) },
-        new Notification { Id = new Guid("ffffffff-0002-0000-0000-000000000002"), UserId = otherUserId, Category = NotificationCategory.NewMessage, Title = "New Message", Message = "You have a new message from test@test.com.", IsRead = true, ReadAt = new DateTime(2025, 1, 10, 9, 16, 0, DateTimeKind.Utc), CreatedAt = new DateTime(2025, 1, 10, 9, 0, 0, DateTimeKind.Utc) },
-        new Notification { Id = new Guid("ffffffff-0003-0000-0000-000000000003"), UserId = otherUserId, Category = NotificationCategory.ExchangeRequested, Title = "New Exchange Request", Message = "test@test.com has requested an exchange for your listing.", IsRead = false, ReadAt = null, CreatedAt = new DateTime(2025, 1, 10, 10, 5, 0, DateTimeKind.Utc) },
-        new Notification { Id = new Guid("ffffffff-0004-0000-0000-000000000004"), UserId = testUserId, Category = NotificationCategory.ExchangeAccepted, Title = "Exchange Accepted", Message = "Your exchange request has been accepted by otheruser@test.com.", IsRead = true, ReadAt = new DateTime(2025, 1, 10, 10, 30, 0, DateTimeKind.Utc), CreatedAt = new DateTime(2025, 1, 10, 10, 20, 0, DateTimeKind.Utc) },
-        new Notification { Id = new Guid("ffffffff-0005-0000-0000-000000000005"), UserId = testUserId, Category = NotificationCategory.TransactionUpdate, Title = "Transaction Status Updated", Message = "Your transaction status has changed to Shipped.", IsRead = false, ReadAt = null, CreatedAt = new DateTime(2025, 1, 12, 14, 0, 0, DateTimeKind.Utc) },
-        new Notification { Id = new Guid("ffffffff-0006-0000-0000-000000000006"), UserId = otherUserId, Category = NotificationCategory.WishlistAvailable, Title = "Wishlist Book Available", Message = "A book on your wishlist has been listed by another user.", IsRead = false, ReadAt = null, CreatedAt = new DateTime(2025, 1, 13, 9, 0, 0, DateTimeKind.Utc) },
-        new Notification { Id = new Guid("ffffffff-0007-0000-0000-000000000007"), UserId = testUserId, Category = NotificationCategory.ExchangeRejected, Title = "Exchange Rejected", Message = "Your exchange request was declined.", IsRead = true, ReadAt = new DateTime(2025, 1, 14, 11, 0, 0, DateTimeKind.Utc), CreatedAt = new DateTime(2025, 1, 14, 10, 30, 0, DateTimeKind.Utc) }
+        new Notification { Id = notif1, UserId = testUserId, Category = NotificationCategory.MatchFound, Title = "Book Match Found", Message = "A book matching your wishlist is now available.", IsRead = false, ReadAt = null, CreatedAt = new DateTime(2026, 5, 1, 8, 0, 0, DateTimeKind.Utc) },
+        new Notification { Id = new Guid("ffffffff-0002-0000-0000-000000000002"), UserId = otherUserId, Category = NotificationCategory.NewMessage, Title = "New Message", Message = "You have a new message from test@test.com.", IsRead = true, ReadAt = new DateTime(2026, 5, 2, 9, 16, 0, DateTimeKind.Utc), CreatedAt = new DateTime(2026, 5, 2, 9, 0, 0, DateTimeKind.Utc) },
+        new Notification { Id = new Guid("ffffffff-0003-0000-0000-000000000003"), UserId = otherUserId, Category = NotificationCategory.ExchangeRequested, Title = "New Exchange Request", Message = "test@test.com has requested an exchange for your listing.", IsRead = false, ReadAt = null, CreatedAt = new DateTime(2026, 5, 2, 10, 5, 0, DateTimeKind.Utc) },
+        new Notification { Id = new Guid("ffffffff-0004-0000-0000-000000000004"), UserId = testUserId, Category = NotificationCategory.ExchangeAccepted, Title = "Exchange Accepted", Message = "Your exchange request has been accepted by otheruser@test.com.", IsRead = true, ReadAt = new DateTime(2026, 5, 3, 10, 30, 0, DateTimeKind.Utc), CreatedAt = new DateTime(2026, 5, 3, 10, 20, 0, DateTimeKind.Utc) },
+        new Notification { Id = new Guid("ffffffff-0005-0000-0000-000000000005"), UserId = testUserId, Category = NotificationCategory.TransactionUpdate, Title = "Transaction Status Updated", Message = "Your transaction status has changed to Shipped.", IsRead = false, ReadAt = null, CreatedAt = new DateTime(2026, 5, 3, 14, 0, 0, DateTimeKind.Utc) },
+        new Notification { Id = new Guid("ffffffff-0006-0000-0000-000000000006"), UserId = otherUserId, Category = NotificationCategory.WishlistAvailable, Title = "Wishlist Book Available", Message = "A book on your wishlist has been listed by another user.", IsRead = false, ReadAt = null, CreatedAt = new DateTime(2026, 5, 4, 9, 0, 0, DateTimeKind.Utc) },
+        new Notification { Id = new Guid("ffffffff-0007-0000-0000-000000000007"), UserId = testUserId, Category = NotificationCategory.ExchangeRejected, Title = "Exchange Rejected", Message = "Your exchange request was declined.", IsRead = true, ReadAt = new DateTime(2026, 5, 4, 11, 0, 0, DateTimeKind.Utc), CreatedAt = new DateTime(2026, 5, 4, 10, 30, 0, DateTimeKind.Utc) }
     );
 
     await db.SaveChangesAsync();
