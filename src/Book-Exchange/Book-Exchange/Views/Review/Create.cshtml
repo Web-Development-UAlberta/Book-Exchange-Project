@@ -15,7 +15,6 @@
         Transaction # @ViewBag.TransactionCode &mdash; @ViewBag.CompletedDate
     </p>
 
-    {{-- Transaction summary card (wireframe: ID="review-transaction-summary", CLASS="review-txn-card") --}}
     <div id="review-transaction-summary" class="review-txn-card card mb-4 p-3 d-flex flex-row align-items-center gap-3">
         <div class="border rounded d-flex align-items-center justify-content-center text-muted"
              style="width:64px;height:80px;min-width:64px;font-size:0.7rem;">Cover</div>
@@ -53,7 +52,6 @@
 
             <p class="mb-3 fw-semibold">Reviewing @ViewBag.RevieweeName</p>
 
-            {{-- Star rating (wireframe: CLASS="star-rating-btn", data-value=1..5) --}}
             <div class="mb-4">
                 <label class="form-label">
                     Rating <span class="text-danger">*</span>
@@ -73,9 +71,6 @@
                 <input type="hidden" asp-for="Rating" id="review-rating-input" />
                 <span asp-validation-for="Rating" class="text-danger small"></span>
             </div>
-
-            <div class="mb-4">
-                <label asp-for="Comment" class="form-label">Comments (optional)</label>
             <div class="mb-4">
                 <label asp-for="Comment" class="form-label">Comments (optional)</label>
                 <textarea asp-for="Comment"
