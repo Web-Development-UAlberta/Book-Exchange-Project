@@ -77,66 +77,12 @@ public class ListingTests : PageTest
         await Expect(Page.Locator("#create-listing-submit-btn")).ToBeVisibleAsync();
     }
 
-    // FIXME: These are testing that the API is working properly and I don't think we need to test for that in UI tests
-    // should be moved to unit tests if we really want to test that the API is working
     /// <summary>
-    /// UI-LIST-04: User searches and selects a book from Google Books result
-    /// Expected: Selected book card is shown and ISBN is filled
-    /// </summary>
-    // [Fact]
-    // public async Task UI_LIST_04_UserCanSearchAndSelectBook()
-    // {
-    //     await LoginAsync("test@test.com", "Test1234!");
-
-    //     await Page.GotoAsync($"{BaseUrl}/Listing/Create");
-
-    //     await Page.FillAsync("#book-search-input", "harry");
-    //     await Page.ClickAsync("#book-search-btn");
-
-    //     await Page.WaitForSelectorAsync(".book-result-item");
-
-    //     await Page.Locator(".book-result-item").First.ClickAsync();
-
-    //     await Expect(Page.Locator("#selected-book-card")).ToBeVisibleAsync();
-    //     await Expect(Page.Locator("#selected-book-title")).ToBeVisibleAsync();
-    //     await Expect(Page.Locator("#listing-isbn-input")).Not.ToHaveValueAsync("");
-    // }
-
-    /// <summary>
-    /// UI-LIST-05: Authenticated user creates listing
-    /// Expected: User is redirected to listing details page
-    /// </summary>
-    // [Fact]
-    // public async Task UI_LIST_05_UserCanCreateListing()
-    // {
-    //     await LoginAsync("test@test.com", "Test1234!");
-
-    //     await Page.GotoAsync($"{BaseUrl}/Listing/Create");
-
-    //     await Page.FillAsync("#book-search-input", "harry");
-    //     await Page.ClickAsync("#book-search-btn");
-
-    //     await Page.WaitForSelectorAsync(".book-result-item");
-    //     await Page.Locator(".book-result-item").First.ClickAsync();
-
-    //     await Page.SelectOptionAsync("#listing-condition-select", new[] { "Good" });
-    //     await Page.FillAsync("#listing-price-input", "12.50");
-    //     await Page.FillAsync("#listing-weight-input", "400");
-
-    //     await Page.ClickAsync("#create-listing-submit-btn");
-
-    //     await Expect(Page).ToHaveURLAsync(new Regex(".*/Listing/Details.*"));
-    //     await Expect(Page.Locator("#listing-detail-page")).ToBeVisibleAsync();
-    //     await Expect(Page.Locator("#listing-book-title")).ToBeVisibleAsync();
-    //     await Expect(Page.Locator("#listing-price")).ToContainTextAsync("12.50");
-    // }
-
-    /// <summary>
-    /// UI-LIST-06: Create listing validation works
+    /// UI-LIST-04: Create listing validation works
     /// Expected: Required ISBN validation is shown when no book is selected
     /// </summary>
     [Fact]
-    public async Task UI_LIST_06_CreateListingWithoutBook_ShowsValidation()
+    public async Task UI_LIST_04_CreateListingWithoutBook_ShowsValidation()
     {
         await LoginAsync("test@test.com", "Test1234!");
 
@@ -150,43 +96,4 @@ public class ListingTests : PageTest
 
         await Expect(Page.Locator("[data-valmsg-for='Isbn']")).ToBeVisibleAsync();
     }
-
-    // FIXME: These are testing that the API is working properly and I don't think we need to test for that in UI tests
-    // should be moved to unit tests if we really want to test that the API is working
-    /// <summary>
-    /// UI-LIST-07: Listing detail page contains wireframe sections
-    /// Expected: Main listing detail elements are visible
-    /// </summary>
-    // [Fact]
-    // public async Task UI_LIST_07_DetailsPage_ShowsMainSections()
-    // {
-    //     await LoginAsync("test@test.com", "Test1234!");
-    //     await Page.GotoAsync($"{BaseUrl}/Listing/Create");
-    //     await Page.FillAsync("#book-search-input", "harry");
-    //     await Page.ClickAsync("#book-search-btn");
-    //     await Page.WaitForSelectorAsync(".book-result-item");
-    //     await Page.Locator(".book-result-item").First.ClickAsync();
-    //     await Page.SelectOptionAsync("#listing-condition-select", new[] { "Good" });
-    //     await Page.FillAsync("#listing-price-input", "12.50");
-    //     await Page.FillAsync("#listing-weight-input", "400");
-    //     await Page.ClickAsync("#create-listing-submit-btn");
-
-    //     var detailsUrl = Page.Url;
-
-    //     await Page.Context.ClearCookiesAsync();
-    //     await Page.WaitForTimeoutAsync(500);
-    //     await LoginAsync("otheruser@test.com", "Test1234!");
-    //     await Page.GotoAsync(detailsUrl);
-
-    //     await Expect(Page.Locator("#listing-detail-page")).ToBeVisibleAsync();
-    //     await Expect(Page.Locator("#listing-book-title")).ToBeVisibleAsync();
-    //     await Expect(Page.Locator("#listing-author-name")).ToBeVisibleAsync();
-    //     await Expect(Page.Locator("#listing-price")).ToBeVisibleAsync();
-    //     await Expect(Page.Locator("#listing-condition-badge")).ToBeVisibleAsync();
-    //     await Expect(Page.Locator("#condition-guide")).ToBeVisibleAsync();
-    //     await Expect(Page.Locator("#listing-seller-card")).ToBeVisibleAsync();
-    //     await Expect(Page.Locator("#propose-swap-btn")).ToBeVisibleAsync();
-    //     await Expect(Page.Locator("#send-offer-btn")).ToBeVisibleAsync();
-    //     await Expect(Page.Locator("#message-seller-btn")).ToBeVisibleAsync();
-    // }
 }
