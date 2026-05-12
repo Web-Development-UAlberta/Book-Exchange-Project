@@ -2,9 +2,29 @@
 
 @{
     ViewData["Title"] = "Review Details";
-    var revieweeUser = Model.Transaction?.ExchangeRequest?.TargetListing?.User;
-    var revieweeName = revieweeUser?.UserName ?? "Unknown";
-    var revieweeId   = revieweeUser?.Id ?? Guid.Empty;
+
+    var listingOwner   = Model.Transaction?.ExchangeRequest?.TargetListing?.User;
+    var requesterId    = Model.Transaction?.ExchangeRequest?.RequesterId ?? Guid.Empty;
+    var listingOwnerId = listingOwner?.Id ?? Guid.Empty;
+
+    string revieweeName;
+    Guid   revieweeId;
+
+    if (Model.ReviewerId == listingOwnerId)
+    {
+        @* // Reviewer is the listing owner → reviewee is the requester.
+        // The requester navigation property is not included by the service,
+        // so we show the ID as a fallback for the name until Requester is included. *@
+        revieweeName = Model.Transaction?.ExchangeRequest?.Requester?.UserName
+                       ?? $"User {requesterId}";
+        revieweeId   = requesterId;
+    }
+    else
+    {
+        @* // Reviewer is the requester → reviewee is the listing owner. *@
+        revieweeName = listingOwner?.UserName ?? "Unknown";
+        revieweeId   = listingOwnerId;
+    }
 }
 
 <div class="container mt-4" style="max-width: 600px;">
@@ -13,6 +33,7 @@
         <h2 class="mb-0">Review Details</h2>
         <a id="review-back-link"
            asp-action="GetUser"
+           asp-controller="Review"
            asp-route-userId="@revieweeId"
            class="btn btn-outline-secondary btn-sm">
             &larr; Back to Reviews
@@ -22,7 +43,6 @@
     <div class="card shadow-sm">
         <div class="card-body p-4">
 
-            {{!-- Stars --}}
             <div id="review-detail-stars" class="mb-3" style="font-size:2rem;color:#f5a623;">
                 @for (int i = 1; i <= 5; i++)
                 {
@@ -31,7 +51,6 @@
                 <span class="fs-5 text-muted ms-2">@Model.Rating / 5</span>
             </div>
 
-            {{!-- Comment --}}
             @if (!string.IsNullOrWhiteSpace(Model.Comment))
             {
                 <blockquote id="review-detail-comment" class="blockquote mb-3">
@@ -45,7 +64,6 @@
 
             <hr />
 
-            {{!-- Meta --}}
             <dl class="row mb-0 small">
                 <dt class="col-sm-4 text-muted">Reviewer</dt>
                 <dd id="review-detail-reviewer" class="col-sm-8">

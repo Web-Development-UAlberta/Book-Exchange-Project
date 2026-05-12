@@ -90,8 +90,9 @@ if (app.Environment.IsDevelopment())
 
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-    var testUser = await SeedUserAsync(userManager, "test@test.com", "Test1234!");
-    var otherUser = await SeedUserAsync(userManager, "otheruser@test.com", "Test1234!");
+    var testUser = await SeedUserAsync(userManager, "test@test.com", "Test1234!", new Guid("aaaa0001-0000-0000-0000-000000000001"));
+    var otherUser = await SeedUserAsync(userManager, "otheruser@test.com", "Test1234!", new Guid("aaaa0002-0000-0000-0000-000000000002"));
+    var noReviewUser = await SeedUserAsync(userManager, "noreview@test.com", "Test1234!", new Guid("aaaa0003-0000-0000-0000-000000000003"));
 
     await SeedAddressesAsync(db, testUser.Id, otherUser.Id);
     await SeedCarriersAsync(db);
@@ -99,6 +100,8 @@ if (app.Environment.IsDevelopment())
     await SeedExchangeRequestsTransactionsAndShipmentsAsync(db, testUser.Id, otherUser.Id);
     await SeedMessagesAsync(db, testUser.Id, otherUser.Id);
     await SeedNotificationsAsync(db, testUser.Id, otherUser.Id);
+    await SeedCompletedTransactionDataAsync(db, testUser.Id, otherUser.Id);
+    await SeedReviewsAsync(db, testUser.Id, otherUser.Id);
 }
 app.MapStaticAssets();
 
@@ -117,13 +120,15 @@ app.Run();
 static async Task<ApplicationUser> SeedUserAsync(
     UserManager<ApplicationUser> userManager,
     string email,
-    string password)
+    string password,
+    Guid? pinnedID = null)
 {
     var existing = await userManager.FindByEmailAsync(email);
     if (existing != null) return existing;
 
     var user = new ApplicationUser
     {
+        Id = pinnedID ?? Guid.NewGuid(),
         UserName = email,
         Email = email,
         EmailConfirmed = true
@@ -148,7 +153,7 @@ static async Task SeedAddressesAsync(
             UserId = testUserId,
             FullName = "Test User Edmonton Address",
             GooglePlaceId = "ChIJI__egEUioFMRXRX2SgygH0E",
-            CreatedAt = new DateTime(2025, 1, 5, 0, 0, 0, DateTimeKind.Utc)
+            CreatedAt = new DateTime(2026, 5, 5, 0, 0, 0, DateTimeKind.Utc)
         },
         new Address
         {
@@ -156,7 +161,7 @@ static async Task SeedAddressesAsync(
             UserId = otherUserId,
             FullName = "Other User Calgary Address",
             GooglePlaceId = "ChIJ1T-EnwNwcVMROrZStrE7bSY",
-            CreatedAt = new DateTime(2025, 1, 5, 0, 0, 0, DateTimeKind.Utc)
+            CreatedAt = new DateTime(2026, 5, 5, 0, 0, 0, DateTimeKind.Utc)
         }
     );
 
@@ -257,7 +262,7 @@ static async Task SeedExchangeRequestsTransactionsAndShipmentsAsync(
     var request1 = new Guid("eeeeeeee-1001-0000-0000-000000000001");
     if (await db.ExchangeRequests.AnyAsync(e => e.Id == request1)) return;
 
-    var now = new DateTime(2025, 1, 10, 0, 0, 0, DateTimeKind.Utc);
+    var now = new DateTime(2026, 5, 1, 0, 0, 0, DateTimeKind.Utc);
 
     db.ExchangeRequests.AddRange(
         new ExchangeRequest
@@ -421,5 +426,92 @@ static async Task SeedNotificationsAsync(
         new Notification { Id = new Guid("ffffffff-0007-0000-0000-000000000007"), UserId = testUserId, Category = NotificationCategory.ExchangeRejected, Title = "Exchange Rejected", Message = "Your exchange request was declined.", IsRead = true, ReadAt = new DateTime(2026, 5, 4, 11, 0, 0, DateTimeKind.Utc), CreatedAt = new DateTime(2026, 5, 4, 10, 30, 0, DateTimeKind.Utc) }
     );
 
+    await db.SaveChangesAsync();
+}
+
+static async Task SeedCompletedTransactionDataAsync(
+    ApplicationDbContext db,
+    Guid testUserId,
+    Guid otherUserId)
+{
+    var completedAt = new DateTime(2025, 1, 15, 12, 0, 0, DateTimeKind.Utc);
+
+    // ── Block 1: promote transactions 0001 and 0002 to Completed ────────────
+    var guard1 = new Guid("77777777-0001-0000-0000-000000000001");
+    if (!await db.TransactionStatusHistories.AnyAsync(h => h.Id == guard1))
+    {
+        db.TransactionStatusHistories.AddRange(
+            new TransactionStatusHistory { Id = guard1, TransactionId = new Guid("99999999-0001-0000-0000-000000000001"), Status = TransactionStatus.Shipped, UpdatedByUserId = testUserId, UpdatedAt = completedAt.AddDays(-2) },
+            new TransactionStatusHistory { Id = new Guid("77777777-0002-0000-0000-000000000002"), TransactionId = new Guid("99999999-0001-0000-0000-000000000001"), Status = TransactionStatus.Completed, UpdatedByUserId = otherUserId, UpdatedAt = completedAt }
+        );
+        var txn1 = await db.Transactions.FindAsync(new Guid("99999999-0001-0000-0000-000000000001"));
+        if (txn1 != null) txn1.CompletedAt = completedAt;
+
+        db.TransactionStatusHistories.AddRange(
+            new TransactionStatusHistory { Id = new Guid("77777777-0003-0000-0000-000000000003"), TransactionId = new Guid("99999999-0002-0000-0000-000000000002"), Status = TransactionStatus.Shipped, UpdatedByUserId = otherUserId, UpdatedAt = completedAt.AddDays(-1) },
+            new TransactionStatusHistory { Id = new Guid("77777777-0004-0000-0000-000000000004"), TransactionId = new Guid("99999999-0002-0000-0000-000000000002"), Status = TransactionStatus.Completed, UpdatedByUserId = testUserId, UpdatedAt = completedAt.AddHours(6) }
+        );
+        var txn2 = await db.Transactions.FindAsync(new Guid("99999999-0002-0000-0000-000000000002"));
+        if (txn2 != null) txn2.CompletedAt = completedAt.AddHours(6);
+
+        await db.SaveChangesAsync();
+    }
+
+    // ── Block 2: transaction 0003 (fresh, unreviewed) ────────────────────────
+    var guard2 = new Guid("99999999-0003-0000-0000-000000000003");
+    if (!await db.Transactions.AnyAsync(t => t.Id == guard2))
+    {
+        db.ExchangeRequests.Add(new ExchangeRequest { Id = new Guid("eeeeeeee-1005-0000-0000-000000000005"), TargetListingId = new Guid("cccccccc-0007-0000-0000-000000000007"), RequesterId = testUserId, Status = ExchangeStatus.Accepted, Price = 0, Message = "Fresh request seeded for UI-REVIEW-05.", CreatedAt = completedAt.AddDays(5), AcceptedAt = completedAt.AddDays(5).AddHours(1) });
+        db.ExchangeRequestItems.Add(new ExchangeRequestItem { ExchangeRequestId = new Guid("eeeeeeee-1005-0000-0000-000000000005"), OfferedListingId = new Guid("cccccccc-0003-0000-0000-000000000003") });
+        db.Transactions.Add(new Transaction { Id = guard2, ExchangeRequestId = new Guid("eeeeeeee-1005-0000-0000-000000000005"), TotalValue = 15.00m, CreatedAt = completedAt.AddDays(5).AddHours(1), ConfirmedAt = completedAt.AddDays(5).AddHours(1).AddMinutes(5), CompletedAt = completedAt.AddDays(7) });
+        db.TransactionStatusHistories.AddRange(
+            new TransactionStatusHistory { Id = new Guid("77777777-0005-0000-0000-000000000005"), TransactionId = guard2, Status = TransactionStatus.Shipped, UpdatedByUserId = testUserId, UpdatedAt = completedAt.AddDays(6) },
+            new TransactionStatusHistory { Id = new Guid("77777777-0006-0000-0000-000000000006"), TransactionId = guard2, Status = TransactionStatus.Completed, UpdatedByUserId = otherUserId, UpdatedAt = completedAt.AddDays(7) }
+        );
+        await db.SaveChangesAsync();
+    }
+
+    // ── Block 3: transaction 0004 (incomplete, for UI-REVIEW-08) ────────────
+    var guard3 = new Guid("99999999-0004-0000-0000-000000000004");
+    if (!await db.Transactions.AnyAsync(t => t.Id == guard3))
+    {
+        db.ExchangeRequests.Add(new ExchangeRequest { Id = new Guid("eeeeeeee-1006-0000-0000-000000000006"), TargetListingId = new Guid("cccccccc-0008-0000-0000-000000000008"), RequesterId = testUserId, Status = ExchangeStatus.Accepted, Price = 0, Message = "Incomplete transaction seeded for UI-REVIEW-08.", CreatedAt = completedAt.AddDays(10), AcceptedAt = completedAt.AddDays(10).AddHours(1) });
+        db.ExchangeRequestItems.Add(new ExchangeRequestItem { ExchangeRequestId = new Guid("eeeeeeee-1006-0000-0000-000000000006"), OfferedListingId = new Guid("cccccccc-0004-0000-0000-000000000004") });
+        db.Transactions.Add(new Transaction { Id = guard3, ExchangeRequestId = new Guid("eeeeeeee-1006-0000-0000-000000000006"), TotalValue = 14.00m, CreatedAt = completedAt.AddDays(10).AddHours(1), ConfirmedAt = completedAt.AddDays(10).AddHours(1).AddMinutes(5) });
+        db.TransactionStatusHistories.Add(new TransactionStatusHistory { Id = new Guid("77777777-0007-0000-0000-000000000007"), TransactionId = guard3, Status = TransactionStatus.Confirmed, UpdatedByUserId = testUserId, UpdatedAt = completedAt.AddDays(10).AddHours(1).AddMinutes(5) });
+        await db.SaveChangesAsync();
+    }
+}
+
+static async Task SeedReviewsAsync(
+    ApplicationDbContext db,
+    Guid testUserId,
+    Guid otherUserId)
+{
+    var review1 = new Guid("11111111-0001-0000-0000-000000000001");
+    if (await db.Reviews.AnyAsync(r => r.Id == review1)) return;
+
+    db.Reviews.AddRange(
+    new Review
+    {
+        Id = review1,
+        TransactionId = new Guid("99999999-0001-0000-0000-000000000001"),
+        ReviewerId = testUserId,
+        Rating = 5,
+        Comment = "Smooth exchange, book was exactly as described.",
+        CreatedAt = new DateTime(2026, 5, 1, 9, 0, 0, DateTimeKind.Utc)
+    },
+    new Review
+    {
+        Id = new Guid("11111111-0002-0000-0000-000000000002"),
+        TransactionId = new Guid("99999999-0002-0000-0000-000000000002"),
+        ReviewerId = otherUserId,
+        Rating = 4,
+        Comment = "Great swap partner, would exchange again.",
+        CreatedAt = new DateTime(2026, 5, 2, 10, 0, 0, DateTimeKind.Utc)
+    }
+);
+
+    await db.Reviews.AddRangeAsync();
     await db.SaveChangesAsync();
 }

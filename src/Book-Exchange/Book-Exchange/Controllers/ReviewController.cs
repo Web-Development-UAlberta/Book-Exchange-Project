@@ -66,6 +66,7 @@ public class ReviewController : Controller
 
     // GET /Review/User/{userId}
     [HttpGet]
+    [Route("Review/GetUser/{userId}")]
     public async Task<IActionResult> GetUser(Guid userId)
     {
         try
