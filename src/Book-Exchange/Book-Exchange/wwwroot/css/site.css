@@ -457,6 +457,43 @@ a:hover {
   border-left: 3px solid #2abfaa;
 }
 
+.bx-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--bx-teal);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1;
+}
+
+.bx-sidebar-username {
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 0.25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 180px;
+}
+
+.bx-sidebar-rep {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.bx-sidebar-rep span {
+  color: rgba(255, 255, 255, 0.55);
+}
+
 /* Stat cards */
 .stat-card {
   background: #fff;
@@ -840,7 +877,7 @@ dd {
   color: #fff;
 }
 
-/* Sticky footer fix */
+/* Sticky footer */
 html,
 body {
   height: 100%;
