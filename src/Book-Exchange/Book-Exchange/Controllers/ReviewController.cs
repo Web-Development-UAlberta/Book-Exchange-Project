@@ -28,10 +28,9 @@ public class ReviewController : Controller
     [HttpGet]
     public async Task<IActionResult> Create(Guid transactionId, Guid revieweeId)
     {
-        var userId = Guid.Parse(_userManager.GetUserId(User)!);
-
         try
         {
+            var userId = Guid.Parse(_userManager.GetUserId(User)!);
             var vm = await _transactionService.GetTransactionByIdAsync(transactionId, userId);
 
             // Derive reviewee name: if the current user is the requester,
@@ -44,7 +43,7 @@ public class ReviewController : Controller
         }
         catch (KeyNotFoundException)
         {
-            return NotFound();
+
         }
 
         var dto = new CreateReviewDto

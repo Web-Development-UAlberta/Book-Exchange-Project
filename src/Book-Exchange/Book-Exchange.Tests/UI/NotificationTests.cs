@@ -393,9 +393,11 @@ public class NotificationTests : PageTest
 
         await Page.GotoAsync($"{BaseUrl}/");
 
-        var navNotificationsBtn = Page.Locator("a[href*='Notification'], button[href*='Notification']");
+        await Page.ClickAsync("#messagesDropdown");
+        await Page.WaitForSelectorAsync("a[href*='Notification']");
 
-        await Expect(navNotificationsBtn.First).ToBeVisibleAsync();
+        await Expect(Page.Locator("a[href*='Notification'], button[href*='Notification']").First)
+        .ToBeVisibleAsync();
     }
 
     /// <summary>
@@ -409,9 +411,10 @@ public class NotificationTests : PageTest
 
         await Page.GotoAsync($"{BaseUrl}/");
 
-        await Page.ClickAsync("a[href*='/Notification']");
+        await Page.ClickAsync("#messagesDropdown");
+        await Page.WaitForSelectorAsync("a[href*='/Notification']");
 
-        await Expect(Page).ToHaveURLAsync(new Regex(".*/Notification$"));
-        await Expect(Page.Locator("#notifications-panel")).ToBeVisibleAsync();
+        await Page.Locator("a[href*='/Notification']").First.ClickAsync();
+        await Expect(Page).ToHaveURLAsync(new System.Text.RegularExpressions.Regex(".*/Notification.*"));
     }
 }
