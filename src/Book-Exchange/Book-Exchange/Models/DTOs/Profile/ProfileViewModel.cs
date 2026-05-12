@@ -40,9 +40,8 @@ public class ProfileListingItem
 {
     public Guid Id { get; set; }
     public string Isbn { get; set; } = string.Empty;
-
     public string BookTitle { get; set; } = "Unknown Title";
-
+    public string? BookAuthor { get; set; }   // ← add this
     public BookCondition Condition { get; set; }
     public decimal Price { get; set; }
 }

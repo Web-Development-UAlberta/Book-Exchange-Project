@@ -817,6 +817,18 @@ a:hover {
   flex: 1;
 }
 
+.listing-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  flex: 1;
+}
+
+.listing-author {
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
 .profile-type-badge {
   font-size: 0.72rem;
   font-weight: 600;

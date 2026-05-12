@@ -98,15 +98,30 @@
                     _                                             => "badge-good"
                 };
                 <div class="profile-listing-row">
-                    <span class="listing-title">
-                        <a asp-controller="Listing" asp-action="Details" asp-route-id="@listing.Id">
-                            @listing.BookTitle
-                        </a>
-                    </span>
-                    <span class="profile-type-badge @badgeClass">
-                        @listing.Condition.ToString()
-                    </span>
+                <div class="listing-title">
+                    <a asp-controller="Listing" asp-action="Details" asp-route-id="@listing.Id">
+                        @listing.BookTitle
+                    </a>
+                    @if (!string.IsNullOrWhiteSpace(listing.BookAuthor))
+                    {
+                        <span class="listing-author">@listing.BookAuthor</span>
+                    }
                 </div>
+                    @{
+                        string FormatCondition(BookCondition c) => c switch
+                        {
+                            BookCondition.LikeNew    => "Like New",
+                            BookCondition.VeryGood   => "Very Good",
+                            BookCondition.Good       => "Good",
+                            BookCondition.Acceptable => "Acceptable",
+                            BookCondition.Poor       => "Poor",
+                            _                        => c.ToString()
+                        };
+                    }
+                <span class="profile-type-badge @badgeClass">
+                    @FormatCondition(listing.Condition)
+                </span>
+            </div>
             }
         </div>
 

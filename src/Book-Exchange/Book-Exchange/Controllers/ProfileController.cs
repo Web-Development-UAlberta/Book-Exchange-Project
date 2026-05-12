@@ -92,11 +92,15 @@ public class ProfileController : Controller
         foreach (var listing in listings)
         {
             var book = await _bookSearchApi.GetBookByIsbnAsync(listing.Isbn);
+            var title = book?.Title;
+            var author = book?.Authors?.FirstOrDefault();
+
             listingItems.Add(new ProfileListingItem
             {
                 Id = listing.Id,
                 Isbn = listing.Isbn,
-                BookTitle = book?.Title ?? listing.Isbn,
+                BookTitle = !string.IsNullOrWhiteSpace(title) ? title : listing.Isbn,
+                BookAuthor = !string.IsNullOrWhiteSpace(author) ? author : null,
                 Condition = listing.Condition,
                 Price = listing.Price
             });
