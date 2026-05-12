@@ -423,6 +423,22 @@ a:hover {
   border: 2px solid var(--bx-purple-dk);
 }
 
+/*Listings view*/
+.condition-cell {
+  font-size: 0.75rem;
+  text-align: center;
+  padding: 0.4rem 0.6rem;
+  line-height: 1.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+.condition-cell-active {
+  background-color: var(--bx-teal) !important;
+  border-color: var(--bx-teal) !important;
+  color: #fff !important;
+}
+
 /* Dashboard */
 #dashboard-sidebar {
   background-color: var(--bx-navy);

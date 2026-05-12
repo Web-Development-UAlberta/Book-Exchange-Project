@@ -48,8 +48,19 @@
                             <strong>ISBN:</strong> @listing.Isbn
                         </p>
 
+                        @{
+                        string FormatCondition(BookCondition c) => c switch
+                        {
+                            BookCondition.LikeNew    => "Like New",
+                            BookCondition.VeryGood   => "Very Good",
+                            BookCondition.Good       => "Good",
+                            BookCondition.Acceptable => "Acceptable",
+                            BookCondition.Poor       => "Poor",
+                            _                        => c.ToString()
+                        };
+                        }
                         <p>
-                            <strong>Condition:</strong> @listing.Condition
+                            <strong>Condition:</strong> @FormatCondition(listing.Condition)
                         </p>
 
                         <p>
