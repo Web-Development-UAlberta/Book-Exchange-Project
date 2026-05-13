@@ -61,6 +61,30 @@ public class ListingController : Controller
         var listing = await _listingService.GetListingByIdAsync(id);
         var book = await _bookSearchApi.GetBookByIsbnAsync(listing.Isbn);
 
+
+        var userId = listing.User.Id;
+
+        var reviewQuery = _context.Reviews
+            .AsNoTracking()
+            .Where(r =>
+                r.ReviewerId != userId &&
+                (
+                    r.Transaction.ExchangeRequest.TargetListing.UserId == userId ||
+                    r.Transaction.ExchangeRequest.RequesterId == userId
+                ));
+
+        var reviewCount = await reviewQuery.CountAsync();
+
+        var averageRating = reviewCount > 0
+            ? Math.Round(await reviewQuery.AverageAsync(r => (double)r.Rating), 1)
+            : 0.0;
+
+        var tradeCount = await _context.Transactions
+            .AsNoTracking()
+            .CountAsync(t =>
+                t.ExchangeRequest.RequesterId == userId ||
+                t.ExchangeRequest.TargetListing.UserId == userId);
+
         var vm = new ListingViewDto
         {
             Id = listing.Id,
@@ -71,6 +95,9 @@ public class ListingController : Controller
             WeightGrams = listing.WeightGrams,
             CreatedAt = listing.CreatedAt,
             SellerName = listing.User.UserName ?? "Unknown",
+            SellerRating = averageRating,
+            SellerReviewerCount = reviewCount,
+            SellerTradeCount = tradeCount,
             Book = book
         };
 

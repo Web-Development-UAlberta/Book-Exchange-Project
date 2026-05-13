@@ -17,5 +17,9 @@ public class ListingViewDto
     public BookInfoDto? Book { get; set; }
 
     public string SellerName { get; set; } = "Unknown";
+    public double SellerRating { get; set; } = 0;
+    public int SellerReviewerCount { get; set; } = 0;
+    public int SellerTradeCount { get; set; } = 0;
+
 
 }
