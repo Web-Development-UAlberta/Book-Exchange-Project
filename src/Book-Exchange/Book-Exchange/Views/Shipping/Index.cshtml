@@ -65,7 +65,7 @@
                             </td>
                             <td>
                                 <span class="badge @GetStatusBadgeClass(shipment.Status) shipment-status-badge">
-                                    @shipment.Status
+                                     @(shipment.Status == Book_Exchange.Models.ShipmentStatus.LabelCreated ? "Label Created" : shipment.Status.ToString())
                                 </span>
                             </td>
                             <td>@shipment.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd")</td>

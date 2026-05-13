@@ -66,12 +66,21 @@
                     <label asp-for="Condition" class="form-label"></label>
                     <select id="listing-condition-select"
                             asp-for="Condition"
-                            asp-items="Html.GetEnumSelectList<Book_Exchange.Models.BookCondition>()"
                             class="form-select">
+                        @foreach (BookCondition condition in Enum.GetValues(typeof(BookCondition)))
+                        {
+                            string label = condition switch
+                            {
+                                BookCondition.LikeNew    => "Like New",
+                                BookCondition.VeryGood   => "Very Good",
+                                BookCondition.Good       => "Good",
+                                BookCondition.Acceptable => "Acceptable",
+                                BookCondition.Poor       => "Poor",
+                                _                        => condition.ToString()
+                            };
+                            <option value="@((int)condition)">@label</option>
+                        }
                     </select>
-                    <span asp-validation-for="Condition"
-                          class="text-danger">
-                    </span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Price" class="form-label"></label>
@@ -84,7 +93,7 @@
                     </span>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="WeightGrams" class="form-label"></label>
+                    <label asp-for="WeightGrams" class="form-label">Weight Grams</label>
                     <input id="listing-weight-input"
                            asp-for="WeightGrams"
                            class="form-control"

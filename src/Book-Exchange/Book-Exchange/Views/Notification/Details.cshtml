@@ -28,8 +28,20 @@
                         Book_Exchange.Models.NotificationCategory.TransactionUpdate  => "bg-secondary",
                         _                                                            => "bg-secondary"
                     })">
-                    @Model.Category.ToString()
-                </span>
+                    @{
+                        string FormatCategory(NotificationCategory c) => c switch
+                        {
+                            NotificationCategory.MatchFound         => "Match Found",
+                            NotificationCategory.WishlistAvailable => "Wishlist Available",
+                            NotificationCategory.NewMessage         => "New Message",
+                            NotificationCategory.ExchangeRequested  => "Exchange Requested",
+                            NotificationCategory.ExchangeAccepted   => "Exchange Accepted",
+                            NotificationCategory.ExchangeRejected   => "Exchange Rejected",
+                            NotificationCategory.TransactionUpdate  => "Transaction Update",
+                            _                                        => c.ToString()
+                        };
+                        }
+                    <span class="text-muted ms-2">@FormatCategory(Model.Category)</span>
 
                 @if (!Model.IsRead)
                 {
