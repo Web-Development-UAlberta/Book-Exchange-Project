@@ -67,7 +67,18 @@
                                 {
                                     <span class="badge bg-success badge-swap">Swap</span>
                                 }
-                                <span class="text-muted small listing-card-condition">@listing.Condition</span>
+                                @{
+                                string FormatCondition(BookCondition c) => c switch
+                                {
+                                    BookCondition.LikeNew    => "Like New",
+                                    BookCondition.VeryGood   => "Very Good",
+                                    BookCondition.Good       => "Good",
+                                    BookCondition.Acceptable => "Acceptable",
+                                    BookCondition.Poor       => "Poor",
+                                    _                        => c.ToString()
+                                };
+                                }
+                                <span class="text-muted small listing-card-condition">@FormatCondition(listing.Condition)</span>
                             </div>
                         </div>
                     </div>
