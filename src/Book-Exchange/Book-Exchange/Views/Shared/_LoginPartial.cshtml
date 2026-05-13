@@ -21,17 +21,23 @@
 
                 <li>
                     <a class="dropdown-item"
-                           asp-area="Identity"
-                           asp-page="/Account/Manage/Index">
+                           asp-controller="Profile"
+                           asp-action="Index">
                         Profile
                     </a>
                 </li>
-
                 <li>
                     <a class="dropdown-item"
                            asp-controller="Addresses"
                            asp-action="Index">
                         My Addresses
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item"
+                            asp-controller="Shipping" 
+                            asp-action="Index">
+                        Shipping
                     </a>
                 </li>
                 <li>

@@ -29,8 +29,7 @@
             <a class="sidebar-nav-link" asp-action="Index" asp-controller="Message">Messages</a>
             <a class="sidebar-nav-link" asp-action="Index" asp-controller="Shipping">Shipping</a>
             <a class="sidebar-nav-link" asp-action="Index" asp-controller="Notification">Notifications</a>
-            <a class="sidebar-nav-link" href="/Identity/Account/Manage">Profile</a>
-            <!-- TODO: Create Profile views & UI tests -->
+            <a class="sidebar-nav-link" asp-action="Index" asp-controller="Profile">Profile</a>
         </nav>
     </div>
 
@@ -158,12 +157,6 @@
                                         <span class="badge @(listing.Price > 0 ? "bg-warning badge-sell" : "bg-success badge-swap")">
                                             @(listing.Price > 0 ? "sell" : "swap")
                                         </span>
-                                        <!-- FIXME: Edit button not working -->
-                                        <a class="btn btn-outline-secondary btn-sm"
-                                           asp-action="Edit" asp-controller="Listing"
-                                           asp-route-id="@listing.Id">
-                                            Edit
-                                        </a>
                                     </div>
                                 </div>
                             }

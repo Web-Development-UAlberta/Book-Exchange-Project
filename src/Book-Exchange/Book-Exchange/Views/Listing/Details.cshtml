@@ -31,8 +31,7 @@
                 </div>
             }
 
-            <h5 id="condition-guide" class="mt-4">Condition Guide</h5>
-
+            <h5 id="condition-guide" class="mt-4">Condition Guide</h5>          
             <div class="d-flex gap-2 mt-2">
                 <span class="btn btn-outline-secondary condition-cell @(Model.Condition == Book_Exchange.Models.BookCondition.LikeNew ? "condition-cell-active" : "")">
                     LN<br />Like New
@@ -98,42 +97,20 @@
                 <p id="listing-seller-name">
                     @Model.SellerName
                 </p>
-
-                <!---<p id="listing-seller-rating">
-                    ★★★★☆ - 18 trades
-                </p>-->
-                <!-- TODO: check this buttons -->
                     <a id="exchange-request-btn"
                             class="btn btn-outline-primary mb-2"
                             asp-controller="ExchangeRequest"
                             asp-action="Create"
                             asp-route-listingId="@Model.Id">
-                        Exchange Request
+                        Create An Exchange Request
                     </a>
-
                     <a id="message-seller-btn"
                             class="btn btn-outline-primary"
                             asp-controller="Message"
-                            asp-action="Create"
-                            asp-route-listingId="@Model.Id">
+                            asp-action="Conversation"
+                            asp-route-otherUserId="@Model.UserId">
                         Message Seller
                     </a>
-                    <!-- TODO: check this buttons -->
-                    <a id= "propose-swap-btn"
-                            class="btn btn-outline-secondary mt-2"
-                            asp-controller="ExchangeRequest"
-                            asp-action="ProposeSwap"
-                            asp-route-listingId="@Model.Id">
-                        Propose Swap
-                    </a>
-                    <a id= "send-offer-btn"
-                            class="btn btn-outline-secondary mt-2"
-                            asp-controller="Offer"
-                            asp-action="Create"
-                            asp-route-listingId="@Model.Id">
-                        Send Offer
-                    </a>
-
             </div>
             // TODO: Need to Add SellerAddressID to Listing Model to show shipping as well add GetDefaultAddressAsync to IAddressService and implement it in AddressService.
             // TODO: Update Listing Controller Details to populate shipping estimate if user has default address.

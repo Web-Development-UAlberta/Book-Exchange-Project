@@ -22,25 +22,8 @@ public class BookSearchTests : PageTest
         await Expect(Page.Locator("#book-search-button")).ToBeVisibleAsync();
     }
 
-    // FIXME: These are testing that the API is working properly and I don't think we need to test for that in UI tests
-    // should be moved to unit tests if we really want to test that the API is working
-    // /// <summary>
-    // /// UI-BOOK-02: User can search books
-    // /// </summary>
-    // [Fact]
-    // public async Task BookSearch_UserCanSearchBooks()
-    // {
-    //     await Page.GotoAsync($"{BaseUrl}/BookSearch");
-
-    //     await Page.FillAsync("#book-search-input", "harry");
-    //     await Page.ClickAsync("#book-search-button");
-
-    //     await Expect(Page).ToHaveURLAsync(new Regex(".*/BookSearch/Search.*searchText=harry.*"));
-    //     await Expect(Page.Locator("#book-search-results")).ToBeVisibleAsync();
-    // }
-
     /// <summary>
-    /// UI-BOOK-03: Empty search shows no books found
+    /// UI-BOOK-02: Empty search shows no books found
     /// </summary>
     [Fact]
     public async Task BookSearch_EmptySearch_ShowsNoBooksFound()
@@ -53,25 +36,9 @@ public class BookSearchTests : PageTest
         await Expect(Page.Locator("#no-books-found")).ToBeVisibleAsync();
     }
 
-    // FIXME: These are testing that the API is working properly and I don't think we need to test for that in UI tests
-    // should be moved to unit tests if we really want to test that the API is working
-    // /// <summary>
-    // /// UI-BOOK-04: Search result book cards are visible
-    // /// </summary>
-    // [Fact]
-    // public async Task BookSearch_SearchResults_ShowBookCards()
-    // {
-    //     await Page.GotoAsync($"{BaseUrl}/BookSearch");
-
-    //     await Page.FillAsync("#book-search-input", "harry");
-    //     await Page.ClickAsync("#book-search-button");
-
-    //     await Expect(Page.Locator(".book-card").First).ToBeVisibleAsync();
-    //     await Expect(Page.Locator(".book-title").First).ToBeVisibleAsync();
-    // }
 
     /// <summary>
-    /// UI-BOOK-05: Preview link is visible when available
+    /// UI-BOOK-03: Preview link is visible when available
     /// </summary>
     [Fact]
     public async Task BookSearch_ResultWithPreview_ShowsPreviewButton()

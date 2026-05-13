@@ -11,23 +11,47 @@ namespace Book_Exchange.Controllers;
 public class ReviewController : Controller
 {
     private readonly IReviewService _reviewService;
+    private readonly ITransactionService _transactionService;
     private readonly UserManager<ApplicationUser> _userManager;
 
-    public ReviewController(IReviewService reviewService, UserManager<ApplicationUser> userManager)
+    public ReviewController(
+        IReviewService reviewService,
+        ITransactionService transactionService,
+        UserManager<ApplicationUser> userManager)
     {
         _reviewService = reviewService;
+        _transactionService = transactionService;
         _userManager = userManager;
     }
 
-    // GET /Review/Create/{transactionId}... {revieweeId}
+    // GET /Review/Create/{transactionId}?revieweeId={revieweeId}
     [HttpGet]
-    public IActionResult Create(Guid transactionId, Guid revieweeId)
+    public async Task<IActionResult> Create(Guid transactionId, Guid revieweeId)
     {
+        try
+        {
+            var userId = Guid.Parse(_userManager.GetUserId(User)!);
+            var vm = await _transactionService.GetTransactionByIdAsync(transactionId, userId);
+
+            // Derive reviewee name: if the current user is the requester,
+            // the reviewee is the listing owner (WithUserName already holds the other party)
+            ViewBag.TransactionCode = transactionId.ToString()[..8].ToUpper();
+            ViewBag.CompletedDate = vm.CreatedAt.ToString("MMMM d, yyyy");
+            ViewBag.RevieweeName = vm.WithUserName;
+            ViewBag.BookTitle = vm.Description;
+            ViewBag.BookSnap = string.Empty;
+        }
+        catch (KeyNotFoundException)
+        {
+
+        }
+
         var dto = new CreateReviewDto
         {
             TransactionId = transactionId,
             RevieweeId = revieweeId
         };
+
         return View(dto);
     }
 
@@ -49,13 +73,19 @@ public class ReviewController : Controller
             TempData["Success"] = "Review submitted successfully.";
             return RedirectToAction("Index", "Transaction");
         }
-        catch (KeyNotFoundException)
+        catch (KeyNotFoundException ex)
         {
-            return NotFound();
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return View(dto);
         }
         catch (UnauthorizedAccessException)
         {
             return Forbid();
+        }
+        catch (ArgumentException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return View(dto);
         }
         catch (InvalidOperationException ex)
         {
@@ -63,6 +93,7 @@ public class ReviewController : Controller
             return View(dto);
         }
     }
+
 
     // GET /Review/User/{userId}
     [HttpGet]
