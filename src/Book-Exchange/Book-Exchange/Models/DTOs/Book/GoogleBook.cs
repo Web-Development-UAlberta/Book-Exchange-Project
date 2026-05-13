@@ -61,6 +61,7 @@ public class GoogleIndustryIdentifier
 
 public class GoogleImageLinks
 {
+    public string? SmallThumbnail { get; set; }
     [JsonPropertyName("thumbnail")]
     public string? Thumbnail { get; set; }
 }

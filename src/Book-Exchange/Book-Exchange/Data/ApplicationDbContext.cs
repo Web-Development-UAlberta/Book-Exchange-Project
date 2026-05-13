@@ -14,6 +14,7 @@ namespace Book_Exchange.Data
     {
 
         public DbSet<Address> Addresses => Set<Address>();
+        public DbSet<BookCache> BookCaches { get; set; }
         public DbSet<Listing> Listings => Set<Listing>();
         public DbSet<WishlistItem> Wishlist => Set<WishlistItem>();
         public DbSet<ExchangeRequest> ExchangeRequests => Set<ExchangeRequest>();
@@ -75,7 +76,40 @@ namespace Book_Exchange.Data
                 entity.HasIndex(e => e.UserId)
                     .HasDatabaseName("ix_addresses_user_id");
             });
-           
+
+            // BookCache
+            builder.Entity<BookCache>(entity =>
+            {
+                entity.ToTable("book_caches");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Isbn)
+                    .IsRequired()
+                    .HasMaxLength(13);
+
+                entity.HasIndex(e => e.Isbn)
+                    .IsUnique();
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.Authors)
+                    .HasMaxLength(1000);
+
+                entity.Property(e => e.Genres)
+                    .HasMaxLength(1000);
+
+                entity.Property(e => e.Publisher)
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.ThumbnailUrl)
+                    .HasMaxLength(1000);
+
+                entity.Property(e => e.ThumbnailPath)
+                    .HasMaxLength(1000);
+            });
+
             // Listing
             builder.Entity<Listing>(entity =>
             {
