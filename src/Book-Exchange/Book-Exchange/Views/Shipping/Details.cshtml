@@ -31,7 +31,7 @@
         <div class="card-header">
             <strong>Shipment</strong>
             <span class="badge @GetStatusBadgeClass(Model.Status) ms-2" id="shipping-status-badge">
-                @Model.Status
+                @(Model.Status == Book_Exchange.Models.ShipmentStatus.LabelCreated ? "Label Created" : Model.Status.ToString())
             </span>
         </div>
         <div class="card-body">
@@ -127,7 +127,7 @@
                             <select name="newStatus" class="form-select" id="shipping-new-status-select">
                                 @foreach (var status in GetAllowedTransitions(Model.Status))
                                 {
-                                    <option value="@((int)status)">@status</option>
+                                    <option value="@((int)status)">@(status == Book_Exchange.Models.ShipmentStatus.LabelCreated ? "Label Created" : status.ToString())</option>
                                 }
                             </select>
                         </div>
