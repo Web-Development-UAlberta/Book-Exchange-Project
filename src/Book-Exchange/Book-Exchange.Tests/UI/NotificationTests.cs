@@ -393,7 +393,7 @@ public class NotificationTests : PageTest
 
         await Page.GotoAsync($"{BaseUrl}/");
 
-        await Page.ClickAsync("#messagesDropdown");
+        await Page.ClickAsync("#messageDropdown");
         await Page.WaitForSelectorAsync("a[href*='Notification']");
 
         await Expect(Page.Locator("a[href*='Notification'], button[href*='Notification']").First)
@@ -411,7 +411,7 @@ public class NotificationTests : PageTest
 
         await Page.GotoAsync($"{BaseUrl}/");
 
-        await Page.ClickAsync("#messagesDropdown");
+        await Page.ClickAsync("#messageDropdown");
         await Page.WaitForSelectorAsync("a[href*='/Notification']");
 
         await Page.Locator("a[href*='/Notification']").First.ClickAsync();

@@ -55,6 +55,46 @@ public class ReviewController : Controller
         return View(dto);
     }
 
+    // POST /Review/Create
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(CreateReviewDto dto)
+    {
+        var userId = Guid.Parse(_userManager.GetUserId(User)!);
+
+        if (!ModelState.IsValid)
+        {
+            return View(dto);
+        }
+
+        try
+        {
+            await _reviewService.CreateReviewAsync(dto, userId);
+            TempData["Success"] = "Review submitted successfully.";
+            return RedirectToAction("Index", "Transaction");
+        }
+        catch (KeyNotFoundException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return View(dto);
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return Forbid();
+        }
+        catch (ArgumentException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return View(dto);
+        }
+        catch (InvalidOperationException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return View(dto);
+        }
+    }
+
+
     // GET /Review/User/{userId}
     [HttpGet]
     [Route("Review/GetUser/{userId}")]

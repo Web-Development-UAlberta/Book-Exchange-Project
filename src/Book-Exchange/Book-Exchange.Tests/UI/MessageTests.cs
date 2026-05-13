@@ -366,7 +366,12 @@ public class MessageTests : PageTest
         await Page.GotoAsync($"{BaseUrl}/");
         await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
 
-        await Page.Locator("nav a", new() { HasText = "Messages" }).First.ClickAsync();
+        await Page.ClickAsync("#messageDropdown");
+
+        var messagesLink = Page.Locator("nav a[href*='/Message']").First;
+        await messagesLink.WaitForAsync(new() { State = WaitForSelectorState.Visible });
+        await messagesLink.ClickAsync();
+
         await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
 
         await Expect(Page).ToHaveURLAsync(new Regex(".*/Message$"));
