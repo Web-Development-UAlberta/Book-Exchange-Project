@@ -8,6 +8,11 @@ obj/
 
 **/.vs
 
+# Ignore files inside book-covers
+src/Book-Exchange/Book-Exchange/wwwroot/book-covers/*
+# Keep the folder itself
+!src/Book-Exchange/Book-Exchange/wwwroot/book-covers/.gitkeep
+
 # Common node modules locations
 /node_modules
 /wwwroot/node_modules
