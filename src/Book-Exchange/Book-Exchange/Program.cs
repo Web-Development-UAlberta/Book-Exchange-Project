@@ -413,6 +413,7 @@ static async Task SeedNotificationsAsync(
     Guid testUserId,
     Guid otherUserId)
 {
+    if (db.Notifications.Any()) return;
     var notif1 = new Guid("ffffffff-0001-0000-0000-000000000001");
     if (await db.Notifications.AnyAsync(n => n.Id == notif1)) return;
 
