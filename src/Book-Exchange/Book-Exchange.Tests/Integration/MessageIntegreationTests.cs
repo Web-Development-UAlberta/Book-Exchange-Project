@@ -23,7 +23,7 @@ public class MessageServiceIntegrationTests : IDisposable
             .Options;
 
         _db = new ApplicationDbContext(options);
-        _service = new MessageService(_db);
+        _service = new MessageService(_db, new NotificationService(_db));
     }
 
     public void Dispose() => _db.Dispose();
