@@ -59,6 +59,8 @@ public class WishlistController : Controller
             viewModel.Items.Add(dto);
         }
 
+        viewModel.TotalActiveCount = viewModel.Items.Count(i => i.IsActive);
+
         if (!string.IsNullOrWhiteSpace(searchText))
         {
             viewModel.Items = viewModel.Items

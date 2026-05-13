@@ -7,4 +7,6 @@ public class WishlistIndexViewDto
     public bool AvailableOnly { get; set; }
 
     public List<WishlistItemViewDto> Items { get; set; } = new();
+
+    public int TotalActiveCount { get; set; }
 }
