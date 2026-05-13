@@ -37,7 +37,6 @@ public class ProfileController : Controller
 
     // ── GET /Profile/{id}
     [HttpGet]
-    [AllowAnonymous]
     public async Task<IActionResult> View(Guid id)
     {
         var currentUserId = User.Identity?.IsAuthenticated == true
