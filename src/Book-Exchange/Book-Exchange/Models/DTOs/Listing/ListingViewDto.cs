@@ -20,6 +20,4 @@ public class ListingViewDto
     public double SellerRating { get; set; } = 0;
     public int SellerReviewerCount { get; set; } = 0;
     public int SellerTradeCount { get; set; } = 0;
-
-
 }
