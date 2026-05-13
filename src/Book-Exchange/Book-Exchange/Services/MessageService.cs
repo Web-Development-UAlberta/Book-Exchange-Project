@@ -1,6 +1,7 @@
 using Book_Exchange.Data;
 using Book_Exchange.Models;
 using Book_Exchange.Models.DTOs.Message;
+using Book_Exchange.Models.DTOs.Notification;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,9 +11,12 @@ public class MessageService : IMessageService
 {
     private readonly ApplicationDbContext _context;
 
-    public MessageService(ApplicationDbContext context)
+    private readonly INotificationService _notificationService;
+
+    public MessageService(ApplicationDbContext context, INotificationService notificationService)
     {
         _context = context;
+        _notificationService = notificationService;
     }
 
     /// <summary>
@@ -92,6 +96,19 @@ public class MessageService : IMessageService
 
         _context.Messages.Add(message);
         await _context.SaveChangesAsync();
+
+        var sender = await _context.Users.FindAsync(senderId);
+        await _notificationService.CreateNotificationAsync(new CreateNotificationDto
+        {
+            UserId = dto.ReceiverId,
+            Category = NotificationCategory.NewMessage,
+            Title = "New Message",
+            Message = $"You have a new message from {sender?.UserName ?? "a user"}.",
+            RelatedListingId = dto.ListingId,
+            RelatedExchangeRequestId = dto.ExchangeRequestId,
+            RelatedTransactionId = dto.TransactionId
+        });
+
         return message;
     }
 
