@@ -1,9 +1,10 @@
-using System.Security.Claims;
 using Book_Exchange.Models;
+using Book_Exchange.Models.DTOs.Book;
 using Book_Exchange.Models.DTOs.ExchangeRequest;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Book_Exchange.Controllers;
 
@@ -138,25 +139,47 @@ public class ExchangeRequestController : Controller
 
     private async Task<ExchangeRequestViewDto> BuildViewDto(ExchangeRequest request)
     {
+        var targetBook = await _bookSearchApi.GetBookByIsbnAsync(request.TargetListing.Isbn);
+
+        var offeredBooks = new List<BookInfoDto>();
+        var offeredIsbns = new List<string>();
+
+        foreach (var item in request.ExchangeRequestItems)
+        {
+            var isbn = item.OfferedListing.Isbn;
+
+            offeredIsbns.Add(isbn);
+
+            var book = await _bookSearchApi.GetBookByIsbnAsync(isbn);
+
+            if (book != null)
+            {
+                offeredBooks.Add(book);
+            }
+        }
+
         return new ExchangeRequestViewDto
         {
             Id = request.Id,
             TargetListingId = request.TargetListingId,
             TargetIsbn = request.TargetListing.Isbn,
-            TargetBook = await _bookSearchApi.GetBookByIsbnAsync(request.TargetListing.Isbn),
+            TargetBook = targetBook,
+
             RequesterId = request.RequesterId,
             RequesterName = request.Requester.UserName ?? "Unknown",
+
             OwnerId = request.TargetListing.UserId,
             OwnerName = request.TargetListing.User.UserName ?? "Unknown",
+
             Status = request.Status,
             Price = request.Price,
             Message = request.Message,
             CreatedAt = request.CreatedAt,
             AcceptedAt = request.AcceptedAt,
             CancelledAt = request.CancelledAt,
-            OfferedIsbns = request.ExchangeRequestItems
-                .Select(i => i.OfferedListing.Isbn)
-                .ToList()
+
+            OfferedIsbns = offeredIsbns,
+            OfferedBooks = offeredBooks
         };
     }
 }

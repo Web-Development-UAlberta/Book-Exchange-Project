@@ -27,4 +27,5 @@ public class ExchangeRequestViewDto
     public DateTime? CancelledAt { get; set; }
 
     public List<string> OfferedIsbns { get; set; } = new();
+    public List<BookInfoDto> OfferedBooks { get; set; } = new();
 }
