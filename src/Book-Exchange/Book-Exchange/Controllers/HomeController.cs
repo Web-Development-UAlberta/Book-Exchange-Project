@@ -26,13 +26,11 @@ public class HomeController : Controller
         _userManager = userManager;
     }
 
-    // GET /
     public async Task<IActionResult> Index()
     {
         if (User.Identity?.IsAuthenticated == true)
             return RedirectToAction(nameof(Dashboard));
 
-        // 4 most recent listings
         var listings = await _context.Listings
             .Include(l => l.User)
             .OrderByDescending(l => l.CreatedAt)
@@ -40,6 +38,7 @@ public class HomeController : Controller
             .ToListAsync();
 
         var dtos = new List<ListingViewDto>();
+
         foreach (var l in listings)
         {
             dtos.Add(new ListingViewDto
@@ -59,7 +58,6 @@ public class HomeController : Controller
         return View(dtos);
     }
 
-    // GET /Home/Dashboard
     [Authorize]
     public async Task<IActionResult> Dashboard()
     {
@@ -76,6 +74,43 @@ public class HomeController : Controller
             .OrderByDescending(w => w.Id)
             .ToListAsync();
 
+        var dashboardWishlistItems = new List<DashboardWishlistItemViewModel>();
+
+        foreach (var item in wishlistItems)
+        {
+            var book = await _bookSearchApi.GetBookByIsbnAsync(item.Isbn);
+
+            dashboardWishlistItems.Add(new DashboardWishlistItemViewModel
+            {
+                Id = item.Id,
+                Isbn = item.Isbn,
+                IsActive = item.IsActive,
+                BookTitle = !string.IsNullOrWhiteSpace(book?.Title)
+                    ? book.Title
+                    : item.Isbn,
+                BookAuthor = book?.Authors?.FirstOrDefault()
+            });
+        }
+
+        var dashboardListingItems = new List<DashboardListingItemViewModel>();
+
+        foreach (var listing in myListings.Take(5))
+        {
+            var book = await _bookSearchApi.GetBookByIsbnAsync(listing.Isbn);
+
+            dashboardListingItems.Add(new DashboardListingItemViewModel
+            {
+                Id = listing.Id,
+                Isbn = listing.Isbn,
+                Condition = listing.Condition,
+                Price = listing.Price,
+                BookTitle = !string.IsNullOrWhiteSpace(book?.Title)
+                    ? book.Title
+                    : listing.Isbn,
+                BookAuthor = book?.Authors?.FirstOrDefault()
+            });
+        }
+
         var unreadMessageCount = await _context.Messages
             .Where(m => m.ReceiverId == userId && !m.IsRead)
             .CountAsync();
@@ -86,7 +121,6 @@ public class HomeController : Controller
             .Take(5)
             .ToListAsync();
 
-        // Open transactions — Transaction has no direct Status property.
         var allUserTransactions = await _context.Transactions
             .Include(t => t.ExchangeRequest)
                 .ThenInclude(er => er.Requester)
@@ -105,6 +139,7 @@ public class HomeController : Controller
                     .OrderByDescending(h => h.UpdatedAt)
                     .Select(h => h.Status)
                     .FirstOrDefault();
+
                 return latest == TransactionStatus.Confirmed
                     || latest == TransactionStatus.Shipped;
             })
@@ -125,7 +160,9 @@ public class HomeController : Controller
                      && r.ReviewerId != userId)
             .ToListAsync();
 
-        double? averageRating = reviews.Any() ? reviews.Average(r => r.Rating) : null;
+        double? averageRating = reviews.Any()
+            ? reviews.Average(r => r.Rating)
+            : null;
 
         var vm = new DashboardViewModel
         {
@@ -138,14 +175,13 @@ public class HomeController : Controller
             UnreadMessageCount = unreadMessageCount,
             OpenTransactions = openTransactions,
             RecentNotifications = recentNotifications,
-            WishlistItems = wishlistItems,
-            MyActiveListings = myListings.Take(5).ToList()
+            WishlistItems = dashboardWishlistItems,
+            MyActiveListings = dashboardListingItems
         };
 
         return View(vm);
     }
 
-    // GET /Home/Search?q=...
     public async Task<IActionResult> Search(string q)
     {
         if (string.IsNullOrWhiteSpace(q))
@@ -153,6 +189,7 @@ public class HomeController : Controller
 
         var books = await _bookSearchApi.SearchBooksAsync(q, 20);
         ViewBag.Query = q;
+
         return View(books);
     }
 }

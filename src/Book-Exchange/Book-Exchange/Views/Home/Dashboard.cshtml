@@ -111,7 +111,18 @@
                             foreach (var item in Model.WishlistItems)
                             {
                                 <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
-                                    <span class="small text-muted font-monospace">@item.Isbn</span>
+                                    <div class="small">
+                                        <span class="fw-semibold">@item.BookTitle</span>
+
+                                        @if (!string.IsNullOrWhiteSpace(item.BookAuthor))
+                                        {
+                                            <br />
+                                            <span class="text-muted">@item.BookAuthor</span>
+                                        }
+
+                                        <br />
+                                        <span class="text-muted font-monospace">ISBN: @item.Isbn</span>
+                                    </div>
                                     <a class="btn btn-outline-primary btn-sm"
                                        asp-action="Index" asp-controller="Listing"
                                        asp-route-isbn="@item.Isbn">
@@ -146,7 +157,14 @@
                             {
                                 <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
                                     <div class="small">
-                                        <span class="font-monospace text-muted">@listing.Isbn</span>
+                                        <span class="fw-semibold">@listing.BookTitle</span>
+                                        @if (!string.IsNullOrWhiteSpace(listing.BookAuthor))
+                                        {
+                                            <br />
+                                            <span class="text-muted">@listing.BookAuthor</span>
+                                        }
+                                        <br />
+                                        <span class="font-monospace text-muted">ISBN: @listing.Isbn</span>
                                         @{
                                         string FormatCondition(BookCondition c) => c switch
                                         {
