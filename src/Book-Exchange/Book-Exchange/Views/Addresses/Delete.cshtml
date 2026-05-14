@@ -5,29 +5,89 @@
 }
 
 <div class="container mt-4" data-testid="delete-address-page">
+
     <h2>Delete Address</h2>
 
-    <div class="alert alert-warning">
-        Are you sure you want to delete this address?
+    <div asp-validation-summary="ModelOnly"
+         class="alert alert-danger">
     </div>
+    @if (Model.IsDefault)
+    {
+        <div class="alert alert-warning">
+            <strong>Warning:</strong>
+            This is your default address.
+            If deleted, another address (if available)
+            will automatically become the default address.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            Are you sure you want to delete this address?
+        </div>
+    }
 
     <dl class="row">
-        <dt class="col-sm-3">Address</dt>
-        <dd class="col-sm-9" data-testid="delete-address-full-name">@Model.FullName</dd>
 
-        <dt class="col-sm-3">Google Place Id</dt>
-        <dd class="col-sm-9">@Model.GooglePlaceId</dd>
+        <dt class="col-sm-3">
+            Address
+        </dt>
+
+        <dd class="col-sm-9"
+            data-testid="delete-address-full-name">
+            @Model.FullName
+        </dd>
+
+        <dt class="col-sm-3">
+            Default Address
+        </dt>
+
+        <dd class="col-sm-9">
+
+            @if (Model.IsDefault)
+            {
+                <span class="badge bg-success"
+                      data-testid="default-address-badge">
+                    Default
+                </span>
+            }
+            else
+            {
+                <span class="text-muted">
+                    No
+                </span>
+            }
+
+        </dd>
+
+        <dt class="col-sm-3">
+            Created At
+        </dt>
+
+        <dd class="col-sm-9">
+            @Model.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd")
+        </dd>
+
     </dl>
 
-    <form asp-action="Delete" method="post" data-testid="delete-address-form">
+    <form asp-action="Delete"
+          method="post"
+          data-testid="delete-address-form">
+
         <input type="hidden" asp-for="Id" />
 
-        <button type="submit" class="btn btn-danger" data-testid="confirm-delete-address-button">
+        <button type="submit"
+                class="btn btn-danger"
+                data-testid="confirm-delete-address-button">
             Delete
         </button>
 
-        <a asp-action="Index" class="btn btn-secondary" data-testid="back-to-address-list">
+        <a asp-action="Index"
+           class="btn btn-secondary"
+           data-testid="back-to-address-list">
             Cancel
         </a>
+
     </form>
+
 </div>

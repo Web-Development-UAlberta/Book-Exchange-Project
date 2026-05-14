@@ -5,84 +5,171 @@
 }
 
 <div class="container mt-4" data-testid="create-address-page">
+
     <h2>Add Address</h2>
 
-    <form asp-action="Create" method="post" data-testid="create-address-form">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <form asp-action="Create"
+          method="post"
+          data-testid="create-address-form">
+
+        <div asp-validation-summary="ModelOnly"
+             class="text-danger">
+        </div>
 
         <div class="mb-3">
-            <label class="form-label">Search Address</label>
+
+            <label class="form-label">
+                Search Address
+            </label>
+
             <input type="text"
                    id="addressSearch"
                    class="form-control"
                    placeholder="Start typing your address..."
                    data-testid="address-search-input" />
+
         </div>
 
         <div class="mb-3">
+
             <button type="button"
                     id="searchAddressButton"
                     class="btn btn-secondary"
                     data-testid="search-address-button">
                 Search
             </button>
+
+        </div>
+
+        <div id="searchResults"
+             class="list-group mb-3"
+             data-testid="address-search-results">
         </div>
 
         <div class="mb-3">
-            <label asp-for="FullName" class="form-label"></label>
+
+            <label asp-for="FullName"
+                   class="form-label">
+            </label>
+
             <input asp-for="FullName"
                    class="form-control"
                    readonly
                    data-testid="full-name-input" />
-            <span asp-validation-for="FullName" class="text-danger"></span>
+
+            <span asp-validation-for="FullName"
+                  class="text-danger">
+            </span>
+
         </div>
 
-        <input asp-for="GooglePlaceId" type="hidden" data-testid="google-place-id-input" />
+        <input asp-for="GooglePlaceId"
+               type="hidden"
+               data-testid="google-place-id-input" />
 
-        <div id="searchResults" class="list-group mb-3" data-testid="address-search-results"></div>
+        <div class="form-check mb-3">
 
-        <button type="submit" class="btn btn-primary" data-testid="save-address-button">
+            <input asp-for="IsDefault"
+                   class="form-check-input"
+                   data-testid="is-default-checkbox" />
+
+            <label asp-for="IsDefault"
+                   class="form-check-label">
+                Set as default address
+            </label>
+
+        </div>
+
+        <button type="submit"
+                class="btn btn-primary"
+                data-testid="save-address-button">
             Save
         </button>
 
-        <a asp-action="Index" class="btn btn-secondary" data-testid="back-to-address-list">
+        <a asp-action="Index"
+           class="btn btn-secondary"
+           data-testid="back-to-address-list">
             Back
         </a>
+
     </form>
+
 </div>
 
 @section Scripts {
+
     <partial name="_ValidationScriptsPartial" />
 
     <script>
-                document.getElementById("searchAddressButton").addEventListener("click", async function () {
-            const query = document.getElementById("addressSearch").value;
-            const resultsDiv = document.getElementById("searchResults");
 
-            resultsDiv.innerHTML = "";
+        document.getElementById("searchAddressButton")
+            .addEventListener("click", async function () {
 
-            const response = await fetch(`/Addresses/SearchGoogleAddress?query=${encodeURIComponent(query)}`);
-            const results = await response.json();
+                const query = document.getElementById("addressSearch").value;
+                const resultsDiv = document.getElementById("searchResults");
 
-            console.log(results);
+                resultsDiv.innerHTML = "";
 
-            results.forEach(item => {
-                const placeId = item.placeId || item.PlaceId;
-                const address = item.formattedAddress || item.FormattedAddress;
+                if (!query || query.trim() === "") {
+                    return;
+                }
 
-                const button = document.createElement("button");
-                button.type = "button";
-                button.className = "list-group-item list-group-item-action";
-                button.textContent = address;
-                button.setAttribute("data-testid", "address-result-item");
+                const response = await fetch(
+                    `/Addresses/SearchGoogleAddress?query=${encodeURIComponent(query)}`
+                );
 
-                button.addEventListener("click", function () {
-                    document.getElementById("FullName").value = address;
-                    document.getElementById("GooglePlaceId").value = placeId;
+                const results = await response.json();
+
+                console.log(results);
+
+                if (!results || results.length === 0) {
+
+                    resultsDiv.innerHTML = `
+                        <div class="list-group-item text-muted">
+                            No addresses found.
+                        </div>
+                    `;
+
+                    return;
+                }
+
+                results.forEach(item => {
+
+                    const placeId =
+                        item.placeId || item.PlaceId;
+
+                    const address =
+                        item.formattedAddress || item.FormattedAddress;
+
+                    const button = document.createElement("button");
+
+                    button.type = "button";
+
+                    button.className =
+                        "list-group-item list-group-item-action";
+
+                    button.textContent = address;
+
+                    button.setAttribute(
+                        "data-testid",
+                        "address-result-item"
+                    );
+
+                    button.addEventListener("click", function () {
+
+                        document.getElementById("FullName").value = address;
+
+                        document.getElementById("GooglePlaceId").value = placeId;
+
+                        document.querySelectorAll("#searchResults button")
+                            .forEach(b => b.classList.remove("active"));
+
+                        button.classList.add("active");
+                    });
+
+                    resultsDiv.appendChild(button);
                 });
-
-                resultsDiv.appendChild(button);
             });
-        });
+
     </script>
 }

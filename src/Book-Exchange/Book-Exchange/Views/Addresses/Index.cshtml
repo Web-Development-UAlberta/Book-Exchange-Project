@@ -5,9 +5,13 @@
 }
 
 <div class="container mt-4" data-testid="address-index-page">
+
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>My Addresses</h2>
-        <a asp-action="Create" class="btn btn-primary" data-testid="create-address-link">
+
+        <a asp-action="Create"
+           class="btn btn-primary"
+           data-testid="create-address-link">
             Add Address
         </a>
     </div>
@@ -20,38 +24,87 @@
     }
     else
     {
-        <table class="table table-bordered table-striped" data-testid="address-table">
+        <table class="table table-bordered table-striped align-middle"
+               data-testid="address-table">
+
             <thead>
                 <tr>
                     <th>Address</th>
+                    <th>Default</th>
                     <th>Created At</th>
-                    <th style="width: 180px;">Actions</th>
+                    <th style="width: 260px;">Actions</th>
                 </tr>
             </thead>
+
             <tbody>
                 @foreach (var address in Model)
                 {
                     <tr data-testid="address-row">
-                        <td>@address.FullName</td>
-                        <td>@address.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd")</td>
+
                         <td>
+                            @address.FullName
+                        </td>
+
+                        <td>
+                            @if (address.IsDefault)
+                            {
+                                <span class="badge bg-success"
+                                      data-testid="default-address-badge">
+                                    Default
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">
+                                    No
+                                </span>
+                            }
+                        </td>
+
+                        <td>
+                            @(address.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd"))
+                        </td>
+
+                        <td>
+
+                            @if (!address.IsDefault)
+                            {
+                                <form asp-action="SetDefault"
+                                      asp-route-id="@address.Id"
+                                      method="post"
+                                      class="d-inline">
+
+                                    @Html.AntiForgeryToken()
+
+                                    <button type="submit"
+                                            class="btn btn-sm btn-outline-success"
+                                            data-testid="set-default-address-button">
+                                        Set Default
+                                    </button>
+                                </form>
+                            }
+
                             <a asp-action="Edit"
-                                   asp-route-id="@address.Id"
-                                   class="btn btn-sm btn-warning"
-                                   data-testid="edit-address-link">
+                               asp-route-id="@address.Id"
+                               class="btn btn-sm btn-warning"
+                               data-testid="edit-address-link">
                                 Edit
                             </a>
 
                             <a asp-action="Delete"
-                                   asp-route-id="@address.Id"
-                                   class="btn btn-sm btn-danger"
-                                   data-testid="delete-address-link">
+                               asp-route-id="@address.Id"
+                               class="btn btn-sm btn-danger"
+                               data-testid="delete-address-link">
                                 Delete
                             </a>
+
                         </td>
+
                     </tr>
                 }
             </tbody>
+
         </table>
     }
+
 </div>

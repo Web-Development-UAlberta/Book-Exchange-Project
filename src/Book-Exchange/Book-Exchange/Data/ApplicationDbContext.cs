@@ -73,6 +73,11 @@ namespace Book_Exchange.Data
                     .HasForeignKey(e => e.UserId)
                     .OnDelete(DeleteBehavior.SetNull);
 
+                entity.HasIndex(a => new { a.UserId, a.IsDefault })
+                    .HasDatabaseName("IX_addresses_user_id_IsDefault")
+                    .HasFilter("\"IsDefault\" = true")
+                    .IsUnique();
+
                 entity.HasIndex(e => e.UserId)
                     .HasDatabaseName("ix_addresses_user_id");
             });

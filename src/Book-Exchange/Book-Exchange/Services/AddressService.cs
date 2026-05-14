@@ -32,8 +32,15 @@ public class AddressService : IAddressService
     {
         return await _context.Addresses
             .Where(a => a.UserId == userId)
-            .OrderByDescending(a => a.CreatedAt)
+            .OrderByDescending(a => a.IsDefault)
+            .ThenByDescending(a => a.CreatedAt)
             .ToListAsync();
+    }
+
+    public async Task<Address?> GetDefaultAddressAsync(Guid userId)
+    {
+        return await _context.Addresses
+            .FirstOrDefaultAsync(a => a.UserId == userId && a.IsDefault);
     }
 
     public async Task<Address> CreateAddressAsync(CreateAddressDto dto, Guid userId)
@@ -50,12 +57,23 @@ public class AddressService : IAddressService
         if (alreadyExists)
             throw new InvalidOperationException("This address already exists.");
 
+        var userHasAnyAddress = await _context.Addresses
+            .AnyAsync(a => a.UserId == userId);
+
+        var shouldBeDefault = !userHasAnyAddress || dto.IsDefault;
+
+        if (shouldBeDefault)
+        {
+            await ClearDefaultAddressAsync(userId);
+        }
+
         var address = new Address
         {
             Id = Guid.NewGuid(),
             UserId = userId,
             FullName = googleAddress.FormattedAddress,
             GooglePlaceId = googleAddress.PlaceId,
+            IsDefault = shouldBeDefault,
             CreatedAt = DateTime.UtcNow
         };
 
@@ -74,6 +92,30 @@ public class AddressService : IAddressService
         if (googleAddress == null)
             throw new InvalidOperationException("Invalid Google Place Id.");
 
+        var duplicateExists = await _context.Addresses.AnyAsync(a =>
+            a.UserId == userId &&
+            a.Id != addressId &&
+            a.GooglePlaceId == dto.GooglePlaceId);
+
+        if (duplicateExists)
+            throw new InvalidOperationException("This address already exists.");
+
+        if (dto.IsDefault && !address.IsDefault)
+        {
+            var currentDefaultAddresses = await _context.Addresses
+                .Where(a => a.UserId == userId && a.IsDefault && a.Id != addressId)
+                .ToListAsync();
+
+            foreach (var defaultAddress in currentDefaultAddresses)
+            {
+                defaultAddress.IsDefault = false;
+            }
+
+            await _context.SaveChangesAsync();
+
+            address.IsDefault = true;
+        }
+
         address.FullName = googleAddress.FormattedAddress;
         address.GooglePlaceId = googleAddress.PlaceId;
 
@@ -82,11 +124,69 @@ public class AddressService : IAddressService
         return address;
     }
 
+    public async Task SetDefaultAddressAsync(Guid addressId, Guid userId)
+    {
+        var address = await GetAddressByIdAsync(addressId, userId);
+
+        var currentDefaultAddresses = await _context.Addresses
+            .Where(a => a.UserId == userId && a.IsDefault && a.Id != addressId)
+            .ToListAsync();
+
+        foreach (var defaultAddress in currentDefaultAddresses)
+        {
+            defaultAddress.IsDefault = false;
+        }
+
+        await _context.SaveChangesAsync();
+
+        address.IsDefault = true;
+
+        await _context.SaveChangesAsync();
+    }
+
     public async Task DeleteAddressAsync(Guid addressId, Guid userId)
     {
         var address = await GetAddressByIdAsync(addressId, userId);
 
+        var isUsedInShipment = await _context.Shipments.AnyAsync(s =>
+            s.SenderAddressId == addressId ||
+            s.ReceiverAddressId == addressId);
+
+        if (isUsedInShipment)
+        {
+            throw new InvalidOperationException(
+                "This address cannot be deleted because it is already used in a shipment.");
+        }
+
+        var wasDefault = address.IsDefault;
+
         _context.Addresses.Remove(address);
         await _context.SaveChangesAsync();
+
+        if (wasDefault)
+        {
+            var nextAddress = await _context.Addresses
+                .Where(a => a.UserId == userId)
+                .OrderByDescending(a => a.CreatedAt)
+                .FirstOrDefaultAsync();
+
+            if (nextAddress != null)
+            {
+                nextAddress.IsDefault = true;
+                await _context.SaveChangesAsync();
+            }
+        }
+    }
+
+    private async Task ClearDefaultAddressAsync(Guid userId)
+    {
+        var defaultAddresses = await _context.Addresses
+            .Where(a => a.UserId == userId && a.IsDefault)
+            .ToListAsync();
+
+        foreach (var address in defaultAddresses)
+        {
+            address.IsDefault = false;
+        }
     }
 }

@@ -143,24 +143,33 @@ static async Task SeedAddressesAsync(
     Guid testUserId,
     Guid otherUserId)
 {
-    var address1 = new Guid("aaaaaaaa-0001-0000-0000-000000000001");
-    if (await db.Addresses.AnyAsync(a => a.Id == address1)) return;
+    var address1Id = new Guid("aaaaaaaa-0001-0000-0000-000000000001");
+    var address2Id = new Guid("aaaaaaaa-0002-0000-0000-000000000002");
+
+    if (await db.Addresses.AnyAsync(a =>
+            a.Id == address1Id ||
+            a.Id == address2Id))
+    {
+        return;
+    }
 
     db.Addresses.AddRange(
         new Address
         {
-            Id = address1,
+            Id = address1Id,
             UserId = testUserId,
             FullName = "Test User Edmonton Address",
             GooglePlaceId = "ChIJI__egEUioFMRXRX2SgygH0E",
+            IsDefault = true,
             CreatedAt = new DateTime(2026, 5, 5, 0, 0, 0, DateTimeKind.Utc)
         },
         new Address
         {
-            Id = new Guid("aaaaaaaa-0002-0000-0000-000000000002"),
+            Id = address2Id,
             UserId = otherUserId,
             FullName = "Other User Calgary Address",
             GooglePlaceId = "ChIJ1T-EnwNwcVMROrZStrE7bSY",
+            IsDefault = true,
             CreatedAt = new DateTime(2026, 5, 5, 0, 0, 0, DateTimeKind.Utc)
         }
     );
