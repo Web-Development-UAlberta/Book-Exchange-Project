@@ -14,15 +14,18 @@ public class ListingController : Controller
     private readonly ApplicationDbContext _context;
     private readonly IListingService _listingService;
     private readonly IBookSearchApi _bookSearchApi;
+    private readonly IShippingService _shippingService;
 
     public ListingController(
         ApplicationDbContext context,
         IListingService listingService,
-        IBookSearchApi bookSearchApi)
+        IBookSearchApi bookSearchApi,
+        IShippingService shippingService)
     {
         _context = context;
         _listingService = listingService;
         _bookSearchApi = bookSearchApi;
+        _shippingService = shippingService;
     }
 
     public async Task<IActionResult> Index()
@@ -58,6 +61,7 @@ public class ListingController : Controller
 
     public async Task<IActionResult> Details(Guid id)
     {
+        var currentUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         var listing = await _listingService.GetListingByIdAsync(id);
         var book = await _bookSearchApi.GetBookByIsbnAsync(listing.Isbn);
 
@@ -84,6 +88,13 @@ public class ListingController : Controller
             .CountAsync(t =>
                 t.ExchangeRequest.RequesterId == userId ||
                 t.ExchangeRequest.TargetListing.UserId == userId);
+        
+        var shippingEstimate = currentUserId != listing.UserId
+            ? await _shippingService.GetLowestQuoteBetweenUsersAsync(
+                senderUserId: listing.UserId,
+                receiverUserId: currentUserId,
+                packageWeightGrams: listing.WeightGrams)
+            : null;
 
         var vm = new ListingViewDto
         {
@@ -98,7 +109,8 @@ public class ListingController : Controller
             SellerRating = averageRating,
             SellerReviewerCount = reviewCount,
             SellerTradeCount = tradeCount,
-            Book = book
+            Book = book,
+            ShippingEstimate = shippingEstimate
         };
 
         return View(vm);
