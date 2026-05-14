@@ -4,6 +4,7 @@ using Book_Exchange.Data;
 using Book_Exchange.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Book_Exchange.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260513025035_AddBookCache")]
+    partial class AddBookCache
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,9 +62,6 @@ namespace Book_Exchange.Migrations
                         .HasColumnType("character varying(255)")
                         .HasColumnName("google_place_id");
 
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("boolean");
-
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
@@ -70,11 +70,6 @@ namespace Book_Exchange.Migrations
 
                     b.HasIndex("UserId")
                         .HasDatabaseName("ix_addresses_user_id");
-
-                    b.HasIndex("UserId", "IsDefault")
-                        .IsUnique()
-                        .HasDatabaseName("IX_addresses_user_id_IsDefault")
-                        .HasFilter("\"IsDefault\" = true");
 
                     b.ToTable("addresses", "public");
                 });

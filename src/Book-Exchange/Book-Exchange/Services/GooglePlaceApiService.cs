@@ -103,4 +103,93 @@ public class GooglePlaceApiService : IPlaceApiService
 
         return apiKey;
     }
+
+    public async Task<PlaceDistanceDto?> GetDistanceBetweenPlacesAsync(
+    string originPlaceId,
+    string destinationPlaceId)
+    {
+        if (string.IsNullOrWhiteSpace(originPlaceId) ||
+            string.IsNullOrWhiteSpace(destinationPlaceId))
+        {
+            return null;
+        }
+
+        var apiKey = GetApiKey();
+
+        var url = "https://routes.googleapis.com/distanceMatrix/v2:computeRouteMatrix";
+
+        var requestBody = new
+        {
+            origins = new[]
+            {
+            new
+            {
+                waypoint = new
+                {
+                    placeId = originPlaceId
+                }
+            }
+        },
+            destinations = new[]
+            {
+            new
+            {
+                waypoint = new
+                {
+                    placeId = destinationPlaceId
+                }
+            }
+        },
+            travelMode = "DRIVE"
+        };
+
+        using var request = new HttpRequestMessage(HttpMethod.Post, url);
+
+        request.Headers.Add("X-Goog-Api-Key", apiKey);
+        request.Headers.Add(
+            "X-Goog-FieldMask",
+            "originIndex,destinationIndex,distanceMeters,duration,status");
+
+        request.Content = new StringContent(
+            JsonSerializer.Serialize(requestBody),
+            System.Text.Encoding.UTF8,
+            "application/json");
+
+        using var response = await _httpClient.SendAsync(request);
+
+        var json = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Google Routes API error: {response.StatusCode} - {json}");
+        }
+
+        using var doc = JsonDocument.Parse(json);
+
+        var root = doc.RootElement;
+
+        if (root.ValueKind != JsonValueKind.Array || root.GetArrayLength() == 0)
+        {
+            return null;
+        }
+
+        var route = root[0];
+
+        if (!route.TryGetProperty("distanceMeters", out var distanceElement))
+        {
+            return null;
+        }
+
+        var distanceMeters = distanceElement.GetInt32();
+
+        var duration = route.TryGetProperty("duration", out var durationElement)
+            ? durationElement.GetString() ?? string.Empty
+            : string.Empty;
+
+        return new PlaceDistanceDto
+        {
+            DistanceMeters = distanceMeters,
+            Duration = duration
+        };
+    }
 }

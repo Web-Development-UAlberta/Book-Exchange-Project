@@ -12,4 +12,5 @@ public class CreateAddressDto
     [Required]
     [MaxLength(500)]
     public string GooglePlaceId { get; set; } = null!;
+    public bool IsDefault { get; set; } = false;
 }

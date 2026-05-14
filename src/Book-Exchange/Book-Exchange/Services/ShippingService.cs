@@ -12,15 +12,18 @@ public class ShippingService : IShippingService
     private readonly ApplicationDbContext _context;
     private readonly HttpClient _httpClient;
     private readonly IConfiguration _configuration;
+    private readonly IPlaceApiService _placeApiService;
 
     public ShippingService(
         ApplicationDbContext context,
         HttpClient httpClient,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        IPlaceApiService placeApiService)
     {
         _context = context;
         _httpClient = httpClient;
         _configuration = configuration;
+        _placeApiService = placeApiService;
     }
 
     /// <summary>
@@ -333,5 +336,55 @@ public class ShippingService : IShippingService
             ShipmentStatus.Cancelled => new HashSet<ShipmentStatus>(),
             _ => new HashSet<ShipmentStatus>()
         };
+    }
+
+    public async Task<ShippingQuoteDto?> GetLowestQuoteBetweenUsersAsync(Guid senderUserId, Guid receiverUserId, int packageWeightGrams)
+    {
+        if (packageWeightGrams <= 0)
+            return null;
+
+        var senderAddress = await _context.Addresses
+            .AsNoTracking()
+            .FirstOrDefaultAsync(a =>
+                a.UserId == senderUserId &&
+                a.IsDefault);
+
+        var receiverAddress = await _context.Addresses
+            .AsNoTracking()
+            .FirstOrDefaultAsync(a =>
+                a.UserId == receiverUserId &&
+                a.IsDefault);
+
+        if (senderAddress == null || receiverAddress == null)
+            return null;
+
+        var carriers = await GetEligibleCarriersAsync(packageWeightGrams);
+
+        if (!carriers.Any())
+            return null;
+
+        var distanceResult = await _placeApiService.GetDistanceBetweenPlacesAsync(
+            senderAddress.GooglePlaceId,
+            receiverAddress.GooglePlaceId);
+
+        if (distanceResult == null)
+            return null;
+
+        var distanceKm = Math.Round((decimal)distanceResult.DistanceKm, 2);
+
+        var quotes = carriers.Select(carrier => new ShippingQuoteDto
+        {
+            Carrier = carrier,
+            PackageWeightGrams = packageWeightGrams,
+            DistanceKm = distanceKm,
+            EstimatedCost = CalculateShippingCost(
+                carrier,
+                packageWeightGrams,
+                distanceKm)
+        });
+
+        return quotes
+            .OrderBy(q => q.EstimatedCost)
+            .FirstOrDefault();
     }
 }

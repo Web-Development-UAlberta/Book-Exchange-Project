@@ -26,14 +26,14 @@ public class BookSearchTests : PageTest
     /// UI-BOOK-02: Empty search shows no books found
     /// </summary>
     [Fact]
-    public async Task BookSearch_EmptySearch_ShowsNoBooksFound()
+    public async Task BookSearch_NoResults_ShowsNoBooksFound()
     {
         await Page.GotoAsync($"{BaseUrl}/BookSearch");
 
-        await Page.FillAsync("#book-search-input", "");
+        await Page.FillAsync("#book-search-input", "zzzzzzzzzz-no-book-found-test");
         await Page.ClickAsync("#book-search-button");
 
-        await Expect(Page.Locator("#no-books-found")).ToBeVisibleAsync();
+        await Expect(Page.Locator("#no-books-found")).ToBeVisibleAsync();    
     }
 
 

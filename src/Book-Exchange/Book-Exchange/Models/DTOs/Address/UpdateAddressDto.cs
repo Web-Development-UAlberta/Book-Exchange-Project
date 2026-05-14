@@ -10,4 +10,5 @@ public class UpdateAddressDto
     // External reference from Google Places API — not an internal FK
     [MaxLength(500)]
     public string? GooglePlaceId { get; set; }
+    public bool IsDefault { get; set; } = false;
 }

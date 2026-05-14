@@ -1,5 +1,6 @@
 ﻿using Book_Exchange.Models;
 using Book_Exchange.Models.DTOs.Book;
+using Book_Exchange.Models.DTOs.Shipping;
 
 namespace Book_Exchange.Models.DTOs.Listing;
 
@@ -17,5 +18,8 @@ public class ListingViewDto
     public BookInfoDto? Book { get; set; }
 
     public string SellerName { get; set; } = "Unknown";
-
+    public double SellerRating { get; set; } = 0;
+    public int SellerReviewerCount { get; set; } = 0;
+    public int SellerTradeCount { get; set; } = 0;
+    public ShippingQuoteDto? ShippingEstimate { get; set; }
 }

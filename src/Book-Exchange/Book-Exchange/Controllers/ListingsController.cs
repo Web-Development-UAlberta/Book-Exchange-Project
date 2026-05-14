@@ -14,15 +14,18 @@ public class ListingController : Controller
     private readonly ApplicationDbContext _context;
     private readonly IListingService _listingService;
     private readonly IBookSearchApi _bookSearchApi;
+    private readonly IShippingService _shippingService;
 
     public ListingController(
         ApplicationDbContext context,
         IListingService listingService,
-        IBookSearchApi bookSearchApi)
+        IBookSearchApi bookSearchApi,
+        IShippingService shippingService)
     {
         _context = context;
         _listingService = listingService;
         _bookSearchApi = bookSearchApi;
+        _shippingService = shippingService;
     }
 
     public async Task<IActionResult> Index()
@@ -58,8 +61,40 @@ public class ListingController : Controller
 
     public async Task<IActionResult> Details(Guid id)
     {
+        var currentUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         var listing = await _listingService.GetListingByIdAsync(id);
         var book = await _bookSearchApi.GetBookByIsbnAsync(listing.Isbn);
+
+
+        var userId = listing.User.Id;
+
+        var reviewQuery = _context.Reviews
+            .AsNoTracking()
+            .Where(r =>
+                r.ReviewerId != userId &&
+                (
+                    r.Transaction.ExchangeRequest.TargetListing.UserId == userId ||
+                    r.Transaction.ExchangeRequest.RequesterId == userId
+                ));
+
+        var reviewCount = await reviewQuery.CountAsync();
+
+        var averageRating = reviewCount > 0
+            ? Math.Round(await reviewQuery.AverageAsync(r => (double)r.Rating), 1)
+            : 0.0;
+
+        var tradeCount = await _context.Transactions
+            .AsNoTracking()
+            .CountAsync(t =>
+                t.ExchangeRequest.RequesterId == userId ||
+                t.ExchangeRequest.TargetListing.UserId == userId);
+        
+        var shippingEstimate = currentUserId != listing.UserId
+            ? await _shippingService.GetLowestQuoteBetweenUsersAsync(
+                senderUserId: listing.UserId,
+                receiverUserId: currentUserId,
+                packageWeightGrams: listing.WeightGrams)
+            : null;
 
         var vm = new ListingViewDto
         {
@@ -71,7 +106,11 @@ public class ListingController : Controller
             WeightGrams = listing.WeightGrams,
             CreatedAt = listing.CreatedAt,
             SellerName = listing.User.UserName ?? "Unknown",
-            Book = book
+            SellerRating = averageRating,
+            SellerReviewerCount = reviewCount,
+            SellerTradeCount = tradeCount,
+            Book = book,
+            ShippingEstimate = shippingEstimate
         };
 
         return View(vm);

@@ -22,4 +22,5 @@ public interface IShippingService
     Task<Shipment> UpdateShipmentStatusAsync(Guid shipmentId, ShipmentStatus newStatus);
 
     Task<Shipment> CancelShipmentAsync(Guid shipmentId);
+    Task<ShippingQuoteDto?> GetLowestQuoteBetweenUsersAsync(Guid senderUserId, Guid receiverUserId, int packageWeightGrams);
 }

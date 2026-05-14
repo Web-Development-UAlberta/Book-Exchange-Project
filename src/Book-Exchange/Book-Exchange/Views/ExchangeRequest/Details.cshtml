@@ -6,71 +6,185 @@
 
 <div id="exchange-details-page" class="container mt-4">
 
-    <h2>Exchange Request Details</h2>
+    <h2 class="mb-4">Exchange Request Details</h2>
 
-    <div class="card">
+    <div class="card shadow-sm mb-4">
         <div class="card-body">
 
-            <h4 id="exchange-detail-book-title">
-                @(Model.TargetBook?.Title ?? "Unknown Book")
-            </h4>
+            <div class="row g-4">
 
-            <p>
-                <strong>ISBN:</strong> @Model.TargetIsbn
-            </p>
-
-            <p>
-                <strong>Status:</strong>
-                <span id="exchange-detail-status" class="badge bg-secondary">
-                    @Model.Status
-                </span>
-            </p>
-
-            <p>
-                <strong>Requester:</strong> @Model.RequesterName
-            </p>
-
-            <p>
-                <strong>Owner:</strong> @Model.OwnerName
-            </p>
-
-            <p>
-                <strong>Created:</strong> @Model.CreatedAt.ToString("MMM dd, yyyy")
-            </p>
-
-            @if (Model.Price.HasValue)
-            {
-                <p>
-                    <strong>Cash offer:</strong> $@Model.Price
-                </p>
-            }
-
-            @if (!string.IsNullOrWhiteSpace(Model.Message))
-            {
-                <p>
-                    <strong>Message:</strong> @Model.Message
-                </p>
-            }
-
-            @if (Model.OfferedIsbns.Any())
-            {
-                <h5>Offered Books</h5>
-
-                <ul>
-                    @foreach (var isbn in Model.OfferedIsbns)
+                <div class="col-md-3 text-center">
+                    @if (!string.IsNullOrWhiteSpace(Model.TargetBook?.ThumbnailUrl))
                     {
-                        <li>@isbn</li>
+                        <img src="@Model.TargetBook.ThumbnailUrl"
+                             alt="@Model.TargetBook.Title"
+                             class="img-fluid img-thumbnail"
+                             style="max-height:260px; object-fit:contain;" />
                     }
-                </ul>
-            }
+                    else
+                    {
+                        <div class="border rounded bg-light d-flex align-items-center justify-content-center"
+                             style="height:260px;">
+                            <span class="text-muted">No Cover</span>
+                        </div>
+                    }
+                </div>
 
-            <a asp-controller="ExchangeRequest"
-                   asp-action="Index"
-                   class="btn btn-secondary">
-                Back
-            </a>
+                <div class="col-md-9">
+
+                    <h3 id="exchange-detail-book-title">
+                        @(Model.TargetBook?.Title ?? "Unknown Book")
+                    </h3>
+
+                    <div class="text-muted mb-3">
+                        @(Model.TargetBook?.Authors != null && Model.TargetBook.Authors.Any()
+                            ? string.Join(", ", Model.TargetBook.Authors)
+                            : "Unknown Author")
+                    </div>
+
+                    <p>
+                        <strong>ISBN:</strong> @Model.TargetIsbn
+                    </p>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.TargetBook?.Publisher))
+                    {
+                        <p>
+                            <strong>Publisher:</strong> @Model.TargetBook.Publisher
+                        </p>
+                    }
+
+                    @if (Model.TargetBook?.PublishedYear != null)
+                    {
+                        <p>
+                            <strong>Published:</strong> @Model.TargetBook.PublishedYear
+                        </p>
+                    }
+
+                    @if (Model.TargetBook?.PageCount != null)
+                    {
+                        <p>
+                            <strong>Pages:</strong> @Model.TargetBook.PageCount
+                        </p>
+                    }
+
+                    <p>
+                        <strong>Status:</strong>
+                        <span id="exchange-detail-status" class="badge bg-secondary">
+                            @Model.Status
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong>Requester:</strong> @Model.RequesterName
+                    </p>
+
+                    <p>
+                        <strong>Owner:</strong> @Model.OwnerName
+                    </p>
+
+                    <p>
+                        <strong>Created:</strong> @Model.CreatedAt.ToString("MMM dd, yyyy")
+                    </p>
+
+                    @if (Model.Price.HasValue)
+                    {
+                        <p>
+                            <strong>Cash offer:</strong> $@Model.Price
+                        </p>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Message))
+                    {
+                        <p>
+                            <strong>Message:</strong> @Model.Message
+                        </p>
+                    }
+
+                </div>
+
+            </div>
 
         </div>
     </div>
+
+    @if (Model.OfferedBooks.Any())
+    {
+        <h4 class="mb-3">Offered Books</h4>
+
+        <div class="row g-3 mb-4">
+
+            @foreach (var book in Model.OfferedBooks)
+            {
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="card h-100 shadow-sm">
+
+                        <div class="text-center p-3 bg-light border-bottom">
+                            @if (!string.IsNullOrWhiteSpace(book.ThumbnailUrl))
+                            {
+                                <img src="@book.ThumbnailUrl"
+                                     alt="@book.Title"
+                                     class="img-fluid"
+                                     style="height:160px; object-fit:contain;" />
+                            }
+                            else
+                            {
+                                <div class="d-flex align-items-center justify-content-center bg-secondary-subtle"
+                                     style="height:160px;">
+                                    <span class="text-muted">No Cover</span>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="card-body">
+
+                            <h6 class="card-title">
+                                @(book.Title ?? "Unknown Book")
+                            </h6>
+
+                            <div class="text-muted small mb-2">
+                                @(book.Authors.Any()
+                                    ? string.Join(", ", book.Authors)
+                                    : "Unknown Author")
+                            </div>
+
+                            <div class="small">
+                                <strong>ISBN:</strong>
+                                @(book.Isbn13 ?? book.Isbn10 ?? "N/A")
+                            </div>
+
+                            @if (!string.IsNullOrWhiteSpace(book.Publisher))
+                            {
+                                <div class="small">
+                                    <strong>Publisher:</strong> @book.Publisher
+                                </div>
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+    else if (Model.OfferedIsbns.Any())
+    {
+        <h4>Offered Books</h4>
+
+        <ul>
+            @foreach (var isbn in Model.OfferedIsbns)
+            {
+                <li>@isbn</li>
+            }
+        </ul>
+    }
+
+    <a asp-controller="ExchangeRequest"
+       asp-action="Index"
+       class="btn btn-secondary">
+        Back
+    </a>
 
 </div>

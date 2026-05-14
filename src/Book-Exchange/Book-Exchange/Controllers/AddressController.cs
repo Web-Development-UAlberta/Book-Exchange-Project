@@ -58,7 +58,8 @@ public class AddressesController : Controller
         var dto = new UpdateAddressDto
         {
             FullName = address.FullName,
-            GooglePlaceId = address.GooglePlaceId
+            GooglePlaceId = address.GooglePlaceId,
+            IsDefault = address.IsDefault
         };
 
         ViewBag.AddressId = id;
@@ -98,8 +99,17 @@ public class AddressesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(Guid id)
     {
-        await _addressService.DeleteAddressAsync(id, GetUserId());
-        return RedirectToAction(nameof(Index));
+        try
+        {
+            await _addressService.DeleteAddressAsync(id, GetUserId());
+            return RedirectToAction(nameof(Index));
+        }
+        catch (Exception ex)
+        {
+            var address = await _addressService.GetAddressByIdAsync(id, GetUserId());
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return View(address);
+        }
     }
 
     [HttpGet]
@@ -117,5 +127,13 @@ public class AddressesController : Controller
             throw new UnauthorizedAccessException();
 
         return Guid.Parse(userId);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> SetDefault(Guid id)
+    {
+        await _addressService.SetDefaultAddressAsync(id, GetUserId());
+        return RedirectToAction(nameof(Index));
     }
 }

@@ -1,20 +1,29 @@
-﻿using System.Text.Json;
+﻿using Book_Exchange.Data;
+using Book_Exchange.Models;
 using Book_Exchange.Models.DTOs.Book;
 using Book_Exchange.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace Book_Exchange.Services;
 
 public class GoogleBookSearchApi : IBookSearchApi
 {
     private readonly HttpClient _httpClient;
+    private readonly ApplicationDbContext _context;
     private readonly IConfiguration _configuration;
+    private readonly IWebHostEnvironment _environment;
 
     public GoogleBookSearchApi(
+        ApplicationDbContext context,
         HttpClient httpClient,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        IWebHostEnvironment environment)
     {
+        _context = context;
         _httpClient = httpClient;
         _configuration = configuration;
+        _environment = environment;
     }
 
     public async Task<BookInfoDto?> GetBookByIsbnAsync(string isbn)
@@ -22,7 +31,17 @@ public class GoogleBookSearchApi : IBookSearchApi
         if (string.IsNullOrWhiteSpace(isbn))
             return null;
 
-        isbn = isbn.Trim().Replace("-", "");
+        isbn = NormalizeIsbn(isbn);
+
+        var cachedBook = await _context.BookCaches
+            .FirstOrDefaultAsync(x =>
+                x.Isbn == isbn ||
+                x.Isbn10 == isbn);
+
+        if (cachedBook != null)
+        {
+            return MapCacheToDto(cachedBook);
+        }
 
         var apiKey = _configuration["GoogleBooks:ApiKey"];
 
@@ -36,9 +55,7 @@ public class GoogleBookSearchApi : IBookSearchApi
         if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadAsStringAsync();
-
             Console.WriteLine(error);
-
             return null;
         }
 
@@ -53,7 +70,42 @@ public class GoogleBookSearchApi : IBookSearchApi
 
         var book = result?.Items?.FirstOrDefault();
 
-        return book == null ? null : MapToDto(book);
+        if (book == null)
+            return null;
+
+        var dto = MapToDto(book);
+
+        var cacheKeyIsbn = dto.Isbn13 ?? dto.Isbn10 ?? isbn;
+
+        var localThumbnailPath = await DownloadThumbnailAsync(
+            cacheKeyIsbn,
+            dto.ThumbnailUrl);
+
+        var cache = new BookCache
+        {
+            GoogleBookId = dto.GoogleBookId,
+            Title = dto.Title,
+            Authors = string.Join(", ", dto.Authors),
+            Genres = string.Join(", ", dto.Genres),
+            Publisher = dto.Publisher,
+            PublishedYear = dto.PublishedYear,
+            Description = dto.Description,
+            Isbn10 = dto.Isbn10,
+            Isbn = dto.Isbn13 ?? isbn,
+            PageCount = dto.PageCount,
+            ThumbnailUrl = dto.ThumbnailUrl,
+            ThumbnailPath = localThumbnailPath,
+            PreviewLink = dto.PreviewLink,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        };
+
+        _context.BookCaches.Add(cache);
+        await _context.SaveChangesAsync();
+
+        dto.ThumbnailUrl = localThumbnailPath ?? dto.ThumbnailUrl;
+
+        return dto;
     }
 
     public async Task<List<BookInfoDto>> SearchBooksAsync(
@@ -77,9 +129,7 @@ public class GoogleBookSearchApi : IBookSearchApi
         if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadAsStringAsync();
-
             Console.WriteLine(error);
-
             return new List<BookInfoDto>();
         }
 
@@ -98,6 +148,45 @@ public class GoogleBookSearchApi : IBookSearchApi
             ?? new List<BookInfoDto>();
     }
 
+    private async Task<string?> DownloadThumbnailAsync(
+        string isbn,
+        string? imageUrl)
+    {
+        if (string.IsNullOrWhiteSpace(imageUrl))
+            return null;
+
+        imageUrl = imageUrl.Replace("http://", "https://");
+
+        var folderPath = Path.Combine(
+            _environment.WebRootPath,
+            "book-covers");
+
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
+        }
+
+        var fileName = $"{NormalizeIsbn(isbn)}.jpg";
+        var filePath = Path.Combine(folderPath, fileName);
+
+        if (File.Exists(filePath))
+        {
+            return $"/book-covers/{fileName}";
+        }
+
+        try
+        {
+            var imageBytes = await _httpClient.GetByteArrayAsync(imageUrl);
+            await File.WriteAllBytesAsync(filePath, imageBytes);
+
+            return $"/book-covers/{fileName}";
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
     private static BookInfoDto MapToDto(GoogleBookItem item)
     {
         var volume = item.VolumeInfo;
@@ -109,6 +198,15 @@ public class GoogleBookSearchApi : IBookSearchApi
         var isbn13 = volume?.IndustryIdentifiers?
             .FirstOrDefault(x => x.Type == "ISBN_13")
             ?.Identifier;
+
+        var thumbnailUrl =
+            volume?.ImageLinks?.Thumbnail ??
+            volume?.ImageLinks?.SmallThumbnail;
+
+        if (!string.IsNullOrWhiteSpace(thumbnailUrl))
+        {
+            thumbnailUrl = thumbnailUrl.Replace("http://", "https://");
+        }
 
         return new BookInfoDto
         {
@@ -122,9 +220,43 @@ public class GoogleBookSearchApi : IBookSearchApi
             Isbn10 = isbn10,
             Isbn13 = isbn13,
             PageCount = volume?.PageCount,
-            ThumbnailUrl = volume?.ImageLinks?.Thumbnail,
+            ThumbnailUrl = thumbnailUrl,
             PreviewLink = volume?.PreviewLink
         };
+    }
+
+    private static BookInfoDto MapCacheToDto(BookCache cache)
+    {
+        return new BookInfoDto
+        {
+            GoogleBookId = cache.GoogleBookId,
+            Title = cache.Title,
+            Authors = SplitString(cache.Authors),
+            Genres = SplitString(cache.Genres),
+            Publisher = cache.Publisher,
+            PublishedYear = cache.PublishedYear,
+            Description = cache.Description,
+            Isbn10 = cache.Isbn10,
+            Isbn13 = cache.Isbn,
+            PageCount = cache.PageCount,
+            ThumbnailUrl = cache.ThumbnailPath ?? cache.ThumbnailUrl,
+            PreviewLink = cache.PreviewLink
+        };
+    }
+
+    private static List<string> SplitString(string? value)
+    {
+        return string.IsNullOrWhiteSpace(value)
+            ? new List<string>()
+            : value.Split(", ", StringSplitOptions.RemoveEmptyEntries).ToList();
+    }
+
+    private static string NormalizeIsbn(string isbn)
+    {
+        return isbn
+            .Replace("-", "")
+            .Replace(" ", "")
+            .Trim();
     }
 
     private static int? ExtractYear(string? publishedDate)

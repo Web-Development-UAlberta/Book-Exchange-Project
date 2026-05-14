@@ -1,8 +1,10 @@
-using System.Security.Claims;
+using Book_Exchange.Models;
 using Book_Exchange.Models.DTOs.Wishlist;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
+using System.Security.Claims;
 
 namespace Book_Exchange.Controllers;
 
@@ -140,9 +142,28 @@ public class WishlistController : Controller
     {
         var userId = GetCurrentUserId();
 
-        var listings = await _wishlistService.GetMatchingListingsForItemAsync(id, userId);
+        var listings = await _wishlistService
+            .GetMatchingListingsForItemAsync(id, userId);
 
-        return View(listings);
+        var model = new List<WishListMatchingViewModel>();
+
+        if (listings == null || !listings.Any())
+        {
+            return View(model);
+        }
+
+        foreach (var listing in listings)
+        {
+            var book = await _bookSearchApi.GetBookByIsbnAsync(listing.Isbn);
+
+            model.Add(new WishListMatchingViewModel
+            {
+                Listing = listing,
+                Book = book
+            });
+        }
+
+        return View(model);
     }
 
     private Guid GetCurrentUserId()

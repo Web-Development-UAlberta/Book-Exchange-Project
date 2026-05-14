@@ -90,13 +90,39 @@
             @if (!isOwner)
 
             {
-                <div id="listing-seller-card" class="card p-3">
+                <div class="seller-card border rounded p-3">
+                <!-- First line -->
+                <div class="fw-semibold mb-3">
+                    Listed by
+                </div>
+                <!-- Second row -->
+                <div class="d-flex align-items-center gap-3">
+                    <!-- Left: Avatar -->
+                    <div class="text-center p-3 border-secondary">
+                        <div class="bx-avatar mx-auto mb-2">@Model.SellerName[0].ToString().ToUpper()</div>                   
+                    </div>
 
-                <p>Listed by</p>
+                    <!-- Right: Username + rating/trades -->
+                    <div>
+                        <div class="fw-semibold">
+                            @Model.SellerName
+                        </div>
 
-                <p id="listing-seller-name">
-                    @Model.SellerName
-                </p>
+                        <div class="small text-muted">
+                            <span>
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <span class="@(i <= Math.Round(Model.SellerRating) ? "text-warning" : "text-muted")">★</span>
+                                }
+                            </span>
+
+                            <span>
+                                @Model.SellerRating.ToString("0.0") - @Model.SellerTradeCount trades
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-grid gap-2 mt-3">
                     <a id="exchange-request-btn"
                             class="btn btn-outline-primary mb-2"
                             asp-controller="ExchangeRequest"
@@ -111,17 +137,10 @@
                             asp-route-otherUserId="@Model.UserId">
                         Message Seller
                     </a>
+                </div>
             </div>
-            // TODO: Need to Add SellerAddressID to Listing Model to show shipping as well add GetDefaultAddressAsync to IAddressService and implement it in AddressService.
-            // TODO: Update Listing Controller Details to populate shipping estimate if user has default address.
-            // TODO: then update this with <partial name="_ShippingEstimate" model="Model.ShippingEstimate" />
-            <!--<div id="shipping-estimate" class="card p-3 mt-4 text-center">
-                <p>Estimated Shipping</p>
-                <strong>$12.00</strong>
-                <small>Based on weight and location</small>
-            </div>-->
+            <partial name="_ShippingEstimate" model="Model.ShippingEstimate" />
             }
-
             <a id="listing-view-btn"
                    asp-controller="Listing"
                    asp-action="Index"

@@ -3,14 +3,12 @@ using Moq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Book_Exchange.Models;
+using Book_Exchange.Models.DTOs.Address;
 using Book_Exchange.Services;
 using Book_Exchange.Services.Interfaces;
 using Book_Exchange.Data;
 using System.Net;
 using System.Text;
-
-// Shipping Integration Tests
-// Covers: IT-SHIP-01 through IT-SHIP-03 (Integration Tests)
 
 namespace Book_Exchange.Tests.Integration;
 
@@ -19,7 +17,6 @@ public class ShippingServiceIntegrationTests : IDisposable
     private readonly ApplicationDbContext _db;
     private readonly IShippingService _service;
 
-    // Canned Google Distance Matrix API response (~10 km)
     private const string FakeDistanceMatrixJson = """
         {
             "status": "OK",
@@ -47,7 +44,6 @@ public class ShippingServiceIntegrationTests : IDisposable
             BaseAddress = new Uri("https://maps.googleapis.com/")
         };
 
-        // Provide a minimal IConfiguration with a dummy API key.
         var config = new ConfigurationBuilder()
             .AddInMemoryCollection(new Dictionary<string, string?>
             {
@@ -55,15 +51,27 @@ public class ShippingServiceIntegrationTests : IDisposable
             })
             .Build();
 
-        _service = new ShippingService(_db, httpClient, config);
+        var placeApiServiceMock = new Mock<IPlaceApiService>();
+
+        placeApiServiceMock
+            .Setup(x => x.GetDistanceBetweenPlacesAsync(
+                It.IsAny<string>(),
+                It.IsAny<string>()))
+            .ReturnsAsync(new PlaceDistanceDto
+            {
+                DistanceMeters = 10000,
+                Duration = "720s"
+            });
+
+        _service = new ShippingService(
+            _db,
+            httpClient,
+            config,
+            placeApiServiceMock.Object);
     }
 
     public void Dispose() => _db.Dispose();
 
-    /// <summary>
-    /// IT-SHIP-01: Create shipment for transaction
-    /// Expected: Shipment is saved and linked to transaction with Status = Quoted
-    /// </summary>
     [Fact]
     public async Task IT_SHIP_01_CreateShipment_IsSavedAndLinkedToTransaction()
     {
@@ -98,7 +106,6 @@ public class ShippingServiceIntegrationTests : IDisposable
 
         var transactionId = Guid.NewGuid();
 
-        // TransactionStatusHistory seeded through Transaction History
         var transaction = new Transaction
         {
             Id = transactionId,
@@ -108,11 +115,11 @@ public class ShippingServiceIntegrationTests : IDisposable
             {
                 new TransactionStatusHistory
                 {
-                    Id              = Guid.NewGuid(),
-                    TransactionId   = transactionId,
-                    Status          = TransactionStatus.Confirmed,
+                    Id = Guid.NewGuid(),
+                    TransactionId = transactionId,
+                    Status = TransactionStatus.Confirmed,
                     UpdatedByUserId = sender.Id,
-                    UpdatedAt       = DateTime.UtcNow
+                    UpdatedAt = DateTime.UtcNow
                 }
             }
         };
@@ -138,10 +145,6 @@ public class ShippingServiceIntegrationTests : IDisposable
         Assert.NotNull(saved);
     }
 
-    /// <summary>
-    /// IT-SHIP-02: Quote shipment using carrier pricing and distance
-    /// Expected: Returns ShippingQuoteDtos with EstimatedCost > 0 and DistanceKm > 0
-    /// </summary>
     [Fact]
     public async Task IT_SHIP_02_GetQuotes_ReturnsCalculatedCostsPerCarrier()
     {
@@ -189,10 +192,6 @@ public class ShippingServiceIntegrationTests : IDisposable
         }
     }
 
-    /// <summary>
-    /// IT-SHIP-03: Update shipment status
-    /// Expected: Shipment status updates correctly in the database
-    /// </summary>
     [Fact]
     public async Task IT_SHIP_03_UpdateShipmentStatus_StatusIsUpdated()
     {
@@ -209,7 +208,9 @@ public class ShippingServiceIntegrationTests : IDisposable
         _db.Shipments.Add(shipment);
         await _db.SaveChangesAsync();
 
-        var result = await _service.UpdateShipmentStatusAsync(shipment.Id, ShipmentStatus.LabelCreated);
+        var result = await _service.UpdateShipmentStatusAsync(
+            shipment.Id,
+            ShipmentStatus.LabelCreated);
 
         Assert.NotNull(result);
         Assert.Equal(ShipmentStatus.LabelCreated, result.Status);
@@ -218,8 +219,6 @@ public class ShippingServiceIntegrationTests : IDisposable
         Assert.Equal(ShipmentStatus.LabelCreated, saved!.Status);
     }
 }
-
-// Helper: returns a canned HTTP response for every outgoing request
 
 internal sealed class FakeHttpMessageHandler : HttpMessageHandler
 {
@@ -240,7 +239,10 @@ internal sealed class FakeHttpMessageHandler : HttpMessageHandler
     {
         var response = new HttpResponseMessage(_statusCode)
         {
-            Content = new StringContent(_responseBody, Encoding.UTF8, "application/json")
+            Content = new StringContent(
+                _responseBody,
+                Encoding.UTF8,
+                "application/json")
         };
 
         return Task.FromResult(response);
