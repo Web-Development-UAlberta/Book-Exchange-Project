@@ -1,5 +1,6 @@
 ﻿@model Book_Exchange.Models.DTOs.ExchangeRequest.CreateExchangeRequestDto
 @using Book_Exchange.Models
+@using Book_Exchange.Models.DTOs.ExchangeRequest;
 @using Book_Exchange.Models.DTOs.Shipping
 @Html.AntiForgeryToken()
 
@@ -8,8 +9,9 @@
 
     var targetListing = ViewBag.TargetListing as Listing;
     var targetBook = ViewBag.TargetBook as Book_Exchange.Models.DTOs.Book.BookInfoDto;
-    var myListings = ViewBag.MyListings as IEnumerable<Listing> ?? new List<Listing>();
     var shippingEstimate = ViewBag.ShippingEstimate as ShippingQuoteDto;
+    var myListings =
+        ViewBag.MyListings as IEnumerable<ExchangeListingViewModel> ?? new List<ExchangeListingViewModel>();
 }
 
 <div id="exchange-create-page" class="container mt-4">
@@ -134,19 +136,32 @@
 
             <div id="exchange-offered-listings">
 
-                @foreach (var listing in myListings)
+                @if (!myListings.Any())
                 {
-                    <div class="form-check">
-                        <input class="form-check-input exchange-offered-checkbox"
-                               type="checkbox"
-                               name="OfferedListingIds"
-                               value="@listing.Id"
-                               id="offer-@listing.Id" />
-
-                        <label class="form-check-label" for="offer-@listing.Id">
-                            ISBN: @listing.Isbn | @listing.Condition | $@listing.Price
-                        </label>
+                    <div class="alert alert-info">
+                        You do not have any available listings to offer.
                     </div>
+                }
+                else
+                {
+                    foreach (var listing in myListings)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input exchange-offered-checkbox"
+                                   type="checkbox"
+                                   name="OfferedListingIds"
+                                   value="@listing.Id"
+                                   id="offer-@listing.Id" />
+
+                            <label class="form-check-label" for="offer-@listing.Id">
+                                <strong>@listing.Title</strong>
+                                <br />
+                                <small class="text-muted">
+                                    ISBN: @listing.Isbn | @listing.Condition | $@listing.Price
+                                </small>
+                            </label>
+                        </div>
+                    }
                 }
 
             </div>

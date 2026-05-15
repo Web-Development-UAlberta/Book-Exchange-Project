@@ -75,25 +75,7 @@ public class ExchangeRequestController : Controller
             return RedirectToAction("Details", "Listing", new { id = listingId });
         }
 
-        var myListings = await _listingService.GetListingsByUserIdAsync(userId);
-
-        var availableMyListings = new List<Listing>();
-
-        foreach (var listing in myListings)
-        {
-            if (await IsListingAvailableAsync(listing.Id))
-            {
-                availableMyListings.Add(listing);
-            }
-        }
-
-        ViewBag.ShippingEstimate = await _shippingService.GetLowestQuoteBetweenUsersAsync(
-            senderUserId: targetListing.UserId,
-            receiverUserId: userId,
-            packageWeightGrams: targetListing.WeightGrams);
-        ViewBag.TargetListing = targetListing;
-        ViewBag.TargetBook = await _bookSearchApi.GetBookByIsbnAsync(targetListing.Isbn);
-        ViewBag.MyListings = availableMyListings;
+        await PopulateCreateExchangeViewBagsAsync(listingId, userId);
 
         return View(new CreateExchangeRequestDto
         {
@@ -107,13 +89,22 @@ public class ExchangeRequestController : Controller
 
         var myListings = await _listingService.GetListingsByUserIdAsync(userId);
 
-        var availableMyListings = new List<Listing>();
+        var availableMyListings = new List<ExchangeListingViewModel>();
 
         foreach (var listing in myListings)
         {
             if (await IsListingAvailableAsync(listing.Id))
             {
-                availableMyListings.Add(listing);
+                var book = await _bookSearchApi.GetBookByIsbnAsync(listing.Isbn);
+
+                availableMyListings.Add(new ExchangeListingViewModel
+                {
+                    Id = listing.Id,
+                    Isbn = listing.Isbn,
+                    Title = book?.Title ?? "Unknown Title",
+                    Condition = listing.Condition,
+                    Price = listing.Price
+                });
             }
         }
 
