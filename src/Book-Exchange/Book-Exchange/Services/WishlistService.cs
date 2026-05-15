@@ -3,16 +3,19 @@ using Book_Exchange.Data;
 using Book_Exchange.Models;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Book_Exchange.Models.DTOs.Notification;
 
 namespace Book_Exchange.Services;
 
 public class WishlistService : IWishlistService
 {
     private readonly ApplicationDbContext _context;
+    private readonly INotificationService _notificationService;
 
-    public WishlistService(ApplicationDbContext context)
+    public WishlistService(ApplicationDbContext context, INotificationService notificationService)
     {
         _context = context;
+        _notificationService = notificationService;
     }
 
     public async Task<WishlistItem> GetWishlistItemByIdAsync(Guid wishlistItemId, Guid userId)
@@ -155,5 +158,27 @@ public class WishlistService : IWishlistService
     private static bool IsValidIsbn(string isbn)
     {
         return Regex.IsMatch(isbn, @"^([0-9]{13}|[0-9X]{10})$");
+    }
+
+    public async Task RequestNotificationAsync(Guid wishlistItemId, Guid userId)
+    {
+        var item = await GetWishlistItemByIdAsync(wishlistItemId, userId);
+
+        // Avoid duplicate pending notification requests for the same ISBN
+        var alreadyRequested = await _context.Notifications.AnyAsync(n =>
+            n.UserId == userId &&
+            n.Category == NotificationCategory.WishlistAvailable &&
+            n.Message.Contains(item.Isbn) &&
+            !n.IsRead);
+
+        if (alreadyRequested) return;
+
+        await _notificationService.CreateNotificationAsync(new CreateNotificationDto
+        {
+            UserId = userId,
+            Category = NotificationCategory.WishlistAvailable,
+            Title = "Wishlist Notification Requested",
+            Message = $"You'll be notified when a listing appears for ISBN: {item.Isbn}"
+        });
     }
 }

@@ -170,4 +170,18 @@ public class WishlistController : Controller
     {
         return Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
     }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> NotifyMe(Guid id)
+    {
+        var userId = GetCurrentUserId();
+
+        await _wishlistService.RequestNotificationAsync(id, userId);
+
+        TempData["Success"] = "You'll be notified when this book becomes available.";
+
+        return RedirectToAction(nameof(Index));
+    }
+
 }

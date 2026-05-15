@@ -11,4 +11,5 @@ public interface IWishlistService
     Task RestoreWishlistItemAsync(Guid wishlistItemId, Guid userId);
     Task<IEnumerable<Listing>> GetMatchingListingsAsync(Guid userId);
     Task<IEnumerable<Listing>> GetMatchingListingsForItemAsync(Guid wishlistItemId, Guid userId);
+    Task RequestNotificationAsync(Guid wishlistItemId, Guid userId);
 }
