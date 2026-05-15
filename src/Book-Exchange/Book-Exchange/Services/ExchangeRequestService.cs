@@ -10,16 +10,18 @@ public class ExchangeRequestService : IExchangeRequestService
 {
     private readonly ApplicationDbContext _context;
     private readonly ITransactionService _transactionService;
+    private readonly IBookSearchApi _bookSearchApi;
     private readonly IShippingService _shippingService;
-
 
     public ExchangeRequestService(ApplicationDbContext context, 
         ITransactionService transactionService, 
-        IShippingService shippingService)
+        IShippingService shippingService, 
+        IBookSearchApi bookSearchApi)
     {
         _context = context;
         _transactionService = transactionService;
         _shippingService = shippingService;
+        _bookSearchApi = bookSearchApi;
     }
 
     public async Task<ExchangeRequest> CreateExchangeRequestAsync(
@@ -100,13 +102,16 @@ public class ExchangeRequestService : IExchangeRequestService
 
         _context.ExchangeRequests.Add(request);
 
+        var book = await _bookSearchApi.GetBookByIsbnAsync(targetListing.Isbn);
+        var bookLabel = book?.Title ?? targetListing.Isbn;
+
         _context.Notifications.Add(new Notification
         {
             Id = Guid.NewGuid(),
             UserId = targetListing.UserId,
             Category = NotificationCategory.ExchangeRequested,
             Title = "New Exchange Request",
-            Message = $"You received a new exchange request for ISBN {targetListing.Isbn}.",
+            Message = $"You received a new exchange request for \"{bookLabel}\".",
             RelatedListingId = targetListing.Id,
             RelatedExchangeRequestId = request.Id,
             CreatedAt = DateTime.UtcNow
@@ -177,13 +182,16 @@ public class ExchangeRequestService : IExchangeRequestService
         request.Status = ExchangeStatus.Accepted;
         request.AcceptedAt = DateTime.UtcNow;
 
+        var book = await _bookSearchApi.GetBookByIsbnAsync(request.TargetListing.Isbn);
+        var bookLabel = book?.Title ?? request.TargetListing.Isbn;
+
         _context.Notifications.Add(new Notification
         {
             Id = Guid.NewGuid(),
             UserId = request.RequesterId,
             Category = NotificationCategory.ExchangeAccepted,
             Title = "Exchange Request Accepted",
-            Message = $"Your exchange request for ISBN {request.TargetListing.Isbn} was accepted.",
+            Message = $"A transaction has been created for \"{bookLabel}\". You can now arrange shipping.",
             RelatedListingId = request.TargetListingId,
             RelatedExchangeRequestId = request.Id,
             CreatedAt = DateTime.UtcNow
@@ -229,7 +237,7 @@ public class ExchangeRequestService : IExchangeRequestService
                 UserId = request.RequesterId,
                 Category = NotificationCategory.TransactionUpdate,
                 Title = "Transaction Created",
-                Message = $"A transaction has been created for ISBN {request.TargetListing.Isbn}. You can now arrange shipping.",
+                Message = $"A transaction has been created for \"{bookLabel}\". You can now arrange shipping.",
                 RelatedListingId = request.TargetListingId,
                 RelatedExchangeRequestId = request.Id,
                 RelatedTransactionId = transaction.Id,
@@ -241,7 +249,7 @@ public class ExchangeRequestService : IExchangeRequestService
                 UserId = userId,
                 Category = NotificationCategory.TransactionUpdate,
                 Title = "Transaction Created",
-                Message = $"A transaction has been created for ISBN {request.TargetListing.Isbn}. You can now arrange shipping.",
+                Message = $"A transaction has been created for \"{bookLabel}\". You can now arrange shipping.",
                 RelatedListingId = request.TargetListingId,
                 RelatedExchangeRequestId = request.Id,
                 RelatedTransactionId = transaction.Id,
@@ -272,13 +280,16 @@ public class ExchangeRequestService : IExchangeRequestService
         request.Status = ExchangeStatus.Rejected;
         request.CancelledAt = DateTime.UtcNow;
 
+        var book = await _bookSearchApi.GetBookByIsbnAsync(request.TargetListing.Isbn);
+        var bookLabel = book?.Title ?? request.TargetListing.Isbn;
+
         _context.Notifications.Add(new Notification
         {
             Id = Guid.NewGuid(),
             UserId = request.RequesterId,
             Category = NotificationCategory.ExchangeRejected,
             Title = "Exchange Request Rejected",
-            Message = $"Your exchange request for ISBN {request.TargetListing.Isbn} was rejected.",
+            Message = $"Your exchange request for \"{bookLabel}\" was rejected.",
             RelatedListingId = request.TargetListingId,
             RelatedExchangeRequestId = request.Id,
             CreatedAt = DateTime.UtcNow

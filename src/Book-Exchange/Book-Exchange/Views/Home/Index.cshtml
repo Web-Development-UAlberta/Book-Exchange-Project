@@ -9,18 +9,19 @@
         <h1 class="display-5 fw-bold text-white mb-2">Exchange, Buy &amp; Sell Books</h1>
         <p class="text-white-50 small text-uppercase letter-spacing mb-1">Give Books. Get Stories.</p>
         <p class="text-white-50 mb-4">Find your next read. Pass on your last one.</p>
-        <form id="home-search-form" asp-action="Search" asp-controller="Home" method="get"
-              class="d-flex gap-2 justify-content-center">
+        <form id="home-search-form"
+            asp-action="Search"
+            asp-controller="BookSearch"
+            method="get"
+            class="d-flex gap-2 justify-content-center">
             <input id="search-input"
-                   name="q"
-                   type="text"
-                   class="form-control"
-                   style="max-width: 360px;"
-                   placeholder="Search by title, author, or genre…"
-                   autocomplete="off" />
-            <button id="search-btn" type="submit" class="btn btn-light fw-semibold" asp-controller="BookSearch"
-                          asp-action="Search"
-                          method="get">Search</button> 
+                name="searchText"
+                type="text"
+                class="form-control"
+                style="max-width: 360px;"
+                placeholder="Search by title, author, or genre…"
+                autocomplete="off" />
+            <button id="search-btn" type="submit" class="btn btn-light fw-semibold">Search</button>
         </form>
     </div>
 </div>

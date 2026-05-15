@@ -10,17 +10,33 @@ namespace Book_Exchange.Services;
 public class TransactionService : ITransactionService
 {
     private readonly ApplicationDbContext _context;
+    private readonly IBookSearchApi _bookSearchApi;
 
-    public TransactionService(ApplicationDbContext context)
+    public TransactionService(ApplicationDbContext context, IBookSearchApi bookSearchApi)
     {
         _context = context;
+        _bookSearchApi = bookSearchApi;
+    }
+
+    // helper to get book title
+    private async Task<string> GetTitleAsync(string isbn)
+    {
+        try
+        {
+            var results = await _bookSearchApi.SearchBooksAsync(isbn, 1);
+            return results.FirstOrDefault()?.Title ?? isbn;
+        }
+        catch
+        {
+            return isbn; // ISBN fallback if API call fails
+        }
     }
 
     /// <summary>
     /// GetTransactionByIdAsync
     /// - Loads the transaction with all related data for the ViewModel
     /// - Throws KeyNotFoundException if the transaction does not exist
-    /// - CurrentUser is used to determind HasReview for the transaction
+    /// - CurrentUser is used to determine HasReview for the transaction
     /// </summary>
     /// <param name="transactionId"></param>
     /// <returns></returns>
@@ -42,7 +58,7 @@ public class TransactionService : ITransactionService
             .FirstOrDefaultAsync(t => t.Id == transactionId)
             ?? throw new KeyNotFoundException($"Transaction {transactionId} not found.");
 
-        return MapToViewModel(transaction, currentUserId);
+        return await MapToViewModelAsync(transaction, currentUserId);
     }
 
     /// <summary>
@@ -73,7 +89,9 @@ public class TransactionService : ITransactionService
             .OrderByDescending(t => t.CreatedAt)
             .ToListAsync();
 
-        return transactions.Select(t => MapToViewModel(t, userId));
+        var viewModels = await Task.WhenAll(
+                transactions.Select(t => MapToViewModelAsync(t, userId)));
+        return viewModels;
     }
 
     /// <summary>
@@ -308,7 +326,7 @@ public class TransactionService : ITransactionService
     /// <param name="transaction"></param>
     /// <param name="currentUserId"></param>
     /// <returns></returns> 
-    private static TransactionViewModel MapToViewModel(Transaction transaction, Guid currentUserId)
+    private async Task<TransactionViewModel> MapToViewModelAsync(Transaction transaction, Guid currentUserId)
     {
         var er = transaction.ExchangeRequest;
         var currentStatus = GetCurrentStatus(transaction);
@@ -318,29 +336,29 @@ public class TransactionService : ITransactionService
             TransactionStatus.Shipped or
             TransactionStatus.Disputed;
 
-        // Get other participant's username
         var withUser = currentUserId == er.RequesterId
             ? er.TargetListing.User.UserName ?? "Unknown"
             : er.Requester.UserName ?? "Unknown";
 
-        // Description from the exchange type
-        var targetIsbn = er.TargetListing.Isbn;
+        var targetTitle = await GetTitleAsync(er.TargetListing.Isbn);
         var offeredItems = er.ExchangeRequestItems.ToList();
 
         string description;
         if (!offeredItems.Any() && er.Price.HasValue)
         {
-            description = $"Sell: {targetIsbn}";
+            description = $"Sell: {targetTitle}";
         }
         else if (offeredItems.Any() && !er.Price.HasValue)
         {
-            var offeredIsbns = string.Join(", ", offeredItems.Select(i => i.OfferedListing.Isbn));
-            description = $"Swap: {targetIsbn} \u2194 {offeredIsbns}";
+            var offeredTitles = await Task.WhenAll(
+                offeredItems.Select(i => GetTitleAsync(i.OfferedListing.Isbn)));
+            description = $"Swap: {targetTitle} \u2194 {string.Join(", ", offeredTitles)}";
         }
         else
         {
-            var offeredIsbns = string.Join(", ", offeredItems.Select(i => i.OfferedListing.Isbn));
-            description = $"Swap + Cash: {targetIsbn} \u2194 {offeredIsbns}";
+            var offeredTitles = await Task.WhenAll(
+                offeredItems.Select(i => GetTitleAsync(i.OfferedListing.Isbn)));
+            description = $"Swap + Cash: {targetTitle} \u2194 {string.Join(", ", offeredTitles)}";
         }
 
         // Get the most recent non-cancelled shipment ID if one exists

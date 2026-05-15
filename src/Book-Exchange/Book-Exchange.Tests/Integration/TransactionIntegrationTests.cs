@@ -2,8 +2,11 @@ using Xunit;
 using Microsoft.EntityFrameworkCore;
 using Book_Exchange.Models;
 using Book_Exchange.Models.DTOs.Transaction;
+using Book_Exchange.Models.DTOs.Book;
 using Book_Exchange.Services;
 using Book_Exchange.Data;
+using Moq;
+using Book_Exchange.Services.Interfaces;
 
 // INTEGRATION TESTS
 // Covers: IT-TRANS-01 through IT-TRANS-03 (Integration Tests)
@@ -22,7 +25,17 @@ public class TransactionServiceIntegrationTests : IDisposable
             .Options;
 
         _db = new ApplicationDbContext(options);
-        _service = new TransactionService(_db);
+
+        var mockBookSearch = new Mock<IBookSearchApi>();
+
+        mockBookSearch
+            .Setup(b => b.SearchBooksAsync(It.IsAny<string>(), It.IsAny<int>()))
+            .ReturnsAsync(new List<BookInfoDto>
+            {
+                new BookInfoDto { Title = "Test Book" }
+            });
+
+        _service = new TransactionService(_db, mockBookSearch.Object);
     }
 
     public void Dispose() => _db.Dispose();

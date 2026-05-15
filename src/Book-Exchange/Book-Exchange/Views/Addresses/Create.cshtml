@@ -34,7 +34,7 @@
 
             <button type="button"
                     id="searchAddressButton"
-                    class="btn btn-secondary"
+                    class="btn btn-outline-secondary"
                     data-testid="search-address-button">
                 Search
             </button>
@@ -48,18 +48,21 @@
 
         <div class="mb-3">
 
-            <label asp-for="FullName"
-                   class="form-label">
+            <label asp-for="FullName" class="form-label">
+                Full Address
             </label>
 
             <input asp-for="FullName"
-                   class="form-control"
-                   readonly
-                   data-testid="full-name-input" />
+                class="form-control"
+                readonly
+                placeholder="Search above and select an address from the results"
+                data-testid="full-name-input" />
 
-            <span asp-validation-for="FullName"
-                  class="text-danger">
-            </span>
+            <div class="form-text text-muted">
+                Use the search above to find and select your address.
+            </div>
+
+            <span asp-validation-for="FullName" class="text-danger"></span>
 
         </div>
 
