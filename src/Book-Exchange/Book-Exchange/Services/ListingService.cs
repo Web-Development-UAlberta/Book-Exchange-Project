@@ -60,7 +60,14 @@ public class ListingService : IListingService
 
     private static bool IsValidIsbn(string isbn)
     {
-        return Regex.IsMatch(isbn, @"^([0-9]{13}|[0-9X]{10})$");
+        // ISBN-13 → exactly 13 digits
+        var isbn13Pattern = @"^[0-9]{13}$";
+
+        // ISBN-10 → first 9 chars digits, last char digit or X
+        var isbn10Pattern = @"^[0-9]{9}[0-9X]$";
+
+        return Regex.IsMatch(isbn, isbn13Pattern) ||
+               Regex.IsMatch(isbn, isbn10Pattern);
     }
 
     public async Task<Listing> GetListingByIdAsync(Guid listingId)
