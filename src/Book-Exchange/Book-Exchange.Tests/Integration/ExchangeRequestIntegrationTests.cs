@@ -3,6 +3,7 @@ using Moq;
 using Microsoft.EntityFrameworkCore;
 using Book_Exchange.Models;
 using Book_Exchange.Models.DTOs.ExchangeRequest;
+using Book_Exchange.Models.DTOs.Shipping;
 using Book_Exchange.Services;
 using Book_Exchange.Services.Interfaces;
 using Book_Exchange.Data;
@@ -26,6 +27,7 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
         _db = new ApplicationDbContext(options);
 
         var transactionServiceMock = new Mock<ITransactionService>();
+
         transactionServiceMock
             .Setup(s => s.CreateTransactionFromExchangeRequestAsync(It.IsAny<ExchangeRequest>()))
             .ReturnsAsync((ExchangeRequest req) => new Transaction
@@ -35,15 +37,23 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
                 CreatedAt = DateTime.UtcNow
             });
 
-        _service = new ExchangeRequestService(_db, transactionServiceMock.Object);
+        var shippingServiceMock = new Mock<IShippingService>();
+
+        shippingServiceMock
+            .Setup(s => s.GetLowestQuoteBetweenUsersAsync(
+                It.IsAny<Guid>(),
+                It.IsAny<Guid>(),
+                It.IsAny<int>()))
+            .ReturnsAsync((ShippingQuoteDto?)null);
+
+        _service = new ExchangeRequestService(
+            _db,
+            transactionServiceMock.Object,
+            shippingServiceMock.Object);
     }
 
     public void Dispose() => _db.Dispose();
 
-    /// <summary>
-    /// IT-EXCH-01: User creates BuySell exchange request
-    /// Expected: ExchangeRequest is saved with Requested status
-    /// </summary>
     [Fact]
     public async Task IT_EXCH_01_CreateBuySellExchangeRequest_IsSavedWithRequestedStatus()
     {
@@ -54,6 +64,7 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
         {
             Id = Guid.NewGuid(),
             UserId = owner.Id,
+            User = owner,
             Isbn = "9780141036144",
             Condition = BookCondition.Good,
             Price = 25.00m,
@@ -82,10 +93,6 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
         Assert.NotNull(saved);
     }
 
-    /// <summary>
-    /// IT-EXCH-02: User cannot create duplicate pending request for same listing
-    /// Expected: InvalidOperationException is thrown
-    /// </summary>
     [Fact]
     public async Task IT_EXCH_02_DuplicatePendingRequest_ThrowsInvalidOperation()
     {
@@ -96,6 +103,7 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
         {
             Id = Guid.NewGuid(),
             UserId = owner.Id,
+            User = owner,
             Isbn = "9780141036144",
             Condition = BookCondition.Good,
             Price = 25.00m,
@@ -107,7 +115,9 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
         {
             Id = Guid.NewGuid(),
             TargetListingId = targetListing.Id,
+            TargetListing = targetListing,
             RequesterId = requester.Id,
+            Requester = requester,
             Status = ExchangeStatus.Requested,
             Price = 25.00m,
             CreatedAt = DateTime.UtcNow
@@ -129,10 +139,6 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
             () => _service.CreateExchangeRequestAsync(dto, requester.Id));
     }
 
-    /// <summary>
-    /// IT-EXCH-03: User creates book swap exchange request with offered listings
-    /// Expected: ExchangeRequest is saved with correct offered items
-    /// </summary>
     [Fact]
     public async Task IT_EXCH_03_CreateBookSwapRequest_SavesOfferedListings()
     {
@@ -143,6 +149,7 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
         {
             Id = Guid.NewGuid(),
             UserId = owner.Id,
+            User = owner,
             Isbn = "9780141036144",
             Condition = BookCondition.Good,
             Price = 25.00m,
@@ -154,6 +161,7 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
         {
             Id = Guid.NewGuid(),
             UserId = requester.Id,
+            User = requester,
             Isbn = "9780062316097",
             Condition = BookCondition.Good,
             Price = 12.50m,
@@ -186,10 +194,6 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
         Assert.Contains(saved.ExchangeRequestItems, i => i.OfferedListingId == offeredListing.Id);
     }
 
-    /// <summary>
-    /// IT-EXCH-04: Listing owner accepts exchange request
-    /// Expected: Status becomes Accepted, notification sent to requester, transaction created
-    /// </summary>
     [Fact]
     public async Task IT_EXCH_04_ListingOwnerAcceptsExchangeRequest_StatusAcceptedAndNotificationCreated()
     {
@@ -200,6 +204,7 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
         {
             Id = Guid.NewGuid(),
             UserId = owner.Id,
+            User = owner,
             Isbn = "9780141036144",
             Condition = BookCondition.Good,
             Price = 25.00m,
@@ -211,7 +216,9 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
         {
             Id = Guid.NewGuid(),
             TargetListingId = targetListing.Id,
+            TargetListing = targetListing,
             RequesterId = requester.Id,
+            Requester = requester,
             Status = ExchangeStatus.Requested,
             Price = 25.00m,
             CreatedAt = DateTime.UtcNow
@@ -225,6 +232,7 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
         await _service.AcceptExchangeRequestAsync(exchangeRequest.Id, owner.Id);
 
         var savedRequest = await _db.ExchangeRequests.FindAsync(exchangeRequest.Id);
+
         Assert.NotNull(savedRequest);
         Assert.Equal(ExchangeStatus.Accepted, savedRequest!.Status);
         Assert.NotNull(savedRequest.AcceptedAt);
@@ -238,10 +246,6 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
         Assert.NotNull(notification);
     }
 
-    /// <summary>
-    /// IT-EXCH-05: Listing owner rejects exchange request
-    /// Expected: Status becomes Rejected and notification sent to requester
-    /// </summary>
     [Fact]
     public async Task IT_EXCH_05_ListingOwnerRejectsExchangeRequest_StatusRejectedAndNotificationCreated()
     {
@@ -252,6 +256,7 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
         {
             Id = Guid.NewGuid(),
             UserId = owner.Id,
+            User = owner,
             Isbn = "9780141036144",
             Condition = BookCondition.Good,
             Price = 25.00m,
@@ -263,7 +268,9 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
         {
             Id = Guid.NewGuid(),
             TargetListingId = targetListing.Id,
+            TargetListing = targetListing,
             RequesterId = requester.Id,
+            Requester = requester,
             Status = ExchangeStatus.Requested,
             Price = 25.00m,
             CreatedAt = DateTime.UtcNow
@@ -277,6 +284,7 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
         await _service.RejectExchangeRequestAsync(exchangeRequest.Id, owner.Id);
 
         var savedRequest = await _db.ExchangeRequests.FindAsync(exchangeRequest.Id);
+
         Assert.NotNull(savedRequest);
         Assert.Equal(ExchangeStatus.Rejected, savedRequest!.Status);
 
