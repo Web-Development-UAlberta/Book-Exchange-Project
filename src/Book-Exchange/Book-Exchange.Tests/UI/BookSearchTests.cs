@@ -30,10 +30,10 @@ public class BookSearchTests : PageTest
     {
         await Page.GotoAsync($"{BaseUrl}/BookSearch");
 
-        await Page.FillAsync("#book-search-input", "zzzzzzzzzz-no-book-found-test");
+        await Page.FillAsync("#book-search-input", "xyzzy99999zqwerty");
         await Page.ClickAsync("#book-search-button");
 
-        await Expect(Page.Locator("#no-books-found")).ToBeVisibleAsync();    
+        await Expect(Page.Locator("#no-books-found")).ToBeVisibleAsync();
     }
 
 
@@ -46,7 +46,7 @@ public class BookSearchTests : PageTest
         await Page.GotoAsync($"{BaseUrl}/BookSearch");
 
         await Page.FillAsync("#book-search-input", "harry");
-        await Page.ClickAsync("#book-search-button");
+        await Page.ClickAsync(".book-search-button");
 
         var previewButton = Page.Locator(".book-preview-link").First;
 

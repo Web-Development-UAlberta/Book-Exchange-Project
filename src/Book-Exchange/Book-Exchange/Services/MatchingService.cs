@@ -8,10 +8,12 @@ namespace Book_Exchange.Services;
 public class MatchingService : IMatchingService
 {
     private readonly ApplicationDbContext _context;
+    private readonly IBookSearchApi _bookSearchApi;
 
-    public MatchingService(ApplicationDbContext context)
+    public MatchingService(ApplicationDbContext context, IBookSearchApi bookSearchApi)
     {
         _context = context;
+        _bookSearchApi = bookSearchApi;
     }
 
     public async Task<IEnumerable<WishlistItem>> FindMatchingWishlistItemsAsync(
@@ -34,6 +36,9 @@ public class MatchingService : IMatchingService
             listing.Isbn,
             listing.UserId);
 
+        var book = await _bookSearchApi.GetBookByIsbnAsync(listing.Isbn);
+        var bookLabel = book?.Title ?? listing.Isbn;
+
         foreach (var match in matches)
         {
             var notification = new Notification
@@ -42,7 +47,7 @@ public class MatchingService : IMatchingService
                 UserId = match.UserId,
                 Category = NotificationCategory.MatchFound,
                 Title = "Book Match Found",
-                Message = $"A book from your wishlist is now available. ISBN: {listing.Isbn}",
+                Message = $"A book from your wishlist is now available: \"{bookLabel}\"",
                 RelatedListingId = listing.Id,
                 CreatedAt = DateTime.UtcNow
             };

@@ -4,6 +4,7 @@ using Book_Exchange.Models;
 using Book_Exchange.Services;
 using Book_Exchange.Services.Interfaces;
 using Book_Exchange.Data;
+using Moq;
 
 namespace Book_Exchange.Tests.Integration;
 
@@ -23,7 +24,9 @@ public class WishlistServiceIntegrationTests : IDisposable
             .Options;
 
         _db = new ApplicationDbContext(options);
-        _service = new WishlistService(_db);
+        var notificationServiceMock = new Mock<INotificationService>();
+        var bookSearchApiMock = new Mock<IBookSearchApi>();
+        _service = new WishlistService(_db, notificationServiceMock.Object, bookSearchApiMock.Object);
     }
 
     public void Dispose()

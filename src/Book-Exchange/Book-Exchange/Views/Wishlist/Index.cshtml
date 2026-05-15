@@ -120,11 +120,17 @@
                                     Not listed
                                 </span>
 
-                                <button type="button"
-                                        class="wishlist-notify-btn btn btn-outline-warning btn-sm me-2"
-                                        disabled>
-                                    Notify Me
-                                </button>
+                                <form asp-controller="Wishlist"
+                                    asp-action="NotifyMe"
+                                    asp-route-id="@item.Id"
+                                    method="post"
+                                    class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit"
+                                            class="wishlist-notify-btn btn btn-outline-warning btn-sm me-2">
+                                        Notify Me
+                                    </button>
+                                </form>
                             }
 
                             @if (item.IsActive)
