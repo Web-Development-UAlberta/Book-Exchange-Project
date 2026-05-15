@@ -101,16 +101,44 @@ public class ExchangeRequestController : Controller
         });
     }
 
+    private async Task PopulateCreateExchangeViewBagsAsync(Guid listingId, Guid userId)
+    {
+        var targetListing = await _listingService.GetListingByIdAsync(listingId);
+
+        var myListings = await _listingService.GetListingsByUserIdAsync(userId);
+
+        var availableMyListings = new List<Listing>();
+
+        foreach (var listing in myListings)
+        {
+            if (await IsListingAvailableAsync(listing.Id))
+            {
+                availableMyListings.Add(listing);
+            }
+        }
+
+        ViewBag.TargetListing = targetListing;
+        ViewBag.TargetBook = await _bookSearchApi.GetBookByIsbnAsync(targetListing.Isbn);
+        ViewBag.MyListings = availableMyListings;
+
+        ViewBag.ShippingEstimate =
+            await _shippingService.GetLowestQuoteBetweenUsersAsync(
+                senderUserId: targetListing.UserId,
+                receiverUserId: userId,
+                packageWeightGrams: targetListing.WeightGrams);
+    }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateExchangeRequestDto dto)
     {
+        var userId = GetCurrentUserId();
+
         if (!ModelState.IsValid)
         {
+            await PopulateCreateExchangeViewBagsAsync(dto.TargetListingId, userId);
             return View(dto);
         }
-
-        var userId = GetCurrentUserId();
 
         if (!await IsListingAvailableAsync(dto.TargetListingId))
         {
@@ -122,14 +150,30 @@ public class ExchangeRequestController : Controller
         {
             if (!await IsListingAvailableAsync(offeredListingId))
             {
-                TempData["ErrorMessage"] = "One of your offered books is no longer available.";
-                return RedirectToAction(nameof(Create), new { listingId = dto.TargetListingId });
+                ModelState.AddModelError(string.Empty, "One of your offered books is no longer available.");
+                await PopulateCreateExchangeViewBagsAsync(dto.TargetListingId, userId);
+                return View(dto);
             }
         }
 
-        await _exchangeRequestService.CreateExchangeRequestAsync(dto, userId);
+        try
+        {
+            await _exchangeRequestService.CreateExchangeRequestAsync(dto, userId);
 
-        return RedirectToAction(nameof(Index), new { tab = "sent" });
+            return RedirectToAction(nameof(Index), new { tab = "sent" });
+        }
+        catch (InvalidOperationException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            await PopulateCreateExchangeViewBagsAsync(dto.TargetListingId, userId);
+            return View(dto);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            await PopulateCreateExchangeViewBagsAsync(dto.TargetListingId, userId);
+            return View(dto);
+        }
     }
 
     [HttpGet]

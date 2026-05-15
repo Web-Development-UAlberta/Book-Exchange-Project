@@ -10,11 +10,16 @@ public class ExchangeRequestService : IExchangeRequestService
 {
     private readonly ApplicationDbContext _context;
     private readonly ITransactionService _transactionService;
+    private readonly IShippingService _shippingService;
 
-    public ExchangeRequestService(ApplicationDbContext context, ITransactionService transactionService)
+
+    public ExchangeRequestService(ApplicationDbContext context, 
+        ITransactionService transactionService, 
+        IShippingService shippingService)
     {
         _context = context;
         _transactionService = transactionService;
+        _shippingService = shippingService;
     }
 
     public async Task<ExchangeRequest> CreateExchangeRequestAsync(
@@ -47,12 +52,34 @@ public class ExchangeRequestService : IExchangeRequestService
         }
 
         var offeredListings = await _context.Listings
-            .Where(l => dto.OfferedListingIds.Contains(l.Id))
-            .ToListAsync();
+    .Where(l => dto.OfferedListingIds.Contains(l.Id))
+    .ToListAsync();
 
         if (offeredListings.Any(l => l.UserId != userId))
         {
             throw new UnauthorizedAccessException("You can only offer your own listings.");
+        }
+
+        var offeredBooksValue = offeredListings.Sum(l => l.Price);
+        var cashOffer = dto.Price ?? 0m;
+
+        var requesterTotalOffer = offeredBooksValue + cashOffer;
+
+        var shippingQuote = await _shippingService.GetLowestQuoteBetweenUsersAsync(
+            senderUserId: targetListing.UserId,
+            receiverUserId: userId,
+            packageWeightGrams: targetListing.WeightGrams);
+
+        var shippingCost = shippingQuote?.EstimatedCost ?? 0m;
+
+        var minimumRequiredValue = targetListing.Price + shippingCost;
+
+        if (requesterTotalOffer < minimumRequiredValue)
+        {
+            throw new InvalidOperationException(
+                $"Your offer is too low. The target book price is ${targetListing.Price:0.00}, " +
+                $"estimated shipping is ${shippingCost:0.00}, so your offer must be at least " +
+                $"${minimumRequiredValue:0.00}. Your current offer value is ${requesterTotalOffer:0.00}.");
         }
 
         var request = new ExchangeRequest
