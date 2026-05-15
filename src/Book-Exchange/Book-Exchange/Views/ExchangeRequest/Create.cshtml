@@ -1,5 +1,6 @@
 ﻿@model Book_Exchange.Models.DTOs.ExchangeRequest.CreateExchangeRequestDto
 @using Book_Exchange.Models
+@using Book_Exchange.Models.DTOs.Shipping
 
 @{
     ViewData["Title"] = "Create Exchange Request";
@@ -7,30 +8,81 @@
     var targetListing = ViewBag.TargetListing as Listing;
     var targetBook = ViewBag.TargetBook as Book_Exchange.Models.DTOs.Book.BookInfoDto;
     var myListings = ViewBag.MyListings as IEnumerable<Listing> ?? new List<Listing>();
+    var shippingEstimate = ViewBag.ShippingEstimate as ShippingQuoteDto;
 }
 
 <div id="exchange-create-page" class="container mt-4">
 
     <h2>Create Exchange Request</h2>
 
-    <div id="target-listing-card" class="card mb-4">
-        <div class="card-body">
-            <h5>
-                @(targetBook?.Title ?? "Selected Listing")
-            </h5>
+    <div class="row mb-4">
 
-            <p class="mb-1">
-                <strong>ISBN:</strong> @targetListing?.Isbn
-            </p>
+        <div class="col-md-8">
+            <div id="target-listing-card" class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">
+                        @(targetBook?.Title ?? "Selected Listing")
+                    </h5>
 
-            <p class="mb-1">
-                <strong>Condition:</strong> @targetListing?.Condition
-            </p>
+                    <p class="mb-1">
+                        <strong>ISBN:</strong> @targetListing?.Isbn
+                    </p>
 
-            <p class="mb-0">
-                <strong>Price:</strong> $@targetListing?.Price
-            </p>
+                    <p class="mb-1">
+                        <strong>Condition:</strong> @targetListing?.Condition
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Price:</strong> $@targetListing?.Price
+                    </p>
+
+                    <p class="mb-0">
+                        <strong>Weight:</strong>
+                        @(((targetListing?.WeightGrams ?? 0) / 1000m).ToString("0.00")) kg
+                    </p>
+                </div>
+            </div>
         </div>
+
+        <div class="col-md-4 mt-3 mt-md-0">
+            <div id="shipping-estimate"
+                 class="card h-100 p-3 text-center">
+
+                <p class="mb-2 fw-semibold">
+                    Estimated Shipping
+                </p>
+
+                @if (shippingEstimate == null)
+                {
+                    <strong class="text-muted">
+                        Not available
+                    </strong>
+
+                    <small class="text-muted d-block mt-2">
+                        Requires both users to have default addresses.
+                    </small>
+                }
+                else
+                {
+                    <strong class="fs-4">
+                        $@shippingEstimate.EstimatedCost.ToString("0.00")
+                    </strong>
+
+                    <small class="text-muted d-block mt-2">
+                        Carrier: @shippingEstimate.Carrier.Name
+                    </small>
+
+                    <small class="text-muted d-block">
+                        Distance: @shippingEstimate.DistanceKm.ToString("0.00") km
+                    </small>
+
+                    <small class="text-muted d-block">
+                        Weight: @((shippingEstimate.PackageWeightGrams / 1000m).ToString("0.00")) kg
+                    </small>
+                }
+            </div>
+        </div>
+
     </div>
 
     <form id="exchange-create-form"
@@ -64,75 +116,74 @@
                       asp-for="Message"
                       class="form-control"
                       rows="4"
-                          placeholder="Write a short message to the owner...">
-            </textarea>
+                      placeholder="Write a short message to the owner..."></textarea>
 
-                <span asp-validation-for="Message" class="text-danger"></span>
+            <span asp-validation-for="Message" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">
+                Offered books from my listings
+            </label>
+
+            <div id="exchange-offered-listings">
+
+                @foreach (var listing in myListings)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input exchange-offered-checkbox"
+                               type="checkbox"
+                               name="OfferedListingIds"
+                               value="@listing.Id"
+                               id="offer-@listing.Id" />
+
+                        <label class="form-check-label" for="offer-@listing.Id">
+                            ISBN: @listing.Isbn | @listing.Condition | $@listing.Price
+                        </label>
+                    </div>
+                }
+
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">
-                    Offered books from my listings
-                </label>
+            <small class="text-muted">
+                You can offer up to 3 books.
+            </small>
+        </div>
 
-                <div id="exchange-offered-listings">
+        <button id="exchange-submit-btn"
+                type="submit"
+                class="btn btn-primary">
+            Send Request
+        </button>
 
-                    @foreach (var listing in myListings)
-                    {
-                        <div class="form-check">
-                            <input class="form-check-input exchange-offered-checkbox"
-                                   type="checkbox"
-                                   name="OfferedListingIds"
-                                   value="@listing.Id"
-                                   id="offer-@listing.Id" />
+        <a asp-controller="Listing"
+           asp-action="Details"
+           asp-route-id="@Model.TargetListingId"
+           class="btn btn-secondary">
+            Cancel
+        </a>
 
-                            <label class="form-check-label" for="offer-@listing.Id">
-                                ISBN: @listing.Isbn | @listing.Condition | $@listing.Price
-                            </label>
-                        </div>
-                    }
+    </form>
 
-                </div>
+</div>
 
-                <small class="text-muted">
-                    You can offer up to 3 books.
-                </small>
-            </div>
-
-            <button id="exchange-submit-btn"
-                    type="submit"
-                    class="btn btn-primary">
-                Send Request
-            </button>
-
-            <a asp-controller="Listing"
-                   asp-action="Details"
-                   asp-route-id="@Model.TargetListingId"
-                   class="btn btn-secondary">
-                Cancel
-            </a>
-
-        </form>
-
-    </div>
-
-    @section Scripts {
-        @{
-            await Html.RenderPartialAsync("_ValidationScriptsPartial");
-        }
-
-        <script>
-            document.querySelectorAll(".exchange-offered-checkbox")
-                .forEach(function (checkbox) {
-                    checkbox.addEventListener("change", function () {
-                        const checked =
-                            document.querySelectorAll(".exchange-offered-checkbox:checked");
-
-                        if (checked.length > 3) {
-                            checkbox.checked = false;
-                            alert("You can offer up to 3 books.");
-                        }
-                    });
-                });
-        </script>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        document.querySelectorAll(".exchange-offered-checkbox")
+            .forEach(function (checkbox) {
+                checkbox.addEventListener("change", function () {
+                    const checked =
+                        document.querySelectorAll(".exchange-offered-checkbox:checked");
+
+                    if (checked.length > 3) {
+                        checkbox.checked = false;
+                        alert("You can offer up to 3 books.");
+                    }
+                });
+            });
+    </script>
+}

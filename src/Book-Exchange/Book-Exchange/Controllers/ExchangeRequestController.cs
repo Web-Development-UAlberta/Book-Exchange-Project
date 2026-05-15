@@ -3,6 +3,7 @@ using Book_Exchange.Models;
 using Book_Exchange.Models.DTOs.Book;
 using Book_Exchange.Models.DTOs.ExchangeRequest;
 using Book_Exchange.Services.Interfaces;
+using Book_Exchange.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,20 +15,23 @@ namespace Book_Exchange.Controllers;
 public class ExchangeRequestController : Controller
 {
     private readonly ApplicationDbContext _context;
-    private readonly IExchangeRequestService _exchangeRequestService;
-    private readonly IListingService _listingService;
     private readonly IBookSearchApi _bookSearchApi;
+    private readonly IListingService _listingService;
+    private readonly IShippingService _shippingService;
+    private readonly IExchangeRequestService _exchangeRequestService;
 
     public ExchangeRequestController(
         ApplicationDbContext context,
         IExchangeRequestService exchangeRequestService,
         IListingService listingService,
-        IBookSearchApi bookSearchApi)
+        IBookSearchApi bookSearchApi,
+        IShippingService shippingService)
     {
         _context = context;
         _exchangeRequestService = exchangeRequestService;
         _listingService = listingService;
         _bookSearchApi = bookSearchApi;
+        _shippingService = shippingService;
     }
 
     [HttpGet]
@@ -83,6 +87,10 @@ public class ExchangeRequestController : Controller
             }
         }
 
+        ViewBag.ShippingEstimate = await _shippingService.GetLowestQuoteBetweenUsersAsync(
+            senderUserId: targetListing.UserId,
+            receiverUserId: userId,
+            packageWeightGrams: targetListing.WeightGrams);
         ViewBag.TargetListing = targetListing;
         ViewBag.TargetBook = await _bookSearchApi.GetBookByIsbnAsync(targetListing.Isbn);
         ViewBag.MyListings = availableMyListings;
