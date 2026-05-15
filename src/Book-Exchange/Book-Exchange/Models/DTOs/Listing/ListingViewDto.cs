@@ -14,6 +14,7 @@ public class ListingViewDto
     public decimal Price { get; set; }
     public int WeightGrams { get; set; }
     public DateTime CreatedAt { get; set; }
+    public bool IsAvailable { get; set; } = true;
 
     public BookInfoDto? Book { get; set; }
 

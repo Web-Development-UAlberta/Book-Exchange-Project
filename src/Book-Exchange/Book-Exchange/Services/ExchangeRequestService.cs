@@ -11,11 +11,16 @@ public class ExchangeRequestService : IExchangeRequestService
     private readonly ApplicationDbContext _context;
     private readonly ITransactionService _transactionService;
     private readonly IBookSearchApi _bookSearchApi;
+    private readonly IShippingService _shippingService;
 
-    public ExchangeRequestService(ApplicationDbContext context, ITransactionService transactionService, IBookSearchApi bookSearchApi)
+    public ExchangeRequestService(ApplicationDbContext context, 
+        ITransactionService transactionService, 
+        IShippingService shippingService, 
+        IBookSearchApi bookSearchApi)
     {
         _context = context;
         _transactionService = transactionService;
+        _shippingService = shippingService;
         _bookSearchApi = bookSearchApi;
     }
 
@@ -49,12 +54,34 @@ public class ExchangeRequestService : IExchangeRequestService
         }
 
         var offeredListings = await _context.Listings
-            .Where(l => dto.OfferedListingIds.Contains(l.Id))
-            .ToListAsync();
+    .Where(l => dto.OfferedListingIds.Contains(l.Id))
+    .ToListAsync();
 
         if (offeredListings.Any(l => l.UserId != userId))
         {
             throw new UnauthorizedAccessException("You can only offer your own listings.");
+        }
+
+        var offeredBooksValue = offeredListings.Sum(l => l.Price);
+        var cashOffer = dto.Price ?? 0m;
+
+        var requesterTotalOffer = offeredBooksValue + cashOffer;
+
+        var shippingQuote = await _shippingService.GetLowestQuoteBetweenUsersAsync(
+            senderUserId: targetListing.UserId,
+            receiverUserId: userId,
+            packageWeightGrams: targetListing.WeightGrams);
+
+        var shippingCost = shippingQuote?.EstimatedCost ?? 0m;
+
+        var minimumRequiredValue = targetListing.Price + shippingCost;
+
+        if (requesterTotalOffer < minimumRequiredValue)
+        {
+            throw new InvalidOperationException(
+                $"Your offer is too low. The target book price is ${targetListing.Price:0.00}, " +
+                $"estimated shipping is ${shippingCost:0.00}, so your offer must be at least " +
+                $"${minimumRequiredValue:0.00}. Your current offer value is ${requesterTotalOffer:0.00}.");
         }
 
         var request = new ExchangeRequest
@@ -174,6 +201,35 @@ public class ExchangeRequestService : IExchangeRequestService
 
         var transaction = await _transactionService.CreateTransactionFromExchangeRequestAsync(request);
 
+        var requesterShippingCost = 0m;
+
+        // Shipment from owner -> requester
+        // Create shipment record only
+        await CreateShipmentFromLowestQuoteAsync(
+            transaction,
+            senderUserId: request.TargetListing.UserId,
+            receiverUserId: request.RequesterId,
+            packageWeightGrams: request.TargetListing.WeightGrams);
+
+        // Shipments from requester -> owner
+        // Requester pays these shipments
+        foreach (var item in request.ExchangeRequestItems)
+        {
+            requesterShippingCost += await CreateShipmentFromLowestQuoteAsync(
+                transaction,
+                senderUserId: request.RequesterId,
+                receiverUserId: request.TargetListing.UserId,
+                packageWeightGrams: item.OfferedListing.WeightGrams);
+        }
+
+        var offeredBooksTotal = request.ExchangeRequestItems
+            .Sum(i => i.OfferedListing.Price);
+
+        transaction.TotalValue =
+            offeredBooksTotal +
+            (request.Price ?? 0m) +
+            requesterShippingCost;
+
         _context.Notifications.AddRange(
             new Notification
             {
@@ -241,4 +297,50 @@ public class ExchangeRequestService : IExchangeRequestService
 
         await _context.SaveChangesAsync();
     }
+
+    private async Task<decimal> CreateShipmentFromLowestQuoteAsync(
+    Transaction transaction,
+    Guid senderUserId,
+    Guid receiverUserId,
+    int packageWeightGrams)
+    {
+        var senderAddress = await _context.Addresses
+            .FirstOrDefaultAsync(a => a.UserId == senderUserId && a.IsDefault);
+
+        var receiverAddress = await _context.Addresses
+            .FirstOrDefaultAsync(a => a.UserId == receiverUserId && a.IsDefault);
+
+        if (senderAddress == null || receiverAddress == null)
+        {
+            return 0m;
+        }
+
+        var quote = await _shippingService.GetLowestQuoteBetweenUsersAsync(
+            senderUserId: senderUserId,
+            receiverUserId: receiverUserId,
+            packageWeightGrams: packageWeightGrams);
+
+        if (quote == null || quote.Carrier == null)
+        {
+            return 0m;
+        }
+
+        var shipment = new Shipment
+        {
+            Id = Guid.NewGuid(),
+            TransactionId = transaction.Id,
+            SenderAddressId = senderAddress.Id,
+            ReceiverAddressId = receiverAddress.Id,
+            CarrierId = quote.Carrier.Id,
+            PackageWeightGrams = packageWeightGrams,
+            DistanceKm = quote.DistanceKm,
+            ShippingCost = quote.EstimatedCost,
+            Status = ShipmentStatus.Quoted,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _context.Shipments.Add(shipment);
+
+        return quote.EstimatedCost;
+    }    
 }

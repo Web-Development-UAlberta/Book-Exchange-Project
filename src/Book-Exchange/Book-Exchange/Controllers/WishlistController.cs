@@ -1,9 +1,10 @@
+using Book_Exchange.Data;
 using Book_Exchange.Models;
 using Book_Exchange.Models.DTOs.Wishlist;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Book_Exchange.Controllers;
@@ -11,13 +12,16 @@ namespace Book_Exchange.Controllers;
 [Authorize]
 public class WishlistController : Controller
 {
+    private readonly ApplicationDbContext _context;
     private readonly IWishlistService _wishlistService;
     private readonly IBookSearchApi _bookSearchApi;
 
     public WishlistController(
+        ApplicationDbContext context,
         IWishlistService wishlistService,
         IBookSearchApi bookSearchApi)
     {
+        _context = context;
         _wishlistService = wishlistService;
         _bookSearchApi = bookSearchApi;
     }
@@ -30,11 +34,6 @@ public class WishlistController : Controller
         var wishlist = await _wishlistService.GetWishlistByUserIdAsync(userId);
         var matchingListings = await _wishlistService.GetMatchingListingsAsync(userId);
 
-        var matchingIsbns = matchingListings
-            .Select(l => l.Isbn)
-            .Distinct()
-            .ToHashSet();
-
         var viewModel = new WishlistIndexViewDto
         {
             SearchText = searchText,
@@ -45,7 +44,20 @@ public class WishlistController : Controller
         {
             var book = await _bookSearchApi.GetBookByIsbnAsync(item.Isbn);
 
-            var hasMatch = matchingIsbns.Contains(item.Isbn);
+            var matchingListingsForItem = matchingListings
+                .Where(l => l.Isbn == item.Isbn)
+                .ToList();
+
+            var hasAvailableMatch = false;
+
+            foreach (var listing in matchingListingsForItem)
+            {
+                if (await IsListingAvailableAsync(listing.Id))
+                {
+                    hasAvailableMatch = true;
+                    break;
+                }
+            }
 
             var dto = new WishlistItemViewDto
             {
@@ -53,7 +65,7 @@ public class WishlistController : Controller
                 Isbn = item.Isbn,
                 IsActive = item.IsActive,
                 Book = book,
-                HasMatchingListing = hasMatch
+                HasMatchingListing = hasAvailableMatch
             };
 
             viewModel.Items.Add(dto);
@@ -121,6 +133,36 @@ public class WishlistController : Controller
     {
         var userId = GetCurrentUserId();
 
+        var wishlistItem = await _context.Wishlist
+            .FirstOrDefaultAsync(w => w.Id == id && w.UserId == userId);
+
+        if (wishlistItem == null)
+        {
+            return NotFound();
+        }
+
+        var hasActiveExchange = await _context.ExchangeRequests
+            .AnyAsync(er =>
+                (
+                    er.Status == ExchangeStatus.Requested ||
+                    er.Status == ExchangeStatus.Accepted ||
+                    er.Status == ExchangeStatus.Completed
+                )
+                &&
+                (
+                    er.TargetListing.Isbn == wishlistItem.Isbn ||
+                    er.ExchangeRequestItems.Any(item =>
+                        item.OfferedListing.Isbn == wishlistItem.Isbn)
+                ));
+
+        if (hasActiveExchange)
+        {
+            TempData["ErrorMessage"] =
+                "You cannot remove this wishlist item because it is connected to an active exchange request.";
+
+            return RedirectToAction(nameof(Index));
+        }
+
         await _wishlistService.RemoveWishlistItemAsync(id, userId);
 
         return RedirectToAction(nameof(Index));
@@ -154,6 +196,11 @@ public class WishlistController : Controller
 
         foreach (var listing in listings)
         {
+            if (!await IsListingAvailableAsync(listing.Id))
+            {
+                continue;
+            }
+
             var book = await _bookSearchApi.GetBookByIsbnAsync(listing.Isbn);
 
             model.Add(new WishListMatchingViewModel
@@ -164,6 +211,42 @@ public class WishlistController : Controller
         }
 
         return View(model);
+    }
+
+    /// <summary>
+    /// A listing is considered NOT available if it appears in any active
+    /// exchange request either:
+    ///
+    /// 1. As the target listing of the exchange request
+    ///    ExchangeRequest.TargetListingId
+    ///
+    /// OR
+    ///
+    /// 2. As an offered listing inside ExchangeRequestItems
+    ///    ExchangeRequestItem.OfferedListingId
+    ///
+    /// Active statuses:
+    /// - Requested
+    /// - Accepted
+    /// - Completed
+    ///
+    /// Listings used only in Rejected or Cancelled requests
+    /// are still considered available.
+    /// </summary>
+    private async Task<bool> IsListingAvailableAsync(Guid listingId)
+    {
+        return !await _context.ExchangeRequests
+            .AnyAsync(er =>
+                (
+                    er.Status == ExchangeStatus.Requested ||
+                    er.Status == ExchangeStatus.Accepted ||
+                    er.Status == ExchangeStatus.Completed
+                )
+                &&
+                (
+                    er.TargetListingId == listingId ||
+                    er.ExchangeRequestItems.Any(item => item.OfferedListingId == listingId)
+                ));
     }
 
     private Guid GetCurrentUserId()

@@ -1,9 +1,12 @@
+using Book_Exchange.Data;
 using Book_Exchange.Models;
 using Book_Exchange.Models.DTOs.Book;
 using Book_Exchange.Models.DTOs.ExchangeRequest;
 using Book_Exchange.Services.Interfaces;
+using Book_Exchange.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Book_Exchange.Controllers;
@@ -11,18 +14,24 @@ namespace Book_Exchange.Controllers;
 [Authorize]
 public class ExchangeRequestController : Controller
 {
-    private readonly IExchangeRequestService _exchangeRequestService;
-    private readonly IListingService _listingService;
+    private readonly ApplicationDbContext _context;
     private readonly IBookSearchApi _bookSearchApi;
+    private readonly IListingService _listingService;
+    private readonly IShippingService _shippingService;
+    private readonly IExchangeRequestService _exchangeRequestService;
 
     public ExchangeRequestController(
+        ApplicationDbContext context,
         IExchangeRequestService exchangeRequestService,
         IListingService listingService,
-        IBookSearchApi bookSearchApi)
+        IBookSearchApi bookSearchApi,
+        IShippingService shippingService)
     {
+        _context = context;
         _exchangeRequestService = exchangeRequestService;
         _listingService = listingService;
         _bookSearchApi = bookSearchApi;
+        _shippingService = shippingService;
     }
 
     [HttpGet]
@@ -60,11 +69,13 @@ public class ExchangeRequestController : Controller
             return RedirectToAction("Details", "Listing", new { id = listingId });
         }
 
-        var myListings = await _listingService.GetListingsByUserIdAsync(userId);
+        if (!await IsListingAvailableAsync(listingId))
+        {
+            TempData["ErrorMessage"] = "This listing is no longer available for exchange.";
+            return RedirectToAction("Details", "Listing", new { id = listingId });
+        }
 
-        ViewBag.TargetListing = targetListing;
-        ViewBag.TargetBook = await _bookSearchApi.GetBookByIsbnAsync(targetListing.Isbn);
-        ViewBag.MyListings = myListings;
+        await PopulateCreateExchangeViewBagsAsync(listingId, userId);
 
         return View(new CreateExchangeRequestDto
         {
@@ -72,20 +83,88 @@ public class ExchangeRequestController : Controller
         });
     }
 
+    private async Task PopulateCreateExchangeViewBagsAsync(Guid listingId, Guid userId)
+    {
+        var targetListing = await _listingService.GetListingByIdAsync(listingId);
+
+        var myListings = await _listingService.GetListingsByUserIdAsync(userId);
+
+        var availableMyListings = new List<ExchangeListingViewModel>();
+
+        foreach (var listing in myListings)
+        {
+            if (await IsListingAvailableAsync(listing.Id))
+            {
+                var book = await _bookSearchApi.GetBookByIsbnAsync(listing.Isbn);
+
+                availableMyListings.Add(new ExchangeListingViewModel
+                {
+                    Id = listing.Id,
+                    Isbn = listing.Isbn,
+                    Title = book?.Title ?? "Unknown Title",
+                    Condition = listing.Condition,
+                    Price = listing.Price
+                });
+            }
+        }
+
+        ViewBag.TargetListing = targetListing;
+        ViewBag.TargetBook = await _bookSearchApi.GetBookByIsbnAsync(targetListing.Isbn);
+        ViewBag.MyListings = availableMyListings;
+
+        ViewBag.ShippingEstimate =
+            await _shippingService.GetLowestQuoteBetweenUsersAsync(
+                senderUserId: targetListing.UserId,
+                receiverUserId: userId,
+                packageWeightGrams: targetListing.WeightGrams);
+    }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateExchangeRequestDto dto)
     {
+        var userId = GetCurrentUserId();
+
         if (!ModelState.IsValid)
         {
+            await PopulateCreateExchangeViewBagsAsync(dto.TargetListingId, userId);
             return View(dto);
         }
 
-        var userId = GetCurrentUserId();
+        if (!await IsListingAvailableAsync(dto.TargetListingId))
+        {
+            TempData["ErrorMessage"] = "This listing is no longer available for exchange.";
+            return RedirectToAction("Details", "Listing", new { id = dto.TargetListingId });
+        }
 
-        await _exchangeRequestService.CreateExchangeRequestAsync(dto, userId);
+        foreach (var offeredListingId in dto.OfferedListingIds)
+        {
+            if (!await IsListingAvailableAsync(offeredListingId))
+            {
+                ModelState.AddModelError(string.Empty, "One of your offered books is no longer available.");
+                await PopulateCreateExchangeViewBagsAsync(dto.TargetListingId, userId);
+                return View(dto);
+            }
+        }
 
-        return RedirectToAction(nameof(Index), new { tab = "sent" });
+        try
+        {
+            await _exchangeRequestService.CreateExchangeRequestAsync(dto, userId);
+
+            return RedirectToAction(nameof(Index), new { tab = "sent" });
+        }
+        catch (InvalidOperationException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            await PopulateCreateExchangeViewBagsAsync(dto.TargetListingId, userId);
+            return View(dto);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            await PopulateCreateExchangeViewBagsAsync(dto.TargetListingId, userId);
+            return View(dto);
+        }
     }
 
     [HttpGet]
@@ -109,6 +188,7 @@ public class ExchangeRequestController : Controller
     public async Task<IActionResult> Accept(Guid id)
     {
         await _exchangeRequestService.AcceptExchangeRequestAsync(id, GetCurrentUserId());
+
         return RedirectToAction(nameof(Index), new { tab = "received" });
     }
 
@@ -117,7 +197,44 @@ public class ExchangeRequestController : Controller
     public async Task<IActionResult> Reject(Guid id)
     {
         await _exchangeRequestService.RejectExchangeRequestAsync(id, GetCurrentUserId());
+
         return RedirectToAction(nameof(Index), new { tab = "received" });
+    }
+
+    /// <summary>
+    /// A listing is considered NOT available if it appears in any active
+    /// exchange request either:
+    ///
+    /// 1. As the target listing of the exchange request
+    ///    ExchangeRequest.TargetListingId
+    ///
+    /// OR
+    ///
+    /// 2. As an offered listing inside ExchangeRequestItems
+    ///    ExchangeRequestItem.OfferedListingId
+    ///
+    /// Active statuses:
+    /// - Requested
+    /// - Accepted
+    /// - Completed
+    ///
+    /// Listings used only in Rejected or Cancelled requests
+    /// are still considered available.
+    /// </summary>
+    private async Task<bool> IsListingAvailableAsync(Guid listingId)
+    {
+        return !await _context.ExchangeRequests
+            .AnyAsync(er =>
+                (
+                    er.Status == ExchangeStatus.Requested ||
+                    er.Status == ExchangeStatus.Accepted ||
+                    er.Status == ExchangeStatus.Completed
+                )
+                &&
+                (
+                    er.TargetListingId == listingId ||
+                    er.ExchangeRequestItems.Any(item => item.OfferedListingId == listingId)
+                ));
     }
 
     private Guid GetCurrentUserId()
