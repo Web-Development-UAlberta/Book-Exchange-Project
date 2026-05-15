@@ -46,10 +46,17 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
                 It.IsAny<int>()))
             .ReturnsAsync((ShippingQuoteDto?)null);
 
+        var bookSearchApiMock = new Mock<IBookSearchApi>();
+
+        bookSearchApiMock
+            .Setup(s => s.GetBookByIsbnAsync(It.IsAny<string>()))
+            .ReturnsAsync((Book_Exchange.Models.DTOs.Book.BookInfoDto?)null);
+
         _service = new ExchangeRequestService(
             _db,
             transactionServiceMock.Object,
-            shippingServiceMock.Object);
+            shippingServiceMock.Object,
+            bookSearchApiMock.Object);
     }
 
     public void Dispose() => _db.Dispose();
