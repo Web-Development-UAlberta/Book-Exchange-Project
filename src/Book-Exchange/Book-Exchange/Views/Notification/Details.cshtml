@@ -31,17 +31,18 @@
                     @{
                         string FormatCategory(NotificationCategory c) => c switch
                         {
-                            NotificationCategory.MatchFound         => "Match Found",
+                            NotificationCategory.MatchFound        => "Match Found",
                             NotificationCategory.WishlistAvailable => "Wishlist Available",
-                            NotificationCategory.NewMessage         => "New Message",
-                            NotificationCategory.ExchangeRequested  => "Exchange Requested",
-                            NotificationCategory.ExchangeAccepted   => "Exchange Accepted",
-                            NotificationCategory.ExchangeRejected   => "Exchange Rejected",
-                            NotificationCategory.TransactionUpdate  => "Transaction Update",
-                            _                                        => c.ToString()
+                            NotificationCategory.NewMessage        => "New Message",
+                            NotificationCategory.ExchangeRequested => "Exchange Requested",
+                            NotificationCategory.ExchangeAccepted  => "Exchange Accepted",
+                            NotificationCategory.ExchangeRejected  => "Exchange Rejected",
+                            NotificationCategory.TransactionUpdate => "Transaction Update",
+                            _                                      => c.ToString()
                         };
-                        }
-                    <span class="text-muted ms-2">@FormatCategory(Model.Category)</span>
+                    }
+                    @FormatCategory(Model.Category)
+                </span>
 
                 @if (!Model.IsRead)
                 {
@@ -66,16 +67,31 @@
                 }
             </dl>
 
-            @* Contextual action links based on related entities *@
-            @if (Model.RelatedListingId.HasValue
-              || Model.RelatedExchangeRequestId.HasValue
-              || Model.RelatedTransactionId.HasValue)
+            @* Contextual action buttons *@
+            @{
+                bool hasActions = Model.Category == NotificationCategory.NewMessage
+                    || (Model.RelatedListingId.HasValue && Model.Category != NotificationCategory.NewMessage)
+                    || Model.RelatedExchangeRequestId.HasValue
+                    || Model.RelatedTransactionId.HasValue;
+            }
+
+            @if (hasActions)
             {
                 <div class="notification-related-actions mt-3 d-flex flex-wrap gap-2">
 
-                    @if (Model.RelatedListingId.HasValue)
+                    @* NewMessage: go to inbox *@
+                    @if (Model.Category == NotificationCategory.NewMessage)
                     {
-                        <a asp-controller="Listings" asp-action="Details"
+                        <a asp-controller="Message" asp-action="Index"
+                           class="btn btn-outline-primary btn-sm">
+                            View Messages
+                        </a>
+                    }
+
+                    @* All other categories: show View Listing if present *@
+                    @if (Model.RelatedListingId.HasValue && Model.Category != NotificationCategory.NewMessage)
+                    {
+                        <a asp-controller="Listing" asp-action="Details"
                            asp-route-id="@Model.RelatedListingId"
                            class="btn btn-outline-primary btn-sm notification-view-listing-btn">
                             View Listing

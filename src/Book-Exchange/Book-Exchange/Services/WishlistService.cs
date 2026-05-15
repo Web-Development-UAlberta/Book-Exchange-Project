@@ -11,11 +11,13 @@ public class WishlistService : IWishlistService
 {
     private readonly ApplicationDbContext _context;
     private readonly INotificationService _notificationService;
+    private readonly IBookSearchApi _bookSearchApi;
 
-    public WishlistService(ApplicationDbContext context, INotificationService notificationService)
+    public WishlistService(ApplicationDbContext context, INotificationService notificationService, IBookSearchApi bookSearchApi)
     {
         _context = context;
         _notificationService = notificationService;
+        _bookSearchApi = bookSearchApi;
     }
 
     public async Task<WishlistItem> GetWishlistItemByIdAsync(Guid wishlistItemId, Guid userId)
@@ -76,6 +78,9 @@ public class WishlistService : IWishlistService
                 l.UserId != item.UserId)
             .ToListAsync();
 
+        var book = await _bookSearchApi.GetBookByIsbnAsync(item.Isbn);
+        var bookLabel = book?.Title ?? item.Isbn;
+
         foreach (var listing in matchingListings)
         {
             var alreadyExists = await _context.Notifications.AnyAsync(n =>
@@ -95,7 +100,7 @@ public class WishlistService : IWishlistService
                 UserId = item.UserId,
                 Category = NotificationCategory.MatchFound,
                 Title = "Wishlist Match Found",
-                Message = $"A book from your wishlist is available now. ISBN: {item.Isbn}",
+                Message = $"A book from your wishlist is available now: \"{bookLabel}\"",
                 RelatedListingId = listing.Id,
                 CreatedAt = DateTime.UtcNow,
                 IsRead = false
@@ -173,12 +178,15 @@ public class WishlistService : IWishlistService
 
         if (alreadyRequested) return;
 
+        var book = await _bookSearchApi.GetBookByIsbnAsync(item.Isbn);
+        var bookLabel = book?.Title ?? item.Isbn;
+
         await _notificationService.CreateNotificationAsync(new CreateNotificationDto
         {
             UserId = userId,
             Category = NotificationCategory.WishlistAvailable,
             Title = "Wishlist Notification Requested",
-            Message = $"You'll be notified when a listing appears for ISBN: {item.Isbn}"
+            Message = $"You'll be notified when a listing appears for \"{bookLabel}\""
         });
     }
 }

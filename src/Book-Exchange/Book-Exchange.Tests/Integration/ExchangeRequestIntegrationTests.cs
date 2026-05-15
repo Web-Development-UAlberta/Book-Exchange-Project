@@ -35,7 +35,8 @@ public class ExchangeRequestServiceIntegrationTests : IDisposable
                 CreatedAt = DateTime.UtcNow
             });
 
-        _service = new ExchangeRequestService(_db, transactionServiceMock.Object);
+        var bookSearchApiMock = new Mock<IBookSearchApi>();
+        _service = new ExchangeRequestService(_db, transactionServiceMock.Object, bookSearchApiMock.Object);
     }
 
     public void Dispose() => _db.Dispose();

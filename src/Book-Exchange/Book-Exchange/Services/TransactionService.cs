@@ -21,15 +21,22 @@ public class TransactionService : ITransactionService
     // helper to get book title
     private async Task<string> GetTitleAsync(string isbn)
     {
-        var results = await _bookSearchApi.SearchBooksAsync(isbn, 1);
-        return results.FirstOrDefault()?.Title ?? isbn;
+        try
+        {
+            var results = await _bookSearchApi.SearchBooksAsync(isbn, 1);
+            return results.FirstOrDefault()?.Title ?? isbn;
+        }
+        catch
+        {
+            return isbn; // ISBN fallback if API call fails
+        }
     }
 
     /// <summary>
     /// GetTransactionByIdAsync
     /// - Loads the transaction with all related data for the ViewModel
     /// - Throws KeyNotFoundException if the transaction does not exist
-    /// - CurrentUser is used to determind HasReview for the transaction
+    /// - CurrentUser is used to determine HasReview for the transaction
     /// </summary>
     /// <param name="transactionId"></param>
     /// <returns></returns>
