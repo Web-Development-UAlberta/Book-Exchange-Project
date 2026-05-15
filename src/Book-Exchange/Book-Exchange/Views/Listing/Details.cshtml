@@ -79,6 +79,18 @@
             <span id="listing-condition-badge" class="badge bg-secondary">
                 @Model.Condition
             </span>
+            @if (Model.IsAvailable)
+            {
+                <span class="badge bg-success">
+                    Available
+                </span>
+            }
+            else
+            {
+                <span class="badge bg-danger">
+                    Not Available
+                </span>
+            }
 
             <span class="badge bg-light text-dark border">
                 @(Model.WeightGrams / 1000.0) kg

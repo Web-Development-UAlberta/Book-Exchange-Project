@@ -1,10 +1,11 @@
-using System.Security.Claims;
 using Book_Exchange.Data;
+using Book_Exchange.Models;
 using Book_Exchange.Models.DTOs.Listing;
 using Book_Exchange.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Book_Exchange.Controllers;
 
@@ -26,6 +27,42 @@ public class ListingController : Controller
         _listingService = listingService;
         _bookSearchApi = bookSearchApi;
         _shippingService = shippingService;
+    }
+
+    /// <summary>
+    /// A listing is considered NOT available if it appears in any active
+    /// exchange request either:
+    /// 
+    /// 1. As the target listing of the exchange request
+    ///    (ExchangeRequest.TargetListingId)
+    /// 
+    /// OR
+    /// 
+    /// 2. As an offered listing inside ExchangeRequestItems
+    ///    (ExchangeRequestItem.OfferedListingId)
+    /// 
+    /// Active statuses:
+    /// - Requested
+    /// - Accepted
+    /// - Completed
+    /// 
+    /// Listings used only in Rejected or Cancelled requests
+    /// are still considered available.
+    /// </summary>
+    private async Task<bool> IsListingAvailableAsync(Guid listingId)
+    {
+        return !await _context.ExchangeRequests
+            .AnyAsync(er =>
+                (
+                    er.Status == ExchangeStatus.Requested ||
+                    er.Status == ExchangeStatus.Accepted ||
+                    er.Status == ExchangeStatus.Completed
+                )
+                &&
+                (
+                    er.TargetListingId == listingId ||
+                    er.ExchangeRequestItems.Any(item => item.OfferedListingId == listingId)
+                ));
     }
 
     public async Task<IActionResult> Index()
@@ -52,7 +89,8 @@ public class ListingController : Controller
                 WeightGrams = listing.WeightGrams,
                 CreatedAt = listing.CreatedAt,
                 SellerName = listing.User.UserName ?? "Unknown",
-                Book = await _bookSearchApi.GetBookByIsbnAsync(listing.Isbn)
+                Book = await _bookSearchApi.GetBookByIsbnAsync(listing.Isbn),
+                IsAvailable = await IsListingAvailableAsync(listing.Id)
             });
         }
 
@@ -110,7 +148,8 @@ public class ListingController : Controller
             SellerReviewerCount = reviewCount,
             SellerTradeCount = tradeCount,
             Book = book,
-            ShippingEstimate = shippingEstimate
+            ShippingEstimate = shippingEstimate,
+            IsAvailable = await IsListingAvailableAsync(listing.Id)
         };
 
         return View(vm);

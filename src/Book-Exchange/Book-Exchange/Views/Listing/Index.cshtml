@@ -60,8 +60,25 @@
                         };
                         }
                         <p>
-                            <strong>Condition:</strong> @FormatCondition(listing.Condition)
+                           <strong>Condition:</strong> @FormatCondition(listing.Condition)
                         </p>
+
+                        <p>
+                            <strong>Status:</strong>
+
+                            @if (listing.IsAvailable)
+                            {
+                                <span class="badge bg-success">Available</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Not Available</span>
+                            }
+                        </p>
+
+                        <p>
+                            <strong>Price:</strong> $@listing.Price
+                        </p>    
 
                         <p>
                             <strong>Price:</strong> $@listing.Price
