@@ -23,8 +23,8 @@ public class TransactionService : ITransactionService
     {
         try
         {
-            var results = await _bookSearchApi.SearchBooksAsync(isbn, 1);
-            return results.FirstOrDefault()?.Title ?? isbn;
+            var book = await _bookSearchApi.GetBookByIsbnAsync(isbn);
+            return book?.Title ?? isbn;
         }
         catch
         {
