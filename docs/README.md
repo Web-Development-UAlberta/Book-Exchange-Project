@@ -326,7 +326,7 @@ When a listing matches a book in your wishlist (or vice versa), the platform sen
 3. Optionally message to the listing owner.
 4. Submit. The listing owner will be notified.
 
-   ![Create an exchange request](src/Book-Exchange/img/Create-Exchange)
+   ![Create an exchange request](src/Book-Exchange/img/Create-Exchange.png)
 
 ### Accepting or Rejecting Requests (Listing Owner)
 
@@ -352,7 +352,7 @@ Once an exchange request is accepted, a Transaction is created.
 4. Update the shipment status as the book moves through delivery.
 
    ![Shipping options grid](src/Book-Exchange/img/Shipping-table.png)
-   ![Shipping details page](src/Book-Exchange/img/shipment-details.ong)
+   ![Shipping details page](src/Book-Exchange/img/shipment-details.png)
 
 ### Reviews
 
