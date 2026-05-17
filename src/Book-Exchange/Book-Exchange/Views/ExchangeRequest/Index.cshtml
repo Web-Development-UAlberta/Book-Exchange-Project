@@ -1,0 +1,64 @@
+﻿@model Book_Exchange.Controllers.ExchangeRequestIndexViewModel
+@using Book_Exchange.Models
+
+@{
+    ViewData["Title"] = "Exchange Requests";
+    var tab = ViewBag.Tab as string ?? "received";
+}
+
+<div id="exchange-index-page" class="container mt-4">
+
+    <h2>Exchange Requests</h2>
+
+    <ul id="exchange-tabs" class="nav nav-tabs mb-3">
+        <li class="nav-item">
+            <a id="received-tab"
+                   class="nav-link @(tab == "received" ? "active" : "")"
+                   asp-controller="ExchangeRequest"
+                   asp-action="Index"
+                   asp-route-tab="received">
+                Received
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a id="sent-tab"
+                   class="nav-link @(tab == "sent" ? "active" : "")"
+                   asp-controller="ExchangeRequest"
+                   asp-action="Index"
+                   asp-route-tab="sent">
+                Sent
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a id="history-tab"
+                   class="nav-link @(tab == "history" ? "active" : "")"
+                   asp-controller="ExchangeRequest"
+                   asp-action="Index"
+                   asp-route-tab="history">
+                History
+            </a>
+        </li>
+    </ul>
+
+    @if (tab == "received")
+    {
+        <div id="received-panel">
+            @await Html.PartialAsync("_ExchangeRequestList", Model.Received)
+        </div>
+    }
+    else if (tab == "sent")
+    {
+        <div id="sent-panel">
+            @await Html.PartialAsync("_ExchangeRequestList", Model.Sent)
+        </div>
+    }
+    else
+    {
+        <div id="history-panel">
+            @await Html.PartialAsync("_ExchangeRequestList", Model.History)
+        </div>
+    }
+
+</div>

@@ -1,0 +1,33 @@
+@* 
+    Partial: _ShippingEstimate.cshtml
+    Used on: Listings/Details.cshtml
+    
+    Rendered inside the listing detail page to show the estimated shipping cost
+    based on the listing's book weight and the distance between the viewer's
+    default address and the seller's address.
+
+    Usage in Listings/Details.cshtml:
+        <partial name="_ShippingEstimate" model="Model.ShippingEstimate" />
+
+    Model: ShippingEstimateViewModel (nullable)
+*@
+
+@model Book_Exchange.Models.ViewModels.ShippingEstimateViewModel?
+
+<div id="shipping-estimate" class="card text-center p-3 mt-3">
+    @if (Model == null)
+    {
+        <p class="text-muted mb-0">
+            Estimated Shipping<br />
+            <small>Add an address to see shipping costs.</small>
+        </p>
+    }
+    else
+    {
+        <p class="mb-0">
+            Estimated Shipping<br />
+            <strong>~ $@Model.EstimatedCost.ToString("F2")</strong><br />
+            <small class="text-muted">Based on weight &amp; Location</small>
+        </p>
+    }
+</div>

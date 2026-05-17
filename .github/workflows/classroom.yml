@@ -1,0 +1,78 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: BookExchangeDb
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    strategy:
+      matrix:
+        dotnet-version: ["10.0.x"]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Restore dependencies
+        run: dotnet restore ./src/Book-Exchange/Book-Exchange.slnx
+
+      - name: Build
+        run: dotnet build --no-restore -c Release ./src/Book-Exchange/Book-Exchange.slnx
+
+        # Broke out unit and integration tests to separate steps to ensure the app is built before running UI tests
+        # This also allows us to run unit and integration tests in parallel in the future if desired, since they don't require the app to be running
+      - name: Run unit tests
+        run: dotnet test ./src/Book-Exchange/Book-Exchange.Tests/Unit/Unit.csproj --no-build --configuration Release --verbosity normal
+
+      - name: Run integration tests
+        run: dotnet test ./src/Book-Exchange/Book-Exchange.Tests/Integration/Integration.csproj --no-build --configuration Release --verbosity normal
+
+      # Install Playwright browsers on the CI runner
+      - name: Install Playwright browsers
+        run: pwsh ./src/Book-Exchange/Book-Exchange.Tests/UI/bin/Release/net10.0/playwright.ps1 install --with-deps chromium
+
+      # Start the app in the background and wait for it to be ready
+      - name: Start app
+        run: |
+          cd ./src/Book-Exchange/Book-Exchange
+          dotnet run --configuration Release --launch-profile http &
+          echo "Waiting for app to start..."
+          for i in {1..30}; do
+            curl -s http://localhost:5261 > /dev/null && echo "App is ready" && break
+            echo "Attempt $i — waiting..."
+            sleep 2
+          done
+        env:
+          ASPNETCORE_ENVIRONMENT: Development
+          ConnectionStrings__DefaultConnection: "Host=localhost;Port=5432;Database=BookExchangeDb;Username=postgres;Password=postgres;"
+
+      # UI tests — requires running app
+      - name: Run UI tests
+        run: dotnet test ./src/Book-Exchange/Book-Exchange.Tests/UI/UI.csproj --no-build --configuration Release --verbosity normal
+        env:
+          PLAYWRIGHT_TEST_BASE_URL: http://localhost:5261

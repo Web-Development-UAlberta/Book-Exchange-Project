@@ -1,0 +1,37 @@
+﻿@model Book_Exchange.Models.DTOs.Shipping.ShippingQuoteDto?
+
+<div id="shipping-estimate"
+     class="card p-3 mt-4 text-center">
+
+    <p class="mb-1">Estimated Shipping</p>
+
+    @if (Model == null)
+    {
+        <strong class="text-muted">
+            Not available
+        </strong>
+
+        <small class="text-muted d-block mt-2">
+            Shipping estimate requires both users to have default addresses.
+        </small>
+    }
+    else
+    {
+        <strong class="fs-5">
+            $@Model.EstimatedCost.ToString("0.00")
+        </strong>
+
+        <small class="text-muted d-block mt-2">
+            Lowest carrier: @Model.Carrier.Name
+        </small>
+
+        <small class="text-muted d-block">
+            Distance: @Model.DistanceKm.ToString("0.00") km
+        </small>
+
+        <small class="text-muted d-block">
+            Weight: @((Model.PackageWeightGrams / 1000m).ToString("0.00")) kg
+        </small>
+    }
+
+</div>

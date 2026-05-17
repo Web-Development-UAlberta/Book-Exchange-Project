@@ -1,0 +1,108 @@
+﻿@model IEnumerable<Book_Exchange.Models.DTOs.Listing.ListingViewDto>
+
+@{
+    ViewData["Title"] = "Listings";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Listings</h2>
+
+        <a id="create-listing-btn"
+               asp-controller="Listing"
+               asp-action="Create"
+               class="btn btn-primary">
+            Create Listing
+        </a>
+    </div>
+
+    <div id="listing-list" class="row">
+
+        @foreach (var listing in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 listing-card">
+
+                    @if (!string.IsNullOrWhiteSpace(listing.Book?.ThumbnailUrl))
+                    {
+                        <img src="@listing.Book.ThumbnailUrl"
+                             class="card-img-top p-3"
+                             style="height:250px; object-fit:contain;"
+                             alt="@listing.Book.Title" />
+                    }
+
+                    <div class="card-body">
+                        <h5 class="card-title listing-book-title">
+                            @(listing.Book?.Title ?? "Unknown Title")
+                        </h5>
+
+                        <p>
+                            <strong>Author:</strong>
+                            @(listing.Book?.Authors.Any() == true
+                                ? string.Join(", ", listing.Book.Authors)
+                                : "N/A")
+                        </p>
+
+                        <p>
+                            <strong>ISBN:</strong> @listing.Isbn
+                        </p>
+
+                        @{
+                        string FormatCondition(BookCondition c) => c switch
+                        {
+                            BookCondition.LikeNew    => "Like New",
+                            BookCondition.VeryGood   => "Very Good",
+                            BookCondition.Good       => "Good",
+                            BookCondition.Acceptable => "Acceptable",
+                            BookCondition.Poor       => "Poor",
+                            _                        => c.ToString()
+                        };
+                        }
+                        <p>
+                           <strong>Condition:</strong> @FormatCondition(listing.Condition)
+                        </p>
+
+                        <p>
+                            <strong>Status:</strong>
+
+                            @if (listing.IsAvailable)
+                            {
+                                <span class="badge bg-success">Available</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Not Available</span>
+                            }
+                        </p>
+
+                        <p>
+                            <strong>Price:</strong> $@listing.Price
+                        </p>    
+
+                        <p>
+                            <strong>Price:</strong> $@listing.Price
+                        </p>                        
+                    </div>
+
+                    <div class="card-footer bg-white">
+                        <a class="btn btn-outline-primary w-100 listing-view-btn"
+                               asp-controller="Listing"
+                               asp-action="Details"
+                               asp-route-id="@listing.Id">
+                            View Listing
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        }
+
+        @if (!Model.Any())
+        {
+            <p id="no-listings-message">You have no listings yet.</p>
+        }
+
+    </div>
+
+</div>

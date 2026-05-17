@@ -1,0 +1,171 @@
+﻿@using System.Security.Claims
+@model Book_Exchange.Models.DTOs.Listing.ListingViewDto
+
+@{
+    ViewData["Title"] = "Listing Details";
+    var currentUserId =
+            User.FindFirstValue(ClaimTypes.NameIdentifier);
+    var isOwner =
+        currentUserId == Model.UserId.ToString();
+}
+
+<div id="listing-detail-page" class="container mt-4">
+
+    <div class="row">
+
+        <div class="col-md-5">
+
+            @if (!string.IsNullOrWhiteSpace(Model.Book?.ThumbnailUrl))
+            {
+                <img id="listing-cover"
+                     src="@Model.Book.ThumbnailUrl"
+                     class="img-fluid border p-3"
+                     alt="@Model.Book.Title" />
+            }
+            else
+            {
+                <div id="listing-cover"
+                     class="border d-flex align-items-center justify-content-center"
+                     style="height:300px;">
+                    Cover
+                </div>
+            }
+
+            <h5 id="condition-guide" class="mt-4">Condition Guide</h5>          
+            <div class="d-flex gap-2 mt-2">
+                <span class="btn btn-outline-secondary condition-cell @(Model.Condition == Book_Exchange.Models.BookCondition.LikeNew ? "condition-cell-active" : "")">
+                    LN<br />Like New
+                </span>
+
+                <span class="btn btn-outline-secondary condition-cell @(Model.Condition == Book_Exchange.Models.BookCondition.VeryGood ? "condition-cell-active" : "")">
+                    VG<br />Very Good
+                </span>
+
+                <span class="btn btn-outline-secondary condition-cell @(Model.Condition == Book_Exchange.Models.BookCondition.Good ? "condition-cell-active" : "")">
+                    GD<br />Good
+                </span>
+
+                <span class="btn btn-outline-secondary condition-cell @(Model.Condition == Book_Exchange.Models.BookCondition.Acceptable ? "condition-cell-active" : "")">
+                    AC<br />Acceptable
+                </span>
+
+                <span class="btn btn-outline-secondary condition-cell @(Model.Condition == Book_Exchange.Models.BookCondition.Poor ? "condition-cell-active" : "")">
+                    PR<br />Poor
+                </span>
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <h1 id="listing-book-title">
+                @(Model.Book?.Title ?? "Unknown Title")
+            </h1>
+
+            <p id="listing-author-name">
+                By @(Model.Book?.Authors.Any() == true
+                                    ? string.Join(", ", Model.Book.Authors)
+                                    : "Unknown Author")
+            </p>
+
+            <p id="listing-price">
+                Price: $@Model.Price
+            </p>
+
+            <p>
+                Listed @Model.CreatedAt.ToString("MMM dd, yyyy")
+                -
+                Genre @(Model.Book?.Genres.Any() == true
+                                    ? string.Join(", ", Model.Book.Genres)
+                                    : "N/A")
+            </p>
+
+            <span id="listing-condition-badge" class="badge bg-secondary">
+                @Model.Condition
+            </span>
+            @if (Model.IsAvailable)
+            {
+                <span class="badge bg-success">
+                    Available
+                </span>
+            }
+            else
+            {
+                <span class="badge bg-danger">
+                    Not Available
+                </span>
+            }
+
+            <span class="badge bg-light text-dark border">
+                @(Model.WeightGrams / 1000.0) kg
+            </span>
+
+        </div>
+
+        <div class="col-md-3">
+            @if (!isOwner)
+
+            {
+                <div class="seller-card border rounded p-3">
+                <!-- First line -->
+                <div class="fw-semibold mb-3">
+                    Listed by
+                </div>
+                <!-- Second row -->
+                <div class="d-flex align-items-center gap-3">
+                    <!-- Left: Avatar -->
+                    <div class="text-center p-3 border-secondary">
+                        <div class="bx-avatar mx-auto mb-2">@Model.SellerName[0].ToString().ToUpper()</div>                   
+                    </div>
+
+                    <!-- Right: Username + rating/trades -->
+                    <div>
+                        <div class="fw-semibold">
+                            @Model.SellerName
+                        </div>
+
+                        <div class="small text-muted">
+                            <span>
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <span class="@(i <= Math.Round(Model.SellerRating) ? "text-warning" : "text-muted")">★</span>
+                                }
+                            </span>
+
+                            <span>
+                                @Model.SellerRating.ToString("0.0") - @Model.SellerTradeCount trades
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-grid gap-2 mt-3">
+                    <a id="exchange-request-btn"
+                            class="btn btn-outline-primary mb-2"
+                            asp-controller="ExchangeRequest"
+                            asp-action="Create"
+                            asp-route-listingId="@Model.Id">
+                        Create An Exchange Request
+                    </a>
+                    <a id="message-seller-btn"
+                            class="btn btn-outline-primary"
+                            asp-controller="Message"
+                            asp-action="Conversation"
+                            asp-route-otherUserId="@Model.UserId">
+                        Message Seller
+                    </a>
+                </div>
+            </div>
+            <partial name="_ShippingEstimate" model="Model.ShippingEstimate" />
+            }
+            <a id="listing-view-btn"
+                   asp-controller="Listing"
+                   asp-action="Index"
+                   class="btn btn-secondary mt-4 w-100">
+                Back to Listings
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,79 @@
+@model IEnumerable<Book_Exchange.Models.Shipment>
+@{
+    ViewData["Title"] = "My Shipments";
+}
+
+<div id="shipping-index-page" class="container mt-4">
+    <h2 id="shipping-index-title">My Shipments</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div id="shipping-success-alert" class="alert alert-success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    @if (!Model.Any())
+    {
+        <p id="shipping-empty-message" class="text-muted">You have no shipments yet.</p>
+    }
+    else
+    {
+        <table id="shipping-list-table" class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Shipment</th>
+                    <th>Carrier</th>
+                    <th>Weight (g)</th>
+                    <th>Distance (km)</th>
+                    <th>Shipping Cost</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="shipping-list-body">
+                @foreach (var shipment in Model)
+                {
+                    <tr class="shipment-card">
+                        <td>SHP-@shipment.Id.ToString("N")[..4].ToUpper()</td>
+                        <td class="shipment-carrier">@(shipment.Carrier?.Name ?? "—")</td>
+                        <td>@shipment.PackageWeightGrams</td>
+                        <td>@(shipment.DistanceKm.HasValue ? shipment.DistanceKm.Value.ToString("F2") : "—")</td>
+                        <td>@(shipment.ShippingCost.HasValue ? shipment.ShippingCost.Value.ToString("C") : "—")</td>
+                        <td>
+                            <span class="badge shipment-status-badge @GetStatusBadgeClass(shipment.Status)">
+                                @GetStatusDisplayName(shipment.Status)
+                            </span>
+                        </td>
+                        <td>@shipment.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd")</td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@shipment.Id"
+                               class="btn btn-sm btn-outline-primary shipment-track-btn">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+@functions {
+    static string GetStatusDisplayName(Book_Exchange.Models.ShipmentStatus status) => status switch
+    {
+        Book_Exchange.Models.ShipmentStatus.LabelCreated => "Label Created",
+        _ => status.ToString()
+    };
+
+    static string GetStatusBadgeClass(Book_Exchange.Models.ShipmentStatus status) => status switch
+    {
+        Book_Exchange.Models.ShipmentStatus.Quoted       => "bg-info text-dark",
+        Book_Exchange.Models.ShipmentStatus.LabelCreated => "bg-info text-dark",
+        Book_Exchange.Models.ShipmentStatus.Shipped      => "bg-warning text-dark",
+        Book_Exchange.Models.ShipmentStatus.Delivered    => "bg-success",
+        Book_Exchange.Models.ShipmentStatus.Cancelled    => "bg-danger",
+        _                                                => "bg-secondary"
+    };
+}

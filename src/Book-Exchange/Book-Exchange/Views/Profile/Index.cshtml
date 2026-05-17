@@ -1,0 +1,129 @@
+@model Book_Exchange.Models.ViewModels.ProfileViewModel
+@{
+    ViewData["Title"] = Model.UserName + "'s Profile";
+}
+
+<div id="profile-page" data-cen-id="@Model.Id">
+
+    <div id="profile-header">
+
+        <div id="profile-avatar">
+            @if (!string.IsNullOrWhiteSpace(Model.AvatarUrl))
+            {
+                <img src="@Model.AvatarUrl" alt="@Model.UserName avatar" />
+            }
+            else
+            {
+                <span>@Model.UserName.Substring(0, 1).ToUpper()</span>
+            }
+        </div>
+
+        <div id="profile-info">
+            <p id="profile-username">@Model.UserName</p>
+            <p id="profile-member-since">Member since @Model.MemberSince.Year</p>
+        </div>
+
+        @if (Model.IsOwnProfile)
+        {
+            <a asp-area="Identity" asp-page="/Account/Manage/Index"
+               class="btn btn-outline-secondary btn-sm" id="profile-edit-btn">
+                Edit Profile
+            </a>
+        }
+    </div>
+
+    <div id="profile-stats">
+        <div class="profile-stat-card" id="profile-rating">
+            <span class="stat-value">@Model.AverageRating.ToString("0.0")</span>
+            <span class="stat-label">Rating</span>
+        </div>
+        <div class="profile-stat-card" id="profile-trade-count">
+            <span class="stat-value">@Model.TradeCount</span>
+            <span class="stat-label">Trades</span>
+        </div>
+        <div class="profile-stat-card" id="profile-listing-count">
+            <span class="stat-value">@Model.ListingCount</span>
+            <span class="stat-label">Listings</span>
+        </div>
+    </div>
+
+    <div id="profile-content">
+
+        <div id="profile-review-list">
+            <h5>Reviews</h5>
+
+            @if (!Model.Reviews.Any())
+            {
+                <p class="text-muted small">No reviews yet.</p>
+            }
+
+            @foreach (var review in Model.Reviews)
+            {
+                <div class="profile-reviews-comment">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <span class="reviewer-name">@review.ReviewerUserName</span>
+                        <span class="star-rating">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <span class="@(i <= review.Rating ? "text-warning" : "text-muted")">★</span>
+                            }
+                        </span>
+                    </div>
+                    <p class="profile-reviews-comment-text profile-reviews-author">
+                        @(string.IsNullOrWhiteSpace(review.Comment)
+                            ? $"{review.ReviewerUserName} reviewed {Model.UserName}"
+                            : review.Comment)
+                    </p>
+                </div>
+            }
+        </div>
+
+        <div id="profile-listings-list">
+            <h5>Public Listings</h5>
+
+            @if (!Model.Listings.Any())
+            {
+                <p class="text-muted small">No listings yet.</p>
+            }
+
+            @foreach (var listing in Model.Listings)
+            {
+                var badgeClass = listing.Condition switch
+                {
+                    Book_Exchange.Models.BookCondition.LikeNew    => "badge-likenew",
+                    Book_Exchange.Models.BookCondition.VeryGood   => "badge-verygood",
+                    Book_Exchange.Models.BookCondition.Good       => "badge-good",
+                    Book_Exchange.Models.BookCondition.Acceptable => "badge-acceptable",
+                    Book_Exchange.Models.BookCondition.Poor       => "badge-poor",
+                    _                                             => "badge-good"
+                };
+                <div class="profile-listing-row">
+                <div class="listing-title">
+                    <a asp-controller="Listing" asp-action="Details" asp-route-id="@listing.Id">
+                        @listing.BookTitle
+                    </a>
+                    @if (!string.IsNullOrWhiteSpace(listing.BookAuthor))
+                    {
+                        <span class="listing-author">@listing.BookAuthor</span>
+                    }
+                </div>
+                    @{
+                        string FormatCondition(BookCondition c) => c switch
+                        {
+                            BookCondition.LikeNew    => "Like New",
+                            BookCondition.VeryGood   => "Very Good",
+                            BookCondition.Good       => "Good",
+                            BookCondition.Acceptable => "Acceptable",
+                            BookCondition.Poor       => "Poor",
+                            _                        => c.ToString()
+                        };
+                    }
+                <span class="profile-type-badge @badgeClass">
+                    @FormatCondition(listing.Condition)
+                </span>
+            </div>
+            }
+        </div>
+
+    </div>
+</div>

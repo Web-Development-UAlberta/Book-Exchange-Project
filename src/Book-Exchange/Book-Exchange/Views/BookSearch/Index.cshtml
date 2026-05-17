@@ -1,0 +1,130 @@
+﻿@model List<Book_Exchange.Models.DTOs.Book.BookInfoDto>
+
+@{
+    ViewData["Title"] = "Book Search";
+}
+
+<div class="container mt-4">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <h2 class="mb-4">Search Books</h2>
+
+                    <form id="book-search-form"
+                          asp-controller="BookSearch"
+                          asp-action="Search"
+                          method="get">
+
+                        <div class="input-group">
+
+                            <input id="book-search-input"
+                                   type="text"
+                                   name="searchText"
+                                   class="form-control"
+                                   placeholder="Search by title, author, or ISBN..."
+                                   value="@ViewBag.SearchText" />
+
+                            <button id="book-search-button"
+                                    type="submit"
+                                    class="btn btn-primary book-search-button">
+                                Search
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div id="book-search-results" class="row mt-4">
+
+            @foreach (var book in Model)
+            {
+                <div class="col-md-4 mb-4">
+
+                    <div class="card h-100 shadow-sm book-card">
+
+                        @if (!string.IsNullOrWhiteSpace(book.ThumbnailUrl))
+                        {
+                            <img src="@book.ThumbnailUrl"
+                                 class="card-img-top p-3"
+                                 alt="@book.Title"
+                                 style="height:300px; object-fit:contain;" />
+                        }
+
+                        <div class="card-body">
+
+                            <h5 class="card-title book-title">
+                                @book.Title
+                            </h5>
+
+                            <p class="card-text">
+                                <strong>Authors:</strong>
+                                @(book.Authors.Any()
+                                    ? string.Join(", ", book.Authors)
+                                    : "N/A")
+                            </p>
+
+                            <p class="card-text">
+                                <strong>Genres:</strong>
+                                @(book.Genres.Any()
+                                    ? string.Join(", ", book.Genres)
+                                    : "N/A")
+                            </p>
+
+                            <p class="card-text">
+                                <strong>Published:</strong>
+                                @(book.PublishedYear?.ToString() ?? "N/A")
+                            </p>
+
+                            <p class="card-text">
+                                <strong>Publisher:</strong>
+                                @(book.Publisher ?? "N/A")
+                            </p>
+
+                            <p class="card-text">
+                                <strong>ISBN-13:</strong>
+                                @(book.Isbn13 ?? "N/A")
+                            </p>
+
+                        </div>
+
+                        <div class="card-footer bg-white border-0">
+
+                            @if (!string.IsNullOrWhiteSpace(book.PreviewLink))
+                            {
+                                <a href="@book.PreviewLink"
+                                       target="_blank"
+                                       class="btn btn-outline-primary w-100 book-preview-link">
+                                    Preview
+                                </a>
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+    else if (!string.IsNullOrWhiteSpace(ViewBag.SearchText))
+    {
+        <div id="no-books-found"
+             class="alert alert-warning mt-4">
+            No books found.
+        </div>
+    }
+
+</div>

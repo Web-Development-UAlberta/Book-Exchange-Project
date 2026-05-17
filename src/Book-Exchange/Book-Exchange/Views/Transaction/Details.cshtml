@@ -1,0 +1,118 @@
+@model Book_Exchange.Models.DTOs.Transaction.TransactionViewModel
+
+@{
+    ViewData["Title"] = "Transaction Details";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 id="transaction-details-title">Transaction Details</h1>
+    <a id="btn-back-to-list" asp-action="Index" class="btn btn-outline-secondary btn-sm">
+        &larr; Back to Transactions
+    </a>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div id="alert-success" class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div id="alert-error" class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div id="transaction-details-card" class="card mb-4">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Description</dt>
+            <dd id="detail-description" class="col-sm-9">@Model.Description</dd>
+
+            <dt class="col-sm-3">With</dt>
+            <dd id="detail-user" class="col-sm-9">@Model.WithUserName</dd>
+
+            <dt class="col-sm-3">Started</dt>
+            <dd id="detail-created" class="col-sm-9">
+                @Model.CreatedAt.ToLocalTime().ToString("MMM dd, yyyy h:mm tt")
+            </dd>
+
+            @if (Model.TotalValue.HasValue)
+            {
+                <dt class="col-sm-3">Total Value</dt>
+                <dd id="detail-value" class="col-sm-9">$@Model.TotalValue.Value.ToString("F2")</dd>
+            }
+
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9">
+                <span id="detail-status" class="transactions-status-badge badge
+                    @(Model.CurrentStatus == Book_Exchange.Models.TransactionStatus.Confirmed ? "bg-warning text-dark" :
+                      Model.CurrentStatus == Book_Exchange.Models.TransactionStatus.Shipped ? "bg-primary" :
+                      Model.CurrentStatus == Book_Exchange.Models.TransactionStatus.Completed ? "bg-success" :
+                      Model.CurrentStatus == Book_Exchange.Models.TransactionStatus.Disputed ? "bg-danger" : "bg-secondary")">
+                    @Model.CurrentStatus
+                </span>
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div id="transaction-actions" class="d-flex gap-2 mb-4">
+
+    @if (Model.CurrentStatus == Book_Exchange.Models.TransactionStatus.Confirmed)
+    {
+        <form asp-action="MarkAsShipped" asp-route-id="@Model.Id" method="post">
+            @Html.AntiForgeryToken()
+            <button id="btn-mark-shipped" type="submit" class="btn btn-primary">
+                Mark as Shipped
+            </button>
+        </form>
+        <form asp-action="Cancel" asp-route-id="@Model.Id" method="post">
+            @Html.AntiForgeryToken()
+            <button id="btn-cancel" type="submit" class="btn btn-outline-danger">
+                Cancel Transaction
+            </button>
+        </form>
+    }
+
+    @if (Model.CurrentStatus == Book_Exchange.Models.TransactionStatus.Shipped)
+    {
+        <form asp-action="Complete" asp-route-id="@Model.Id" method="post">
+            @Html.AntiForgeryToken()
+            <button id="btn-complete" type="submit" class="btn btn-success">
+                Mark as Complete
+            </button>
+        </form>
+        <form asp-action="Dispute" asp-route-id="@Model.Id" method="post">
+            @Html.AntiForgeryToken()
+            <button id="btn-dispute" type="submit" class="btn btn-outline-danger">
+                Dispute Transaction
+            </button>
+        </form>
+        @if (Model.ShipmentId.HasValue)
+        {
+            <a id="btn-view-shipment"
+               class="btn btn-outline-primary"
+               asp-controller="Shipping"
+               asp-action="Details"
+               asp-route-transactionId="@Model.Id"> 
+                View Shipment
+            </a>
+        }
+    }
+
+    @if (Model.CurrentStatus == Book_Exchange.Models.TransactionStatus.Completed && !Model.HasReview)
+    {
+        <a id="btn-leave-review"
+           class="transactions-review-btn btn btn-outline-warning"
+           asp-controller="Review"
+           asp-action="Create"
+           asp-route-transactionId="@Model.Id">
+            Leave Review
+        </a>
+    }
+
+</div>

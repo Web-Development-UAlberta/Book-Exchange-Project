@@ -1,0 +1,137 @@
+@model Book_Exchange.Models.DTOs.Notification.NotificationDto
+
+@{
+    ViewData["Title"] = "Notification Details";
+    Layout = "_Layout";
+}
+
+<div id="notification-detail-panel" class="container mt-4" style="max-width: 680px;">
+
+    <div class="mb-3">
+        <a asp-action="Index" class="btn btn-outline-secondary btn-sm notification-back-btn">
+            &larr; Back to Notifications
+        </a>
+    </div>
+
+    <div class="card notification-detail-card">
+        <div class="card-body">
+
+            <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="badge notification-category-badge
+                    @(Model.Category switch {
+                        Book_Exchange.Models.NotificationCategory.MatchFound         => "bg-success",
+                        Book_Exchange.Models.NotificationCategory.WishlistAvailable  => "bg-info text-dark",
+                        Book_Exchange.Models.NotificationCategory.NewMessage         => "bg-primary",
+                        Book_Exchange.Models.NotificationCategory.ExchangeRequested  => "bg-warning text-dark",
+                        Book_Exchange.Models.NotificationCategory.ExchangeAccepted   => "bg-success",
+                        Book_Exchange.Models.NotificationCategory.ExchangeRejected   => "bg-danger",
+                        Book_Exchange.Models.NotificationCategory.TransactionUpdate  => "bg-secondary",
+                        _                                                            => "bg-secondary"
+                    })">
+                    @{
+                        string FormatCategory(NotificationCategory c) => c switch
+                        {
+                            NotificationCategory.MatchFound        => "Match Found",
+                            NotificationCategory.WishlistAvailable => "Wishlist Available",
+                            NotificationCategory.NewMessage        => "New Message",
+                            NotificationCategory.ExchangeRequested => "Exchange Requested",
+                            NotificationCategory.ExchangeAccepted  => "Exchange Accepted",
+                            NotificationCategory.ExchangeRejected  => "Exchange Rejected",
+                            NotificationCategory.TransactionUpdate => "Transaction Update",
+                            _                                      => c.ToString()
+                        };
+                    }
+                    @FormatCategory(Model.Category)
+                </span>
+
+                @if (!Model.IsRead)
+                {
+                    <span class="notification-dot bg-primary rounded-circle d-inline-block"
+                          style="width:10px;height:10px;" title="Unread"></span>
+                }
+            </div>
+
+            <h4 class="notification-detail-title">@Model.Title</h4>
+            <p class="notification-detail-message text-muted">@Model.Message</p>
+
+            <hr />
+
+            <dl class="row notification-detail-meta small text-muted">
+                <dt class="col-sm-4">Received</dt>
+                <dd class="col-sm-8">@Model.CreatedAt.ToString("dddd, MMMM d, yyyy h:mm tt")</dd>
+
+                @if (Model.ReadAt.HasValue)
+                {
+                    <dt class="col-sm-4">Read at</dt>
+                    <dd class="col-sm-8">@Model.ReadAt.Value.ToString("dddd, MMMM d, yyyy h:mm tt")</dd>
+                }
+            </dl>
+
+            @* Contextual action buttons *@
+            @{
+                bool hasActions = Model.Category == NotificationCategory.NewMessage
+                    || (Model.RelatedListingId.HasValue && Model.Category != NotificationCategory.NewMessage)
+                    || Model.RelatedExchangeRequestId.HasValue
+                    || Model.RelatedTransactionId.HasValue;
+            }
+
+            @if (hasActions)
+            {
+                <div class="notification-related-actions mt-3 d-flex flex-wrap gap-2">
+
+                    @* NewMessage: go to inbox *@
+                    @if (Model.Category == NotificationCategory.NewMessage)
+                    {
+                        <a asp-controller="Message" asp-action="Index"
+                           class="btn btn-outline-primary btn-sm">
+                            View Messages
+                        </a>
+                    }
+
+                    @* All other categories: show View Listing if present *@
+                    @if (Model.RelatedListingId.HasValue && Model.Category != NotificationCategory.NewMessage)
+                    {
+                        <a asp-controller="Listing" asp-action="Details"
+                           asp-route-id="@Model.RelatedListingId"
+                           class="btn btn-outline-primary btn-sm notification-view-listing-btn">
+                            View Listing
+                        </a>
+                    }
+
+                    @if (Model.RelatedExchangeRequestId.HasValue)
+                    {
+                        <a asp-controller="ExchangeRequest" asp-action="Details"
+                           asp-route-id="@Model.RelatedExchangeRequestId"
+                           class="btn btn-outline-primary btn-sm notification-view-exchange-btn">
+                            View Exchange Request
+                        </a>
+                    }
+
+                    @if (Model.RelatedTransactionId.HasValue)
+                    {
+                        <a asp-controller="Transaction" asp-action="Details"
+                           asp-route-id="@Model.RelatedTransactionId"
+                           class="btn btn-outline-primary btn-sm notification-view-transaction-btn">
+                            View Transaction
+                        </a>
+                    }
+
+                </div>
+            }
+
+        </div>
+
+        <div class="card-footer d-flex gap-2 justify-content-end">
+            <form asp-action="Archive" asp-route-id="@Model.Id" method="post">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-outline-secondary btn-sm notification-archive-btn">
+                    Dismiss
+                </button>
+            </form>
+            <a asp-action="Index" class="btn btn-primary btn-sm">
+                Done
+            </a>
+        </div>
+    </div>
+
+</div>

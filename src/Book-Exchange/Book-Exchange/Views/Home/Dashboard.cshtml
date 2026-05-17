@@ -1,0 +1,240 @@
+@using Book_Exchange.Models
+@model Book_Exchange.Models.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row g-0" id="dashboard-page">
+
+    @* SIDEBAR *@
+    <div class="col-auto" id="dashboard-sidebar" style="width: 210px; min-height: calc(100vh - 60px);">
+        <div class="text-center p-3 border-bottom border-secondary">
+            <div class="bx-avatar mx-auto mb-2">@Model.UserName[0].ToString().ToUpper()</div>
+            <div class="bx-sidebar-username">@Model.UserName</div>
+            <div class="bx-sidebar-rep small">
+                @if (Model.AverageRating.HasValue)
+                {
+                    <span>★ @Model.AverageRating.Value.ToString("F1") &nbsp;·&nbsp;</span>
+                }
+                <span>@Model.TradeCount trades</span>
+            </div>
+        </div>
+        <nav class="d-flex flex-column pt-2">
+            <a class="sidebar-nav-link active" asp-action="Dashboard" asp-controller="Home">Dashboard</a>
+            <a class="sidebar-nav-link" asp-action="Index" asp-controller="Listing">My listings</a>
+            <a class="sidebar-nav-link" asp-action="Index" asp-controller="Wishlist">Wishlist & Matches</a>
+            <a class="sidebar-nav-link" asp-action="Index" asp-controller="ExchangeRequest">Exchange Requests</a>
+            <a class="sidebar-nav-link" asp-action="Index" asp-controller="Transaction">Transactions</a>
+            <a class="sidebar-nav-link" asp-action="Index" asp-controller="Message">Messages</a>
+            <a class="sidebar-nav-link" asp-action="Index" asp-controller="Shipping">Shipping</a>
+            <a class="sidebar-nav-link" asp-action="Index" asp-controller="Notification">Notifications</a>
+            <a class="sidebar-nav-link" asp-action="Index" asp-controller="Profile">Profile</a>
+        </nav>
+    </div>
+
+    @* MAIN CONTENT *@
+    <div class="col p-4" style="background: #F5F7FA; min-height: calc(100vh - 60px);">
+
+        @* Stat cards *@
+        <div class="row g-3 mb-4" id="dashboard-stats">
+            <div class="col-6 col-md-3">
+                <a asp-action="Index" asp-controller="Listing" class="stat-card text-decoration-none d-block">
+                    <div class="stat-card-value stat-card-value--teal">@Model.ActiveListingCount</div>
+                    <div class="stat-card-label">Active listings</div>
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-action="Index" asp-controller="Wishlist" class="stat-card text-decoration-none d-block">
+                    <div class="stat-card-value stat-card-value--blue">@Model.WishlistCount</div>
+                    <div class="stat-card-label">Wishlist items</div>
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-action="Index" asp-controller="Transaction" class="stat-card text-decoration-none d-block">
+                    <div class="stat-card-value stat-card-value--purple">@Model.OpenTransactionCount</div>
+                    <div class="stat-card-label">Open transactions</div>
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-action="Index" asp-controller="Message" class="stat-card text-decoration-none d-block">
+                    <div class="stat-card-value stat-card-value--navy">@Model.UnreadMessageCount</div>
+                    <div class="stat-card-label">Unread messages</div>
+                </a>
+            </div>
+        </div>
+
+        @* Panel row 1 *@
+        <div class="row g-3 mb-3">
+
+            @* Active Transactions *@
+            <div class="col-md-6">
+                <div class="card h-100" id="active-transactions">
+                    <div class="card-header">Active transactions</div>
+                    <div class="card-body p-0">
+                        @if (Model.OpenTransactions.Any())
+                        {
+                            foreach (var tx in Model.OpenTransactions)
+                            {
+                                var latestStatus = tx.StatusHistory
+                                    .OrderByDescending(h => h.UpdatedAt)
+                                    .Select(h => h.Status)
+                                    .FirstOrDefault();
+                                <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
+                                    <span class="small fw-500">
+                                        Swap w/ @(tx.ExchangeRequest?.Requester?.UserName ?? "User")
+                                    </span>
+                                    <span class="transactions-status-badge badge bg-warning">
+                                        @latestStatus
+                                    </span>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-muted small p-3 mb-0">No active transactions</p>
+                        }
+                    </div>
+                    <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                        <a asp-action="Index" asp-controller="Transaction" class="small text-primary">View all</a>
+                    </div>
+                </div>
+            </div>
+
+            @* Wishlist *@
+            <div class="col-md-6">
+                <div class="card h-100" id="wishlist-matches-panel">
+                    <div class="card-header">Wishlist</div>
+                    <div class="card-body p-0">
+                        @if (Model.WishlistItems.Any())
+                        {
+                            foreach (var item in Model.WishlistItems)
+                            {
+                                <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
+                                    <div class="small">
+                                        <span class="fw-semibold">@item.BookTitle</span>
+
+                                        @if (!string.IsNullOrWhiteSpace(item.BookAuthor))
+                                        {
+                                            <br />
+                                            <span class="text-muted">@item.BookAuthor</span>
+                                        }
+
+                                        <br />
+                                        <span class="text-muted font-monospace">ISBN: @item.Isbn</span>
+                                    </div>
+                                    <a class="btn btn-outline-primary btn-sm"
+                                       asp-action="Index" asp-controller="Listing"
+                                       asp-route-isbn="@item.Isbn">
+                                        View Listing
+                                    </a>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-muted small p-3 mb-0">Your wishlist is empty</p>
+                        }
+                    </div>
+                    <div class="card-footer bg-white">
+                        <a asp-action="Index" asp-controller="Wishlist" class="small text-primary">View all</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* Panel row 2 *@
+        <div class="row g-3">
+
+            @* My Active Listings *@
+            <div class="col-md-6">
+                <div class="card h-100" id="my-listings-panel">
+                    <div class="card-header">My active listings</div>
+                    <div class="card-body p-0">
+                        @if (Model.MyActiveListings.Any())
+                        {
+                            foreach (var listing in Model.MyActiveListings)
+                            {
+                                <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
+                                    <div class="small">
+                                        <span class="fw-semibold">@listing.BookTitle</span>
+                                        @if (!string.IsNullOrWhiteSpace(listing.BookAuthor))
+                                        {
+                                            <br />
+                                            <span class="text-muted">@listing.BookAuthor</span>
+                                        }
+                                        <br />
+                                        <span class="font-monospace text-muted">ISBN: @listing.Isbn</span>
+                                        @{
+                                        string FormatCondition(BookCondition c) => c switch
+                                        {
+                                            BookCondition.LikeNew    => "Like New",
+                                            BookCondition.VeryGood   => "Very Good",
+                                            BookCondition.Good       => "Good",
+                                            BookCondition.Acceptable => "Acceptable",
+                                            BookCondition.Poor       => "Poor",
+                                            _                        => c.ToString()
+                                        };
+                                        }
+                                        <span class="text-muted ms-2">@FormatCondition(listing.Condition)</span>
+                                        @if (listing.Price > 0)
+                                        {
+                                            <span class="fw-semibold ms-1">$@listing.Price.ToString("F2")</span>
+                                        }
+                                    </div>
+                                    <div class="d-flex gap-1 align-items-center">
+                                        <span class="badge @(listing.Price > 0 ? "bg-warning badge-sell" : "bg-success badge-swap")">
+                                            @(listing.Price > 0 ? "sell" : "swap")
+                                        </span>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-muted small p-3 mb-0">No listings yet</p>
+                        }
+                    </div>
+                    <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                        <a asp-action="Index" asp-controller="Listing" class="small text-primary">View all</a>
+                        <a id="dashboard-create-listing-btn"
+                           asp-action="Create" asp-controller="Listing"
+                           class="btn btn-primary btn-sm">
+                            + Add Listing
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            @* Notifications *@
+            <div class="col-md-6">
+                <div class="card h-100" id="notifications-panel">
+                    <div class="card-header">Notifications</div>
+                    <div class="card-body p-0">
+                        @if (Model.RecentNotifications.Any())
+                        {
+                            foreach (var notif in Model.RecentNotifications)
+                            {
+                                <div class="d-flex align-items-start gap-2 px-3 py-2 border-bottom @(notif.IsRead ? "" : "notification-unread")">
+                                    <span class="notification-dot @(notif.IsRead ? "" : "notification-dot--active") mt-1 flex-shrink-0"></span>
+                                    <div>
+                                        <div class="small fw-semibold">@notif.Title</div>
+                                        <div class="text-muted" style="font-size:0.72rem;">@notif.CreatedAt.ToString("MMM d")</div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-muted small p-3 mb-0">No notifications</p>
+                        }
+                    </div>
+                    <div class="card-footer bg-white">
+                        <a asp-action="Index" asp-controller="Notification" class="small text-primary">View all</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
