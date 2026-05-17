@@ -184,6 +184,12 @@ public class ShippingService : IShippingService
         Guid carrierId,
         int packageWeightGrams)
     {
+        var existingShipment = await _context.Shipments
+            .FirstOrDefaultAsync(s => s.TransactionId == transactionId &&
+                                       s.Status != ShipmentStatus.Cancelled);
+        if (existingShipment != null)
+            throw new InvalidOperationException("An active shipment already exists for this transaction.");
+
         var transaction = await _context.Transactions.FindAsync(transactionId)
             ?? throw new ArgumentException("Transaction not found.");
 
@@ -237,7 +243,10 @@ public class ShippingService : IShippingService
             .Include(s => s.Carrier)
             .Include(s => s.SenderAddress)
             .Include(s => s.ReceiverAddress)
-            .FirstOrDefaultAsync(s => s.TransactionId == transactionId);
+            .Where(s => s.TransactionId == transactionId)
+            .OrderBy(s => s.Status == ShipmentStatus.Cancelled ? 1 : 0) // prefer active
+            .ThenByDescending(s => s.CreatedAt)
+            .FirstOrDefaultAsync();
     }
 
     /// <summary>
