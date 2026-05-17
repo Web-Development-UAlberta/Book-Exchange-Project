@@ -134,5 +134,22 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    @if (TempData["Success"] != null)
+    {
+        <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 1100;">
+            <div id="successToast" class="toast align-items-center text-bg-success border-0 show" role="alert">
+                <div class="d-flex">
+                    <div class="toast-body fs-6">
+                        ✓ @TempData["Success"]
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+            </div>
+        </div>
+        <script>
+            var toastEl = document.getElementById('successToast');
+            setTimeout(function () { bootstrap.Toast.getOrCreateInstance(toastEl).hide(); }, 4000);
+        </script>
+    }
 </body>
 </html>

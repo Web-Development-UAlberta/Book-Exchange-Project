@@ -15,6 +15,10 @@ public interface IShippingService
 
     Task<Shipment> CreateShipmentAsync(Guid transactionId, Guid senderAddressId, Guid receiverAddressId, Guid carrierId, int packageWeightGrams);
 
+    Task<Shipment?> GetShipmentAsync(Guid shipmentId);
+
+    Task<Shipment?> GetShipmentByTransactionForUserAsync(Guid transactionId, Guid userId);
+
     Task<Shipment?> GetShipmentByTransactionAsync(Guid transactionId);
 
     Task<IEnumerable<Shipment>> GetShipmentsForUserAsync(string userId);
@@ -22,5 +26,6 @@ public interface IShippingService
     Task<Shipment> UpdateShipmentStatusAsync(Guid shipmentId, ShipmentStatus newStatus);
 
     Task<Shipment> CancelShipmentAsync(Guid shipmentId);
+
     Task<ShippingQuoteDto?> GetLowestQuoteBetweenUsersAsync(Guid senderUserId, Guid receiverUserId, int packageWeightGrams);
 }

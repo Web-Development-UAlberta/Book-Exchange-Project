@@ -1,7 +1,26 @@
+<a name="top"></a>
+
 # 📚 Book Exchange Platform
 
 > **Connect. Trade. Read More.**
 > A community-driven marketplace for buying, selling, and swapping books — built with ASP.NET Core and powered by real book data.
+
+---
+
+## 📋 Table of Contents
+
+- [What Is This?](#-what-is-this)
+- [Tech Stack](#️-tech-stack)
+- [Prerequisites](#-prerequisites)
+- [Configuration & Secrets](#-configuration--secrets)
+- [Getting Started](#-getting-started)
+- [Running Tests](#-running-tests)
+- [Project Structure](#-project-structure)
+- [Key Routes](#-key-routes)
+- [Project Usage](#-project-usage)
+- [CI/CD](#-cicd)
+- [Documentation](#-documentation)
+- [Contributing](#-contributing)
 
 ---
 
@@ -11,7 +30,7 @@ The **Book Exchange Platform** is a full-stack web application that lets users l
 
 Built on a clean three-tier architecture using **.NET 10**, **PostgreSQL**, and **ASP.NET Core MVC** — it's designed for reliability, testability, and straightforward local setup.
 
----
+## [🔝 Back to Top](#top)
 
 ## 🛠️ Tech Stack
 
@@ -25,7 +44,7 @@ Built on a clean three-tier architecture using **.NET 10**, **PostgreSQL**, and 
 | **Testing**  | xUnit, Microsoft Playwright        |
 | **IDE**      | Visual Studio 2022+                |
 
----
+## [🔝 Back to Top](#top)
 
 ## ✅ Prerequisites
 
@@ -46,7 +65,7 @@ You will also need API keys for the following external services:
 - **Google Books API** — for book metadata lookup by ISBN
 - **Google Maps / Places API** — for address autocomplete and validation
 
----
+## [🔝 Back to Top](#top)
 
 ## 🔑 Configuration & Secrets
 
@@ -61,7 +80,7 @@ dotnet user-secrets set "GoogleMaps:ApiKey" "YOUR_GOOGLE_MAPS_API_KEY"
 dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Port=5432;Database=bookexchange;Username=postgres;Password=yourpassword"
 ```
 
----
+## [🔝 Back to Top](#top)
 
 ## 💻 Getting Started
 
@@ -148,9 +167,9 @@ pwsh bin/Debug/net10.0/playwright.ps1 install chromium
 > **Linux:** See [Microsoft's install guide](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux)
 > **Windows:** Download from the [PowerShell GitHub releases](https://github.com/PowerShell/PowerShell/releases)
 
-#### Step 2 — Create test user accounts
+#### Step 2 — Test user accounts
 
-UI tests authenticate using two pre-existing accounts. Register these users in the running application before executing tests:
+When running in **Development**, these accounts are created automatically by the database seeder on first launch. If you are running tests against a non-Development environment or a fresh database without seed data, register these accounts manually in the running application before executing tests:
 
 | Role                | Email                | Password    |
 | ------------------- | -------------------- | ----------- |
@@ -191,7 +210,7 @@ For automated runs in CI, add a step to install Playwright browsers along with t
 
 The `--with-deps` flag installs required system libraries (fonts, graphics libs) needed for headless browsers on Linux runners.
 
----
+## [🔝 Back to Top](#top)
 
 ## 📁 Project Structure
 
@@ -215,7 +234,7 @@ The `--with-deps` flag installs required system libraries (fonts, graphics libs)
 └── appsettings.json
 ```
 
----
+## [🔝 Back to Top](#top)
 
 ## 🌐 Key Routes
 
@@ -233,7 +252,115 @@ The `--with-deps` flag installs required system libraries (fonts, graphics libs)
 | Addresses     | `/Addresses`                 | Manage saved addresses        |
 | Book Search   | `/BookSearch`                | Search books via Google Books |
 
----
+## [🔝 Back to Top](#top)
+
+## 🎉 Project Usage
+
+### First Run & Data Seeding
+
+The application does not require manual data entry to get started. When running in the Development environment, the startup pipeline automatically applies any pending database migrations and seeds the database with sample data — but only if that data does not already exist (all seed operations are idempotent).
+
+The following seed data is created on first run:
+
+|                   |                                                                                                                                                                           |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Category          | Details                                                                                                                                                                   |
+| Users             | [test@test.com](mailto:test@test.com) / Test1234!, [otheruser@test.com](mailto:otheruser@test.com) / Test1234!, [noreview@test.com](mailto:noreview@test.com) / Test1234! |
+| Addresses         | One address per seeded user (Edmonton & Calgary, using Google Place IDs)                                                                                                  |
+| Carriers          | Canada Post, Purolator, FedEx Canada, UPS Canada                                                                                                                          |
+| Listings          | 8–10 listings across both test users with various ISBNs, conditions, and prices                                                                                           |
+| Wishlists         | ISBN-based wishlist entries for both test users, including cross-matches                                                                                                  |
+| Exchange Requests | BuySell, BookSwap, and BookSwapWithCash requests in various states                                                                                                        |
+| Transactions      | Transactions in Confirmed, Shipped, Completed, and Cancelled states                                                                                                       |
+| Shipments         | Sample shipments linked to transactions                                                                                                                                   |
+| Messages          | Sample message threads between test users                                                                                                                                 |
+| Notifications     | Pre-seeded notifications for both users                                                                                                                                   |
+| Reviews           | Reviews from completed transactions                                                                                                                                       |
+
+In Production, the database starts empty. Users must register, add addresses, and create listings manually before any matching or exchange activity is possible.
+
+### Registering & Setting Up Your Profile
+
+1. Navigate to the application in your browser (default: [https://localhost:5261](https://localhost:55261)).
+2. Click Register and create an account with your email and password.
+3. After logging in, go to Profile to view your user page by clicking the down arrow next to your user name and select Profile.
+4. Navigate to My Addresses and add a shipping address using the Google Places address lookup.
+   ![Registration form](src/Book-Exchange/img/Register.png)
+   ![Add an Address](src/Book-Exchange/img/Address.png)
+
+### Creating a Listing
+
+Listings represent books you own and are willing to sell or swap.
+
+1. From the navigation bar, click Listings → Create Listing.
+2. Enter the book's Author or title. Book metadata (title, author, cover, ISBN) is fetched automatically from the Google Books API.
+3. Set the condition, price, and weight (in grams).
+4. Submit the form. Your listing will appear under My Listings and be visible in the public book search.
+
+![Listings page](src/Book-Exchange/img/Listings.png)
+![Create a new listing](src/Book-Exchange/img/Create-Listing.png)
+
+### Managing Your Wishlist
+
+The wishlist tracks books you want. The matching engine uses it to notify you when a matching listing appears.
+
+1. Go to Wishlist → Add to Wishlist.
+2. Enter the Book Title or Author of the book you're looking for.
+3. Your wishlist items can be toggled to be removed or restored at any time.
+
+   ![Wishlist page with items](src/Book-Exchange/img/Wishlist.png)
+
+### Match Suggestions
+
+When a listing matches a book in your wishlist (or vice versa), the platform sends you a Match Found notification and surfaces the notification on your dashboard.
+
+1. Check your Notifications for alerts.
+2. Click a match notification and then view the listing to message the listing owner or create an exchange request.
+
+   ![Match notification](src/Book-Exchange/img/Match-Notification.png)
+
+### Submitting an Exchange Request
+
+1. From a listing's detail page, click Create an Exchange Request.
+2. Select up to 3 books to swap with the listing owner, offer cash only or combine cash and books.
+3. Optionally message to the listing owner.
+4. Submit. The listing owner will be notified.
+
+   ![Create an exchange request](src/Book-Exchange/img/Create-Exchange.png)
+
+### Accepting or Rejecting Requests (Listing Owner)
+
+1. Go to Exchange Requests and click on a listing with a pending request.
+2. Review the incoming exchange requests by clicking details.
+3. Click Accept to create a transaction, or Reject to decline.
+
+Only one request can be accepted per listing. Accepting automatically moves the listing to Pending status and creates a Transaction.
+
+![Pending Exchnage Request](src/Book-Exchange/img/Offered-Exchange.png)
+
+### Transactions & Shipping
+
+Once an exchange request is accepted, a Transaction is created.
+
+1. Navigate to Transactions to see your active and past transactions.
+2. Navigate to shipping to see the quoted shipping estimates.
+3. Update the shipment status as the book moves through delivery.
+
+   ![Shipping options grid](src/Book-Exchange/img/Shipping-table.png)
+   ![Shipping details page](src/Book-Exchange/img/shipment-details.png)
+
+### Reviews
+
+After a transaction is marked Completed, both parties can leave a review.
+
+1. Go to Transactions → History and find the completed transaction you want to review.
+2. Click Leave a Review, provide a rating (1–5) and an optional comment.
+3. Reviews appear on the other user's public profile and contribute to their reputation score.
+
+   ![Review submission form](src/Book-Exchange/img/review-form.png)
+   ![Profile with reviews](src/Book-Exchange/img/Profile-Reviews.png)
+
+## [🔝 Back to Top](#top)
 
 ## 🔄 CI/CD
 
@@ -243,7 +370,7 @@ This project uses **GitHub Actions** for automated builds and test runs.
 - Direct pushes to `main` are **blocked**
 - GitHub Actions runs all tests on every PR and push to `main`
 
----
+## [🔝 Back to Top](#top)
 
 ## 📄 Documentation
 
@@ -255,7 +382,7 @@ This project uses **GitHub Actions** for automated builds and test runs.
 | ERD           | `./docs/ERD.png`      |
 | Wireframes    | `./docs/wireframes/`  |
 
----
+## [🔝 Back to Top](#top)
 
 ## 🤝 Contributing
 
@@ -264,6 +391,6 @@ This project uses **GitHub Actions** for automated builds and test runs.
 3. Open a pull request — **1 approver required** before merging
 4. Ensure all GitHub Actions checks pass before requesting review
 
----
+## [🔝 Back to Top](#top)
 
 > Built with ☕ and a love of books.
