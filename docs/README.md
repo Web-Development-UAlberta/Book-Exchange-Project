@@ -344,12 +344,7 @@ Once an exchange request is accepted, a Transaction is created.
 
 1. Navigate to Transactions to see your active and past transactions.
 2. Navigate to shipping to see the quoted shipping estimates.
-
-- A Single Transaction will quote multiple shipping options.
-- Review the options by viewing the details.
-- Select the best one by canceling the others.
-
-4. Update the shipment status as the book moves through delivery.
+3. Update the shipment status as the book moves through delivery.
 
    ![Shipping options grid](src/Book-Exchange/img/Shipping-table.png)
    ![Shipping details page](src/Book-Exchange/img/shipment-details.png)
