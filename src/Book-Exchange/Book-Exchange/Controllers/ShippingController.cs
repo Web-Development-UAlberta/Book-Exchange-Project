@@ -33,14 +33,28 @@ public class ShippingController : Controller
         return View(shipments);
     }
 
-    // GET /Shipping/Details/{transactionId}
+    // GET /Shipping/Details/{id}
+    // 'id' is the Shipment ID (not the transaction ID).
+    // Each user's index links to their own shipment row directly, so there is no
+    // ambiguity when a transaction has two shipments (one per swap direction).
     [HttpGet]
-    public async Task<IActionResult> Details(Guid transactionId)
+    public async Task<IActionResult> Details(Guid id)
     {
-        var shipment = await _shippingService.GetShipmentByTransactionAsync(transactionId);
+        var userId = Guid.Parse(_userManager.GetUserId(User)!);
+        var shipment = await _shippingService.GetShipmentAsync(id);
 
         if (shipment == null)
             return NotFound();
+
+        // Only parties to the shipment may view it
+        bool isSender = shipment.SenderAddress.UserId == userId;
+        bool isReceiver = shipment.ReceiverAddress.UserId == userId;
+
+        if (!isSender && !isReceiver)
+            return Forbid();
+
+        ViewBag.IsSender = isSender;
+        ViewBag.ShipmentReference = $"SHP-{shipment.Id.ToString("N")[..4].ToUpper()}";
 
         return View(shipment);
     }
@@ -79,10 +93,10 @@ public class ShippingController : Controller
     {
         try
         {
-            await _shippingService.CreateShipmentAsync(transactionId, senderAddressId, receiverAddressId, carrierId, packageWeightGrams);
+            var shipment = await _shippingService.CreateShipmentAsync(transactionId, senderAddressId, receiverAddressId, carrierId, packageWeightGrams);
 
             TempData["Success"] = "Shipment created successfully.";
-            return RedirectToAction(nameof(Details), new { transactionId });
+            return RedirectToAction(nameof(Details), new { id = shipment.Id });
         }
         catch (ArgumentException ex)
         {
@@ -97,15 +111,28 @@ public class ShippingController : Controller
     }
 
     // POST /Shipping/UpdateStatus/{id}
+    // Only the sender may advance their shipment's status.
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> UpdateStatus(Guid id, ShipmentStatus newStatus)
     {
+        var userId = Guid.Parse(_userManager.GetUserId(User)!);
+
+        var shipment = await _shippingService.GetShipmentAsync(id);
+        if (shipment == null)
+            return NotFound();
+
+        if (shipment.SenderAddress.UserId != userId)
+        {
+            TempData["Error"] = "You can only update the status of shipments you are sending.";
+            return RedirectToAction(nameof(Details), new { id = shipment.Id });
+        }
+
         try
         {
-            var shipment = await _shippingService.UpdateShipmentStatusAsync(id, newStatus);
+            var updated = await _shippingService.UpdateShipmentStatusAsync(id, newStatus);
             TempData["Success"] = $"Shipment status updated to {newStatus}.";
-            return RedirectToAction(nameof(Details), new { transactionId = shipment.TransactionId });
+            return RedirectToAction(nameof(Details), new { id = updated.Id });
         }
         catch (ArgumentException)
         {
@@ -119,15 +146,28 @@ public class ShippingController : Controller
     }
 
     // POST /Shipping/Cancel/{id}
+    // Only the sender may cancel their own shipment.
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Cancel(Guid id)
     {
+        var userId = Guid.Parse(_userManager.GetUserId(User)!);
+
+        var shipment = await _shippingService.GetShipmentAsync(id);
+        if (shipment == null)
+            return NotFound();
+
+        if (shipment.SenderAddress.UserId != userId)
+        {
+            TempData["Error"] = "You can only cancel shipments you are sending.";
+            return RedirectToAction(nameof(Details), new { id = shipment.Id });
+        }
+
         try
         {
-            var shipment = await _shippingService.CancelShipmentAsync(id);
+            var cancelled = await _shippingService.CancelShipmentAsync(id);
             TempData["Success"] = "Shipment cancelled.";
-            return RedirectToAction(nameof(Details), new { transactionId = shipment.TransactionId });
+            return RedirectToAction(nameof(Details), new { id = cancelled.Id });
         }
         catch (ArgumentException)
         {

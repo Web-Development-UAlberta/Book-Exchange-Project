@@ -184,12 +184,6 @@ public class ShippingService : IShippingService
         Guid carrierId,
         int packageWeightGrams)
     {
-        var existingShipment = await _context.Shipments
-            .FirstOrDefaultAsync(s => s.TransactionId == transactionId &&
-                                       s.Status != ShipmentStatus.Cancelled);
-        if (existingShipment != null)
-            throw new InvalidOperationException("An active shipment already exists for this transaction.");
-
         var transaction = await _context.Transactions.FindAsync(transactionId)
             ?? throw new ArgumentException("Transaction not found.");
 
@@ -232,6 +226,37 @@ public class ShippingService : IShippingService
     }
 
     /// <summary>
+    /// GetShipmentAsync
+    /// - Fetches a single shipment by its primary key, including SenderAddress and ReceiverAddress
+    /// - Returns null if not found
+    /// </summary>
+    public async Task<Shipment?> GetShipmentAsync(Guid shipmentId)
+    {
+        return await _context.Shipments
+            .Include(s => s.SenderAddress)
+            .Include(s => s.ReceiverAddress)
+            .FirstOrDefaultAsync(s => s.Id == shipmentId);
+    }
+
+    /// <summary>
+    /// GetShipmentByTransactionForUserAsync
+    /// - Returns the shipment for this transaction where the given user is the sender.
+    /// - Each side of a book-swap has its own shipment row; this finds the one the current
+    ///   user is responsible for shipping.
+    /// - Returns null if no such shipment exists.
+    /// </summary>
+    public async Task<Shipment?> GetShipmentByTransactionForUserAsync(Guid transactionId, Guid userId)
+    {
+        return await _context.Shipments
+            .Include(s => s.Carrier)
+            .Include(s => s.SenderAddress)
+            .Include(s => s.ReceiverAddress)
+            .FirstOrDefaultAsync(s =>
+                s.TransactionId == transactionId &&
+                s.SenderAddress.UserId == userId);
+    }
+
+    /// <summary>
     /// GetShipmentByTransactionAsync
     /// - Returns the shipment linked to the given transaction ID, including Carrier, SenderAddress, and ReceiverAddress
     /// - Returns null if no shipment exists for the transaction
@@ -243,10 +268,7 @@ public class ShippingService : IShippingService
             .Include(s => s.Carrier)
             .Include(s => s.SenderAddress)
             .Include(s => s.ReceiverAddress)
-            .Where(s => s.TransactionId == transactionId)
-            .OrderBy(s => s.Status == ShipmentStatus.Cancelled ? 1 : 0) // prefer active
-            .ThenByDescending(s => s.CreatedAt)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(s => s.TransactionId == transactionId);
     }
 
     /// <summary>
@@ -260,14 +282,15 @@ public class ShippingService : IShippingService
     {
         var userGuid = Guid.Parse(userId);
 
+        // Only return shipments where this user is the sender.
+        // The receiver can view shipment details via the transaction, but the
+        // index belongs to the party who is responsible for shipping the item.
         return await _context.Shipments
             .Include(s => s.Carrier)
             .Include(s => s.SenderAddress)
             .Include(s => s.ReceiverAddress)
             .Include(s => s.Transaction)
-            .Where(s =>
-                s.SenderAddress.UserId == userGuid ||
-                s.ReceiverAddress.UserId == userGuid)
+            .Where(s => s.SenderAddress.UserId == userGuid)
             .OrderByDescending(s => s.CreatedAt)
             .ToListAsync();
     }
